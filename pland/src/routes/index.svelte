@@ -85,18 +85,18 @@ function resetPlants() {
     <h2>Player 2</h2>
     <Plant bind:selectedItemValue="{plant2item1}" bind:selectedLocationValue="{plant2location1}" bind:submitted="{plant2submitted1}"></Plant>
     <Plant bind:selectedItemValue="{plant2item2}" bind:selectedLocationValue="{plant2location2}" bind:submitted="{plant2submitted2}"></Plant>
-    {plant1submitted}
-    {plant2submitted}
     {#if readyToRoll}
         {#if (hash == '')}
             <p>you wanna roll that seed? 🤠</p>
-            <button on:click="{roll_click}">Roll that beautiful seed</button>
-            <button on:click="{test_click}">Test those settings</button>
+            <button on:click="{roll_click}">Roll that beautiful seed ✨</button>
+            <button on:click="{test_click}">Test those settings 🧪</button>
         {:else if (hash == 'OK')}
-            <p>Sahabutt says that'll roll.</p>
-            <button on:click="{roll_click}">Roll that beautiful seed</button>
+            <p>Sahabutt🤖 says that'll roll. 🙄</p>
+            <button on:click="{roll_click}">Roll that beautiful seed ✨</button>
         {:else}
-            <a href="http://alttpr.com/en/h/{hash}">Here's that seed</a>
+            <a href="http://alttpr.com/en/h/{hash}">Here's that seed you wanted</a>
         {/if}
+    {:else}
+        <p>hurry up i wanna roll 🥵🥵🥵🥵🥵</p>
     {/if}
 </main>

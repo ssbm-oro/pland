@@ -60,8 +60,8 @@
 </script>
 
 <main>
-    <AutoComplete items = "{placeableItems}" bind:value="{selectedItemValue}" bind:selectedItem="{selectedItem}" labelFunction="{itemLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
-    <AutoComplete items = "{locations}" bind:value="{selectedLocationValue}" bind:selectedItem="{selectedLocation}" labelFunction="{locationLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
+    Item <AutoComplete items = "{placeableItems}" bind:value="{selectedItemValue}" bind:selectedItem="{selectedItem}" labelFunction="{itemLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
+    Location <AutoComplete items = "{locations}" bind:value="{selectedLocationValue}" bind:selectedItem="{selectedLocation}" labelFunction="{locationLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
     {#if submitted}✅{:else}☑️{/if}
 </main>
 
