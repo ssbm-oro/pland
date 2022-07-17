@@ -7,7 +7,7 @@ let presets: string[] = [];
 export let selectedPreset :string;
 
 onMount(async () => {
-	const res = await fetch(`http://localhost:3000/api/presets`);
+	const res = await fetch(`api/presets`);
 	presets = (await res.json()).data;
 });
 
