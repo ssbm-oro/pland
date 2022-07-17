@@ -223,6 +223,6 @@ $RECYCLE.BIN/
 *.vsix
 
 # Sveltekit generated files
-.svelte-kit/generated/*
+.svelte-kit
 
 .vercel

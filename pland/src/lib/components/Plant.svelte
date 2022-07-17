@@ -15,7 +15,7 @@
 </script>
 
 <script lang="ts">
-    import { locations, items } from '../data/json/alttpr-customizer-schema.json';
+    import { locations, items } from '../../../static/json/alttpr-customizer-schema.json';
     import AutoComplete from 'simple-svelte-autocomplete';
 
     let placeableItems = items.filter(item => ((item.count) && item.count > 0));
