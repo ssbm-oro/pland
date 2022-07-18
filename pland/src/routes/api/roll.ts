@@ -22,7 +22,7 @@ async function add_default_customizer(preset_data:any, origin:string) {
 	return preset_data;
 }
 
-export const post: RequestHandler = async ( {request, params, url} ) => {
+export const POST: RequestHandler = async ( {request, params, url} ) => {
     const presetName = url.searchParams.get('preset') ?? '';
     const plant1item1 = url.searchParams.get('plant1item1') ?? '';
     const plant1location1 = url.searchParams.get('plant1location1') ?? '';
@@ -34,7 +34,9 @@ export const post: RequestHandler = async ( {request, params, url} ) => {
     const plant2location2 = url.searchParams.get('plant2location2') ?? '';
     const test = url.searchParams.get('test') == 'true' ?? false;
     
-    var res = await fetch(`${url.origin}/presets/${presetName}`);
+    let uri = new URL(`/presets/${presetName}`, url.origin)
+    console.log(uri);
+    var res = await fetch(uri);
     console.log(res);
     let preset = await res.json();
     console.log(preset);

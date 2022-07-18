@@ -1,26 +1,20 @@
 <script lang="ts">
-    import Plant, { type Item, type Location } from "$lib/components/Plant.svelte";
+import Plant from "$lib/components/Plant.svelte";
+
+    import type { PlantData } from "$lib/components/Plant.svelte";
     import Presets from "$lib/components/Presets.svelte";
 
     let selectedPreset: string = '';
-    let plant1item1: Item|null;
-    let plant1location1: Location|null;
-    let plant1item2: Item|null;
-    let plant1location2: Location|null;
-    let plant1submitted1: boolean = false;
-    let plant1submitted2: boolean = false;
-    let plant2item1: Item|null;
-    let plant2location1: Location|null;
-    let plant2item2: Item|null;
-    let plant2location2: Location|null;
-    let plant2submitted1: boolean = false;
-    let plant2submitted2: boolean = false;
+    let plant1: PlantData;
+    let plant2: PlantData;
+    let plant3: PlantData;
+    let plant4: PlantData;
 
     let hash = '';
 
-    $: plant1submitted = plant1submitted1 && plant1submitted2;
+    $: plant1submitted = plant1?.submitted && plant2?.submitted;
 
-    $: plant2submitted = plant2submitted1 && plant2submitted2;
+    $: plant2submitted = plant3?.submitted && plant4?.submitted;
 
     $: readyToRoll = (selectedPreset != null) && (selectedPreset!= '') && plant1submitted && plant2submitted;
 
@@ -32,17 +26,17 @@
 
     /// Really naive implementation for now
     function validate_plants() {
-        return !((plant1item1 == plant2item1) || (plant1item2 == plant2item1) ||
-            (plant1item1 == plant2item2) || (plant1item2 == plant2item2) ||
-            (plant1location1 == plant2location1) || (plant1location2 == plant2location1) ||
-            (plant1location1 == plant2location2) || (plant1location2 == plant2location2));
+        return !((plant1?.item == plant3?.item) || (plant2?.item == plant3?.item) ||
+            (plant1?.item == plant4?.item) || (plant2?.item == plant4?.item) ||
+            (plant1?.location == plant3?.location) || (plant2?.location == plant3?.location) ||
+            (plant1?.location == plant4?.location) || (plant2?.location == plant4?.location));
     }
 
     function roll(test:boolean = true) {
         const options = {
 			method: 'POST'
 		}
-        const params = `preset=${selectedPreset}&plant1item1=${plant1item1?.value}&plant1location1=${plant1location1?.hash}&plant1item2=${plant1item2?.value}&plant1location2=${plant1location2?.hash}&plant2item1=${plant2item1?.value}&plant2location1=${plant2location1?.hash}&plant2item1=${plant2item2?.value}&plant2location1=${plant2location2?.hash}&test=${test}`
+        const params = `preset=${selectedPreset}&plant1item1=${plant1?.item?.value}&plant1location1=${plant1?.location?.hash}&plant1item2=${plant2?.item?.value}&plant1location2=${plant2?.location?.hash}&plant2item1=${plant3?.item?.value}&plant2location1=${plant3?.location?.hash}&plant2item1=${plant4?.item?.value}&plant2location1=${plant4?.location?.hash}&test=${test}`
 		fetch(`/api/roll?${params}`, options).then(async res => {
 			console.log(res);
             let text = await res.text();
@@ -65,12 +59,18 @@
 
 
 function resetPlants() {
-    plant1item1 = null;
-    plant1location1 = null;
-    plant1submitted = false;
-    plant2item1 = null;
-    plant2location1 = null;
-    plant2submitted = false;
+    plant1.item = null;
+    plant1.location = null;
+    plant1.submitted = false;
+    plant2.item = null;
+    plant2.location = null;
+    plant2.submitted = false;
+    plant3.item = null;
+    plant3.location = null;
+    plant3.submitted = false;
+    plant4.item = null;
+    plant4.location = null;
+    plant4.submitted = false;
     readyToRoll = false;
 }
 </script>
@@ -80,11 +80,11 @@ function resetPlants() {
 
     <Presets bind:selectedPreset="{selectedPreset}"></Presets>
     <h2>Player 1</h2>
-    <Plant bind:selectedItemValue="{plant1item1}" bind:selectedLocationValue="{plant1location1}" bind:submitted="{plant1submitted1}"></Plant>
-    <Plant bind:selectedItemValue="{plant1item2}" bind:selectedLocationValue="{plant1location2}" bind:submitted="{plant1submitted2}"></Plant>
+    <Plant bind:selectedPlant="{plant1}"></Plant>
+    <Plant bind:selectedPlant="{plant2}"></Plant>
     <h2>Player 2</h2>
-    <Plant bind:selectedItemValue="{plant2item1}" bind:selectedLocationValue="{plant2location1}" bind:submitted="{plant2submitted1}"></Plant>
-    <Plant bind:selectedItemValue="{plant2item2}" bind:selectedLocationValue="{plant2location2}" bind:submitted="{plant2submitted2}"></Plant>
+    <Plant bind:selectedPlant="{plant3}"></Plant>
+    <Plant bind:selectedPlant="{plant4}"></Plant>
     {#if readyToRoll}
         {#if (hash == '')}
             <p>you wanna roll that seed? 🤠</p>

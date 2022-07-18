@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+    import { locations, items } from '../../../static/json/alttpr-customizer-schema.json';
     export interface Item {
         value: string;
         name: string;
@@ -12,57 +13,55 @@
         region: string;
         class: string;
     }
+
+    export interface PlantData {
+        item: Item|null;
+        location: Location|null;
+        submitted: boolean;
+    }
 </script>
 
 <script lang="ts">
-    import { locations, items } from '../../../static/json/alttpr-customizer-schema.json';
     import AutoComplete from 'simple-svelte-autocomplete';
 
     let placeableItems = items.filter(item => ((item.count) && item.count > 0));
-    let selectedItem:string;
-    let selectedLocation:string;
-    export let selectedItemValue:Item|null;
-    export let selectedLocationValue:Location|null;
-    export let submitted = false;
+    export let selectedPlant:PlantData = {
+        item: { value: '', name: '', placed: 0, count: 0  },
+        location: { hash: '', name: '', region: '', class: '' },
+        submitted: false
+    }
 
-    function submit(){
-        if (selectedItem != null && selectedLocation != null) {
-            submitted = true;
+    const itemLabelFunc = function(item:Item|null) {
+        if (item) {
+            return item.name.slice(5) + ' ' + item.placed + '/' + item.count;
         }
+        return '';
     }
 
-    function reset() {
-        selectedItem = '';
-        selectedItemValue = null;
-        selectedLocation = '';
-        selectedLocationValue = null;
-        submitted = false;
-    }
-
-    const itemLabelFunc = function(item:Item) {
-        return item.name.slice(5) + ' ' + item.placed + '/' + item.count;
-    }
-
-    const locationLabelFunc = function(location:Location) {
-        return location.name;
+    const locationLabelFunc = function(location:Location|null) {
+        if (location) {
+            return location.name;
+        }
+        return '';
     }
 
     const onChange = function()
     {
-        if ((selectedItemValue != null) && (selectedLocationValue != null)) {
-            submitted = true;
+        if ((selectedPlant.item != null) && (selectedPlant.location != null) &&
+            (selectedPlant.item.name != '') && (selectedPlant.location.hash != '')) {
+            selectedPlant.submitted = true;
         }
         else {
-            submitted = false;
+            selectedPlant.submitted = false;
         }
     }
 
 </script>
 
 <main>
-    Item <AutoComplete items = "{placeableItems}" bind:value="{selectedItemValue}" bind:selectedItem="{selectedItem}" labelFunction="{itemLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
-    Location <AutoComplete items = "{locations}" bind:value="{selectedLocationValue}" bind:selectedItem="{selectedLocation}" labelFunction="{locationLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
-    {#if submitted}✅{:else}☑️{/if}
+    Item <AutoComplete items = "{placeableItems}" bind:value="{selectedPlant.item}" labelFunction="{itemLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
+    Location <AutoComplete items = "{locations}" bind:value="{selectedPlant.location}" labelFunction="{locationLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
+    {#if selectedPlant.submitted}✅{:else}☑️{/if}
 </main>
 
 <style>
