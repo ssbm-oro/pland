@@ -34,10 +34,22 @@
 
     function roll(test:boolean = true) {
         const options = {
-			method: 'POST'
+			method: 'POST',
+            body: new URLSearchParams({
+                preset: selectedPreset,
+                plant1item1: plant1.item?.value!,
+                plant1location1: plant1.location?.hash!,
+                plant1item2: plant2.item?.value!,
+                plant1location2: plant2.location?.hash!,
+                plant2item1: plant3.item?.value!,
+                plant2location1: plant3.location?.hash!,
+                plant2item2: plant4.item?.value!,
+                plant2location2: plant4.location?.hash!,
+                test: test.toString()
+            })
 		}
-        const params = `preset=${selectedPreset}&plant1item1=${plant1?.item?.value}&plant1location1=${plant1?.location?.hash}&plant1item2=${plant2?.item?.value}&plant1location2=${plant2?.location?.hash}&plant2item1=${plant3?.item?.value}&plant2location1=${plant3?.location?.hash}&plant2item1=${plant4?.item?.value}&plant2location1=${plant4?.location?.hash}&test=${test}`
-		fetch(`/api/roll?${params}`, options).then(async res => {
+
+		fetch(`/api/roll`, options).then(async res => {
 			console.log(res);
             let text = await res.text();
             hash = text;
