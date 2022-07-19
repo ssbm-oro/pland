@@ -3,9 +3,6 @@
     import type { PlantData } from "$lib/components/Plant.svelte";
     import Presets from "$lib/components/Presets.svelte";
 	import { UserStore } from '$lib/stores';
-    import { deleteSession } from '$lib/utils/sessionHandler';
-    import { session } from "$app/stores";
-    import { goto } from "$app/navigation";
 
     let selectedPreset: string = '';
     let plant1: PlantData;
@@ -86,18 +83,25 @@
         window.location.href = '/';
     }
 
-    //const redirect_uri =  encodeURIComponent(process.env.DISCORD_REDIRECT_URI!);
+    let redirect_uri = 'http%3A%2F%2Flocalhost%3A5173%2Fapi%2Fuser%2Fauth';
+    if (import.meta.env.VITE_DISCORD_REDIRECT_URI) {
+        redirect_uri =  encodeURIComponent(import.meta.env.VITE_DISCORD_REDIRECT_URI);
+        console.log('uri set');
+    }
+
+    let discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=992309099272339546&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
+    console.log(discord_login_uri);
 </script>
 
 <main>
     <h1>Welcome to pland</h1>
     
     {#if !$UserStore}
-        <button on:click={() => (window.location.href = "https://discord.com/api/oauth2/authorize?client_id=992309099272339546&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fapi%2Fuser%2Fauth&response_type=code&scope=identify%20guilds")}> <!--`https://discord.com/api/oauth2/authorize?client_id=992309099272339546&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`)}>-->
+        <button on:click={() => (window.location.href = discord_login_uri)}> <!--`https://discord.com/api/oauth2/authorize?client_id=992309099272339546&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`)}>-->
             Login with Discord</button>
     {:else}
-            <h2>You are {$UserStore.username}</h2>
-            <button on:click='{logout}'>Sign out</button>
+        <h2>You are {$UserStore.username}</h2>
+        <button on:click='{logout}'>Sign out</button>
 
 
         <Presets bind:selectedPreset="{selectedPreset}"></Presets>

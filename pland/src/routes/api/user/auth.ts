@@ -9,11 +9,11 @@ export const GET: RequestHandler = async ( { url} ) => {
     if (!code) return { status: 400, body: { error: 'No code provided' } };
 
     const FormData = new URLSearchParams({
-        client_id: process.env.DISCORD_OAUTH_CLIENT_ID!,
-        client_secret: process.env.DISCORD_OAUTH_CLIENT_SECRET!,
+        client_id: import.meta.env.VITE_DISCORD_OAUTH_CLIENT_ID!,
+        client_secret: import.meta.env.VITE_DISCORD_OAUTH_CLIENT_SECRET!,
         grant_type: 'authorization_code',
         code: code.toString(),
-        redirect_uri: process.env.DISCORD_REDIRECT_URI!,
+        redirect_uri: import.meta.env.VITE_DISCORD_REDIRECT_URI,
     });
 
     try {
