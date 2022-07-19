@@ -100,10 +100,10 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
                     content: message
                 }
 
-                let formData = new FormData();
-                formData.append('payload_json', JSON.stringify(data));
-                formData.append('file', new Blob([json], {type: 'application/json'}), 'result.json');
-                console.log(formData);
+                // let formData = new FormData();
+                // formData.append('payload_json', JSON.stringify(data));
+                // formData.append('file', new Blob([json], {type: 'application/json'}), 'result.json');
+                // console.log(formData);
 
 
                 const options = {
