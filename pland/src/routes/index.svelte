@@ -13,6 +13,7 @@
     let plant4: PlantData;
 
     let hash = '';
+    let message = '';
 
     $: plant1submitted = plant1?.submitted && plant2?.submitted;
 
@@ -61,6 +62,11 @@
             if (res.ok) {
                 hash = await res.text();
                 log.debug(hash);
+            }
+            else {
+                hash = ''
+                message = await res.text();
+                console.log(res);
             }
 		}).catch(err => {
 			log.error(err);
@@ -121,6 +127,9 @@
             <p>🤔 {loading_message}</p>
         {:else}
             {#if readyToRoll}
+                {#if message != ''}
+                    <p>😰 the seed didn't roll - {message}</p>
+                {/if}
                 {#if (hash == '')}
                     <p>you wanna roll that seed? 🤠</p>
                     <button on:click="{roll_click}">Roll that beautiful seed ✨</button>

@@ -195,7 +195,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
         {
             return {
                 status: res.status,
-                text: res.statusText
+                body: res.body
             }
         }
     }
