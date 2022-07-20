@@ -3,6 +3,7 @@
     import type { PlantData } from "$lib/components/Plant.svelte";
     import Presets from "$lib/components/Presets.svelte";
 	import { UserStore } from '$lib/stores';
+    import log from 'loglevel';
 
     let selectedPreset: string = '';
     let plant1: PlantData;
@@ -50,12 +51,12 @@
 		}
 
 		fetch(`/api/roll`, options).then(async res => {
-			console.log(res);
+			log.debug(res);
             let text = await res.text();
             hash = text;
-            console.log(hash);
+            log.debug(hash);
 		}).catch(err => {
-			console.error(err);
+			log.error(err);
 		})
     }
 

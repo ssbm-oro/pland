@@ -3,6 +3,7 @@ import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
 import axios from 'axios';
 import type { RequestHandler } from '@sveltejs/kit';
+import log from 'loglevel';
 
 export const GET: RequestHandler = async ( { url} ) => {
     const code = url.searchParams.get('code');
@@ -66,7 +67,7 @@ export const GET: RequestHandler = async ( { url} ) => {
         }
 
     } catch (error) {
-        console.log(error);
+        log.log(error);
         return {
             status: 302,
             Location: '/authorizationError'

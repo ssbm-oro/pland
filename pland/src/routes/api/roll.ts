@@ -1,5 +1,6 @@
 import { fetchSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "@sveltejs/kit";
+import log from "loglevel";
 
 const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
 
@@ -15,13 +16,13 @@ function removeItemFromPool(itemcount: { [key: string]: number; }, item:string) 
 
 async function add_default_customizer(preset_data:any, origin:string) {
 	const default_settings = await (await fetch(`${origin}/json/default-customizer.json`)).json();
-    console.log("DEFAULT SETTINGS");
-    console.log(default_settings["settings"]);
+    log.info("DEFAULT SETTINGS");
+    log.info(default_settings["settings"]);
 	if (!('l' in preset_data['settings'])) {
 		preset_data['settings'] = { ...preset_data['settings'], ...default_settings["settings"] };
 	}
-    console.log("PRESET_DATA");
-    console.log(preset_data);
+    log.info("PRESET_DATA");
+    log.info(preset_data);
 	return preset_data;
 }
 
@@ -39,13 +40,13 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
     const test = params.get('test') == 'true' ?? false;
     
     let uri = new URL(`/presets/${presetName}`, url.origin)
-    console.log(uri);
+    log.info(uri);
     var res = await fetch(uri);
-    console.log(res);
+    log.info(res);
     let preset = await res.json();
-    console.log(preset);
+    log.info(preset);
     await add_default_customizer(preset, url.origin);
-    console.log(preset);
+    log.info(preset);
     
     preset.customizer = true;
     preset.settings['spoilers'] = 'generate';
@@ -62,8 +63,8 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
     removeItemFromPool(itemcount, plant2item2);
 
 
-    console.log("--- sending preset settings ---")
-    console.log(preset.settings);
+    log.info("--- sending preset settings ---")
+    log.info(preset.settings);
 
     const options = {
         method: 'POST',
@@ -82,8 +83,6 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
 
     try { 
         let res = await fetch(customizer_url, options);
-        console.log(res);
-        console.log(res.ok);
         if (res.ok)
         {
             let json = await res.json();
@@ -94,17 +93,12 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
                 body = json['hash'];
                 message = `${new Date().toISOString()} - Seed rolled successfully: ${body} by ${user?.username}`;
             }
-            console.log(body);
+            log.info(message);
+            log.info(JSON.stringify(json));
             try {
                 let data = {
                     content: message
                 }
-
-                // let formData = new FormData();
-                // formData.append('payload_json', JSON.stringify(data));
-                // formData.append('file', new Blob([json], {type: 'application/json'}), 'result.json');
-                // console.log(formData);
-
 
                 const options = {
                     method: 'POST',
@@ -116,9 +110,9 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
 
                 let discordres = await fetch(webhook_uri, options);
                 //let discordres = await axios(options);
-                console.log(discordres);
+                log.debug(discordres);
             }
-            catch(err) { console.error(err); }
+            catch(err) { log.error(err); }
             return {
                 status: 200,
                 body: body
@@ -133,7 +127,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
         }
     }
     catch(err) {
-        console.error(err);
+        log.error(err);
         return {
             stauts: 500
         }
