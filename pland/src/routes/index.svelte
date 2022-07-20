@@ -25,6 +25,8 @@
         }
     }
 
+    let rolling = false;
+
     /// Really naive implementation for now
     function validate_plants() {
         return !((plant1?.item == plant3?.item) || (plant2?.item == plant3?.item) ||
@@ -34,6 +36,7 @@
     }
 
     function roll(test:boolean = true) {
+        rolling = true;
         const options = {
 			method: 'POST',
             body: new URLSearchParams({
@@ -52,12 +55,15 @@
 
 		fetch(`/api/roll`, options).then(async res => {
 			log.debug(res);
-            let text = await res.text();
-            hash = text;
-            log.debug(hash);
+            if (res.ok) {
+                hash = await res.text();
+                log.debug(hash);
+            }
 		}).catch(err => {
 			log.error(err);
-		})
+		}).finally(() => {
+            rolling = false;
+        })
     }
 
     function roll_click()
@@ -107,19 +113,24 @@
         <h2>Player 2</h2>
         <Plant bind:selectedPlant="{plant3}"></Plant>
         <Plant bind:selectedPlant="{plant4}"></Plant>
-        {#if readyToRoll}
-            {#if (hash == '')}
-                <p>you wanna roll that seed? 🤠</p>
-                <button on:click="{roll_click}">Roll that beautiful seed ✨</button>
-                <button on:click="{test_click}">Test those settings 🧪</button>
-            {:else if (hash == 'OK')}
-                <p>Sahabutt🤖 says that'll roll. 🙄</p>
-                <button on:click="{roll_click}">Roll that beautiful seed ✨</button>
-            {:else}
-                <a href="http://alttpr.com/en/h/{hash}">Here's that seed you wanted</a>
-            {/if}
+        {#if rolling}
+            <p>🤔</p>
         {:else}
-            <p>hurry up i wanna roll 🥵🥵🥵🥵🥵</p>
+            {#if readyToRoll}
+                {#if (hash == '')}
+                    <p>you wanna roll that seed? 🤠</p>
+                    <button on:click="{roll_click}">Roll that beautiful seed ✨</button>
+                    <button on:click="{test_click}">Test those settings 🧪</button>
+                {:else if (hash == 'OK')}
+                    <p>Sahabutt🤖 says that'll roll. 🙄</p>
+                    <button on:click="{roll_click}">Roll that beautiful seed ✨</button>
+                    <button on:click="{test_click}">Test those settings again! 🧪</button>
+                {:else}
+                    <a href="http://alttpr.com/en/h/{hash}">Here's that seed you wanted</a>
+                {/if}
+            {:else}
+                <p>hurry up i wanna roll 🥵🥵🥵🥵🥵</p>
+            {/if}
         {/if}
     {/if}
 </main>

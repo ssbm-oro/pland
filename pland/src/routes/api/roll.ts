@@ -187,7 +187,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             }
             catch(err) { log.error(err); }
             return {
-                status: 200,
+                status: res.status,
                 body: body
             }
         }
