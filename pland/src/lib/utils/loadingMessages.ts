@@ -11,7 +11,7 @@ const loading_messages = [
     `oro, delete this message before the tournament starts`,
     `Filling sphere one with garbage`,
     `Start deciding who to blame for this seed`,
-    `Somebody once told me this was gonna troll me`,
+    `Somebody once told me this seed was gonna troll me`,
     `Buffering`,
     `heck`,
     `Are you pondering what I'm pondering?`,

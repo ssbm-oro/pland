@@ -41,6 +41,8 @@
     function roll(test:boolean = true) {
         rolling = true;
         loading_message = get_loading_message();
+        message = '';
+        
         const options = {
 			method: 'POST',
             body: new URLSearchParams({
@@ -66,7 +68,6 @@
             else {
                 hash = ''
                 message = await res.text();
-                console.log(res);
             }
 		}).catch(err => {
 			log.error(err);

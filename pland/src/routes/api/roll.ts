@@ -10,6 +10,12 @@ import path from 'path';
 const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
 const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`
 
+enum discord_log_levels {
+    info = 0xe4f2e8,
+    success = 0x00ff85,
+    error = 0xe11d62
+}
+
 function removeItemFromPool(itemcount: { [key: string]: number; }, item:string) {
     let item_name = item.slice(0,-2);
 	if (itemcount[item_name] == null) {
@@ -68,6 +74,72 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
     preset.settings.l[plant2location2] = plant2item2;
     removeItemFromPool(itemcount, plant2item2);
 
+    let plant_fields = [
+        {
+            name: 'preset',
+            value: presetName,
+            inline: true
+        },
+        {
+            name: 'player1plant1item',
+            value: plant1item1,
+            inline: true
+        },
+        {
+            name: 'player1plant1location',
+            value: plant1location1,
+            inline: true
+        },
+        {
+            name: 'player1plant2item',
+            value: plant1item2,
+            inline: true
+        },
+        {
+            name: 'player1plant2location',
+            value: plant1location2,
+            inline: true
+        },
+        {
+            name: 'player2plant1item',
+            value: plant2item1,
+            inline: true
+        },
+        {
+            name: 'player2plant1location',
+            value: plant2location1,
+            inline: true
+        },
+        {
+            name: 'player2plant2item',
+            value: plant2item2,
+            inline: true
+        },
+        {
+            name: 'player2plant2location',
+            value: plant2location2,
+            inline: true
+        },
+        {
+            name: 'test',
+            value: test,
+            inline: true
+        }
+    ]
+    let user = fetchSession(locals.user?.id!);
+
+    let embed = {
+        title: '',
+        description: '',
+        color: discord_log_levels.info,
+        timestamp: new Date(),
+        author: {
+            name: user?.username,
+            icon_url: discord_avatar_uri.replace('$userid',user?.id!).replace('$useravatar',user?.avatar!)
+        },
+        fields: plant_fields
+    }
+
 
     log.info("--- sending preset settings ---")
     log.info(preset.settings);
@@ -87,103 +159,29 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
         customizer_url = 'https://alttpr.com/api/customizer/test';
     }
 
-    try { 
+    let discord_webhook_data = new FormData();
+
+    try {
         let res = await fetch(customizer_url, options);
         if (res.ok)
         {
             let json = await res.json();
             let body = 'OK';
-            let user = fetchSession(locals.user?.id!);
-            let message = 'Settings tested successfully';
-            let description = `The following settings were submitted to the customizer test and it said it'll roll! 🎲`;
+            embed.title = 'Settings tested successfully';
+            embed.description = `The following settings were submitted to the customizer test and it said it'll roll! 🎲`;
             let hash_url;
             if (json['hash']) {
                 body = json['hash'];
                 hash_url = `http://alttpr.com/en/h/${body}`;
-                message = 'Seed rolled successfully';
-                description = `The following settings were submitted to the customizer and it gave me this crap: ${hash_url}`;
+                embed.title = 'Seed rolled successfully';
+                embed.description = `The following settings were submitted to the customizer and it gave me this crap: ${hash_url}`;
+                embed.color = discord_log_levels.success;
             }
-            log.info(message);
+            log.info(embed.title);
             log.info(JSON.stringify(json));
             try {
-                let formData = new FormData();
-
                 let file = tempy.temporaryWriteSync(JSON.stringify(json), {extension:'json'});
-
-                let embed = {
-                    title: message,
-                    description: description,
-                    timestamp: new Date(),
-                    author: {
-                        name: user?.username,
-                        icon_url: discord_avatar_uri.replace('$userid',user?.id!).replace('$useravatar',user?.avatar!)
-                    },
-                    fields: [
-                        {
-                            name: 'preset',
-                            value: presetName,
-                            inline: true
-                        },
-                        {
-                            name: 'player1plant1item',
-                            value: plant1item1,
-                            inline: true
-                        },
-                        {
-                            name: 'player1plant1location',
-                            value: plant1location1,
-                            inline: true
-                        },
-                        {
-                            name: 'player1plant2item',
-                            value: plant1item2,
-                            inline: true
-                        },
-                        {
-                            name: 'player1plant2location',
-                            value: plant1location2,
-                            inline: true
-                        },
-                        {
-                            name: 'player2plant1item',
-                            value: plant2item1,
-                            inline: true
-                        },
-                        {
-                            name: 'player2plant1location',
-                            value: plant2location1,
-                            inline: true
-                        },
-                        {
-                            name: 'player2plant2item',
-                            value: plant2item2,
-                            inline: true
-                        },
-                        {
-                            name: 'player2plant2location',
-                            value: plant2location2,
-                            inline: true
-                        },
-                        {
-                            name: 'test',
-                            value: test,
-                            inline: true
-                        }
-                    ]
-                }
-
-                let payload_json = {
-                    content: message,
-                    embeds: [embed]
-                }
-
-                formData.append('payload_json', JSON.stringify(payload_json), {contentType: 'application/json'} );
-
-                log.debug(file);
-                formData.append('files[0]', fs.createReadStream(file), {contentType: 'application/json'});
-
-                let discordres = await axios.post(webhook_uri, formData, { headers: formData.getHeaders() });
-                log.debug(discordres);
+                discord_webhook_data.append('files[0]', fs.createReadStream(file), {contentType: 'application/json'});
             }
             catch(err) { log.error(err); }
             return {
@@ -193,16 +191,30 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
         }
         else
         {
+            let text = await res.text();
+            embed.title = 'Settings failed to roll'
+            embed.description = `The following settings were submitted to the customizer and it said no bones: ${text}`
+            embed.color = discord_log_levels.error;
             return {
                 status: res.status,
-                body: res.body
+                body: text
             }
         }
     }
     catch(err) {
         log.error(err);
         return {
-            stauts: 500
+            status: 500
         }
+    }
+    finally {
+        let payload_json = {
+            content: embed.title,
+            embeds: [embed]
+        }
+        discord_webhook_data.append('payload_json', JSON.stringify(payload_json), {contentType: 'application/json'} );
+
+        let discordres = await axios.post(webhook_uri, discord_webhook_data, { headers: discord_webhook_data.getHeaders() });
+        log.debug(discordres);
     }
 }
