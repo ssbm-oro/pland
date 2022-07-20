@@ -1,6 +1,10 @@
 import { fetchSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "@sveltejs/kit";
 import log from "loglevel";
+import fs from "fs";
+import FormData from "form-data";
+import tempy from "tempy";
+import axios from "axios";
 
 const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
 
@@ -96,20 +100,13 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             log.info(message);
             log.info(JSON.stringify(json));
             try {
-                let data = {
-                    content: message
-                }
+                let formData = new FormData();
+                formData.append('content',message);
+                let file = tempy.temporaryWriteSync(JSON.stringify(json), {extension:'json'});
+                log.debug(file);
+                formData.append('file', fs.createReadStream(file));
 
-                const options = {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                }
-
-                let discordres = await fetch(webhook_uri, options);
-                //let discordres = await axios(options);
+                let discordres = await axios.post(webhook_uri, formData, { headers: formData.getHeaders() });
                 log.debug(discordres);
             }
             catch(err) { log.error(err); }
