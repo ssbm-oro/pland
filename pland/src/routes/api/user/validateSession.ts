@@ -1,5 +1,6 @@
 import { fetchSession } from '$lib/utils/sessionHandler';
 import type { RequestHandler } from '@sveltejs/kit';
+import type { IUserData } from 'src/interfaces';
 
 interface IBody {
     sessionId: string;
@@ -15,6 +16,6 @@ export const POST: RequestHandler = async ( { request} ) => {
 
     return {
         status: 200,
-        body: JSON.stringify(session)
+        body: JSON.stringify(session as IUserData)
     };
 }

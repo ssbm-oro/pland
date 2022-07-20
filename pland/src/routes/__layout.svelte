@@ -1,5 +1,5 @@
 <script context="module" lang="ts">
-	import type { FullUser } from 'src/interfaces';
+	import type { IUserData } from 'src/interfaces';
 	import { UserStore } from '$lib/stores';
     import type { Load } from '@sveltejs/kit';
 
@@ -26,7 +26,7 @@
 
         if (res.status == 200)
         {
-            const User: FullUser = await res.json();
+            const User: IUserData = await res.json();
             UserStore.setUser(User);
         }
 

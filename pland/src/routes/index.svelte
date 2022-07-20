@@ -95,14 +95,10 @@
         window.location.href = '/';
     }
 
-    let redirect_uri = 'http%3A%2F%2Flocalhost%3A5173%2Fapi%2Fuser%2Fauth';
-    if (import.meta.env.VITE_DISCORD_REDIRECT_URI) {
-        redirect_uri =  encodeURIComponent(import.meta.env.VITE_DISCORD_REDIRECT_URI);
-        console.log('uri set');
-    }
+    const redirect_uri = encodeURIComponent(import.meta.env.VITE_DISCORD_REDIRECT_URI);
+    const client_id = import.meta.env.VITE_DISCORD_OAUTH_CLIENT_ID;
 
-    let discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=992309099272339546&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
-    console.log(discord_login_uri);
+    const discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
 </script>
 
 <main>
