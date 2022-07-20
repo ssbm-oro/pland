@@ -4,6 +4,7 @@
     import Presets from "$lib/components/Presets.svelte";
 	import { UserStore } from '$lib/stores';
     import log from 'loglevel';
+    import { get_loading_message } from '$lib/utils/loadingMessages'
 
     let selectedPreset: string = '';
     let plant1: PlantData;
@@ -26,6 +27,7 @@
     }
 
     let rolling = false;
+    let loading_message = '';
 
     /// Really naive implementation for now
     function validate_plants() {
@@ -37,6 +39,7 @@
 
     function roll(test:boolean = true) {
         rolling = true;
+        loading_message = get_loading_message();
         const options = {
 			method: 'POST',
             body: new URLSearchParams({
@@ -63,6 +66,7 @@
 			log.error(err);
 		}).finally(() => {
             rolling = false;
+            loading_message = '';
         })
     }
 
@@ -114,7 +118,7 @@
         <Plant bind:selectedPlant="{plant3}"></Plant>
         <Plant bind:selectedPlant="{plant4}"></Plant>
         {#if rolling}
-            <p>🤔</p>
+            <p>🤔 {loading_message}</p>
         {:else}
             {#if readyToRoll}
                 {#if (hash == '')}
