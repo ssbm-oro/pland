@@ -5,7 +5,7 @@ import fs from "fs";
 import FormData from "form-data";
 import * as tempy from "tempy";
 import axios from "axios";
-import path from 'path';
+import { locations } from '../../../static/json/alttpr-customizer-schema.json';
 
 const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
 const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`
@@ -76,48 +76,28 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
 
     let plant_fields = [
         {
-            name: 'preset',
+            name: 'Preset Name',
             value: presetName,
             inline: true
         },
         {
-            name: 'player1plant1item',
-            value: plant1item1,
+            name: 'Player 1 Plant 1',
+            value: plant1item1 + ' - ' + getLocationName(plant1location1),
             inline: true
         },
         {
-            name: 'player1plant1location',
-            value: plant1location1,
+            name: 'Player 1 Plant 2',
+            value: plant1item2 + ' - ' + getLocationName(plant1location2),
             inline: true
         },
         {
-            name: 'player1plant2item',
-            value: plant1item2,
+            name: 'Player 2 Plant 1',
+            value: plant2item1 + ' - ' + getLocationName(plant2location1),
             inline: true
         },
         {
-            name: 'player1plant2location',
-            value: plant1location2,
-            inline: true
-        },
-        {
-            name: 'player2plant1item',
-            value: plant2item1,
-            inline: true
-        },
-        {
-            name: 'player2plant1location',
-            value: plant2location1,
-            inline: true
-        },
-        {
-            name: 'player2plant2item',
-            value: plant2item2,
-            inline: true
-        },
-        {
-            name: 'player2plant2location',
-            value: plant2location2,
+            name: 'Player 2 Plant 2',
+            value: plant2item2 + ' - ' + getLocationName(plant2location2),
             inline: true
         },
         {
@@ -180,7 +160,15 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             log.info(embed.title);
             log.info(JSON.stringify(json));
             try {
-                let file = tempy.temporaryWriteSync(JSON.stringify(json), {extension:'json'});
+                let options;
+                if (test) {
+                    options = { extension: 'json' }
+                }
+                else {
+                    options = { name: `${body}.json`}
+                }
+                delete json['patch'];
+                let file = tempy.temporaryWriteSync(JSON.stringify(json), options);
                 discord_webhook_data.append('files[0]', fs.createReadStream(file), {contentType: 'application/json'});
             }
             catch(err) { log.error(err); }
@@ -217,4 +205,13 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
         let discordres = await axios.post(webhook_uri, discord_webhook_data, { headers: discord_webhook_data.getHeaders() });
         log.debug(discordres);
     }
+}
+
+function getLocationName(location_hash: string) {
+    let location = locations.find(location => location.hash == location_hash);
+    if (location) {
+        return location.name;
+    }
+
+    return location_hash;
 }

@@ -23,7 +23,21 @@ const loading_messages = [
     `Thinking up Blind puns`,
     `Thanks for dropping in. The first passengers on a hot air balloon were a sheep, a duck, and a rooster.`,
     `pland.resources.loading.silly_loading_messages[17]`,
-    `Don't forget to free the chickens`
+    `Don't forget to free the chickens`,
+    `Picking an MSU`,
+    `Here we go again`,
+    `Bring back pilot spoiler`,
+    `Sorry`,
+    `Do not cross the keys`,
+    `We have updated our privacy policy.`,
+    `Your vehicle's warranty is about to expire`,
+    `You owe me door repair fee.`,
+    `Learning to feel emotions`,
+    `There's a bug in the Skull Woods Boss Room`,
+    `Disregarding all of your selections`,
+    `Feeding the cat`,
+    `Don't forget to plan for your retirement`,
+    `Wait I thought this was crowd control`
 ];
 
 export function get_loading_message() {

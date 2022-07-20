@@ -4,7 +4,8 @@
 		"paths": {
 			"$lib": ["src/lib"],
 			"$lib/*": ["src/lib/*"],
-			"$static/*": ["src/static/*"]
+			"$static": ["static"],
+			"$static/*": ["static/*"]
 		 },
 		"allowJs": true,
 		"checkJs": true,
