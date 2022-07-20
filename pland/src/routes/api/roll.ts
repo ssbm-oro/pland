@@ -5,8 +5,10 @@ import fs from "fs";
 import FormData from "form-data";
 import * as tempy from "tempy";
 import axios from "axios";
+import path from 'path';
 
 const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
+const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`
 
 function removeItemFromPool(itemcount: { [key: string]: number; }, item:string) {
     let item_name = item.slice(0,-2);
@@ -92,19 +94,93 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             let json = await res.json();
             let body = 'OK';
             let user = fetchSession(locals.user?.id!);
-            let message = `${new Date().toISOString()} - Settings tested successfully by ${user?.username}`
+            let message = 'Settings tested successfully';
+            let description = `The following settings were submitted to the customizer test and it said it'll roll! 🎲`;
+            let hash_url;
             if (json['hash']) {
                 body = json['hash'];
-                message = `${new Date().toISOString()} - Seed rolled successfully: ${body} by ${user?.username}`;
+                hash_url = `http://alttpr.com/en/h/${body}`;
+                message = 'Seed rolled successfully';
+                description = `The following settings were submitted to the customizer and it gave me this crap: ${hash_url}`;
             }
             log.info(message);
             log.info(JSON.stringify(json));
             try {
                 let formData = new FormData();
-                formData.append('content',message);
+
                 let file = tempy.temporaryWriteSync(JSON.stringify(json), {extension:'json'});
+
+                let embed = {
+                    title: message,
+                    description: description,
+                    timestamp: new Date(),
+                    author: {
+                        name: user?.username,
+                        icon_url: discord_avatar_uri.replace('$userid',user?.id!).replace('$useravatar',user?.avatar!)
+                    },
+                    fields: [
+                        {
+                            name: 'preset',
+                            value: presetName,
+                            inline: true
+                        },
+                        {
+                            name: 'player1plant1item',
+                            value: plant1item1,
+                            inline: true
+                        },
+                        {
+                            name: 'player1plant1location',
+                            value: plant1location1,
+                            inline: true
+                        },
+                        {
+                            name: 'player1plant2item',
+                            value: plant1item2,
+                            inline: true
+                        },
+                        {
+                            name: 'player1plant2location',
+                            value: plant1location2,
+                            inline: true
+                        },
+                        {
+                            name: 'player2plant1item',
+                            value: plant2item1,
+                            inline: true
+                        },
+                        {
+                            name: 'player2plant1location',
+                            value: plant2location1,
+                            inline: true
+                        },
+                        {
+                            name: 'player2plant2item',
+                            value: plant2item2,
+                            inline: true
+                        },
+                        {
+                            name: 'player2plant2location',
+                            value: plant2location2,
+                            inline: true
+                        },
+                        {
+                            name: 'test',
+                            value: test,
+                            inline: true
+                        }
+                    ]
+                }
+
+                let payload_json = {
+                    content: message,
+                    embeds: [embed]
+                }
+
+                formData.append('payload_json', JSON.stringify(payload_json), {contentType: 'application/json'} );
+
                 log.debug(file);
-                formData.append('file', fs.createReadStream(file));
+                formData.append('files[0]', fs.createReadStream(file), {contentType: 'application/json'});
 
                 let discordres = await axios.post(webhook_uri, formData, { headers: formData.getHeaders() });
                 log.debug(discordres);
