@@ -3,7 +3,7 @@ import type { RequestHandler } from "@sveltejs/kit";
 import log from "loglevel";
 import fs from "fs";
 import FormData from "form-data";
-import tempy from "tempy";
+import * as tempy from "tempy";
 import axios from "axios";
 
 const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
