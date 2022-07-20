@@ -87,30 +87,17 @@
         readyToRoll = false;
     }
 
-    async function logout() {
-        await fetch('/api/user/logout', {
-            method: 'POST',
-            body: JSON.stringify({})
-        });
-
-        window.location.href = '/';
-    }
-
-    const redirect_uri = encodeURIComponent(import.meta.env.VITE_DISCORD_REDIRECT_URI);
-    const client_id = import.meta.env.VITE_DISCORD_OAUTH_CLIENT_ID;
-
-    const discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
+    const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`
 </script>
 
 <main>
     <h1>Welcome to pland</h1>
     
     {#if !$UserStore}
-        <button on:click={() => (window.location.href = discord_login_uri)}> <!--`https://discord.com/api/oauth2/authorize?client_id=992309099272339546&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`)}>-->
-            Login with Discord</button>
+        <p>Please log in if you wanna do anything 🔐</p>
     {:else}
         <h2>You are {$UserStore.username}</h2>
-        <button on:click='{logout}'>Sign out</button>
+        <img src='{discord_avatar_uri.replace('$userid', $UserStore.id).replace('$useravatar',$UserStore.avatar)}' alt="{$UserStore.username}'s avatar"/>
 
 
         <Presets bind:selectedPreset="{selectedPreset}"></Presets>

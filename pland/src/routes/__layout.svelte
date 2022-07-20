@@ -36,6 +36,20 @@
 		}
 	}
 	$: toggleIcon = $themeStore.theme == 'light' ? '☽' : '☀';
+
+	async function logout() {
+		await fetch('/api/user/logout', {
+			method: 'POST',
+			body: JSON.stringify({})
+		});
+
+		window.location.href = '/';
+	}
+
+	const redirect_uri = encodeURIComponent(import.meta.env.VITE_DISCORD_REDIRECT_URI);
+	const client_id = import.meta.env.VITE_DISCORD_OAUTH_CLIENT_ID;
+
+	const discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
 </script>
 
 <SvelteTheme />
@@ -43,6 +57,13 @@
     <a href="/">Home</a>
     <a href="/about">About</a>
 	<button on:click='{toggleTheme}'>{toggleIcon}</button>
+	{#if !$UserStore}
+		<button on:click={() => (window.location.href = discord_login_uri)}>
+			Login with Discord</button>
+	{:else}
+			
+			<button on:click='{logout}'>Sign out</button>
+	{/if}
 </nav>
   
 <slot></slot>
