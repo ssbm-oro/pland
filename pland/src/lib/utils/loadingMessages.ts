@@ -33,11 +33,23 @@ const loading_messages = [
     `Your vehicle's warranty is about to expire`,
     `You owe me door repair fee.`,
     `Learning to feel emotions`,
-    `There's a bug in the Skull Woods Boss Room`,
+    `There's a known bug in the Skull Woods Boss Room`,
     `Disregarding all of your selections`,
     `Feeding the cat`,
     `Don't forget to plan for your retirement`,
-    `Wait I thought this was crowd control`
+    `Wait I thought this was crowd control`,
+    `I hope Ganon wins this time`,
+    `Vanilla square peg in square hole`,
+    `Don't Panic`,
+    `Uncle routing`,
+    `Praying to the Old Gods`,
+    `Always be kind to everyone, especially when it's difficult`,
+    `Lemme think real hard about that`,
+    `Listen to the Go Mode Podcast!`,
+    `Listen to the 216 Podcast!`,
+    `Rolling - 69% complete`,
+    `Actually just browsing old ladder seeds`,
+    `Stop all the downloading!`
 ];
 
 export function get_loading_message() {

@@ -1,12 +1,12 @@
 import { writable } from 'svelte/store';
-import type { IUserData } from '../interfaces';
+import type { APIUser } from 'discord-api-types/payloads/v10';
 
 const fUser = function () {
-    const { subscribe, set, update } = writable<IUserData>();
+    const { subscribe, set, update } = writable<APIUser>();
 
     return {
         subscribe,
-        setUser: (u: IUserData) => set(u)
+        setUser: (u: APIUser) => set(u)
     }
 }
 

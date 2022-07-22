@@ -1,9 +1,14 @@
-import type { FullUser, ITokenGrantData, IUserData, TSessionID } from 'src/interfaces';
+import type { FullUser, TSessionID } from 'src/interfaces';
 import crypto from 'crypto';
+import type { APIUser } from 'discord-api-types/payloads';
+import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest';
+
+let x: RESTPostOAuth2AccessTokenResult;
 
 const sessionUsers = new Map<TSessionID, FullUser>();
+const sessionUserTimeouts = new Map<TSessionID, NodeJS.Timeout>();
 
-export function setSession(userData: IUserData, tokenGrantData: ITokenGrantData) {
+export function setSession(userData: APIUser, tokenGrantData: RESTPostOAuth2AccessTokenResult) {
 
     // Creating a new session ID that will be used as a cookie to authenticate the user in 
     const newSessionID: TSessionID = crypto.randomBytes(32).toString('hex');
@@ -11,21 +16,41 @@ export function setSession(userData: IUserData, tokenGrantData: ITokenGrantData)
 
     sessionUsers.set(newSessionID, fullUser);
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
         deleteSession(newSessionID)
     }, 1000 * 60 * 10) //  10 minutes
+
+    sessionUserTimeouts.set(newSessionID, timeout);
 
     return newSessionID as TSessionID;
 }
 
 export function fetchSession(sessionId: TSessionID) {
-    setTimeout(() => {
-        deleteSession(sessionId)
-    }, 1000 * 60 * 10) //  10 minutes
+    refreshTimeout(sessionId);
 
     return sessionUsers.get(sessionId) || null;
 }
 
+function refreshTimeout(sessionId: string) {
+    if (sessionUserTimeouts.has(sessionId)) {
+        sessionUserTimeouts.get(sessionId)?.refresh();
+    }
+    else {
+        const timeout = setTimeout(() => {
+            deleteSession(sessionId);
+        }, 1000 * 60 * 10); //  10 minutes
+        sessionUserTimeouts.set(sessionId, timeout);
+    }
+}
+
 export function deleteSession(sessionId: TSessionID) {
     sessionUsers.delete(sessionId);
+}
+
+export function updateSession(sessionId: TSessionID, userData: APIUser, tokenGrantData: RESTPostOAuth2AccessTokenResult) {
+    refreshTimeout(sessionId);
+    const fullUser: FullUser = { ...userData, ...tokenGrantData };
+    sessionUsers.set(sessionId, fullUser);
+
+    return sessionId as TSessionID;
 }

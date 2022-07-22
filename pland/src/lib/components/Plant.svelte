@@ -24,8 +24,11 @@
 <script lang="ts">
     import AutoComplete from 'simple-svelte-autocomplete';
 
+    let itemAutoComplete: { "": any; };
+    let locationAutoComplete;
+
     let placeableItems = items.filter(item => ((item.count) && item.count > 0));
-    export let selectedPlant:PlantData = {
+    export let selectedPlant: PlantData = {
         item: { value: '', name: '', placed: 0, count: 0  },
         location: { hash: '', name: '', region: '', class: '' },
         submitted: false
@@ -56,11 +59,18 @@
         }
     }
 
+    export function reset() {
+        selectedPlant = {
+            item: { value: '', name: '', placed: 0, count: 0  },
+            location: { hash: '', name: '', region: '', class: '' },
+            submitted: false
+        }
+    }
 </script>
 
 <main>
-    Item <AutoComplete items = "{placeableItems}" bind:value="{selectedPlant.item}" labelFunction="{itemLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
-    Location <AutoComplete items = "{locations}" bind:value="{selectedPlant.location}" labelFunction="{locationLabelFunc}" onChange="{onChange}" showClear="true"></AutoComplete>
+    Item <AutoComplete bind:this="{itemAutoComplete}" items="{placeableItems}" bind:value="{selectedPlant.item}" labelFunction="{itemLabelFunc}" onChange="{onChange}" lock="true"></AutoComplete><br/>
+    Location <AutoComplete bind:this="{locationAutoComplete}" items = "{locations}" bind:value="{selectedPlant.location}" labelFunction="{locationLabelFunc}" onChange="{onChange}" lock="true"></AutoComplete><br/>
     {#if selectedPlant.submitted}✅{:else}☑️{/if}
 </main>
 

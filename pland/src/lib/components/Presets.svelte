@@ -14,7 +14,7 @@ onMount(async () => {
 </script>
 
 <main>
-	<AutoComplete items='{presets}' bind:selectedItem='{selectedPreset}' showClear="true"></AutoComplete>
+	<AutoComplete items='{presets}' bind:selectedItem='{selectedPreset}' showClear="true" on:onChange></AutoComplete>
 </main>
 
 <style>

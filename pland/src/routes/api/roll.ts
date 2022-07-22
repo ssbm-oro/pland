@@ -6,9 +6,14 @@ import FormData from "form-data";
 import * as tempy from "tempy";
 import axios from "axios";
 import { locations } from '../../../static/json/alttpr-customizer-schema.json';
+import type { FullUser } from "src/interfaces";
+import type { APIEmbed, APIEmbedField } from 'discord-api-types/payloads/v10';
+
+
 
 const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
-const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`
+const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`;
+const customizer_url = 'https://alttpr.com/api/customizer';
 
 enum discord_log_levels {
     info = 0xe4f2e8,
@@ -16,110 +21,81 @@ enum discord_log_levels {
     error = 0xe11d62
 }
 
-function removeItemFromPool(itemcount: { [key: string]: number; }, item:string) {
-    let item_name = item.slice(0,-2);
-	if (itemcount[item_name] == null) {
-			itemcount[item_name] = 0;
-		}
-		else {
-			itemcount[item_name]--;
-		}
-}
-
-async function add_default_customizer(preset_data:any, origin:string) {
-	const default_settings = await (await fetch(`${origin}/json/default-customizer.json`)).json();
-    log.info("DEFAULT SETTINGS");
-    log.info(default_settings["settings"]);
-	if (!('l' in preset_data['settings'])) {
-		preset_data['settings'] = { ...preset_data['settings'], ...default_settings["settings"] };
-	}
-    log.info("PRESET_DATA");
-    log.info(preset_data);
-	return preset_data;
-}
-
 export const POST: RequestHandler = async ( {request, url, locals} ) => {
+    if (!locals.user) {
+        return {
+            status: 401,
+            body: 'Unauthorized'
+        }
+    }
+
     let params = new URLSearchParams(await request.text());
-    const presetName = params.get('preset') ?? '';
-    const plant1item1 = params.get('plant1item1') ?? '';
-    const plant1location1 = params.get('plant1location1') ?? '';
-    const plant1item2 = params.get('plant1item2') ?? '';
-    const plant1location2 = params.get('plant1location2') ?? '';
-    const plant2item1 = params.get('plant2item1') ?? '';
-    const plant2location1 = params.get('plant2location1') ?? '';
-    const plant2item2 = params.get('plant2item2') ?? '';
-    const plant2location2 = params.get('plant2location2') ?? '';
+    const presetName = params.get('preset');
+    const plant1item1 = params.get('plant1item1');
+    const plant1location1 = params.get('plant1location1');
+    const plant1item2 = params.get('plant1item2');
+    const plant1location2 = params.get('plant1location2');
+    const plant2item1 = params.get('plant2item1');
+    const plant2location1 = params.get('plant2location1');
+    const plant2item2 = params.get('plant2item2');
+    const plant2location2 = params.get('plant2location2');
     const test = params.get('test') == 'true' ?? false;
+
+    if ((!presetName) || (!plant1item1) || (!plant1location1) || (!plant1item2) ||
+        (!plant1location2) || (!plant2item1) || (!plant2location1) ||
+        (!plant2item2) || (!plant2location2)) {
+            return {
+                status: 400,
+                body: 'Missing parameter(s)'
+            }
+    }
+
+    let user = fetchSession(locals.user.id);
+    if (!user) {
+        return {
+            status: 403,
+            body: 'Forbidden'
+        }
+    }
     
-    let uri = new URL(`/presets/${presetName}`, url.origin)
-    log.info(uri);
-    var res = await fetch(uri);
-    log.info(res);
-    let preset = await res.json();
-    log.info(preset);
-    await add_default_customizer(preset, url.origin);
-    log.info(preset);
+    let preset_res = await fetch(new URL(`/presets/${presetName}`, url.origin));
+    let preset = await preset_res.json();
+
+    let default_settings_uri = new URL(`/json/default-customizer.json`, url.origin);
+    const default_settings = await (await fetch(default_settings_uri)).json();
+    add_default_customizer(preset, default_settings);
     
     preset.customizer = true;
     preset.settings['spoilers'] = 'generate';
 
-	let itemcount = preset.settings.custom.item.count;
+    plant(preset, plant1item1, plant1location1);
+    plant(preset, plant1item2, plant1location2);
+    plant(preset, plant2item1, plant2location1);
+    plant(preset, plant2item2, plant1location2);
 
-    preset.settings.l[plant1location1] = plant1item1;
-    removeItemFromPool(itemcount, plant1item1);
-    preset.settings.l[plant1location2] = plant1item2;
-    removeItemFromPool(itemcount, plant1item2);
-    preset.settings.l[plant2location1] = plant2item1;
-    removeItemFromPool(itemcount, plant2item1);
-    preset.settings.l[plant2location2] = plant2item2;
-    removeItemFromPool(itemcount, plant2item2);
+    let player1 = 'Player 1';
+    let player2 = 'Player 2';
+    preset.settings.notes = `${presetName.replace('.json','')} plando seed wrought to you by ${player1} and ${player2}`;
 
-    let plant_fields = [
-        {
-            name: 'Preset Name',
-            value: presetName,
-            inline: true
-        },
-        {
-            name: 'Player 1 Plant 1',
-            value: plant1item1 + ' - ' + getLocationName(plant1location1),
-            inline: true
-        },
-        {
-            name: 'Player 1 Plant 2',
-            value: plant1item2 + ' - ' + getLocationName(plant1location2),
-            inline: true
-        },
-        {
-            name: 'Player 2 Plant 1',
-            value: plant2item1 + ' - ' + getLocationName(plant2location1),
-            inline: true
-        },
-        {
-            name: 'Player 2 Plant 2',
-            value: plant2item2 + ' - ' + getLocationName(plant2location2),
-            inline: true
-        },
-        {
-            name: 'test',
-            value: test,
-            inline: true
-        }
-    ]
-    let user = fetchSession(locals.user?.id!);
+    let plant_fields: APIEmbedField[] = [];// = field_array(presetName, player1, plant1item1, plant1location1, plant1item2, plant1location2, player2, plant2item1, plant2location1, plant2item2, plant2location2, test)
+    plant_fields.push({name:"Preset", value:presetName, inline:true});
+    plant_fields.push({name:`${player1} Plant 1`, value:`${plant1item1} - ${getLocationName(plant1location1)}`, inline:true});
+    plant_fields.push({name:`${player1} Plant 2`, value:`${plant1item2} - ${getLocationName(plant1location2)}`, inline:true});
+    plant_fields.push({name:`${player2} Plant 1`, value:`${plant2item1} - ${getLocationName(plant2location1)}`, inline:true});
+    plant_fields.push({name:`${player2} Plant 2`, value:`${plant2item2} - ${getLocationName(plant2location2)}`, inline:true});
+    plant_fields.push({name:"Test", value:String(test), inline:true});
 
-    let embed = {
-        title: '',
-        description: '',
+    let embed :APIEmbed =  {
         color: discord_log_levels.info,
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
         author: {
-            name: user?.username,
-            icon_url: discord_avatar_uri.replace('$userid',user?.id!).replace('$useravatar',user?.avatar!)
+            name: user.username
         },
         fields: plant_fields
     }
-
+    if (user.avatar) {
+        embed.author!.icon_url = discord_avatar_uri.replace('$userid', user.id).replace('$useravatar', user.avatar);
+    }
 
     log.info("--- sending preset settings ---")
     log.info(preset.settings);
@@ -133,16 +109,12 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
         retry: true
     }
 
-    let customizer_url = 'https://alttpr.com/api/customizer';
-
-    if (test) {
-        customizer_url = 'https://alttpr.com/api/customizer/test';
-    }
+    let endpoint = customizer_url + (test ? '/test' : '');
 
     let discord_webhook_data = new FormData();
 
     try {
-        let res = await fetch(customizer_url, options);
+        let res = await fetch(endpoint, options);
         if (res.ok)
         {
             let json = await res.json();
@@ -154,7 +126,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
                 body = json['hash'];
                 hash_url = `http://alttpr.com/en/h/${body}`;
                 embed.title = 'Seed rolled successfully';
-                embed.description = `The following settings were submitted to the customizer and it gave me this crap: ${hash_url}`;
+                embed.description = `The following settings were submitted to the customizer and it gave me this crap: ${hash_url}`
                 embed.color = discord_log_levels.success;
             }
             log.info(embed.title);
@@ -207,6 +179,27 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
     }
 }
 
+function removeItemFromPool(itemcount: { [key: string]: number; }, item:string) {
+    let item_name = item.slice(0,-2);
+	if (itemcount[item_name] == null) {
+			itemcount[item_name] = 0;
+		}
+		else {
+			itemcount[item_name]--;
+		}
+}
+
+function add_default_customizer(preset_data:any, default_settings:any) {
+    log.info("DEFAULT SETTINGS");
+    log.info(default_settings["settings"]);
+	if (!('l' in preset_data['settings'])) {
+		preset_data['settings'] = { ...preset_data['settings'], ...default_settings["settings"] };
+	}
+    log.info("PRESET_DATA");
+    log.info(preset_data);
+	return preset_data;
+}
+
 function getLocationName(location_hash: string) {
     let location = locations.find(location => location.hash == location_hash);
     if (location) {
@@ -214,4 +207,9 @@ function getLocationName(location_hash: string) {
     }
 
     return location_hash;
+}
+
+function plant(preset: any, item: string, location: string) {
+    preset.settings.l[location] = item;
+    removeItemFromPool(preset.settings.custom.item.count, item);
 }

@@ -1,9 +1,11 @@
-import type { ITokenGrantData, IUserData, IUserGuildData, TSessionID } from 'src/interfaces';
+import type { TSessionID } from 'src/interfaces';
 import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
 import axios from 'axios';
 import type { RequestHandler } from '@sveltejs/kit';
 import log from 'loglevel';
+import type { APIUser, APIGuild } from 'discord-api-types/payloads/v10'
+import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest/v10'
 
 export const GET: RequestHandler = async ( { url} ) => {
     const code = url.searchParams.get('code');
@@ -25,7 +27,7 @@ export const GET: RequestHandler = async ( { url} ) => {
             }
         });
 
-        const Grantdata: ITokenGrantData = AuthRes.data;
+        const Grantdata: RESTPostOAuth2AccessTokenResult = AuthRes.data;
 
         // Get the user's data using the access token
         const UserRes = await axios.get(`https://discord.com/api/v10/users/@me`, {
@@ -34,7 +36,7 @@ export const GET: RequestHandler = async ( { url} ) => {
             }
         });
 
-        const UserData: IUserData = UserRes.data;
+        const UserData: APIUser = UserRes.data;
 
         // Get the guilds the user is in
         const UserGuildRes = await axios.get(`https://discord.com/api/v10/users/@me/guilds`, {
@@ -44,7 +46,7 @@ export const GET: RequestHandler = async ( { url} ) => {
         });
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const UserGuildData: IUserGuildData[] = UserGuildRes.data;
+        const UserGuildData: APIGuild[] = UserGuildRes.data;
 
         // Create new session for the user
         const SessionID: TSessionID = setSession(UserData, Grantdata);

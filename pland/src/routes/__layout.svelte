@@ -1,28 +1,27 @@
 <script context="module" lang="ts">
-	import type { IUserData } from 'src/interfaces';
+	import type { APIUser } from 'discord-api-types/payloads';
 	import { UserStore } from '$lib/stores';
     import type { Load } from '@sveltejs/kit';
 	import SvelteTheme from 'svelte-themes/SvelteTheme.svelte'
 	import themeStore, { setTheme } from 'svelte-themes'
 
-	export const load: Load = async ({ session, fetch }) => {
-		const res = await fetch('/api/user/validateSession', {
-			method: 'POST',
-			body: JSON.stringify({ sessionId: session.id } || {}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
+
+	export const load: Load = async ({ url, session, fetch }) => {
+		const res = await fetch('/api/user/validateSession', { method: 'POST' });
 
         if (res.status == 200)
         {
-            const User: IUserData = await res.json();
+            const User: APIUser = await res.json();
             UserStore.setUser(User);
+
+			// refresh the user's token every 5 minutes while they are still using the app
+			setInterval(async () => await fetch('/api/user/refreshSession', {method: 'POST'}), 1000 * 60 * 5);
         }
 
 		return {
 			props: {}
 		};
+
 	}
 </script>
 
@@ -53,17 +52,22 @@
 </script>
 
 <SvelteTheme />
-<nav>
-    <a href="/">Home</a>
-    <a href="/about">About</a>
-	<button on:click='{toggleTheme}'>{toggleIcon}</button>
-	{#if !$UserStore}
-		<button on:click={() => (window.location.href = discord_login_uri)}>
-			Login with Discord</button>
-	{:else}
-			
+<header>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/about">About</a>
+		<button on:click='{toggleTheme}'>{toggleIcon}</button>
+		{#if !$UserStore}
+			<button on:click={() => (window.location.href = discord_login_uri)}>
+				Login with Discord</button>
+		{:else}
 			<button on:click='{logout}'>Sign out</button>
-	{/if}
-</nav>
+		{/if}
+	</nav>
+</header>
   
 <slot></slot>
+
+<br/>
+<!-- svelte-ignore missing-declaration -->
+<footer>© oro 2022 - Version {__APP_VERSION__}</footer>
