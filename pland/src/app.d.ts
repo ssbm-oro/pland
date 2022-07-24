@@ -1,4 +1,5 @@
 /// <reference types="@sveltejs/kit" />
+/// <reference types="unplugin-icons/types/svelte" />
 declare module 'simple-svelte-autocomplete';
 
 // See https://kit.svelte.dev/docs/types#app
@@ -11,8 +12,6 @@ declare namespace App {
 		}
 	}
 	// interface Platform {}
-	interface Session {
-		id: ? import('./interfaces').TSessionID
-	}
+	// interface Session {}
 	// interface Stuff {}
 }

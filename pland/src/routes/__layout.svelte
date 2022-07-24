@@ -2,11 +2,14 @@
 	import type { APIUser } from 'discord-api-types/payloads';
 	import { UserStore } from '$lib/stores';
     import type { Load } from '@sveltejs/kit';
-	import SvelteTheme from 'svelte-themes/SvelteTheme.svelte'
-	import themeStore, { setTheme } from 'svelte-themes'
+	import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
+	import themeStore, { setTheme } from 'svelte-themes';
+	import Icon from '@iconify/svelte';
 
 
-	export const load: Load = async ({ url, session, fetch }) => {
+
+
+	export const load: Load = async ({ fetch }) => {
 		const res = await fetch('/api/user/validateSession', { method: 'POST' });
 
         if (res.status == 200)
@@ -59,7 +62,7 @@
 		<button on:click='{toggleTheme}'>{toggleIcon}</button>
 		{#if !$UserStore}
 			<button on:click={() => (window.location.href = discord_login_uri)}>
-				Login with Discord</button>
+				Login with Discord<Icon icon="bxl:discord-alt" /></button>
 		{:else}
 			<button on:click='{logout}'>Sign out</button>
 		{/if}

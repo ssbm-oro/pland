@@ -20,9 +20,3 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.user = null;
 	return await resolve(event);
 };
-
-export const getSession: GetSession = (request) => {
-	if (request?.locals?.user) return request.locals.user;
-
-	return {id: null};
-};

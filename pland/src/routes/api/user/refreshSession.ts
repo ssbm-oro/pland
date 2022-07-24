@@ -6,10 +6,6 @@ import type { RESTPostOAuth2AccessTokenResult} from 'discord-api-types/rest/v10'
 import cookie from 'cookie';
 import log from 'loglevel';
 
-interface IBody {
-    sessionId: string;
-}
-
 export const POST: RequestHandler = async ( { request} ) => {
 
     let cookies = cookie.parse(request.headers.get('cookie') || '')
