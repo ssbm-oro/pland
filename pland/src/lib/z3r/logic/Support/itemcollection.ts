@@ -2,7 +2,6 @@ import type { Item } from "../item";
 import type { World } from "../world";
 
 export class ItemCollection {
-
     items: Map<string, Item> = new Map();
     item_counts : Map<string, number> = new Map();
     checksForWorld?: World;
@@ -39,6 +38,10 @@ export class ItemCollection {
         return this;
     }
 
+    has(key: string, count: number = 1) {
+        return this.items.has(key) && this.item_counts.has(key) && this.item_counts.get(key)! >= count;
+    }
+
     public filter(predicate: (value: Item, index: number, array: Item[]) => value is Item){
         return new ItemCollection([...this.items.values()].filter(predicate));
     }
@@ -58,7 +61,17 @@ export class ItemCollection {
         return merged;
     }
 
-    
-
+    canKillMostThings(world:World): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canLightTorches(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canLiftRocks(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canShootArrows(world: World): boolean{
+        throw new Error("Method not implemented.");
+    }
 
 }

@@ -1,14 +1,15 @@
 import type { Region } from "./region";
 import { Item } from "./item";
 import type { ItemCollection } from "./Support/itemcollection";
+import { LocationCollection } from "./Support/locationcollection";
 
 export class Location {
     name: string;
     region: Region;
     item: Item | null = null;
     always_callback?: (item: Item, items: ItemCollection) => boolean;
-    fill_callback?: (item: Item, locations: Location[]) => boolean;
-    requirement_callback?: (locations: Location[], items: ItemCollection) => boolean;
+    fill_callback?: (item: Item, locations: LocationCollection) => boolean;
+    requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
 
     constructor(name: string, region: Region) {
         this.name = name;
@@ -17,14 +18,24 @@ export class Location {
 
     public fill(newItem:Item): boolean {
         let oldItem = this.item;
-        this.item = newItem;
+        this.setItem(newItem);
         if (this.canFill(newItem, Item.items)) {
             Item.items?.addItem(newItem);
             return true;
         }
 
-        this.item = oldItem;
+        this.setItem(oldItem);
+
         return false;
+    }
+
+    public setItem(newItem: Item | null) {
+        this.item = newItem;
+        return this;
+    }
+
+    setRequirement(requirement_callback: (locations: LocationCollection, items: ItemCollection) => boolean) {
+        this.requirement_callback = requirement_callback;
     }
 
     public canFill(newItem: Item, items: ItemCollection, check_access = true) {
@@ -36,7 +47,7 @@ export class Location {
         return fillable;
     }
 
-    public canAccess(items: ItemCollection, locations: Location[] = []) {
+    public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([])) {
         let total_locations = locations ?? this.region.locations;
 
         if (!this.region.canEnter(total_locations, items))

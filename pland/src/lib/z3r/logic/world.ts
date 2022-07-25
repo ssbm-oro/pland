@@ -6,12 +6,17 @@ import { Standard } from "./World/standard";
 import { Inverted } from "./World/inverted";
 import { Retro } from "./World/retro";
 import type { ItemCollection } from "./Support/itemcollection";
+import { LocationCollection } from "./Support/locationcollection";
 
 export class World {
+    getRegion(arg0: string) :Region{
+        throw new Error("Method not implemented.");
+    }
     regions: Region[] = [];
-    locations: Location[] = [];
+    locations: LocationCollection = new LocationCollection([]);
     config: any;
     win_condition?: (items: ItemCollection) => boolean;
+    id: number = 0;
 
     public constructor(config:[] = [])
     {
@@ -21,7 +26,7 @@ export class World {
             if(this.config['logic'] !== 'NoLogic') {
                 region.initialize();
             }
-            this.locations.push(... region.locations);
+            this.locations = this.locations.merge(region.locations);
         });
     }
 

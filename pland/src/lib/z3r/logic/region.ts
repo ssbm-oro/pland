@@ -4,25 +4,27 @@ import type { Boss } from "./boss";
 import type { World } from "./world";
 import type { Prize } from "./Location/prize";
 import type { ItemCollection } from "./Support/itemcollection";
+import { LocationCollection } from "./Support/locationcollection";
 
 export class Region {
-    initialize() {
-        throw new Error("Method not implemented.");
-    }
     name: string;
-    locations: Location[];
+    locations: LocationCollection;
     boss?: Boss;
     world: World;
     prize?: Prize;
-    can_complete?: (location: Location[], items: ItemCollection) => boolean;
-    can_enter?: (location: Location[], items: ItemCollection) => boolean;
+    can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
+    can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
     region_items: Item[] = [];
 
 
     constructor(name: string, world: World) {
         this.name = name;
-        this.locations = [];
+        this.locations = new LocationCollection([]);
         this.world = world;
+    }
+    
+    initialize() {
+        throw new Error("Method not implemented.");
     }
 
     public canPlaceBoss(boss: Boss, level: string = 'top') {
@@ -59,14 +61,14 @@ export class Region {
         return this.prize.hasItem(item);
     }
 
-    public canComplete(locations: Location[], items: ItemCollection) {
+    public canComplete(locations: LocationCollection, items: ItemCollection) {
         if (this.can_complete) {
             return this.can_complete(locations, items);
         }
         return true;
     }
 
-    public canEnter(locations: Location[], items: ItemCollection) {
+    public canEnter(locations: LocationCollection, items: ItemCollection) {
         if (this.can_enter) {
             return this.can_enter(locations, items);
         }
