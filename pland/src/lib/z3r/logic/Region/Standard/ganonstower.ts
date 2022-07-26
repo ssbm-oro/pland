@@ -13,6 +13,7 @@ import { Chest } from "../../Location/chest";
 import { BigChest } from "../../Location/bigchest";
 import { Event } from "../../Location/Prize/event";
 import type { ItemCollection } from "../../Support/itemcollection";
+import { ButtonStyle } from "discord-api-types/v10";
 
 export class GanonsTower extends Region {
     boss_top?: Boss;
@@ -111,21 +112,25 @@ export class GanonsTower extends Region {
         return this;
     }
 
-    public override initialize(): void {
-        this.locations.get("Ganon's Tower - Bob's Torch")?.setRequirement((locations, items) => {
+    public override initialize(): Region {
+        this.locations.get("Ganon's Tower - Bob's Torch")?.setRequirements((locations, items) => {
             return items.has('PegasusBoots');
         });
 
-        const leftGtRequirement = (locations:LocationCollection, items:ItemCollection) => {
+        const leftGtRequirements = (locations:LocationCollection, items:ItemCollection) => {
             return items.has('Hammer') && items.has('Hookshot');
         }
-        this.locations.get("Ganon's Tower - DMs Room - Top Left")?.setRequirement(leftGtRequirement);
-        this.locations.get("Ganon's Tower - DMs Room - Top Right")?.setRequirement(leftGtRequirement);
-        this.locations.get("Ganon's Tower - DMs Room - Bottom Left")?.setRequirement(leftGtRequirement);
-        this.locations.get("Ganon's Tower - DMs Room - Top Right")?.setRequirement(leftGtRequirement);
+        const rightGtRequirements = (locations:LocationCollection, items:ItemCollection) => {
+            return items.has('FireRod') && items.has('CaneOfSomaria');
+        }
 
-        this.locations.get("Ganon's Tower - Randomizer Room - Top Left")?.setRequirement((locations: LocationCollection, items: ItemCollection) => {
-            return leftGtRequirement(locations, items)
+        this.locations.get("Ganon's Tower - DMs Room - Top Left")?.setRequirements(leftGtRequirements);
+        this.locations.get("Ganon's Tower - DMs Room - Top Right")?.setRequirements(leftGtRequirements);
+        this.locations.get("Ganon's Tower - DMs Room - Bottom Left")?.setRequirements(leftGtRequirements);
+        this.locations.get("Ganon's Tower - DMs Room - Top Right")?.setRequirements(leftGtRequirements);
+
+        this.locations.get("Ganon's Tower - Randomizer Room - Top Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return leftGtRequirements(locations, items)
                 && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
@@ -133,8 +138,8 @@ export class GanonsTower extends Region {
                 ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
         });
 
-        this.locations.get("Ganon's Tower - Randomizer Room - Top Right")?.setRequirement((locations: LocationCollection, items: ItemCollection) => {
-            return leftGtRequirement(locations, items)
+        this.locations.get("Ganon's Tower - Randomizer Room - Top Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return leftGtRequirements(locations, items)
                 && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
@@ -142,8 +147,8 @@ export class GanonsTower extends Region {
                 ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
         });
 
-        this.locations.get("Ganon's Tower - Randomizer Room - Bottom Left")?.setRequirement((locations: LocationCollection, items: ItemCollection) => {
-            return leftGtRequirement(locations, items)
+        this.locations.get("Ganon's Tower - Randomizer Room - Bottom Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return leftGtRequirements(locations, items)
                 && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Top Right",
@@ -151,8 +156,8 @@ export class GanonsTower extends Region {
                 ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
         });
 
-        this.locations.get("Ganon's Tower - Randomizer Room - Bottom Right")?.setRequirement((locations: LocationCollection, items: ItemCollection) => {
-            return leftGtRequirement(locations, items)
+        this.locations.get("Ganon's Tower - Randomizer Room - Bottom Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return leftGtRequirements(locations, items)
                 && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Top Right",
@@ -160,8 +165,8 @@ export class GanonsTower extends Region {
                 ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
         });
 
-        this.locations.get("Ganon's Tower - Firesnake Room")?.setRequirement((locations: LocationCollection, items: ItemCollection) => {
-            return leftGtRequirement(locations, items)
+        this.locations.get("Ganon's Tower - Firesnake Room")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return leftGtRequirements(locations, items)
                 && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Top Right",
@@ -171,9 +176,110 @@ export class GanonsTower extends Region {
                 || (items.has('KeyA2', 3));
         });
 
-        this.locations.get("Ganon's Tower - Map Chest")?.setRequirement((locations, items) => {
+        this.locations.get("Ganon's Tower - Map Chest")?.setRequirements((locations, items) => {
             return items.has('Hammer') && (items.has('Hookshot') || items.has('PegasusBoots')) 
+                && [Item.get('BigKeyA2', this.world), Item.get('KeyA2', this.world)].includes(locations.get("Ganon's Tower - Map Chest")?.item!) ? items.has('KeyA2', 3) : items.has('KeyA2', 4);
+        });
+
+        this.locations.get("Ganon's Tower - Big Chest")?.setRequirements((locations, items) => {
+            return items.has('BigKeyA2') && items.has('KeyA2', 3) &&
+                (leftGtRequirements(locations,items) || rightGtRequirements(locations,items));
+        });
+
+        this.locations.get("Ganon's Tower - Bob's Chest")?.setRequirements((locations, items) => {
+            return items.has('KeyA2', 3) &&
+                (leftGtRequirements(locations,items) || rightGtRequirements(locations,items));
+        });
+
+        this.locations.get("Ganon's Tower - Tile Chest")?.setRequirements((locations, items) => {
+            return items.has('CaneOfSomaria');
         })
+
+        this.locations.get("Ganon's Tower - Compass Room - Top Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return rightGtRequirements(locations, items)
+                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                    "Ganon's Tower - Compass Room - Top Right",
+                    "Ganon's Tower - Compass Room - Bottom Left",
+                    "Ganon's Tower - Compass Room - Bottom Right",
+                ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
+        });
+
+        this.locations.get("Ganon's Tower - Compass Room - Top Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return rightGtRequirements(locations, items)
+                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                    "Ganon's Tower - Compass Room - Top Left",
+                    "Ganon's Tower - Compass Room - Bottom Left",
+                    "Ganon's Tower - Compass Room - Bottom Right",
+                ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
+        });
+
+        this.locations.get("Ganon's Tower - Compass Room - Bottom Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return rightGtRequirements(locations, items)
+                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                    "Ganon's Tower - Compass Room - Top Left",
+                    "Ganon's Tower - Compass Room - Top Right",
+                    "Ganon's Tower - Compass Room - Bottom Right",
+                ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
+        });
+
+        this.locations.get("Ganon's Tower - Compass Room - Bottom Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return rightGtRequirements(locations, items)
+                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                    "Ganon's Tower - Compass Room - Top Left",
+                    "Ganon's Tower - Compass Room - Top Right",
+                    "Ganon's Tower - Compass Room - Bottom Left",
+                ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
+        });
+
+        const bigKeyRoomRequirements = (locations: LocationCollection, items: ItemCollection) => {
+            return ((leftGtRequirements(locations, items) || (rightGtRequirements(locations, items)))
+                && items.has('KeyA2', 3) && this.boss_bottom?.canBeat(items,locations)!);
+        }
+
+        this.locations.get("Ganon's Tower - Big Key Chest")?.setRequirements(bigKeyRoomRequirements);
+        this.locations.get("Ganon's Tower - Big Key Room - Left")?.setRequirements(bigKeyRoomRequirements);
+        this.locations.get("Ganon's Tower - Big Key Room - Right")?.setRequirements(bigKeyRoomRequirements);
+
+        const upstairsGtRequiremets = (locations: LocationCollection, items: ItemCollection) => {
+            return items.canShootArrows(this.world) && items.canLightTorches()
+                && items.has('BigKeyA2') && items.has('KeyA2', 3)
+                && this.boss_middle?.canBeat(items, locations)!;
+        };
+
+        this.locations.get("Ganon's Tower - Mini Helmasaur Room - Right")?.setRequirements(upstairsGtRequiremets);
+        this.locations.get("Ganon's Tower - Mini Helmasaur Room - Left")?.setRequirements(upstairsGtRequiremets);
+        this.locations.get("Ganon's Tower - Pre-Moldorm Chest")?.setRequirements(upstairsGtRequiremets);
+
+        this.locations.get("Ganon's Tower - Moldorm Chest")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+            return items.canShootArrows(this.world) && items.canLightTorches()
+                && items.has('BigKeyA2') && items.has('KeyA2', 4)
+                && this.boss_middle?.canBeat(items, locations)! && this.boss_top?.canBeat(items, locations)!;
+        });
+
+        this.canComplete = (locations: LocationCollection, items: ItemCollection) => {
+            return this.canEnter(locations, items)
+                && this.locations.get("Ganon's Tower - Moldorm Chest")?.canAccess(items, locations)!
+                && this.boss?.canBeat(items, locations)!;
+        };
+
+        this.prize?.setRequirements(this.canComplete);
+
+        this.canEnter = (locations:LocationCollection, items:ItemCollection) => {
+            return items.has('RescueZelda')
+                && this.canOpen(items, this.world)
+                && this.world.getRegion('East Dark World Death Mountain').canEnter(locations, items);
+        }
+
+        return this;
+    }
+
+    canOpen(items: ItemCollection, world: World) {
+        let crystals = 0;
+        for (let item of items.items.keys()) {
+            if (item.startsWith('Crystal')) crystals++;
+        }
+
+        return crystals >= world.config.crystals.tower;
     }
 
 }

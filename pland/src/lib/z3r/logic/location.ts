@@ -34,7 +34,7 @@ export class Location {
         return this;
     }
 
-    setRequirement(requirement_callback: (locations: LocationCollection, items: ItemCollection) => boolean) {
+    setRequirements(requirement_callback: (locations: LocationCollection, items: ItemCollection) => boolean) {
         this.requirement_callback = requirement_callback;
     }
 

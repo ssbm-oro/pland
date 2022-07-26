@@ -61,7 +61,7 @@ export class ItemCollection {
         return merged;
     }
 
-    canKillMostThings(world:World): boolean {
+    canKillMostThings(world:World, count: number = 1): boolean {
         throw new Error("Method not implemented.");
     }
     canLightTorches(): boolean {
@@ -70,8 +70,19 @@ export class ItemCollection {
     canLiftRocks(): boolean {
         throw new Error("Method not implemented.");
     }
+    canLiftDarkRocks(): boolean {
+        throw new Error("Method not implemented.");
+    }
     canShootArrows(world: World): boolean{
         throw new Error("Method not implemented.");
     }
-
+    hasSword(count: number = 1): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canMeltThings(world: World): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canBombThings(): boolean {
+        throw new Error("Method not implemented.");
+    }
 }

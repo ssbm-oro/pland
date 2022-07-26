@@ -47,11 +47,11 @@ export class EasternPalace extends Region {
     }
 
     public override initialize(): Region {
-        this.locations.get("Eastern Palace - Big Chest")?.setRequirement((locations, items) => {
+        this.locations.get("Eastern Palace - Big Chest")?.setRequirements((locations, items) => {
             return items.has('BigKeyP1');
         });
 
-        this.locations.get("Eastern Palace - Big Key Chest")?.setRequirement((locations, items) => {
+        this.locations.get("Eastern Palace - Big Key Chest")?.setRequirements((locations, items) => {
             return items.has('Lamp');
         });
 
@@ -59,7 +59,7 @@ export class EasternPalace extends Region {
             return this.locations.get("Eastern Palace - Boss")?.canAccess(items, locations)!;
         }
 
-        this.locations.get("Eastern Palace - Boss")?.setRequirement((locations, items) => {
+        this.locations.get("Eastern Palace - Boss")?.setRequirements((locations, items) => {
             return items.canShootArrows(this.world)
                 && items.canLightTorches()
                 && items.has('BigKeyP1')

@@ -47,19 +47,19 @@ export class DesertPalace extends Region {
     }
 
     public override initialize(): Region {
-        this.locations.get("Desert Palace - Big Chest")!.setRequirement((locations, items) => {
+        this.locations.get("Desert Palace - Big Chest")!.setRequirements((locations, items) => {
             return items.has("BigKeyP2");
         });
 
-        this.locations.get("Desert Palace - Big Key Chest")!.setRequirement((locations, items) => {
+        this.locations.get("Desert Palace - Big Key Chest")!.setRequirements((locations, items) => {
             return items.has("KeyP2") && items.canKillMostThings(this.world);
         });
 
-        this.locations.get("Desert Palace - Compass Chest")!.setRequirement((locations, items) => {
+        this.locations.get("Desert Palace - Compass Chest")!.setRequirements((locations, items) => {
             return items.has("KeyP2");
         })
 
-        this.locations.get("Desert Palace - Torch")!.setRequirement((locations, items) => {
+        this.locations.get("Desert Palace - Torch")!.setRequirements((locations, items) => {
             return items.has('Pegasus Boots');
         })
 
@@ -67,7 +67,7 @@ export class DesertPalace extends Region {
             return this.locations.get("Desert Palace - Boss")?.canAccess(items, locations)!;
         }
 
-        this.locations.get("Desert Palace - Boss")!.setRequirement((locations, items) => {
+        this.locations.get("Desert Palace - Boss")!.setRequirements((locations, items) => {
             return ((this.canEnter(locations, items))
                 && ((items.canLiftRocks() || items.has('Magic Mirror') && this.world.getRegion('Mire').canEnter(locations, items)))
                 && items.canLightTorches()
@@ -80,7 +80,7 @@ export class DesertPalace extends Region {
                 && (items.has('Book of Mudora') || (items.has('Mirror') && (this.world.getRegion('Mire').canEnter(locations,items))));
         };
 
-        this.prize!.setRequirement(this.canComplete);
+        this.prize!.setRequirements(this.canComplete);
 
         return this;
     }

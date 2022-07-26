@@ -23,7 +23,7 @@ export class Region {
         this.world = world;
     }
     
-    initialize() {
+    initialize() : Region {
         throw new Error("Method not implemented.");
     }
 
