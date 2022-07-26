@@ -85,4 +85,10 @@ export class ItemCollection {
     canBombThings(): boolean {
         throw new Error("Method not implemented.");
     }
+    hasABottle(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canFly(world: World): boolean {
+        throw new Error("Method not implemented.");
+    }
 }
