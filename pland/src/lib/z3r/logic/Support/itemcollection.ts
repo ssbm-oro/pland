@@ -91,4 +91,7 @@ export class ItemCollection {
     canFly(world: World): boolean {
         throw new Error("Method not implemented.");
     }
+    canExtendMagic(): boolean {
+        throw new Error("Method not implemented.");
+    }
 }

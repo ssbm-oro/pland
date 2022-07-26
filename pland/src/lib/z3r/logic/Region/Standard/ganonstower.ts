@@ -267,7 +267,7 @@ export class GanonsTower extends Region {
         this.canEnter = (locations:LocationCollection, items:ItemCollection) => {
             return items.has('RescueZelda')
                 && this.canOpen(items, this.world)
-                && this.world.getRegion('East Dark World Death Mountain').canEnter(locations, items);
+                && this.world.getRegion('East Dark World Death Mountain')!.canEnter(locations, items);
         }
 
         return this;

@@ -7,23 +7,21 @@ import { Inverted } from "./World/inverted";
 import { Retro } from "./World/retro";
 import type { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
+import type { Config } from "./config";
 
 export class World {
-    getRegion(arg0: string) :Region{
-        throw new Error("Method not implemented.");
-    }
-    regions: Region[] = [];
+    regions: Map<string, Region> = new Map();
     locations: LocationCollection = new LocationCollection([]);
-    config: any;
+    config: Config;
     win_condition?: (items: ItemCollection) => boolean;
     id: number = 0;
 
-    public constructor(config:[] = [])
+    public constructor(config:Config)
     {
         this.config = config;
 
         this.regions.forEach(region => {
-            if(this.config['logic'] !== 'NoLogic') {
+            if(this.config.glitches !== 'NoLogic') {
                 region.initialize();
             }
             this.locations = this.locations.merge(region.locations);
@@ -42,6 +40,10 @@ export class World {
             default:
                 return new Standard(config);
         }
+    }
+
+    getRegion(regionName: string) :Region | undefined {
+        return this.regions.get(regionName);
     }
 
 }

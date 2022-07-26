@@ -5,6 +5,10 @@ import type { World } from "./world";
 import type { Prize } from "./Location/prize";
 import type { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
+import type { Key } from "./Item/key";
+import type { Map } from "./Item/map";
+import type { BigKey } from "./Item/bigkey";
+import type { Compass } from "./Item/compass";
 
 export class Region {
     name: string;
@@ -28,7 +32,7 @@ export class Region {
     }
 
     public canPlaceBoss(boss: Boss, level: string = 'top') {
-        if (this.name != "Ice Palace" && this.world.config.mode.weapon == 'swordless' && boss.name == "Kholdstare") {
+        if (this.name != "Ice Palace" && this.world.config.weapons == 'swordless' && boss.name == "Kholdstare") {
             return false;
         }
 
@@ -78,7 +82,9 @@ export class Region {
     public canFill(item: Item) {
         let from_world = item.world;
 
-        // TODO: Add key/region checking
+        // TODO: Add wild dungeon items
+        if ((item as Key) || (item as Map) || (item as BigKey) || (item as Compass))
+            return this.region_items.includes(item);
 
         return true;
     }

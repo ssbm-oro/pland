@@ -9,7 +9,7 @@ import { Dash } from "$lib/z3r/logic/Location/dash";
 import { Dig } from "$lib/z3r/logic/Location/dig";
 import { Bombos } from "$lib/z3r/logic/Location/Drop/bombos";
 
-export class NorthEast extends Region {
+export class South extends Region {
     public constructor(world: World) {
         super("Light World", world);
 
@@ -58,16 +58,16 @@ export class NorthEast extends Region {
 
         this.locations.get("Bombos Tablet")?.setRequirements((locations, items) => {
             return items.has("BookOfMudora") && items.hasSword(2)
-                && (items.has("MagicMirror") && this.world.getRegion("South Dark World").canEnter(locations, items));
+                && (items.has("MagicMirror") && this.world.getRegion("South Dark World")!.canEnter(locations, items));
         });
 
         this.locations.get("Cave 45")?.setRequirements((locations, items) => {
-            return items.has("MagicMirror") && this.world.getRegion("South Dark World").canEnter(locations, items);
+            return items.has("MagicMirror") && this.world.getRegion("South Dark World")!.canEnter(locations, items);
         });
 
         this.locations.get("Checkerboard Cave")?.setRequirements((locations, items) => {
             return items.canLiftRocks()
-                && (items.has("MagicMirror") && this.world.getRegion("Mire").canEnter(locations, items));
+                && (items.has("MagicMirror") && this.world.getRegion("Mire")!.canEnter(locations, items));
         });
 
         this.locations.get("Library")?.setRequirements((locations, items) => {
@@ -75,12 +75,12 @@ export class NorthEast extends Region {
         });
 
         this.locations.get("Desert Ledge")?.setRequirements((locations, items) => {
-            return this.world.getRegion("Desert Palace").canEnter(locations, items);
+            return this.world.getRegion("Desert Palace")!.canEnter(locations, items);
         })
 
         this.locations.get("Lake Hylia Island")?.setRequirements((locations, items) => {
             return items.has("Flippers") && items.has("MagicMirror")
-                && this.world.getRegion("North East Dark World").canEnter(locations, items);
+                && this.world.getRegion("North East Dark World")!.canEnter(locations, items);
         });
 
         this.locations.get("Flute Spot")?.setRequirements((locations, items) => {

@@ -27,19 +27,19 @@ export class East extends Region {
     override initialize(): Region {
         this.locations.get("Mimic Cave")?.setRequirements((locations, items) => {
             return items.has("Hammer") && items.has("MagicMirror")
-                && (items.has("KeyD7", 2) && this.world.getRegion("Turtle Rock").canEnter(locations, items));
+                && (items.has("KeyD7", 2) && this.world.getRegion("Turtle Rock")!.canEnter(locations, items));
         });
 
         this.locations.get("Floating Island")?.setRequirements((locations, items) => {
             return (items.has("MagicMirror")
                 && (items.has("MoonPearl") && (items.canBombThings()) && items.canLiftRocks())
-                && this.world.getRegion("East Dark Death Mountain").canEnter(locations, items));
+                && this.world.getRegion("East Dark Death Mountain")!.canEnter(locations, items));
         });
 
         this.canEnter = (locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda")
-                && ((items.has("MagicMirror") || items.has("Hookshot")) && this.world.getRegion("West Death Mountain").canEnter(locations, items))
-                || (items.has("Hammer") && this.world.getRegion("Tower of Hera").canEnter(locations, items));
+                && ((items.has("MagicMirror") || items.has("Hookshot")) && this.world.getRegion("West Death Mountain")!.canEnter(locations, items))
+                || (items.has("Hammer") && this.world.getRegion("Tower of Hera")!.canEnter(locations, items));
         }
 
         return this;

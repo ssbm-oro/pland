@@ -27,7 +27,7 @@ export class West extends Region {
 
         this.locations.get("Ether Tablet")?.setRequirements((locations, items) => {
             return items.has("BookOfMudora") && items.hasSword(2)
-                && this.world.getRegion("Tower of Hera").canEnter(locations, items);
+                && this.world.getRegion("Tower of Hera")!.canEnter(locations, items);
         });
 
         this.locations.get("Spectacle Rock")?.setRequirements((locations, items) => {

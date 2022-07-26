@@ -8,7 +8,7 @@ import type { ItemCollection } from "$lib/z3r/logic/Support/itemcollection";
 import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
 import type { World } from "$lib/z3r/logic/world";
 
-export class NorthEast extends Region {
+export class NorthWest extends Region {
     public constructor(world: World) {
         super("Light World", world);
 
@@ -47,7 +47,7 @@ export class NorthEast extends Region {
         this.locations.get("King's Tomb")?.setRequirements((locations, items) => {
             return items.has("PegasusBoots")
                 && (items.canLiftDarkRocks()
-                    || items.has("MagicMirror") && this.world.getRegion("North West Dark World").canEnter(locations, items));
+                    || items.has("MagicMirror") && this.world.getRegion("North West Dark World")!.canEnter(locations, items));
         });
 
         this.locations.get("Pegasus Rocks")?.setRequirements((locations, items) => {
@@ -58,7 +58,7 @@ export class NorthEast extends Region {
             return items.has("Powder")
                 && (items.has("Hammer")
                 || (items.has("MagicMirror")
-                    && items.has("MoonPearl") && this.world.getRegion("North West Dark World").canEnter(locations, items)));
+                    && items.has("MoonPearl") && this.world.getRegion("North West Dark World")!.canEnter(locations, items)));
         });
 
         this.locations.get("Sick Kid")?.setRequirements((locations, items) => {
@@ -70,7 +70,7 @@ export class NorthEast extends Region {
         });
 
         this.locations.get("Graveyard Ledge")?.setRequirements((locations, items) => {
-            return (items.has("MagicMirror") && this.world.getRegion("North West Dark World").canEnter(locations, items))
+            return (items.has("MagicMirror") && this.world.getRegion("North West Dark World")!.canEnter(locations, items))
                 && items.has("MoonPearl");
         });
 
