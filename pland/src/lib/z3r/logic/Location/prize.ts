@@ -1,7 +1,6 @@
 import { Location } from "../location";
-import type { Item } from "../item";
-import type { Crystal } from "../Item/crystal";
-import type { Pendant } from "../Item/pendant";
+import type Item from "../item";
+import type { Crystal, Pendant } from "../item";
 
 export class Prize extends Location {
     public override setItem(item: Item | null) {

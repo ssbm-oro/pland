@@ -10,7 +10,7 @@ import { NorthEast as NorthEastLightWorld } from "../Region/Standard/LightWorld/
 import { NorthWest as NorthWestLightWorld } from "../Region/Standard/LightWorld/northwest";
 import { South as SouthLightWorld } from "../Region/Standard/LightWorld/south";
 import { TowerOfHera } from "../Region/Standard/towerofhera";
-import { World } from "../world";
+import World from "../world";
 import { NorthEast as NorthEastDarkWorld } from "../Region/Standard/DarkWorld/northeast";
 import { NorthWest as NorthWestDarkWorld } from "../Region/Standard/DarkWorld/northwest";
 import { South as SouthDarkWorld } from "../Region/Standard/DarkWorld/south";
@@ -27,7 +27,7 @@ import { Medallion } from "../Region/Standard/medallions";
 import { Fountains } from "../Region/Standard/fountains";
 import type { Config } from "../config";
 
-export class Standard extends World {
+export default class Standard extends World {
     public constructor (config:Config) {
         super(config);
         this.regions.set("North East Light World", new NorthEastLightWorld(this));
@@ -57,6 +57,6 @@ export class Standard extends World {
         this.regions.set("Medallions", new Medallion(this));
         this.regions.set("Fountains", new Fountains(this));
 
-        super(config);
+        this.initialize();
     }
 }

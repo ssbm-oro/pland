@@ -1,25 +1,36 @@
-interface Entry {
-        name: string
+import type { Boss } from "../boss";
+import type { Location } from "../location";
+
+export class Entry {
+        name: string;
+
+        public constructor(name: string){
+            this.name = name;
+        }
 }
 
 export class Collection {
-    entries: Map<string, Entry> = new Map();
+    items: Map<string, Entry> = new Map();
 
     public constructor(items:Entry[] = []) {
         items.forEach(item => {
-            this.entries.set(item.name, item);
+            this.items.set(item.name, item);
         });
     }
 
     public get(key:string) {
-        return this.entries.get(key);
+        return this.items.get(key);
     }
 
-    public merge(items: Collection) {
-        if (items === this) {
-            return this;
-        }
+    // public merge(items: Collection) {
+    //     if (items === this) {
+    //         return this;
+    //     }
 
-        return new Collection([...this.entries.values(), ...items.entries.values()]);
+    //     return new Collection([...this.items.values(), ...items.items.values()]);
+    // }
+
+    public filter(f: { (entry: any): boolean; }) {
+        return Array.from(this.items.values()).filter(f);
     }
 }

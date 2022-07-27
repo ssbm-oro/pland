@@ -1,22 +1,17 @@
-import type { Item } from "../item";
+import type { APIAuditLogChangeKeyPermissionOverwrites } from "discord-api-types/v10";
+import type Item from "../item";
 import type { Location } from "../location";
 import type { Region } from "../region";
-import type { World } from "../world";
-import { Collection } from "./collection";
+import type World from "../world";
+import { Collection, type Entry } from "./collection";
 import { ItemCollection } from "./itemcollection";
 
 export class LocationCollection extends Collection {
-    locations:Map<string, Location> = new Map();
     world_id = 0;
 
 
     public constructor(locations: Location[] = []) {
-        super();
-        locations.forEach(location => this.locations.set(location.name, location));
-    }
-
-    public override get(key: string) {
-        return this.locations.get(key);
+        super(locations);
     }
 
     public setChecksForWorld(world_id: number) {
@@ -24,24 +19,28 @@ export class LocationCollection extends Collection {
     }
 
     public addItem(location: Location) {
-        this.locations.set(location.name, location);
+        this.items.set(location.name, location);
         return this;
     }
 
     public removeItem(location: Location) {
-        this.locations.delete(location.name);
+        this.items.delete(location.name);
         return this;
     }
 
     has(key: string): boolean {
-        return this.locations.has(key);
+        return this.items.has(key);
     }
 
-    public filter(predicate: (value: Location) => boolean){
-        let filtered = new LocationCollection([...this.locations.values()].filter(predicate));
-        filtered.world_id = this.world_id;
-        return filtered;
+    public override get(key: string): Location | undefined {
+        return super.get(key) as Location | undefined;
     }
+
+    // public filter(predicate: (value: Location) => boolean){
+    //     let filtered = new LocationCollection([...this.locations.values()].filter(predicate));
+    //     filtered.world_id = this.world_id;
+    //     return filtered;
+    // }
 
     public getEmptyLocations() {
         return this.filter(location => { return (!location.hasItem()); });
@@ -53,7 +52,7 @@ export class LocationCollection extends Collection {
 
     public itemInLocations(item: Item, locationKeys: string[], count: number = 1) {
         locationKeys.forEach(locationKey => {
-            if (this.locations.get(locationKey)?.hasItem(item)) {
+            if ((this.items.get(locationKey) as Location).hasItem(item)) {
                 count--;
             }
 
@@ -64,7 +63,8 @@ export class LocationCollection extends Collection {
     public getItems(world: World) {
         let items:Item[] = [];
 
-        this.locations.forEach(location => {
+        this.items.forEach(entry => {
+            let location = entry as Location;
             const item = location.item;
             if ((item) && (world) && (item.world == world)) {
                 items.push(item);
@@ -77,7 +77,8 @@ export class LocationCollection extends Collection {
     public getRegions() {
         let regions: Region[] = [];
 
-        this.locations.forEach(location => {
+        this.items.forEach(entry => {
+            let location = entry as Location;
             if (!regions.includes(location.region)) {
                 regions.push(location.region);
             }
@@ -94,9 +95,14 @@ export class LocationCollection extends Collection {
         return this.filter(location => location.canAccess(items));
     }
 
-    public override merge(locations: LocationCollection): LocationCollection {
-        let merged = super.merge(locations) as LocationCollection;
-        merged.setChecksForWorld(this.world_id);
-        return merged;
+    public merge(locations: LocationCollection): LocationCollection {
+        if (locations === this) {
+            return this;
+        }
+
+        let items1 = this.items as Map<string, Location>;
+        let items2 = locations.items as Map<string, Location>;
+
+        return new LocationCollection([...items1.values(), ...items2.values()]);
     }
 }

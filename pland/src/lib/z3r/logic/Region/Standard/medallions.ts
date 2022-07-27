@@ -1,5 +1,5 @@
 import { Region } from "../../region";
-import type { World } from "../../world";
+import type World from "../../world";
 import { Medallion as LocationMedallion } from "../../Location/medallion"
 import { LocationCollection } from "../../Support/locationcollection";
 

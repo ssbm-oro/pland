@@ -1,20 +1,15 @@
 import { Boss } from "../../boss";
-import type { Item } from "../../item";
+import type Item from "../../item";
 import { Pendant } from "../../Location/Prize/pendant";
-import { Location } from "../../location";
 import { BigChest } from "../../Location/bigchest";
 import { Chest } from "../../Location/chest";
 import { Dash } from "../../Location/dash";
 import { Drop } from "../../Location/drop";
 import { Region } from "../../region";
 import { LocationCollection } from "../../Support/locationcollection";
-import type { World } from "../../world";
+import type World from "../../world";
 import type { Prize } from "../../Location/prize";
-import type { ItemCollection } from "../../Support/itemcollection";
-import { BigKey } from "../../Item/bigkey";
-import { Compass } from "../../Item/compass";
-import { Key } from "../../Item/key";
-import { Map } from "../../Item/map";
+import { BigKey, Compass, Key, Map } from "../../item";
 
 export class DesertPalace extends Region {
     override region_items: Item[] = [
@@ -69,7 +64,7 @@ export class DesertPalace extends Region {
 
         this.locations.get("Desert Palace - Boss")!.setRequirements((locations, items) => {
             return ((this.canEnter(locations, items))
-                && ((items.canLiftRocks() || items.has('Magic Mirror') && this.world.getRegion('Mire').canEnter(locations, items)))
+                && ((items.canLiftRocks() || items.has('Magic Mirror') && this.world.getRegion('Mire')!.canEnter(locations, items)))
                 && items.canLightTorches()
                 && items.has('BigKeyP2') && items.has('KeyP2')
                 && this.boss!.canBeat(items, locations))
@@ -77,7 +72,7 @@ export class DesertPalace extends Region {
 
         this.canEnter = (locations, items) => {
             return items.has('RescueZelda')
-                && (items.has('Book of Mudora') || (items.has('Mirror') && (this.world.getRegion('Mire').canEnter(locations,items))));
+                && (items.has('Book of Mudora') || (items.has('Mirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
         };
 
         this.prize!.setRequirements(this.canComplete);

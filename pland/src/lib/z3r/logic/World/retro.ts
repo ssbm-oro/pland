@@ -1,5 +1,5 @@
-import { World } from "../world";
+import World from "../world";
 
-export class Retro extends World {
+export default class Retro extends World {
     
 }

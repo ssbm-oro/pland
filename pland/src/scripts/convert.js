@@ -7,14 +7,15 @@ let presets = fs.readdirSync("static/presets/");
 presets.forEach(preset => {
     log.debug(preset);
     if (preset.endsWith('yaml')) {
+        let config;
         try{
-            var config = YAML.load(`static/presets/${preset}`);
+            config = YAML.load(`static/presets/${preset}`);
         }
         catch (err) { log.error(err); }
 
         log.info(config);
-        var jsonConfig = JSON.stringify(config, null, 2);
-        var jsonFileName = "static/presets/" + preset.replace('.yaml','.json');
+        let jsonConfig = JSON.stringify(config, null, 2);
+        let jsonFileName = "static/presets/" + preset.replace('.yaml','.json');
         fs.writeFileSync(jsonFileName, jsonConfig);
     }
 })

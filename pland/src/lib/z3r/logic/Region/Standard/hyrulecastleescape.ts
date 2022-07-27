@@ -1,13 +1,7 @@
-import { Item } from "../../item";
-import { BigKey } from "../../Item/bigkey";
-import { Compass } from "../../Item/compass";
-import { Key } from "../../Item/key";
+import Item, { BigKey, Compass, Key, Map} from "../../item";
 import { Region } from "../../region";
-import { Map } from "../../Item/map";
-import type { World } from "../../world";
+import type World from "../../world";
 import { LocationCollection } from "../../Support/locationcollection";
-import { Location } from "../../location";
-import { Npc } from "../../Location/npc";
 import { Event } from "../../Location/Prize/event";
 import { Uncle } from "../../Location/Npc/uncle";
 import { Chest } from "../../Location/chest";

@@ -1,12 +1,9 @@
-import type { Item } from "../../item";
-import { BigKey } from "../../Item/bigkey";
-import { Compass } from "../../Item/compass";
-import { Key } from "../../Item/key";
-import { Map } from "../../Item/map";
+import type Item from "../../item";
+import { BigKey, Compass, Key, Map } from "../../item";
 import { Chest } from "../../Location/chest";
 import { Region } from "../../region";
 import { LocationCollection } from "../../Support/locationcollection";
-import type { World } from "../../world";
+import type World from "../../world";
 import { Boss } from "../../boss";
 import { BigChest } from "../../Location/bigchest";
 import { Drop } from "../../Location/drop";
@@ -117,7 +114,7 @@ export class SwampPalace extends Region {
         this.canEnter = (locations, items) => {
             return items.has("RescueZelda")
                 && items.has("Flippers")
-                && this.world.getRegion("South Dark World").canEnter(locations, items)
+                && this.world.getRegion("South Dark World")!.canEnter(locations, items)
                 && items.has("MoonPearl")
                 && items.has("Mirror");
         }

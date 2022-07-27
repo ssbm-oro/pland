@@ -1,7 +1,7 @@
 import { Fountain } from "../../Location/fountain";
 import { Region } from "../../region";
 import { LocationCollection } from "../../Support/locationcollection";
-import type { World } from "../../world";
+import type World from "../../world";
 
 export class Fountains extends Region {
     public constructor(world: World) {

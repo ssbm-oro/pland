@@ -1,10 +1,10 @@
 import type { Region } from "./region";
-import { Item } from "./item";
+import Item from "./item";
 import type { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
+import { Entry } from "./Support/collection";
 
-export class Location {
-    name: string;
+export class Location extends Entry {
     region: Region;
     item: Item | null = null;
     always_callback?: (item: Item, items: ItemCollection) => boolean;
@@ -12,7 +12,7 @@ export class Location {
     requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
 
     constructor(name: string, region: Region) {
-        this.name = name;
+        super(name);
         this.region = region;
     }
 

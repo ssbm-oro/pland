@@ -1,19 +1,13 @@
-import { BigKey } from "../../Item/bigkey";
-import { Compass } from "../../Item/compass";
-import { Key } from "../../Item/key";
 import { Region } from "../../region";
-import { Item } from "../../item";
-import { Map } from "../../Item/map";
-import type { World } from "../../world";
+import Item, { BigKey, Key, Compass, Map} from "../../item";
+import type World from "../../world";
 import { Boss } from "../../boss";
 import { LocationCollection } from "../../Support/locationcollection";
-import { Location } from "../../location";
 import { Dash } from "../../Location/dash";
 import { Chest } from "../../Location/chest";
 import { BigChest } from "../../Location/bigchest";
 import { Event } from "../../Location/Prize/event";
 import type { ItemCollection } from "../../Support/itemcollection";
-import { ButtonStyle } from "discord-api-types/v10";
 
 export class GanonsTower extends Region {
     boss_top?: Boss;

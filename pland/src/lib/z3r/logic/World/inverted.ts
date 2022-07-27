@@ -1,5 +1,5 @@
-import { World } from "../world";
+import World from "../world";
 
-export class Inverted extends World {
+export default class Inverted extends World {
     
 }

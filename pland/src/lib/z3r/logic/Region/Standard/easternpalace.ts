@@ -1,18 +1,14 @@
 import { Boss } from "../../boss";
-import type { Item } from "../../item";
+import type Item from "../../item";
 import { Pendant } from "../../Location/Prize/pendant";
-import { Location } from "../../location";
 import { BigChest } from "../../Location/bigchest";
 import { Chest } from "../../Location/chest";
 import { Drop } from "../../Location/drop";
 import { Region } from "../../region";
 import { LocationCollection } from "../../Support/locationcollection";
-import type { World } from "../../world";
+import type World from "../../world";
 import type { Prize } from "../../Location/prize";
-import { BigKey } from "../../Item/bigkey";
-import { Compass } from "../../Item/compass";
-import { Key } from "../../Item/key";
-import { Map } from "../../Item/map";
+import { BigKey, Compass, Key, Map } from "../../item";
 
 export class EasternPalace extends Region {
     override region_items: Item[] = [

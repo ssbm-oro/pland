@@ -1,14 +1,10 @@
-import type { Location } from "./location";
-import type { Item } from "./item";
+import type Item from "./item";
+import type { BigKey, Key, Map, Compass } from "./item";
 import type { Boss } from "./boss";
-import type { World } from "./world";
+import type World from "./world";
 import type { Prize } from "./Location/prize";
 import type { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
-import type { Key } from "./Item/key";
-import type { Map } from "./Item/map";
-import type { BigKey } from "./Item/bigkey";
-import type { Compass } from "./Item/compass";
 
 export class Region {
     name: string;
@@ -28,7 +24,7 @@ export class Region {
     }
     
     initialize() : Region {
-        throw new Error("Method not implemented.");
+        return this;
     }
 
     public canPlaceBoss(boss: Boss, level: string = 'top') {

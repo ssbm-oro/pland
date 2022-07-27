@@ -1,18 +1,13 @@
-import { Item } from "../../item";
-import { BigKey } from "../../Item/bigkey";
-import { Compass } from "../../Item/compass";
-import { Key } from "../../Item/key";
-import { Map } from "../../Item/map";
+import Item, { BigKey, Compass, Key, Map } from "../../item";
 import { Chest } from "../../Location/chest";
 import { Region } from "../../region";
 import { LocationCollection } from "../../Support/locationcollection";
-import type { World } from "../../world";
+import type World from "../../world";
 import { Boss } from "../../boss";
 import { BigChest } from "../../Location/bigchest";
 import { Drop } from "../../Location/drop";
 import { Crystal } from "../../Location/Prize/crystal";
 import type { ItemCollection } from "../../Support/itemcollection";
-import { Location } from "../../location";
 
 export class TurtleRock extends Region {
     override region_items: Item[] = [
@@ -59,7 +54,7 @@ export class TurtleRock extends Region {
                 && items.has("MoonPearl")
                 && items.has("CaneOfSomaria")
                 && (items.has("Hammer") && items.canLiftDarkRocks()
-                    && this.world.getRegion("East Death Mountain").canEnter(locations, items)));
+                    && this.world.getRegion("East Death Mountain")!.canEnter(locations, items)));
         };
 
         this.locations.get("Turtle Rock - Chain Chomps")?.setRequirements((locations, items) => {

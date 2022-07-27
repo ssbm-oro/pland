@@ -6,7 +6,7 @@ import { Standing } from "$lib/z3r/logic/Location/standing";
 import { Region } from "$lib/z3r/logic/region";
 import type { ItemCollection } from "$lib/z3r/logic/Support/itemcollection";
 import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type { World } from "$lib/z3r/logic/world";
+import type World from "$lib/z3r/logic/world";
 
 export class NorthWest extends Region {
     public constructor(world: World) {

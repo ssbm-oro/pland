@@ -1,6 +1,6 @@
-import { Location } from "../location"
-import type { Medallion as MedallionItem } from "../Item/medallion"
-import type { Item } from "../item"
+import { Location } from "../location";
+import type { Medallion as MedallionItem } from "../item";
+import type Item from "../item";
 
 export class Medallion extends Location { 
     public override setItem(item: Item | null) {

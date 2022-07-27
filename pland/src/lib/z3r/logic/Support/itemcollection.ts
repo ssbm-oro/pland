@@ -1,12 +1,14 @@
-import type { Item } from "../item";
-import type { World } from "../world";
+import type Item from "../item";
+import type World from "../world";
+import { Collection } from "./collection";
 
-export class ItemCollection {
-    items: Map<string, Item> = new Map();
+export class ItemCollection extends Collection {
+    //items: Map<string, Item> = new Map();
     item_counts : Map<string, number> = new Map();
     checksForWorld?: World;
 
     public constructor(items:Item[] = []) {
+        super();
         items.forEach(item => this.addItem(item));
     }
 
@@ -42,24 +44,28 @@ export class ItemCollection {
         return this.items.has(key) && this.item_counts.has(key) && this.item_counts.get(key)! >= count;
     }
 
-    public filter(predicate: (value: Item, index: number, array: Item[]) => value is Item){
-        return new ItemCollection([...this.items.values()].filter(predicate));
+    override get(name: string) {
+        return this.items.get(name);
     }
+
+    // public filter(predicate: (value: Item, index: number, array: Item[]) => value is Item){
+    //     return new ItemCollection([...this.items.values()].filter(predicate));
+    // }
 
     public values() {
         this.items.values();
     }
 
-    public diff(items:ItemCollection) {
-        if (!this.items.size) {
-            return new ItemCollection([...this.items.values()]);
-        }
+    // public diff(items:ItemCollection) {
+    //     if (!this.items.size) {
+    //         return new ItemCollection([...this.items.values()]);
+    //     }
 
-        let merged = new ItemCollection([...items.items.values()]);
-        this.items.forEach(item => { merged.addItem(item) });
+    //     let merged = new ItemCollection([...items.items.values()]);
+    //     this.items.forEach(item => { merged.addItem(item) });
 
-        return merged;
-    }
+    //     return merged;
+    // }
 
     canKillMostThings(world:World, count: number = 1): boolean {
         throw new Error("Method not implemented.");
@@ -91,7 +97,10 @@ export class ItemCollection {
     canFly(world: World): boolean {
         throw new Error("Method not implemented.");
     }
-    canExtendMagic(): boolean {
+    canExtendMagic(world?: World, count:number = 1): boolean {
+        throw new Error("Method not implemented.");
+    }
+    canGetGoodBee(): boolean {
         throw new Error("Method not implemented.");
     }
 }
