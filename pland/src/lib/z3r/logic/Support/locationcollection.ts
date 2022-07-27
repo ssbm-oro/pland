@@ -105,4 +105,8 @@ export class LocationCollection extends Collection {
 
         return new LocationCollection([...items1.values(), ...items2.values()]);
     }
+
+    public to_array() {
+        return Array.from<Location>(this.items.values() as IterableIterator<Location>);
+    }
 }

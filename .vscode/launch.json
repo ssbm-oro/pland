@@ -9,7 +9,8 @@
             "request": "launch",
             "runtimeArgs": [
                 "run",
-                "dev"
+                "dev",
+                "--preserve-symlinks"
             ],
             "runtimeExecutable": "npm",
             "skipFiles": [
