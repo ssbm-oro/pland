@@ -19,6 +19,7 @@ import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
     let plantAdded = false;
     let selectedPresetData: any;
     let logicTestMessages: string[] = [];
+    let logicTestResult: boolean|null;
     
     let presets: string[] = [];
 
@@ -95,9 +96,12 @@ import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
             logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
             available.removeItem(item);
 
-            let accessible = planted.filter(location => location.canAccess(available)) as Location[];
+            let accessible = planted.filter(planted_location => planted_location.canAccess(available)) as Location[];
+            accessible.forEach(accessible_item => {
+                logicTestMessages.push(`Location: ${accessible_item.name} accessible. Item added: ${accessible_item.item?.name}`);
+            })
 
-            plantable = plantable && location.canFill(item, available, planted, true)!;
+            plantable = plantable && location.canFill(item, available, planted, true, logicTestMessages)!;
             if (!plantable) {
                 logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
                 break;
@@ -113,6 +117,8 @@ import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
             }
             // planted.addItem(item);
         }
+
+        logicTestResult = plantable;
     }
 </script>
 
@@ -151,6 +157,7 @@ import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
         {/each}{/key}
         <br/><br/>
         <button on:click="{checkPlants}">Check Plants</button>
+        {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
         <br/>
         <ul>
             {#each logicTestMessages as message}

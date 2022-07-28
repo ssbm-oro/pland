@@ -38,7 +38,7 @@ export default class Location extends Entry {
         this.requirement_callback = requirement_callback;
     }
 
-    public canFill(newItem: Item, items: ItemCollection, plants: LocationCollection = new LocationCollection([]), check_access = true) {
+    public canFill(newItem: Item, items: ItemCollection, plants: LocationCollection = new LocationCollection([]), check_access = true, messages: string[] | null = null) {
         if (check_access) {
             let items_clone = new ItemCollection([]);
             items.items.forEach(item => items_clone.addItem(item as Item));
@@ -47,7 +47,8 @@ export default class Location extends Entry {
             plants.filter(location => location.canAccess(items, plants)).forEach(accessible => {
                 let accessible_item = (accessible as Location).item;
                 if (accessible_item) {
-                    console.log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
+                    if (messages)
+                        messages.push(`${accessible.name} is accessible so adding ${accessible_item.name}`);
                     items.addItem(accessible_item!);
                 }
             });
@@ -61,20 +62,20 @@ export default class Location extends Entry {
         return fillable;
     }
 
-    public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([])) {
+    public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([]), messages: string[] | null = null) {
         console.log(items);
         let total_locations = locations ?? this.region.locations;
 
-        console.log(`Checking region access for ${this.region.name}.`);
+        if (messages) messages.push(`Checking region access for ${this.region.name}.`);
         if (!this.region.canEnter(total_locations, items))
         {
-            console.log(`Cannot access region.`);
+            if (messages) messages.push(`Cannot access region.`);
             return false;
         }
 
-        console.log(`Checking requirement callback for ${this.name}.`);
+        if (messages) messages.push(`Checking requirement callback for ${this.name}.`);
         if (!this.requirement_callback || this.requirement_callback.call(this, locations, items)) {
-            console.log(`Can access requirements.`);
+            if (messages) messages.push(`Can access requirements.`);
             return true
         }
 
