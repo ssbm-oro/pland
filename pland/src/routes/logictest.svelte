@@ -6,6 +6,7 @@
     import Retro from "$lib/z3r/logic/World/retro";
     import Standard from "$lib/z3r/logic/World/standard";
     import { onMount } from "svelte";
+    import Icon from '@iconify/svelte';
     let selectedPreset: string;
     let world: World;
     let selectedItem: any;
@@ -56,9 +57,14 @@
     {#if world}
         <select bind:value="{selectedItem}">
             {#each items as item}
-                <option value="{item}">{item.name}</option>
+                {#if item.count && item.count > 0}
+                    <option value="{item}">{item.name}</option>
+                {/if}
             {/each}
         </select>
+        {#if selectedItem && selectedItem.icon && selectedItem.icon.icon }
+            <Icon icon="{selectedItem.icon.icon}" color="{selectedItem.icon.color}" vFlip="{selectedItem.icon.vFlip}" hFlip="{selectedItem.icon.hFlip}"></Icon>
+        {/if}
         <br/>   
         <select bind:value="{selectedLocation}">
             {#each world.locations.to_array() as location}

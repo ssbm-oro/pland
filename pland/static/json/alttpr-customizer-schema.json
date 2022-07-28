@@ -1498,28 +1498,41 @@
             "name": "item.FireRod",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='fa6-solid:wand-magic-sparkles' color='red' />"
+            "icon": {
+                "icon":"fa6-solid:wand-magic-sparkles",
+                "color":"red"
+            }
         },
         {
             "value": "IceRod:1",
             "name": "item.IceRod",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='fa6-solid:wand-magic-sparkles' color='#09f' />"
+            "icon": {
+                "icon":"fa6-solid:wand-magic-sparkles",
+                "color":"#09f"
+            }
         },
         {
             "value": "Hammer:1",
             "name": "item.Hammer",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon=    jam:hammer' color='#a60' />"
+            "icon": {
+                "icon":"jam:hammer",
+                "color":"#a60"
+            }
         },
         {
             "value": "Hookshot:1",
             "name": "item.Hookshot",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='fluent:arrow-download-24-filled' color='gray' vFlip={true} />"
+            "icon": {
+                "icon":"fluent:arrow-download-24-filled",
+                "color":"gray",
+                "vFlip":true
+            }
         },
         {
             "value": "Bow:1",
@@ -1532,63 +1545,91 @@
             "name": "item.Boomerang",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:boomerang' color='blue' />"
+            "icon": {
+                "icon":"mdi:boomerang",
+                "color":"blue"
+            }
         },
         {
             "value": "Powder:1",
             "name": "item.Powder",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:sack' color='#a60' />"
+            "icon": {
+                "icon":"mdi:sack",
+                "color":"#a60"
+            }
         },
         {
             "value": "Bombos:1",
             "name": "item.Bombos",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='icon-park-solid:whirlwind' color='#da0' hFlip={true} />"
+            "icon": {
+                "icon":"icon-park-solid:whirlwind",
+                "color":"#da0",
+                "hFlip":true
+            }
         },
         {
             "value": "Ether:1",
             "name": "item.Ether",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='gg:bolt' color='#da0' />"
+            "icon": {
+                "icon":"gg:bolt",
+                "color":"#da0"
+            }
         },
         {
             "value": "Quake:1",
             "name": "item.Quake",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='fluent:catch-up-24-filled' color='#da0' />"
+            "icon":  {
+                "icon":"fluent:catch-up-24-filled",
+                "color":"#da0"
+            }
         },
         {
             "value": "Lamp:1",
             "name": "item.Lamp",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:post-lamp' color='#c00' />"
+            "icon": {
+                "icon":"mdi:post-lamp",
+                "color":"#c00"
+            }
         },
         {
             "value": "Shovel:1",
             "name": "item.Shovel",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:shovel' color='#aaa' />"
+            "icon": {
+                "icon":"mdi:shovel",
+                "color":"#aaa"
+            }
         },
         {
             "value": "OcarinaInactive:1",
             "name": "item.OcarinaInactive",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:ocarina' color='#05a' />"
+            "icon": {
+                "icon":"mdi:ocarina",
+                "color":"#05a"
+            }
         },
         {
             "value": "CaneOfSomaria:1",
             "name": "item.CaneOfSomaria",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='icon-park-outline:a-cane' color='#c00' />"
+            "icon": {
+                "icon":"icon-park-outline:a-cane",
+                "color":"#c00"
+            }
         },
         {
             "value": "Bottle:1",
@@ -1601,28 +1642,40 @@
             "name": "item.PieceOfHeart",
             "count": 24,
             "placed": 0,
-            "icon": "<Icon icon='fluent:heart-circle-20-filled' color='#a00' />"
+            "icon": {
+                "icon":"fluent:heart-circle-20-filled",
+                "color":"#a00"
+            }
         },
         {
             "value": "CaneOfByrna:1",
             "name": "item.CaneOfByrna",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='icon-park-outline:a-cane' color='#05a' />"
+            "icon": {
+                "icon":"icon-park-outline:a-cane",
+                "color":"#05a"
+            }
         },
         {
             "value": "Cape:1",
             "name": "item.Cape",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='ant-design:eye-invisible-outlined' color='#aaa' />"
+            "icon": {
+                "icon":"ant-design:eye-invisible-outlined",
+                "color":"#aaa"
+            }
         },
         {
             "value": "MagicMirror:1",
             "name": "item.MagicMirror",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='icon-park-twotone:mirror-one' color='#05c' />"
+            "icon": {
+                "icon":"icon-park-twotone:mirror-one",
+                "color":"#05c"
+            }
         },
         {
             "value": "PowerGlove:1",
@@ -1641,28 +1694,40 @@
             "name": "item.BookOfMudora",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='dashicons:book-alt' color='#070' />"
+            "icon": {
+                "icon":"dashicons:book-alt",
+                "color":"#070"
+            }
         },
         {
             "value": "Flippers:1",
             "name": "item.Flippers",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:diving-flippers' color='#05c' />"
+            "icon": {
+                "icon":"mdi:diving-flippers",
+                "color":"#05c"
+            }
         },
         {
             "value": "MoonPearl:1",
             "name": "item.MoonPearl",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:bowling' color='pink' />"
+            "icon": {
+                "icon":"mdi:bowling",
+                "color":"pink"
+            }
         },
         {
             "value": "BugCatchingNet:1",
             "name": "item.BugCatchingNet",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:dot-net' color='#aaa' />"
+            "icon": {
+                "icon":"mdi:dot-net",
+                "color":"#aaa"
+            }
         },
         {
             "value": "BlueMail:1",
@@ -1687,21 +1752,30 @@
             "name": "item.ThreeBombs",
             "count": 16,
             "placed": 0,
-            "icon": "<Icon icon='fa-solid:bomb' color='#00a' />"
+            "icon": {
+                "icon":"fa-solid:bomb",
+                "color":"#00a"
+            }
         },
         {
             "value": "Mushroom:1",
             "name": "item.Mushroom",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:mushroom' color='#a00' />"
+            "icon": {
+                "icon":"mdi:mushroom",
+                "color":"#a00"
+            }
         },
         {
             "value": "RedBoomerang:1",
             "name": "item.RedBoomerang",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:boomerang' color='#a00' />"
+            "icon": {
+                "icon":"mdi:boomerang",
+                "color":"#a00"
+            }
         },
         {
             "value": "BottleWithRedPotion:1",
@@ -1726,28 +1800,40 @@
             "name": "item.TenBombs",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='fa-solid:bomb' color='#00a' />"
+            "icon": {
+                "icon":"fa-solid:bomb",
+                "color":"#00a"
+            }
         },
         {
             "value": "OneRupee:1",
             "name": "item.OneRupee",
             "count": 2,
             "placed": 0,
-            "icon": "<Icon icon='fa6-solid:money-bill-1-wave' color='green' />"
+            "icon": {
+                "icon":"fa6-solid:money-bill-1-wave",
+                "color":"green"
+            }
         },
         {
             "value": "FiveRupees:1",
             "name": "item.FiveRupees",
             "count": 4,
             "placed": 0,
-            "icon": "<Icon icon='fa6-solid:money-bill-1-wave' color='#05c' />"
+            "icon": {
+                "icon":"fa6-solid:money-bill-1-wave",
+                "color":"#05c"
+            }
         },
         {
             "value": "TwentyRupees:1",
             "name": "item.TwentyRupees",
             "count": 28,
             "placed": 0,
-            "icon": "<Icon icon='fa6-solid:money-bill-1-wave' color='#a00' />"
+            "icon": {
+                "icon":"fa6-solid:money-bill-1-wave",
+                "color":"#a00"
+            }
         },
         {
             "value": "BowAndArrows:1",
@@ -1778,28 +1864,40 @@
             "name": "item.BossHeartContainer",
             "count": 10,
             "placed": 0,
-            "icon": "<Icon icon='fluent:heart-24-filled' color='#a00' />"
+            "icon": {
+                "icon":"fluent:heart-24-filled",
+                "color":"#a00"
+            }
         },
         {
             "value": "HeartContainer:1",
             "name": "item.HeartContainer",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='fluent:heart-pulse-24-filled' color='#a00' />"
+            "icon": {
+                "icon":"fluent:heart-24-filled",
+                "color":"#a00"
+            }
         },
         {
             "value": "OneHundredRupees:1",
             "name": "item.OneHundredRupees",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='fa6-solid:money-bill-1-wave' color='silver' />"
+            "icon": {
+                "icon":"fa6-solid:money-bill-1-wave",
+                "color":"silver"
+            }
         },
         {
             "value": "FiftyRupees:1",
             "name": "item.FiftyRupees",
             "count": 7,
             "placed": 0,
-            "icon": "<Icon icon='fa6-solid:money-bill-1-wave' color='purple' />"
+            "icon": {
+                "icon":"fa6-solid:money-bill-1-wave",
+                "color":"purple"
+            }
         },
         {
             "value": "Heart:1",
@@ -1812,14 +1910,18 @@
             "name": "item.Arrow",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='icon-park-outline:middle-finger' />"
+            "icon": {
+                "icon":"icon-park-outline:middle-finger"
+            }
         },
         {
             "value": "TenArrows:1",
             "name": "item.TenArrows",
             "count": 12,
             "placed": 0,
-            "icon": "<Icon icon='mdi:spear' />"
+            "icon": {
+                "icon":"mdi:spear"
+            }
         },
         {
             "value": "SmallMagic:1",
@@ -1832,7 +1934,10 @@
             "name": "item.ThreeHundredRupees",
             "count": 5,
             "placed": 0,
-            "icon": "<Icon icon='healthicons:money-bag' color='#a60' />"
+            "icon": {
+                "icon":"healthicons:money-bag",
+                "color":"#a60"
+            }
         },
         {
             "value": "BottleWithGoldBee:1",
@@ -1851,7 +1956,10 @@
             "name": "item.PegasusBoots",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='carbon:boot' color='#a00' />"
+            "icon": {
+                "icon":"carbon:boot",
+                "color":"#a00"
+            }
         },
         {
             "value": "BombUpgrade5:1",
@@ -1882,7 +1990,10 @@
             "name": "item.HalfMagic",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='mdi:fraction-one-half' color='#0a0' />"
+            "icon": {
+                "icon":"mdi:fraction-one-half",
+                "color":"#0a0"
+            }
         },
         {
             "value": "QuarterMagic:1",
@@ -1925,36 +2036,48 @@
             "name": "item.ProgressiveSword",
             "count": 4,
             "placed": 0,
-            "icon": "<Icon icon='akar-icons:sword' />"
-
+            "icon": {
+                "icon":"akar-icons:sword"
+            }
         },
         {
             "value": "ProgressiveShield:1",
             "name": "item.ProgressiveShield",
             "count": 3,
             "placed": 0,
-            "icon": "<Icon icon='clarity:shield-solid' color='#aaa' />"
+            "icon": {
+                "icon":"clarity:shield-solid",
+                "color":"#aaa"
+            }
         },
         {
             "value": "ProgressiveArmor:1",
             "name": "item.ProgressiveArmor",
             "count": 2,
             "placed": 0,
-            "icon": "<Icon icon='majesticons:t-shirt' color='#aaa' />"
+            "icon": {
+                "icon":"majesticons:t-shirt",
+                "color":"#aaa"
+            }
         },
         {
             "value": "ProgressiveGlove:1",
             "name": "item.ProgressiveGlove",
             "count": 2,
             "placed": 0,
-            "icon": "<Icon icon='icon-park-twotone:clothes-gloves' />"
+            "icon": {
+                "icon":"icon-park-twotone:clothes-gloves"
+            }
         },
         {
             "value": "ProgressiveBow:1",
             "name": "item.ProgressiveBow",
             "count": 2,
             "placed": 0,
-            "icon": "<Icon icon='mdi:bow-arrow' color='#a60' />"
+            "icon": {
+                "icon":"mdi:bow-arrow",
+                "color":"#a60"
+            }
         },
         {
             "value": "Triforce:1",
@@ -1973,63 +2096,81 @@
             "name": "item.MapA2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapD7:1",
             "name": "item.MapD7",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapD4:1",
             "name": "item.MapD4",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapP3:1",
             "name": "item.MapP3",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapD5:1",
             "name": "item.MapD5",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapD3:1",
             "name": "item.MapD3",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapD6:1",
             "name": "item.MapD6",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapD1:1",
             "name": "item.MapD1",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapD2:1",
             "name": "item.MapD2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapA1:1",
@@ -2042,112 +2183,156 @@
             "name": "item.MapP2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapP1:1",
             "name": "item.MapP1",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapH1:1",
             "name": "item.MapH1",
             "count": 0,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "MapH2:1",
             "name": "item.MapH2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:map-line' />"
+            "icon": {
+                "icon":"clarity:map-line"
+            }
         },
         {
             "value": "CompassA2:1",
             "name": "item.CompassA2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassD7:1",
             "name": "item.CompassD7",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassD4:1",
             "name": "item.CompassD4",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassP3:1",
             "name": "item.CompassP3",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassD5:1",
             "name": "item.CompassD5",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassD3:1",
             "name": "item.CompassD3",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassD6:1",
             "name": "item.CompassD6",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassD1:1",
             "name": "item.CompassD1",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassD2:1",
             "name": "item.CompassD2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassA1:1",
             "name": "item.CompassA1",
             "count": 0,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassP2:1",
             "name": "item.CompassP2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassP1:1",
             "name": "item.CompassP1",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='eos-icons:compass' color='#05a' />"
+            "icon": {
+                "icon":"eos-icons:compass",
+                "color":"#05a"
+            }
         },
         {
             "value": "CompassH1:1",
@@ -2166,63 +2351,90 @@
             "name": "item.BigKeyA2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyD7:1",
             "name": "item.BigKeyD7",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyD4:1",
             "name": "item.BigKeyD4",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyP3:1",
             "name": "item.BigKeyP3",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyD5:1",
             "name": "item.BigKeyD5",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyD3:1",
             "name": "item.BigKeyD3",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyD6:1",
             "name": "item.BigKeyD6",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyD1:1",
             "name": "item.BigKeyD1",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyD2:1",
             "name": "item.BigKeyD2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyA1:1",
@@ -2235,14 +2447,20 @@
             "name": "item.BigKeyP2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyP1:1",
             "name": "item.BigKeyP1",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='clarity:key-solid' color='#da0' />"
+            "icon": {
+                "icon":"clarity:key-solid",
+                "color":"#da0"
+            }
         },
         {
             "value": "BigKeyH1:1",
@@ -2261,7 +2479,10 @@
             "name": "item.KeyH2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyH1:1",
@@ -2280,77 +2501,110 @@
             "name": "item.KeyP2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyA1:1",
             "name": "item.KeyA1",
             "count": 2,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyD2:1",
             "name": "item.KeyD2",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyD1:1",
             "name": "item.KeyD1",
             "count": 6,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyD6:1",
             "name": "item.KeyD6",
             "count": 3,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyD3:1",
             "name": "item.KeyD3",
             "count": 3,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyD5:1",
             "name": "item.KeyD5",
             "count": 2,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyP3:1",
             "name": "item.KeyP3",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyD4:1",
             "name": "item.KeyD4",
             "count": 1,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyD7:1",
             "name": "item.KeyD7",
             "count": 4,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         },
         {
             "value": "KeyA2:1",
             "name": "item.KeyA2",
             "count": 4,
             "placed": 0,
-            "icon": "<Icon icon='bx:key' color='#da0' />"
+            "icon": {
+                "icon":"bx:key",
+                "color":"#da0"
+            }
         }
     ],
     "prizes": [
