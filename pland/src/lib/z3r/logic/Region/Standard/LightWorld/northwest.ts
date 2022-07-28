@@ -75,6 +75,7 @@ export class NorthWest extends Region {
         });
 
         this.canEnter = (locations: LocationCollection, items: ItemCollection) => {
+            console.log(items);
             return items.has("RescueZelda");
         }
 

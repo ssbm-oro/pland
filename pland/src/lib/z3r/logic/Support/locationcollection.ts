@@ -1,6 +1,6 @@
 import type { APIAuditLogChangeKeyPermissionOverwrites } from "discord-api-types/v10";
 import type Item from "../item";
-import type { Location } from "../location";
+import type Location from "../location";
 import type { Region } from "../region";
 import type World from "../world";
 import { Collection, type Entry } from "./collection";

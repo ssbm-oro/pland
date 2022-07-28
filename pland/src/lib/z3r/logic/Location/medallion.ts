@@ -1,4 +1,4 @@
-import { Location } from "../location";
+import Location from "../location";
 import type { Medallion as MedallionItem } from "../item";
 import type Item from "../item";
 

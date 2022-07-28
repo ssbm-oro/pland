@@ -1,4 +1,4 @@
-import { Location } from "../location";
+import Location from "../location";
 import type Item from "../item";
 import type { Crystal, Pendant } from "../item";
 

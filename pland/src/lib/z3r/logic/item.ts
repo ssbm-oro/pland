@@ -5,6 +5,8 @@ import type World from "./world";
 export default class Item extends Entry {
     nice_name: string;
     world: World;
+    is_dungeon_item = false;
+    is_bottle = false;
 
     public static items: ItemCollection;
     public static world: World;
@@ -85,6 +87,7 @@ export default class Item extends Entry {
             new Bow('BowAndSilverArrows', world),
             new Bottle('BottleWithBee', world),
             new Bottle('BottleWithFairy', world),
+            new Bottle('BottleWithRandom', world),
             new HealthUpgrade('BossHeartContainer', world),
             new HealthUpgrade('HeartContainer', world),
             new Item('OneHundredRupees', world),
@@ -203,7 +206,7 @@ export default class Item extends Entry {
     }
 
     public static get(name: string, world: World) {
-        return Item.all(world).get(name);
+        return Item.all(world).get(name) as Item | undefined;
     }
 }
 
@@ -226,26 +229,26 @@ export class Medallion extends Item {
 
 
 export class Key extends Item {
-    // purposefully empty class
+    override is_dungeon_item = true;
 }
 
 
 export class Compass extends Item {
-    // purposefully empty class
+    override is_dungeon_item = true;
 }
 
 export class Map extends Item {
-    // purposefully empty class
+    override is_dungeon_item = true;
 }
 
 
 export class Bottle extends Item {
-    // purposefully empty class
+    override is_bottle = true;
 }
 
 
 export class BigKey extends Item {
-    // purposefully empty class
+    override is_dungeon_item = true;
 }
 
 

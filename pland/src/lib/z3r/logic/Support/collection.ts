@@ -1,6 +1,3 @@
-import type { Boss } from "../boss";
-import type { Location } from "../location";
-
 export class Entry {
         name: string;
 

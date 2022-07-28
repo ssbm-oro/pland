@@ -76,12 +76,17 @@ export class Region {
     }
 
     public canFill(item: Item) {
+        console.log(`Checking if ${item.name} can be go in Region ${this.name}.`);
         let from_world = item.world;
 
         // TODO: Add wild dungeon items
-        if ((item as Key) || (item as Map) || (item as BigKey) || (item as Compass))
+        if (item.is_dungeon_item)
+        {
+            console.log(`Item is a dungeon item.`);
             return this.region_items.includes(item);
+        }
 
+        console.log(`Item not a dungeon item.`);
         return true;
     }
 

@@ -2,6 +2,8 @@ import type { Region } from "./region";
 import type { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
 import type { Config } from "./config";
+import type Item from "./item";
+import type Location from "./location";
 
 export default class World {
     regions: Map<string, Region> = new Map();
@@ -9,6 +11,7 @@ export default class World {
     config: Config;
     win_condition?: (items: ItemCollection) => boolean;
     id: number = 0;
+    inverted = false;
 
     public constructor(config:Config)
     {
@@ -26,6 +29,10 @@ export default class World {
 
     getRegion(regionName: string) :Region | undefined {
         return this.regions.get(regionName);
+    }
+
+    canPlant(item: Item, location: Location): boolean {
+        return location.region.canFill(item);
     }
 
 }
