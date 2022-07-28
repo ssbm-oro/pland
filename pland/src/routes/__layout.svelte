@@ -58,6 +58,7 @@
 <header>
 	<nav>
 		<a href="/">Home</a>
+		<a href="/logictest">Logic Test</a>
 		<a href="/about">About</a>
 		<button on:click='{toggleTheme}'>{toggleIcon}</button>
 		{#if !$UserStore}

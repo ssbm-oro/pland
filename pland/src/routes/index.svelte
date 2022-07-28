@@ -108,7 +108,8 @@
     <h1>Welcome to pland</h1>
     
     {#if !$UserStore}
-        <p>Please log in if you wanna do anything 🔐</p>
+        <p>Please log in if you wanna roll seeds. 🔐</p>
+        <p>You can help me <a href="/logictest">test the logic</a> without logging in if you want.</p>
     {:else}
         <h2>You are {$UserStore.username}</h2>
         {#if $UserStore.avatar}
