@@ -116,7 +116,7 @@ export class SwampPalace extends Region {
                 && items.has("Flippers")
                 && this.world.getRegion("South Dark World")!.canEnter(locations, items)
                 && items.has("MoonPearl")
-                && items.has("Mirror");
+                && items.has("MagicMirror");
         }
 
         this.prize?.setRequirements(this.canComplete);
