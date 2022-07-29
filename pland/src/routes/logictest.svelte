@@ -99,6 +99,11 @@
                 let location = world.locations.get(selectedLocations[i].name)!;
                 let item = Item.get(selectedItems[i].value.slice(0,-2), world)!;
                 logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
+                if (!available.has(item.name)) {
+                    logicTestMessages.push(`${item.name} not available to plant.`);
+                    plantable = false;
+                    break;
+                }
                 available.removeItem(item);
 
                 let accessible = planted.filter(planted_location => planted_location.region != location.region && planted_location.canAccess(available)) as Location[];

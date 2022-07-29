@@ -92,7 +92,7 @@ export default class Location extends Entry {
     }
 
     public getName() {
-        return this.name + ":1";
+        return this.name + ":" + this.region.world.id;
     }
 
     public log(message:string) {
