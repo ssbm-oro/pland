@@ -51,7 +51,7 @@ export default class Location extends Entry {
             // });
             // items = items_clone;
 
-            plants.filter(location => location.canAccess(items, plants)).forEach(accessible => {
+            plants.filter(location => location.region != this.region && location.canAccess(items, plants)).forEach(accessible => {
                 let accessible_item = (accessible as Location).item;
                 if (accessible_item) {
                     this.log(`${accessible.name} is accessible so adding ${accessible_item.name}`);

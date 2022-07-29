@@ -35,6 +35,9 @@ export class ItemCollection extends Collection {
             this.items.delete(item.name);
             this.item_counts.delete(item.name);
         }
+        else {
+            this.item_counts.set(item.name, count);
+        }
         
 
         return this;

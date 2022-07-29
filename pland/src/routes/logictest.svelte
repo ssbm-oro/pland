@@ -101,7 +101,7 @@
                 logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
                 available.removeItem(item);
 
-                let accessible = planted.filter(planted_location => planted_location.canAccess(available)) as Location[];
+                let accessible = planted.filter(planted_location => planted_location.region != location.region && planted_location.canAccess(available)) as Location[];
                 accessible.forEach(accessible_item => {
                     logicTestMessages.push(`Location: ${accessible_item.name} accessible. Item added: ${accessible_item.item?.name}`);
                 })
@@ -121,6 +121,12 @@
                     }
                 }
                 // planted.addItem(item);
+            }
+
+            if (plantable) {
+                plantable &&= world.canPlaceMedallions(available);
+                plantable &&= world.canPlaceBosses();
+                plantable &&= world.canPlacePrizes();
             }
 
             logicTestResult = plantable;

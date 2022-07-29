@@ -37,6 +37,34 @@ export default class World {
         return location.region.canFill(item);
     }
 
+
+    canPlacePrizes(): boolean {
+        return true;
+    }
+
+    canPlaceBosses(): boolean {
+        return true;
+    }
+
+    canPlaceMedallions(items:ItemCollection): boolean {
+        return this.canPlaceMedallion("Misery Mire Medallion", items) && this.canPlaceMedallion("Turtle Rock Medallion", items);
+    }
+    
+    canPlaceMedallion(location: string,items: ItemCollection): boolean {
+        let haveMedallion = false;
+        let medallion = this.locations.get(location);
+        if (!medallion || !medallion.item) {
+            console.log(items);
+            haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake');
+            this.log(`${location} not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+        }
+        else {
+            haveMedallion = items.has(medallion.item.name);
+            this.log(`${location} is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
+        }
+        return haveMedallion;
+    }
+
     log(message: string) {
         if (this.messages) this.messages.push(message); else console.log(message);
     }
