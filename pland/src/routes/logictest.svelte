@@ -16,7 +16,7 @@
     let world: World;
     let selectedItems: any[] = [];
     let selectedLocations: any[] = [];
-    let plantAdded = false;
+    let plantsModified = false;
     let selectedPresetData: any;
     let logicTestMessages: string[] = [];
     let logicTestResult: boolean|null;
@@ -57,7 +57,13 @@
     function addPlant() {
         selectedItems.push('');
         selectedLocations.push('');
-        plantAdded = !plantAdded;
+        plantsModified = !plantsModified;
+    }
+
+    function removePlant(index: number) {
+        selectedItems.splice(index, 1);
+        selectedLocations.splice(index, 1);
+        plantsModified = !plantsModified;
     }
 
     function checkPlants() {
@@ -101,6 +107,11 @@
                 logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
                 if (!available.has(item.name)) {
                     logicTestMessages.push(`${item.name} not available to plant.`);
+                    plantable = false;
+                    break;
+                }
+                if (location.hasItem()) {
+                    logicTestMessages.push(`${location.name} already has item planted: ${location.item?.name}.`);
                     plantable = false;
                     break;
                 }
@@ -155,7 +166,7 @@
         <p>{selectedPresetData.description}</p>
         <br/><br/>
         <button on:click="{addPlant}">Add Plant</button>
-        {#key plantAdded}{#each selectedItems as selectedItem, index }
+        {#key plantsModified}{#each selectedItems as selectedItem, index }
             <br/><br/>
             <select bind:value="{selectedItem}">
                 {#each items as item}
@@ -174,6 +185,7 @@
                 {/each}
             </select>
             <br/>
+            <button on:click="{() => removePlant(index)}">Remove Plant</button>
         {/each}{/key}
         <br/><br/>
         <button on:click="{checkPlants}">Check Plants</button>
