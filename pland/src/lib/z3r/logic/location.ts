@@ -8,6 +8,7 @@ export default class Location extends Entry {
     region: Region;
     item: Item | null = null;
     messages: string[]|null;
+    isCrystalPendant = false;
     always_callback?: (item: Item, items: ItemCollection) => boolean;
     fill_callback?: (item: Item, locations: LocationCollection) => boolean;
     requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;

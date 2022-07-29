@@ -148,7 +148,7 @@
                 });
                 plantable &&= world.canPlaceMedallions(available);
                 plantable &&= world.canPlaceBosses();
-                plantable &&= world.canPlacePrizes();
+                plantable &&= world.canPlacePrizes(available);
             }
 
             logicTestResult = plantable;

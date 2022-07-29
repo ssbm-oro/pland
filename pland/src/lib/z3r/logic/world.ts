@@ -1,8 +1,8 @@
 import type { Region } from "./region";
-import type { ItemCollection } from "./Support/itemcollection";
+import { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
 import type { Config } from "./config";
-import type Item from "./item";
+import Item from "./item";
 import type Location from "./location";
 
 export default class World {
@@ -45,7 +45,33 @@ export default class World {
     }
 
 
-    canPlacePrizes(): boolean {
+    canPlacePrizes(items: ItemCollection): boolean {
+        let gtItems = new ItemCollection();
+        this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
+            gtItems.addItem((location as Location).item!);
+        });
+        gtItems.addItem(Item.get('Crystal1', this)!)
+        gtItems.addItem(Item.get('Crystal2', this)!)
+        gtItems.addItem(Item.get('Crystal3', this)!)
+        gtItems.addItem(Item.get('Crystal4', this)!)
+        gtItems.addItem(Item.get('Crystal5', this)!)
+        gtItems.addItem(Item.get('Crystal6', this)!)
+        gtItems.addItem(Item.get('Crystal7', this)!)
+
+        let requiredPendants: Region[] = [];
+        // TODO: use gtItems to populate required pendants
+        const nonGtItems = items.diff(gtItems);
+        this.regions.forEach((region, key) => {
+            if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonGtItems)) {
+                requiredPendants.push(region);
+                this.log(`Determined that ${region.name} must be a pendant based on GT items.`)
+            }
+        });
+        if (requiredPendants.length > 3) {
+            this.log(`Too many pendants! Can't place crystals.`)
+            return false;
+        }
+
         return true;
     }
 

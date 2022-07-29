@@ -58,6 +58,15 @@ export class ItemCollection extends Collection {
         return this;
     }
 
+    public diff(items: ItemCollection) {
+        let difference = this.clone();
+        items.items.forEach((entry, key) => {
+            difference.removeItem(entry as Item);
+        });
+
+        return difference;
+    }
+
     has(key: string, count: number = 1) {
         this.log(`checking if we have at least ${count} of ${key} item.`);
         this.log(`Do we have a ${key}?: ${this.items.has(key)}, Do we have a count of ${key}: ${this.item_counts.has(key)}, the count of ${key}: ${this.item_counts.get(key)!}`);

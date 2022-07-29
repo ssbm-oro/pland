@@ -114,7 +114,7 @@ export class TurtleRock extends Region {
         this.locations.get("Turtle Rock - Boss")?.setRequirements((locations, items) => {
             return this.canEnter(locations, items)
                 && items.has("KeyD7", 4)
-                && items.has("BigKeyD7") && items.has("CaneOfSomaria")
+                && items.has("BigKeyD7") && items.has("CaneOfSomaria") && items.has("Lamp")
                 && this.boss?.canBeat(items, locations)!
         });
 
