@@ -105,7 +105,7 @@
                     logicTestMessages.push(`Location: ${accessible_item.name} accessible. Item added: ${accessible_item.item?.name}`);
                 })
 
-                plantable = plantable && location.canFill(item, available, planted, true)!;
+                plantable = plantable && location.canFill(item, available, true, planted)!;
                 if (!plantable) {
                     logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
                     break;

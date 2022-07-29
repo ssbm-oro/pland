@@ -18,10 +18,10 @@ export default class Location extends Entry {
         this.messages = messages;
     }
 
-    public fill(newItem:Item, items: ItemCollection): boolean {
+    public fill(newItem:Item, items: ItemCollection, check_access: boolean = false): boolean {
         let oldItem = this.item;
         this.setItem(newItem);
-        if (this.canFill(newItem, items)) {
+        if (this.canFill(newItem, items, check_access)) {
             Item.items?.addItem(newItem);
             return true;
         }
@@ -40,7 +40,7 @@ export default class Location extends Entry {
         this.requirement_callback = requirement_callback;
     }
 
-    public canFill(newItem: Item, items: ItemCollection, plants: LocationCollection = new LocationCollection([]), check_access = true) {
+    public canFill(newItem: Item, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
         if (check_access) {
             // let items_clone = new ItemCollection([]);
             // items.items.forEach(item => {
