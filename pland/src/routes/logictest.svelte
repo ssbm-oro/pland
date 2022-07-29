@@ -177,7 +177,7 @@
             <select bind:value="{selectedItem}">
                 {#each items as item}
                     {#if item.count && item.count > 0}
-                        <option value="{item}">{item.name}</option>
+                        <option value="{item}">{item.value.replace(':1','')}</option>
                     {/if}
                 {/each}
             </select>
