@@ -119,12 +119,11 @@
                 }
                 available.removeItem(item);
 
-                let accessible = planted.filter(planted_location => planted_location.region != location.region && planted_location.canAccess(available)) as Location[];
-                accessible.forEach(accessible_item => {
-                    logicTestMessages.push(`Location: ${accessible_item.name} accessible. Item added: ${accessible_item.item?.name}`);
-                })
-
+                console.log("available before plant:");
+                console.log(available);
                 plantable = plantable && location.canFill(item, available, true, planted)!;
+                console.log("available after plant");
+                console.log(available);
                 if (!plantable) {
                     logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
                     break;
@@ -142,6 +141,11 @@
             }
 
             if (plantable) {
+                planted.to_array().forEach(location => {
+                    if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
+                        available.addItem(location.item);
+                    }
+                });
                 plantable &&= world.canPlaceMedallions(available);
                 plantable &&= world.canPlaceBosses();
                 plantable &&= world.canPlacePrizes();

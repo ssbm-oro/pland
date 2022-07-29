@@ -12,6 +12,21 @@ export class ItemCollection extends Collection {
         items.forEach(item => this.addItem(item));
     }
 
+    clone(): ItemCollection {
+        let items_clone = new ItemCollection([]);
+        this.items.forEach(item => {
+            for (let i = 0; i <= this.item_counts.get(item.name)!; i++) {
+                items_clone.addItem(item as Item)
+            }
+        });
+        
+        if (this.checksForWorld) {
+            items_clone.setChecksForWorld(this.checksForWorld);
+        }
+
+        return items_clone;
+    }
+
     public setChecksForWorld(world: World) {
         this.checksForWorld = world;
     }

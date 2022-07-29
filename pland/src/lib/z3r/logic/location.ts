@@ -42,18 +42,11 @@ export default class Location extends Entry {
 
     public canFill(newItem: Item, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
         if (check_access) {
-            // let items_clone = new ItemCollection([]);
-            // items.items.forEach(item => {
-            //     for (let i = 0; i <= items.item_counts.get(item.name)!; i++) {
-            //         console.log(`adding ${item.name} to cloned item collection ${items.item_counts.get(item.name)!}`);
-            //         items_clone.addItem(item as Item)
-            //     }
-            // });
-            // items = items_clone;
+            items = items.clone();
 
-            plants.filter(location => location.region != this.region && location.canAccess(items, plants)).forEach(accessible => {
+            plants.filter(location => location.canAccess(items)).forEach(accessible => {
                 let accessible_item = (accessible as Location).item;
-                if (accessible_item) {
+                if ((accessible as Location).region.canEnter(this.region.world.locations, items) && accessible_item) {
                     this.log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
                     items.addItem(accessible_item!);
                 }

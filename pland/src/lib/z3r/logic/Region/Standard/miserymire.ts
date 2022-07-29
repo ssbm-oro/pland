@@ -94,7 +94,7 @@ export class MiseryMire extends Region {
                 && haveMedallion
                 && items.hasSword()
                 && items.has('MoonPearl')
-                && (items.has('HookShot') || items.has('PegasusBoots'))
+                && (items.has('Hookshot') || items.has('PegasusBoots'))
                 && items.canKillMostThings(this.world, 8)
                 && this.world.getRegion('Mire')!.canEnter(locations, items);
         }

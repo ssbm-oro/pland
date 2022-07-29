@@ -46,10 +46,6 @@ export class SwampPalace extends Region {
     }
 
     public override initialize(): Region {
-        this.locations.get("Swamp Palace - Entrance")?.setRequirements((locations, items) => {
-            return items.has("KeyD2");
-        });
-
         this.locations.get("Swamp Palace - Big Chest")?.setRequirements((locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer")
