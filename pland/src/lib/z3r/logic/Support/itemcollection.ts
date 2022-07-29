@@ -42,11 +42,10 @@ export class ItemCollection extends Collection {
         return this;
     }
 
-    has(key: string, count: number = 1, messages:string[]|null = null) {
-        if (messages) {
-            messages.push(`checking if we have at least ${count} of ${key} item.`);
-            messages.push(`Do we have a ${key}?: ${this.items.has(key)}, Do we have a count of ${key}: ${this.item_counts.has(key)}, the count of ${key}: ${this.item_counts.get(key)!}`);
-        }
+    has(key: string, count: number = 1) {
+        this.log(`checking if we have at least ${count} of ${key} item.`);
+        this.log(`Do we have a ${key}?: ${this.items.has(key)}, Do we have a count of ${key}: ${this.item_counts.has(key)}, the count of ${key}: ${this.item_counts.get(key)!}`);
+
         return this.items.has(key) && this.item_counts.has(key) && this.item_counts.get(key)! >= count;
     }
 
@@ -78,7 +77,7 @@ export class ItemCollection extends Collection {
             || this.has('CaneOfSomaria')
             || (this.canBombThings() && enemies < 6
                 && world.config.enemizer.enemy_health == 'default')
-            || (this.has('CaneOfByrna', undefined, messages) && (enemies < 6 || this.canExtendMagic())
+            || (this.has('CaneOfByrna') && (enemies < 6 || this.canExtendMagic())
                 && world.config.enemizer.enemy_health == 'default')
             || this.canShootArrows(world)
             || this.has('Hammer')
@@ -86,17 +85,17 @@ export class ItemCollection extends Collection {
     }
 
     canLightTorches(): boolean {
-        if (this.messages) this.messages.push(`Checking CanLightTorches: Lamp: ${this.has('Lamp')}, FireRod: ${this.has('FireRod')}`);
+        this.log(`Checking CanLightTorches: Lamp: ${this.has('Lamp')}, FireRod: ${this.has('FireRod')}`);
         return this.has('Lamp') || this.has('FireRod');
     }
 
     canLiftRocks(): boolean {
-        if (this.messages) this.messages.push(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}, PowerGlove: ${this.has('PowerGlove')}`);
+        this.log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}, PowerGlove: ${this.has('PowerGlove')}`);
         return this.has('PowerGlove') || this.has('ProgressiveGlove') || this.has('TitansMitts');
     }
 
     canLiftDarkRocks(): boolean {
-        if (this.messages) this.messages.push(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}`);
+        this.log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}`);
         return this.has('ProgressiveGlove', 2) || this.has('TitansMitts');
     }
 
@@ -161,13 +160,13 @@ export class ItemCollection extends Collection {
     }
 
     canFly(world: World): boolean {
-        if (this.messages) this.messages.push(`Checking CanFly: Have OcarinaActive: ${this.has('OcarinaActive')}, Have OcarinaInactive: ${this.has('OcarinaInactive')}`);
+        this.log(`Checking CanFly: Have OcarinaActive: ${this.has('OcarinaActive')}, Have OcarinaInactive: ${this.has('OcarinaInactive')}`);
         return this.has('OcarinaActive') || (this.has('OcarinaInactive') && this.canActivateOcarina(world));
     }
 
     canActivateOcarina(world: World): boolean {
         if (world.inverted) {
-            if (this.messages) this.messages.push(`Checking if activate ocarina inverted: MoonPearl: ${this.has('MoonPear')}, DefeatAgahnim: ${this.has('DefeatAgahnim')}, Hammer: ${this.has('Hammer')}`)
+            this.log(`Checking if activate ocarina inverted: MoonPearl: ${this.has('MoonPear')}, DefeatAgahnim: ${this.has('DefeatAgahnim')}, Hammer: ${this.has('Hammer')}`)
             return this.has('MoonPearl') && (this.has('DefeatAgahnim') || ((this.has('Hammer') && this.canLiftRocks()) || (this.canLiftDarkRocks())));
         }
         return true;
@@ -187,5 +186,9 @@ export class ItemCollection extends Collection {
         return this.has('BugCatchingNet')
             && this.hasABottle()
             && this.has('PegasusBoots') || (this.hasSword() && this.has('Quake'));
+    }
+
+    log(message:string) {
+        if (this.messages) this.messages.push(message);
     }
 }
