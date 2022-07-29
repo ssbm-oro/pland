@@ -25,8 +25,8 @@ export class GanonsTower extends Region {
         Item.get('MapA2', this.world)!
     ]
 
-    public constructor(world: World) {
-        super("Ganons Tower", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Ganons Tower", world, messages);
 
         this.boss = Boss.get("Agahnim2", world);
         this.boss_top = Boss.get("Moldorm", world);

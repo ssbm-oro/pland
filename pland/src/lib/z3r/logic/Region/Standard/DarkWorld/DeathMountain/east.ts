@@ -5,8 +5,8 @@ import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
 import type World from "$lib/z3r/logic/world";
 
 export class East extends Region {
-    public constructor(world: World) {
-        super("Dark World", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Dark World", world, messages);
 
         this.locations = new LocationCollection([
             new Chest("Super Bunny Cave - Top", this),
@@ -40,9 +40,9 @@ export class East extends Region {
             return items.has("MoonPearl") && items.canLiftRocks() && (items.has("Hookshot") || items.has("PegasusBoots"));
         });
 
-        this.can_enter = (locations, items, messages) => {
+        this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
-                && (items.canLiftDarkRocks() && this.world.getRegion("East Death Mountain")!.canEnter(locations, items, messages));
+                && (items.canLiftDarkRocks() && this.world.getRegion("East Death Mountain")!.canEnter(locations, items));
         };
 
         return this;

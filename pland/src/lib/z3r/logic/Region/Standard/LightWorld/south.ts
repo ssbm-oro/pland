@@ -10,8 +10,8 @@ import { Dig } from "$lib/z3r/logic/Location/dig";
 import { Bombos } from "$lib/z3r/logic/Location/Drop/bombos";
 
 export class South extends Region {
-    public constructor(world: World) {
-        super("Light World", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Light World", world, messages);
 
         this.locations = new LocationCollection([
             new Chest("Floodgate Chest", this),

@@ -9,8 +9,8 @@ import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
 import type World from "$lib/z3r/logic/world";
 
 export class NorthWest extends Region {
-    public constructor(world: World) {
-        super("Light World", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Light World", world, messages);
 
         this.locations = new LocationCollection([
             new Pedestal("Master Sword Pedestal", this),

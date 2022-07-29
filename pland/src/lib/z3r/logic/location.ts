@@ -1,19 +1,21 @@
 import type { Region } from "./region";
 import Item from "./item";
-import { ItemCollection } from "./Support/itemcollection";
+import type { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
 import { Entry } from "./Support/collection";
 
 export default class Location extends Entry {
     region: Region;
     item: Item | null = null;
+    messages: string[]|null;
     always_callback?: (item: Item, items: ItemCollection) => boolean;
     fill_callback?: (item: Item, locations: LocationCollection) => boolean;
-    requirement_callback?: (locations: LocationCollection, items: ItemCollection, messages:string[]|null) => boolean;
+    requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
 
-    constructor(name: string, region: Region) {
+    constructor(name: string, region: Region, messages: string[]|null = null) {
         super(name);
         this.region = region;
+        this.messages = messages;
     }
 
     public fill(newItem:Item): boolean {
@@ -38,17 +40,21 @@ export default class Location extends Entry {
         this.requirement_callback = requirement_callback;
     }
 
-    public canFill(newItem: Item, items: ItemCollection, plants: LocationCollection = new LocationCollection([]), check_access = true, messages: string[] | null = null) {
+    public canFill(newItem: Item, items: ItemCollection, plants: LocationCollection = new LocationCollection([]), check_access = true) {
         if (check_access) {
-            let items_clone = new ItemCollection([]);
-            items.items.forEach(item => items_clone.addItem(item as Item));
-            items = items_clone;
+            // let items_clone = new ItemCollection([]);
+            // items.items.forEach(item => {
+            //     for (let i = 0; i <= items.item_counts.get(item.name)!; i++) {
+            //         console.log(`adding ${item.name} to cloned item collection ${items.item_counts.get(item.name)!}`);
+            //         items_clone.addItem(item as Item)
+            //     }
+            // });
+            // items = items_clone;
 
             plants.filter(location => location.canAccess(items, plants)).forEach(accessible => {
                 let accessible_item = (accessible as Location).item;
                 if (accessible_item) {
-                    if (messages)
-                        messages.push(`${accessible.name} is accessible so adding ${accessible_item.name}`);
+                    this.log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
                     items.addItem(accessible_item!);
                 }
             });
@@ -56,25 +62,25 @@ export default class Location extends Entry {
 
         let oldItem = this.item;
         this.item = newItem;
-        let fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item, messages) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items));
+        let fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items));
         this.item = oldItem;
 
         return fillable;
     }
 
-    public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([]), messages: string[] | null = null) {
+    public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([])) {
         let total_locations = locations ?? this.region.locations;
 
-        if (messages) messages.push(`Checking region access for ${this.region.name}.`);
+        this.log(`Checking region access for ${this.region.name}.`);
         if (!this.region.canEnter(total_locations, items))
         {
-            if (messages) messages.push(`Cannot access region.`);
+            this.log(`Cannot access region.`);
             return false;
         }
 
-        if (messages) messages.push(`Checking requirement callback for ${this.name}.`);
-        if (!this.requirement_callback || this.requirement_callback.call(this, locations, items, messages)) {
-            if (messages) messages.push(`Can access requirements.`);
+        this.log(`Checking requirement callback for ${this.name}.`);
+        if (!this.requirement_callback || this.requirement_callback.call(this, locations, items)) {
+            this.log(`Can access requirements.`);
             return true
         }
 
@@ -87,5 +93,9 @@ export default class Location extends Entry {
 
     public getName() {
         return this.name + ":1";
+    }
+
+    public log(message:string) {
+        if (this.messages) this.messages.push(message);
     }
 }

@@ -20,8 +20,8 @@ export class ThievesTown extends Region {
         Item.get('MapD4', this.world)!
     ];
 
-    public constructor(world: World) {
-        super("Thieves Town", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Thieves Town", world, messages);
 
         this.boss = Boss.get("Blind", world);
 

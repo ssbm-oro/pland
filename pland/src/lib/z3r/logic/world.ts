@@ -32,7 +32,7 @@ export default class World {
     }
 
     canPlant(item: Item, location: Location, messages:string[]|null): boolean {
-        return location.region.canFill(item, messages);
+        return location.region.canFill(item);
     }
 
 }

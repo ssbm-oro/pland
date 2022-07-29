@@ -7,14 +7,16 @@ export default class Item extends Entry {
     world: World;
     is_dungeon_item = false;
     is_bottle = false;
+    messages: string[]|null;
 
     public static items: ItemCollection;
     public static world: World;
 
-    constructor(name: string, world: World) {
+    constructor(name: string, world: World, messages: string[]|null = null) {
         super(name);
         this.nice_name = "item." + name;
         this.world = world;
+        this.messages = messages;
     }
 
     public static all(world: World) {

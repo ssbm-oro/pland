@@ -21,8 +21,8 @@ export class SkullWoods extends Region {
         Item.get('MapD3', this.world)!
     ];
 
-    public constructor(world: World) {
-        super("Skull Woods", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Skull Woods", world, messages);
 
         this.boss = Boss.get("Mothula", world);
 

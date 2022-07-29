@@ -20,8 +20,8 @@ export class MiseryMire extends Region {
         Item.get('MapD6', this.world)!
     ];
 
-    public constructor(world: World) {
-        super("MiseryMire", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("MiseryMire", world, messages);
 
         this.boss = Boss.get("Vitreous", world);
 

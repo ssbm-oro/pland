@@ -35,17 +35,17 @@
             selectedPresetData = await preset_res.json();
             switch(selectedPresetData.settings.mode) {
                 case 'open':
-                    world = new Open(selectedPresetData.settings);
+                    world = new Open(selectedPresetData.settings, logicTestMessages);
                     break;
                 case 'inverted':
-                    world = new Inverted(selectedPresetData.settings);
+                    world = new Inverted(selectedPresetData.settings, logicTestMessages);
                     break;
                 case 'retro':
-                    world = new Retro(selectedPresetData.settings);
+                    world = new Retro(selectedPresetData.settings, logicTestMessages);
                     break;
                 case 'standard':
                 default:
-                    world = new Standard(selectedPresetData.settings);
+                    world = new Standard(selectedPresetData.settings, logicTestMessages);
                     break;
             }
         }
@@ -76,7 +76,7 @@
                 Item.get('PendantOfWisdom',world)!,
                 Item.get('PendantOfCourage',world)!,
                 Item.get('PendantOfPower',world)!,
-            ]);
+            ], logicTestMessages);
             let planted = new LocationCollection();
 
             items.forEach(item => {
@@ -86,8 +86,11 @@
                     if (!itemObj)
                         itemObj = Item.get(item.value.slice(0, -2), world);
                     
-                    if (itemObj)
-                        available.addItem(itemObj)
+                    if (itemObj) {
+                        for(let i = 0; i < item.count; i++) {
+                            available.addItem(itemObj);
+                        }
+                    }
                 }
             });
             
@@ -102,7 +105,7 @@
                     logicTestMessages.push(`Location: ${accessible_item.name} accessible. Item added: ${accessible_item.item?.name}`);
                 })
 
-                plantable = plantable && location.canFill(item, available, planted, true, logicTestMessages)!;
+                plantable = plantable && location.canFill(item, available, planted, true)!;
                 if (!plantable) {
                     logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
                     break;

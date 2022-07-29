@@ -21,8 +21,8 @@ export class TurtleRock extends Region {
         Item.get('MapD7', this.world)!
     ];
 
-    public constructor(world: World) {
-        super("Turtle Rock", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Turtle Rock", world, messages);
 
         this.boss = Boss.get("Trinexx", world);
 

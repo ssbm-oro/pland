@@ -21,8 +21,8 @@ export class TowerOfHera extends Region {
         Item.get('MapP3', this.world)!
     ];
 
-    public constructor(world: World) {
-        super("Tower of Hera", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Tower of Hera", world, messages);
 
         this.boss = Boss.get("Moldorm", world);
 

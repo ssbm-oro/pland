@@ -21,8 +21,8 @@ export class IcePalace extends Region {
         Item.get('MapD5', this.world)!
     ];
 
-    public constructor(world: World) {
-        super("Ice Palace", world);
+    public constructor(world: World, messages: string[]|null = null) {
+        super("Ice Palace", world, messages);
 
         this.boss = Boss.get("Kholdstare", world);
 
