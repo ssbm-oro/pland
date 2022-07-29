@@ -46,6 +46,10 @@ export default class World {
 
 
     canPlacePrizes(items: ItemCollection): boolean {
+        let requiredPendants: Region[] = [];
+        let requiredCrystals: Region[] = [];
+
+
         let gtItems = new ItemCollection();
         this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
             gtItems.addItem((location as Location).item!);
@@ -57,11 +61,8 @@ export default class World {
         gtItems.addItem(Item.get('Crystal5', this)!)
         gtItems.addItem(Item.get('Crystal6', this)!)
         gtItems.addItem(Item.get('Crystal7', this)!)
-
-        let requiredPendants: Region[] = [];
-        // TODO: use gtItems to populate required pendants
         const nonGtItems = items.diff(gtItems);
-        this.regions.forEach((region, key) => {
+        this.regions.forEach(region => {
             if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonGtItems)) {
                 requiredPendants.push(region);
                 this.log(`Determined that ${region.name} must be a pendant based on GT items.`)
@@ -72,7 +73,39 @@ export default class World {
             return false;
         }
 
-        return true;
+        let pendItems = new ItemCollection();
+        pendItems.addItem(Item.get('PendantOfCourage', this)!);
+        pendItems.addItem(Item.get('PendantOfWisdom', this)!);
+        pendItems.addItem(Item.get('PendantOfPower', this)!);
+        if (this.locations.get('Master Sword Pedestal')?.item) {
+            pendItems.addItem(this.locations.get('Master Sword Pedestal')?.item!);
+        }
+        if (this.locations.get('Sahasrahla')?.item) {
+            pendItems.addItem(this.locations.get('Sahasrahla')?.item!);
+        }
+        const nonPendItems = items.diff(pendItems);
+        this.regions.forEach(region => {
+            if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonPendItems)) {
+                requiredCrystals.push(region);
+                this.log(`Determined that ${region.name} must be a crystal based on pendant items.`);
+            }
+        });
+        if (requiredCrystals.length > 7) {
+            this.log(`Too many crystals! Can't place pendants.`);
+            return false;
+        }
+
+        let noDoubles = true;
+        requiredCrystals.forEach(crystal => {
+            requiredPendants.forEach(pendant => {
+                if (crystal == pendant) {
+                    this.log(`Paradox: ${crystal.name} must be both a pendant and a crystal.`);
+                    noDoubles = false;
+                }
+            });
+        });
+
+        return noDoubles;
     }
 
     canPlaceBosses(): boolean {
