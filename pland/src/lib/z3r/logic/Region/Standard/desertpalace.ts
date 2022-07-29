@@ -72,7 +72,7 @@ export class DesertPalace extends Region {
 
         this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
-                && (items.has('Book of Mudora') || (items.has('Mirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
+                && (items.has('Book of Mudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
         };
 
         this.prize!.setRequirements(this.canComplete);
