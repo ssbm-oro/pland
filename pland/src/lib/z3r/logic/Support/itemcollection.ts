@@ -15,11 +15,11 @@ export class ItemCollection extends Collection {
     clone(): ItemCollection {
         let items_clone = new ItemCollection([]);
         this.items.forEach(item => {
-            for (let i = 0; i <= this.item_counts.get(item.name)!; i++) {
+            for (let i = 0; i < this.item_counts.get(item.name)!; i++) {
                 items_clone.addItem(item as Item)
             }
         });
-        
+
         if (this.checksForWorld) {
             items_clone.setChecksForWorld(this.checksForWorld);
         }
