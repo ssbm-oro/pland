@@ -18,8 +18,8 @@ export class HyruleCastleTower extends Region {
         Item.get('MapA1', this.world)!
     ];
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Castle Tower", world, messages);
+    public constructor(world: World) {
+        super("Castle Tower", world);
 
         this.locations = new LocationCollection([
             new Chest("Castle Tower - Room 03", this),

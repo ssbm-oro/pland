@@ -21,8 +21,8 @@ export class PalaceOfDarkness extends Region {
         Item.get('MapD1', this.world)!
     ];
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Dark Palace", world, messages);
+    public constructor(world: World) {
+        super("Dark Palace", world);
 
         this.boss = Boss.get("Helmasaur", world);
 

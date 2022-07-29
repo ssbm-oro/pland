@@ -21,8 +21,8 @@ export class SwampPalace extends Region {
         Item.get('MapD2', this.world)!
     ];
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Swamp Palace", world, messages);
+    public constructor(world: World) {
+        super("Swamp Palace", world,);
 
         this.boss = Boss.get("Arrghus", world);
 

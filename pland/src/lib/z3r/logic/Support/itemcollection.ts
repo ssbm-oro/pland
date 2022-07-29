@@ -6,12 +6,10 @@ export class ItemCollection extends Collection {
     //items: Map<string, Item> = new Map();
     item_counts : Map<string, number> = new Map();
     checksForWorld?: World;
-    messages: string[]|null;
 
-    public constructor(items:Item[] = [], messages: string[]|null = null) {
+    public constructor(items:Item[] = []) {
         super();
         items.forEach(item => this.addItem(item));
-        this.messages = messages;
     }
 
     public setChecksForWorld(world: World) {
@@ -189,6 +187,6 @@ export class ItemCollection extends Collection {
     }
 
     log(message:string) {
-        if (this.messages) this.messages.push(message);
+        if (this.checksForWorld && this.checksForWorld.messages) this.checksForWorld.messages.push(message);
     }
 }

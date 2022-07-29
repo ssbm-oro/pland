@@ -6,8 +6,8 @@ import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
 import type World from "$lib/z3r/logic/world";
 
 export class East extends Region {
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Death Mountain", world, messages);
+    public constructor(world: World) {
+        super("Death Mountain", world);
 
         this.locations = new LocationCollection([
             new Chest("Spiral Cave", this),

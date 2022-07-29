@@ -21,8 +21,8 @@ export class TurtleRock extends Region {
         Item.get('MapD7', this.world)!
     ];
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Turtle Rock", world, messages);
+    public constructor(world: World) {
+        super("Turtle Rock", world,);
 
         this.boss = Boss.get("Trinexx", world);
 
@@ -49,7 +49,17 @@ export class TurtleRock extends Region {
 
     public override initialize(): Region {
         const upper = (locations: LocationCollection, items: ItemCollection) => {
-            return ((items.has(locations.get('Turtle Rock Medallion')?.item?.name!))
+            let haveMedallion = false;
+            let medallion = locations.get('Turtle Rock Medallion')
+            if (!medallion || !medallion.item) {
+                haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
+                this.world.log(`Turtle Rock Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+            }
+            else {
+                haveMedallion = items.has(medallion.item.name);
+                this.world.log(`Turtle Rock Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
+            }
+            return (haveMedallion
                 && items.hasSword()
                 && items.has("MoonPearl")
                 && items.has("CaneOfSomaria")

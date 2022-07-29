@@ -15,14 +15,12 @@ export class Region {
     can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
     can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
     region_items: Item[] = [];
-    messages: string[]|null;
 
 
-    constructor(name: string, world: World, messages: string[]|null = null) {
+    constructor(name: string, world: World) {
         this.name = name;
         this.locations = new LocationCollection([]);
         this.world = world;
-        this.messages = messages
     }
     
     initialize() : Region {
@@ -72,25 +70,25 @@ export class Region {
 
     public canEnter(locations: LocationCollection, items: ItemCollection) {
         if (this.can_enter) {
-            this.log(`Checking if we can enter ${this.name}`);
+            this.world.log(`Checking if we can enter ${this.name}`);
             return this.can_enter(locations, items);
         }
-        this.log(`can_enter not defined. Assuming we can enter this region.`)
+        this.world.log(`can_enter not defined. Assuming we can enter this region.`)
         return true;
     }
 
     public canFill(item: Item) {
-        this.log(`Checking if ${item.name} can be go in Region ${this.name}.`);
+        this.world.log(`Checking if ${item.name} can be go in Region ${this.name}.`);
         let from_world = item.world;
 
         // TODO: Add wild dungeon items
         if (item.is_dungeon_item)
         {
-            this.log(`Item is a dungeon item.`);
+            this.world.log(`Item is a dungeon item.`);
             return this.isRegionItem(item);
         }
 
-        this.log(`Item not a dungeon item.`);
+        this.world.log(`Item not a dungeon item.`);
         return true;
     }
 
@@ -104,10 +102,5 @@ export class Region {
 
     public locationsWithItem() {
         return this.locations.filter(location => location.hasItem());
-    }
-
-
-    log(message: string) {
-        if (this.messages) this.messages.push(message);
     }
 }

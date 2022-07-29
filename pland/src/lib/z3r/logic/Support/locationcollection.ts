@@ -70,8 +70,9 @@ export class LocationCollection extends Collection {
                 items.push(item);
             }
         });
-
-        return new ItemCollection(items);
+        let ret = new ItemCollection(items);
+        ret.setChecksForWorld(world);
+        return ret;
     }
 
     public getRegions() {

@@ -61,7 +61,7 @@
     }
 
     function checkPlants() {
-        logicTestMessages = [];
+        world.messages = logicTestMessages = [];
         try {
             let plantable = true;
             let available = new ItemCollection([
@@ -76,7 +76,8 @@
                 Item.get('PendantOfWisdom',world)!,
                 Item.get('PendantOfCourage',world)!,
                 Item.get('PendantOfPower',world)!,
-            ], logicTestMessages);
+            ]);
+            available.setChecksForWorld(world);
             let planted = new LocationCollection();
 
             items.forEach(item => {

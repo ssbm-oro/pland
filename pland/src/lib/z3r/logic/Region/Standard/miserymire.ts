@@ -20,8 +20,8 @@ export class MiseryMire extends Region {
         Item.get('MapD6', this.world)!
     ];
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("MiseryMire", world, messages);
+    public constructor(world: World) {
+        super("MiseryMire", world);
 
         this.boss = Boss.get("Vitreous", world);
 
@@ -77,8 +77,21 @@ export class MiseryMire extends Region {
         });
 
         this.can_enter = (locations, items) => {
+
+            let haveMedallion = false;
+            let medallion = locations.get('Misery Mire Medallion')
+            if (!medallion || !medallion.item) {
+                haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
+                this.world.log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+                console.log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+            }
+            else {
+                haveMedallion = items.has(medallion.item.name);
+                this.world.log(`Misery Mire Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
+            }
+
             return items.has('RescueZelda')
-                && (items.has(locations.get('Misery Mire Medallion')?.item?.name!))
+                && haveMedallion
                 && items.hasSword()
                 && items.has('MoonPearl')
                 && (items.has('HookShot') || items.has('PegasusBoots'))

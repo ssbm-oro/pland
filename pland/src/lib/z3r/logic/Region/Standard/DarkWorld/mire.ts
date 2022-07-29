@@ -4,8 +4,8 @@ import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
 import type World from "$lib/z3r/logic/world";
 
 export class Mire extends Region {
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Mire", world, messages);
+    public constructor(world: World) {
+        super("Mire", world);
 
         this.locations = new LocationCollection([
             new Chest("Mire Shed - Left", this),
@@ -24,7 +24,7 @@ export class Mire extends Region {
         });
 
         this.can_enter = (locations, items) => {
-            this.log(`Checking access for Mire Area. Moon Pearl: ${items.has("MoonPearl")}`)
+            this.world.log(`Checking access for Mire Area. Moon Pearl: ${items.has("MoonPearl")}`)
             return items.has("MoonPearl")
                 && items.canLiftDarkRocks() && items.canFly(this.world);
         };

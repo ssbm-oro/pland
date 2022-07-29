@@ -19,8 +19,8 @@ export class HyruleCastleEscape extends Region {
         Item.get('MapH2', this.world)!
     ];
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Hyrule Castle", world, messages);
+    public constructor(world: World) {
+        super("Hyrule Castle", world);
 
         this.locations = new LocationCollection([
             new Chest("Sanctuary", this),

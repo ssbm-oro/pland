@@ -22,8 +22,8 @@ export class EasternPalace extends Region {
         Item.get('KeyP1', this.world)!
     ];
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Eastern Palace", world, messages);
+    public constructor(world: World) {
+        super("Eastern Palace", world);
 
         this.boss = Boss.get("Armos Knights", world);
 

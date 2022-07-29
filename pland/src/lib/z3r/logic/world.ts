@@ -12,10 +12,12 @@ export default class World {
     win_condition?: (items: ItemCollection) => boolean;
     id: number = 0;
     inverted = false;
+    messages: string[]|null = null;
 
-    public constructor(config:Config)
+    public constructor(config:Config, messages: string[]|null = null)
     {
         this.config = config;
+        messages = messages;
     }
 
     public initialize() {
@@ -35,4 +37,7 @@ export default class World {
         return location.region.canFill(item);
     }
 
+    log(message: string) {
+        if (this.messages) this.messages.push(message); else console.log(message);
+    }
 }

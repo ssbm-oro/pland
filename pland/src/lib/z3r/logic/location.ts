@@ -96,6 +96,6 @@ export default class Location extends Entry {
     }
 
     public log(message:string) {
-        if (this.messages) this.messages.push(message);
+        if (this.region.world.messages) this.region.world.messages.push(message);
     }
 }

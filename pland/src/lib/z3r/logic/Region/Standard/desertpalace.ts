@@ -23,8 +23,8 @@ export class DesertPalace extends Region {
         Item.get('MapP2', this.world)!
     ]
 
-    public constructor(world: World, messages: string[]|null = null) {
-        super("Desert Palace", world, messages);
+    public constructor(world: World) {
+        super("Desert Palace", world);
 
         this.boss = Boss.get("Lanmolas", world);
 
