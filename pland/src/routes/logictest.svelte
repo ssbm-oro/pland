@@ -100,6 +100,8 @@
                     }
                 }
             });
+
+            world.resetPlants();
             
             for(let i = 0; i < selectedItems.length; i++) {
                 let location = world.locations.get(selectedLocations[i].name)!;
@@ -110,7 +112,7 @@
                     plantable = false;
                     break;
                 }
-                if (location.hasItem()) {
+                if (location.hasItem() && !location.hasItem(item)) {
                     logicTestMessages.push(`${location.name} already has item planted: ${location.item?.name}.`);
                     plantable = false;
                     break;

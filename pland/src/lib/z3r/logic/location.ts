@@ -68,6 +68,10 @@ export default class Location extends Entry {
         return fillable;
     }
 
+    public removeItem() {
+        this.item = null;
+    }
+
     public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([])) {
         let total_locations = locations ?? this.region.locations;
 

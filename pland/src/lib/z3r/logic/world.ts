@@ -38,6 +38,13 @@ export default class World {
     }
 
 
+    resetPlants() {
+        this.locations.locationsWithItem().forEach(location => {
+            this.locations.get(location.name)!.removeItem();
+        });
+    }
+
+
     canPlacePrizes(): boolean {
         return true;
     }
