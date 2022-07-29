@@ -111,7 +111,7 @@
                     break;
                 }
                 else {
-                    if (location.fill(item)) {
+                    if (location.fill(item, available)) {
                         logicTestMessages.push(`Planted ${item.name} at ${location.name}.`)
                         planted.addItem(location);
                     }

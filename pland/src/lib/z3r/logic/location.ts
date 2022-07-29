@@ -18,10 +18,10 @@ export default class Location extends Entry {
         this.messages = messages;
     }
 
-    public fill(newItem:Item): boolean {
+    public fill(newItem:Item, items: ItemCollection): boolean {
         let oldItem = this.item;
         this.setItem(newItem);
-        if (this.canFill(newItem, Item.items)) {
+        if (this.canFill(newItem, items)) {
             Item.items?.addItem(newItem);
             return true;
         }
