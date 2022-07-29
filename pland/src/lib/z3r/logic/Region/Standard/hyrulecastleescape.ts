@@ -9,14 +9,14 @@ import type { ItemCollection } from "../../Support/itemcollection";
 
 export class HyruleCastleEscape extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyH2', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassH2', this.world),
-        new Key('Key', this.world),
-        new Key('KeyH2', this.world),
-        new Map('Map', this.world),
-        new Map('MapH2', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyH2', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassH2', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyH2', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapH2', this.world)!
     ];
 
     public constructor(world: World) {
@@ -67,7 +67,7 @@ export class HyruleCastleEscape extends Region {
             return items.canKillMostThings(this.world);
         });
 
-        this.canComplete = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
             return this.locations.get("Sanctuary")?.canAccess(items, locations)!;
         }
 

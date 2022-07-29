@@ -33,7 +33,7 @@ export class West extends Region {
             return items.has("MagicMirror");
         });
 
-        this.canEnter = (locations:LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations:LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda")
                 && (items.canFly(this.world)
                     || (items.canLiftRocks() && items.has("Lamp")));

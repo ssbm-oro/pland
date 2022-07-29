@@ -23,7 +23,7 @@ export class Mire extends Region {
             return items.has("MoonPearl");
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has("MoonPearl")
                 && items.canLiftDarkRocks() && items.canFly(this.world);
         };

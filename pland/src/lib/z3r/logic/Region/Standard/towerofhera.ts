@@ -11,14 +11,14 @@ import { Pendant } from "../../Location/Prize/pendant";
 
 export class TowerOfHera extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyP3', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassP3', this.world),
-        new Key('Key', this.world),
-        new Key('KeyP3', this.world),
-        new Map('Map', this.world),
-        new Map('MapP3', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyP3', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassP3', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyP3', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapP3', this.world)!
     ];
 
     public constructor(world: World) {
@@ -54,7 +54,7 @@ export class TowerOfHera extends Region {
             return items.has("BigKeyP3");
         })
 
-        this.canComplete = (locations, items) => {
+        this.can_complete = (locations, items) => {
             return this.locations.get("Tower of Hera - Boss")?.canAccess(items, locations)!;
         }
 
@@ -63,7 +63,7 @@ export class TowerOfHera extends Region {
                 && items.has("BigKeyP3");
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && (items.has("Magic Mirror")
                     || (items.has("Hookshot") && items.has("Hammer")

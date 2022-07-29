@@ -12,8 +12,8 @@ export class Region {
     boss?: Boss;
     world: World;
     prize?: Prize;
-    can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
-    can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
+    can_complete?: (location: LocationCollection, items: ItemCollection, messages:string[]|null) => boolean;
+    can_enter?: (location: LocationCollection, items: ItemCollection, messages:string[]|null) => boolean;
     region_items: Item[] = [];
 
 
@@ -61,32 +61,33 @@ export class Region {
         return this.prize.hasItem(item);
     }
 
-    public canComplete(locations: LocationCollection, items: ItemCollection) {
+    public canComplete(locations: LocationCollection, items: ItemCollection, messages: string[]|null = null) {
         if (this.can_complete) {
-            return this.can_complete(locations, items);
+            return this.can_complete(locations, items, messages);
         }
         return true;
     }
 
-    public canEnter(locations: LocationCollection, items: ItemCollection) {
+    public canEnter(locations: LocationCollection, items: ItemCollection, messages:string[]|null = null) {
         if (this.can_enter) {
-            return this.can_enter(locations, items);
+            return this.can_enter(locations, items, messages);
         }
+        if (messages) messages.push(`can_enter not defined. Assuming we can enter this region.`)
         return true;
     }
 
-    public canFill(item: Item) {
-        console.log(`Checking if ${item.name} can be go in Region ${this.name}.`);
+    public canFill(item: Item, messages:string[]|null) {
+        if (messages) messages.push(`Checking if ${item.name} can be go in Region ${this.name}.`);
         let from_world = item.world;
 
         // TODO: Add wild dungeon items
         if (item.is_dungeon_item)
         {
-            console.log(`Item is a dungeon item.`);
-            return this.region_items.includes(item);
+            if (messages) messages.push(`Item is a dungeon item.`);
+            return this.isRegionItem(item);
         }
 
-        console.log(`Item not a dungeon item.`);
+        if (messages) messages.push(`Item not a dungeon item.`);
         return true;
     }
 

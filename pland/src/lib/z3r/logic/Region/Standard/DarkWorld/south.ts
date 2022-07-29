@@ -50,7 +50,7 @@ export class South extends Region {
             return items.has("MoonPearl");
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && (items.has("MoonPearl")
                     && (this.world.getRegion("North East Dark World")!.canEnter(locations, items) && items.has("Hammer"))

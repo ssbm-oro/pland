@@ -51,7 +51,7 @@ export class NorthWest extends Region {
                 && (items.has("MoonPearl") && items.canLiftDarkRocks());
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && (items.has("MoonPearl")
                     && ((this.world.getRegion("North East Dark World")!.canEnter(locations, items)

@@ -10,7 +10,7 @@
     import Item from '$lib/z3r/logic/item';
     import type Location from '$lib/z3r/logic/location';
     import { ItemCollection } from '$lib/z3r/logic/Support/itemcollection';
-import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
+    import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
 
     let selectedPreset: string;
     let world: World;
@@ -62,63 +62,68 @@ import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
 
     function checkPlants() {
         logicTestMessages = [];
-        let plantable = true;
-        let available = new ItemCollection([
-            Item.get('RescueZelda',world)!,
-            Item.get('Crystal1',world)!,
-            Item.get('Crystal2',world)!,
-            Item.get('Crystal3',world)!,
-            Item.get('Crystal4',world)!,
-            Item.get('Crystal5',world)!,
-            Item.get('Crystal6',world)!,
-            Item.get('Crystal7',world)!,
-            Item.get('PendantOfWisdom',world)!,
-            Item.get('PendantOfCourage',world)!,
-            Item.get('PendantOfPower',world)!,
-        ]);
-        let planted = new LocationCollection();
+        try {
+            let plantable = true;
+            let available = new ItemCollection([
+                Item.get('RescueZelda',world)!,
+                Item.get('Crystal1',world)!,
+                Item.get('Crystal2',world)!,
+                Item.get('Crystal3',world)!,
+                Item.get('Crystal4',world)!,
+                Item.get('Crystal5',world)!,
+                Item.get('Crystal6',world)!,
+                Item.get('Crystal7',world)!,
+                Item.get('PendantOfWisdom',world)!,
+                Item.get('PendantOfCourage',world)!,
+                Item.get('PendantOfPower',world)!,
+            ]);
+            let planted = new LocationCollection();
 
-        items.forEach(item => {
-            if (item.count && item.count > 0)
-            {
-                let itemObj = Item.get(item.value, world);
-                if (!itemObj)
-                    itemObj = Item.get(item.value.slice(0, -2), world);
-                
-                if (itemObj)
-                    available.addItem(itemObj)
-            }
-        });
-        
-        for(let i = 0; i < selectedItems.length; i++) {
-            let location = world.locations.get(selectedLocations[i].name)!;
-            let item = Item.get(selectedItems[i].value.slice(0,-2), world)!;
-            logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
-            available.removeItem(item);
+            items.forEach(item => {
+                if (item.count && item.count > 0)
+                {
+                    let itemObj = Item.get(item.value, world);
+                    if (!itemObj)
+                        itemObj = Item.get(item.value.slice(0, -2), world);
+                    
+                    if (itemObj)
+                        available.addItem(itemObj)
+                }
+            });
+            
+            for(let i = 0; i < selectedItems.length; i++) {
+                let location = world.locations.get(selectedLocations[i].name)!;
+                let item = Item.get(selectedItems[i].value.slice(0,-2), world)!;
+                logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
+                available.removeItem(item);
 
-            let accessible = planted.filter(planted_location => planted_location.canAccess(available)) as Location[];
-            accessible.forEach(accessible_item => {
-                logicTestMessages.push(`Location: ${accessible_item.name} accessible. Item added: ${accessible_item.item?.name}`);
-            })
+                let accessible = planted.filter(planted_location => planted_location.canAccess(available)) as Location[];
+                accessible.forEach(accessible_item => {
+                    logicTestMessages.push(`Location: ${accessible_item.name} accessible. Item added: ${accessible_item.item?.name}`);
+                })
 
-            plantable = plantable && location.canFill(item, available, planted, true, logicTestMessages)!;
-            if (!plantable) {
-                logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
-                break;
-            }
-            else {
-                if (location.fill(item)) {
-                    logicTestMessages.push(`Planted ${item.name} at ${location.name}.`)
-                    planted.addItem(location);
+                plantable = plantable && location.canFill(item, available, planted, true, logicTestMessages)!;
+                if (!plantable) {
+                    logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
+                    break;
                 }
                 else {
-                    logicTestMessages.push(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
+                    if (location.fill(item)) {
+                        logicTestMessages.push(`Planted ${item.name} at ${location.name}.`)
+                        planted.addItem(location);
+                    }
+                    else {
+                        logicTestMessages.push(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
+                    }
                 }
+                // planted.addItem(item);
             }
-            // planted.addItem(item);
-        }
 
-        logicTestResult = plantable;
+            logicTestResult = plantable;
+        }
+        catch (err:any) {
+            logicTestMessages.push(err);
+        }
     }
 </script>
 

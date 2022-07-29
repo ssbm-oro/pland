@@ -87,7 +87,7 @@ export class South extends Region {
             return items.has("Shovel");
         })
 
-        this.canEnter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda");
         }
 

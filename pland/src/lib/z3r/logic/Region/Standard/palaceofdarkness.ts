@@ -11,14 +11,14 @@ import type { ItemCollection } from "../../Support/itemcollection";
 
 export class PalaceOfDarkness extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyD1', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassD1', this.world),
-        new Key('Key', this.world),
-        new Key('KeyD1', this.world),
-        new Map('Map', this.world),
-        new Map('MapD1', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyD1', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassD1', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyD1', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapD1', this.world)!
     ];
 
     public constructor(world: World) {
@@ -99,7 +99,7 @@ export class PalaceOfDarkness extends Region {
         this.locations.get("Palace of Darkness - Dark Maze - Top")?.setRequirements(darkMazeRequirements);
         this.locations.get("Palace of Darkness - Dark Maze - Bottom")?.setRequirements(darkMazeRequirements);
 
-        this.canComplete = (locations, items) => {
+        this.can_complete = (locations, items) => {
             return this.locations.get("Palace of Darkness - Boss")?.canAccess(items, locations)!;
         };
 
@@ -110,7 +110,7 @@ export class PalaceOfDarkness extends Region {
                 && items.has('BigKeyD6') && items.has('KeyD6', 6);
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
                 && (items.has('MoonPearl') && this.world.getRegion('North East Dark World')!.canEnter(locations, items));
         };

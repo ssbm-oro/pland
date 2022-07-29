@@ -1,5 +1,5 @@
 import { Boss } from "../../boss";
-import type Item from "../../item";
+import Item from "../../item";
 import { Pendant } from "../../Location/Prize/pendant";
 import { BigChest } from "../../Location/bigchest";
 import { Chest } from "../../Location/chest";
@@ -13,14 +13,14 @@ import { BigKey, Compass, Key, Map } from "../../item";
 
 export class DesertPalace extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyP2', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassP2', this.world),
-        new Key('Key', this.world),
-        new Key('KeyP2', this.world),
-        new Map('Map', this.world),
-        new Map('MapP2', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyP2', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassP2', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyP2', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapP2', this.world)!
     ]
 
     public constructor(world: World) {
@@ -58,7 +58,7 @@ export class DesertPalace extends Region {
             return items.has('Pegasus Boots');
         })
 
-        this.canComplete = (locations, items) => {
+        this.can_complete = (locations, items) => {
             return this.locations.get("Desert Palace - Boss")?.canAccess(items, locations)!;
         }
 
@@ -70,7 +70,7 @@ export class DesertPalace extends Region {
                 && this.boss!.canBeat(items, locations))
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
                 && (items.has('Book of Mudora') || (items.has('Mirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
         };

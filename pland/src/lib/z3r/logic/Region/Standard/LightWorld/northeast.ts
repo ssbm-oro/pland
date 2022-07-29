@@ -51,7 +51,7 @@ export class NorthEast extends Region {
             return items.has("Flippers");
         });
 
-        this.canEnter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda");
         }
 

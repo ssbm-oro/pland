@@ -11,14 +11,14 @@ import { Crystal } from "../../Location/Prize/crystal";
 
 export class IcePalace extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyD5', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassD5', this.world),
-        new Key('Key', this.world),
-        new Key('KeyD5', this.world),
-        new Map('Map', this.world),
-        new Map('MapD5', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyD5', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassD5', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyD5', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapD5', this.world)!
     ];
 
     public constructor(world: World) {
@@ -67,7 +67,7 @@ export class IcePalace extends Region {
             return items.has('BigKeyD5');
         });
 
-        this.canComplete = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
             return this.locations.get("Ice Palace - Boss")?.canAccess(items, locations)!;
         }
 
@@ -78,7 +78,7 @@ export class IcePalace extends Region {
                 && items.has('BigKeyD5') && ((items.has("CaneOfSomaria") && items.has('KeyD5')) || (items.has('KeyD5', 2)));
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
             && items.canMeltThings(this.world)
             && items.has('MoonPearl') && items.has('Flippers') && items.canLiftDarkRocks();

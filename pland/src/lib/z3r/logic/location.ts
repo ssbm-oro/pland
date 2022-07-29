@@ -9,7 +9,7 @@ export default class Location extends Entry {
     item: Item | null = null;
     always_callback?: (item: Item, items: ItemCollection) => boolean;
     fill_callback?: (item: Item, locations: LocationCollection) => boolean;
-    requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
+    requirement_callback?: (locations: LocationCollection, items: ItemCollection, messages:string[]|null) => boolean;
 
     constructor(name: string, region: Region) {
         super(name);
@@ -56,14 +56,13 @@ export default class Location extends Entry {
 
         let oldItem = this.item;
         this.item = newItem;
-        let fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items));
+        let fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item, messages) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items));
         this.item = oldItem;
 
         return fillable;
     }
 
     public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([]), messages: string[] | null = null) {
-        console.log(items);
         let total_locations = locations ?? this.region.locations;
 
         if (messages) messages.push(`Checking region access for ${this.region.name}.`);
@@ -74,7 +73,7 @@ export default class Location extends Entry {
         }
 
         if (messages) messages.push(`Checking requirement callback for ${this.name}.`);
-        if (!this.requirement_callback || this.requirement_callback.call(this, locations, items)) {
+        if (!this.requirement_callback || this.requirement_callback.call(this, locations, items, messages)) {
             if (messages) messages.push(`Can access requirements.`);
             return true
         }

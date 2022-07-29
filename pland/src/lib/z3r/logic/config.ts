@@ -64,7 +64,7 @@ export class Config {
         "rom.freeItemText": boolean;
         "rom.genericKeys": boolean;
         "rom.mapOnPickup": boolean;
-        "rom.rupeeBow": boolean;
+        "rom.rupeeBow": boolean | undefined;
         "rom.timerMode": string;
         "rom.timerStart": string;
         "spoil.BootsLocation": boolean;

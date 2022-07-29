@@ -11,14 +11,14 @@ import type { ItemCollection } from "../../Support/itemcollection";
 
 export class TurtleRock extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyD7', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassD7', this.world),
-        new Key('Key', this.world),
-        new Key('KeyD7', this.world),
-        new Map('Map', this.world),
-        new Map('MapD7', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyD7', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassD7', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyD7', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapD7', this.world)!
     ];
 
     public constructor(world: World) {
@@ -97,7 +97,7 @@ export class TurtleRock extends Region {
         this.locations.get("Turtle Rock - Eye Bridge - Bottom Left")?.setRequirements(laserBridgeRequirements);
         this.locations.get("Turtle Rock - Eye Bridge - Bottom Right")?.setRequirements(laserBridgeRequirements);
 
-        this.canComplete = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
             return this.locations.get("Turtle Rock - Boss")?.canAccess(items, locations)!;
         }
 
@@ -108,7 +108,7 @@ export class TurtleRock extends Region {
                 && this.boss?.canBeat(items, locations)!
         });
 
-        this.canEnter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda")
                 && upper(locations, items);
         };

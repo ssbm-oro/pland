@@ -96,13 +96,13 @@ export class ItemCollection extends Collection {
             case 2:
                 return this.has('BowAndSilverArrows')
                     || this.has('ProgressiveBow', 2)
-                        && (!world.config.custom["rom.rupeeBow"] || this.has('ShopArrow'))
+                        && (world.config.custom && !world.config.custom["rom.rupeeBow"] || this.has('ShopArrow'))
                     || this.has('SilverArrowUpgrade')
                         && (this.has('Bow') || this.has('BowAndArrows') || this.has('ProgressiveBow'));
             case 1:
             default:
                 return this.has('Bow') || this.has('ProgressiveBow')
-                        && (!world.config.custom["rom.rupeeBow"] || this.has('ShopArrow'))
+                        && (world.config.custom && !world.config.custom["rom.rupeeBow"] || this.has('ShopArrow'))
                     || this.has('BowAndArrows') || this.has('ProgressiveBow');
 
         }

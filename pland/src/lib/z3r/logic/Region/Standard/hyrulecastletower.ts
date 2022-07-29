@@ -8,14 +8,14 @@ import type { ItemCollection } from "../../Support/itemcollection";
 
 export class HyruleCastleTower extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyA1', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassA1', this.world),
-        new Key('Key', this.world),
-        new Key('KeyA1', this.world),
-        new Map('Map', this.world),
-        new Map('MapA1', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyA1', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassA1', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyA1', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapA1', this.world)!
     ];
 
     public constructor(world: World) {
@@ -37,13 +37,13 @@ export class HyruleCastleTower extends Region {
             return items.has('Lamp') && items.has('KeyA1');
         });
 
-        this.canComplete = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
             return this.canEnter(locations, items) && items.has('KeyA1',2) && items.has('Lamp') && items.hasSword();
         }
 
         this.prize?.setRequirements(this.canComplete);
 
-        this.canEnter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world, 8)
                 && items.has('RescueZelda')
                 && (items.has('Cape') || (items.hasSword(2)));

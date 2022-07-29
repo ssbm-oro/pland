@@ -39,7 +39,7 @@ export class NorthEast extends Region {
         this.locations.get("Pyramid Fairy - Left")?.setRequirements(pyramidRequirements);
         this.locations.get("Pyramid Fairy - Right")?.setRequirements(pyramidRequirements);
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && (items.has("DefeatAgahnim")
                     || (items.has("Hammer") && items.canLiftRocks() && items.has("MoonPearl"))

@@ -15,14 +15,14 @@ export class GanonsTower extends Region {
     boss_bottom?: Boss;
 
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyP2', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassP2', this.world),
-        new Key('Key', this.world),
-        new Key('KeyP2', this.world),
-        new Map('Map', this.world),
-        new Map('MapP2', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyA2', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassA2', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyA2', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapA2', this.world)!
     ]
 
     public constructor(world: World) {
@@ -250,7 +250,7 @@ export class GanonsTower extends Region {
                 && this.boss_middle?.canBeat(items, locations)! && this.boss_top?.canBeat(items, locations)!;
         });
 
-        this.canComplete = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
             return this.canEnter(locations, items)
                 && this.locations.get("Ganon's Tower - Moldorm Chest")?.canAccess(items, locations)!
                 && this.boss?.canBeat(items, locations)!;
@@ -258,7 +258,7 @@ export class GanonsTower extends Region {
 
         this.prize?.setRequirements(this.canComplete);
 
-        this.canEnter = (locations:LocationCollection, items:ItemCollection) => {
+        this.can_enter = (locations:LocationCollection, items:ItemCollection) => {
             return items.has('RescueZelda')
                 && this.canOpen(items, this.world)
                 && this.world.getRegion('East Dark World Death Mountain')!.canEnter(locations, items);

@@ -31,8 +31,8 @@ export default class World {
         return this.regions.get(regionName);
     }
 
-    canPlant(item: Item, location: Location): boolean {
-        return location.region.canFill(item);
+    canPlant(item: Item, location: Location, messages:string[]|null): boolean {
+        return location.region.canFill(item, messages);
     }
 
 }

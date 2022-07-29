@@ -19,7 +19,7 @@ export class West extends Region {
                     && (items.canExtendMagic() && items.has("Cape")) || items.has("CaneOfByrna"));
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return (items.has("RescueZelda")
                 && this.world.getRegion("West Death Mountain")!.canEnter(locations, items));
         };

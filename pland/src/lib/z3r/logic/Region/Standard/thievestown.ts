@@ -10,14 +10,14 @@ import { Crystal } from "../../Location/Prize/crystal";
 
 export class ThievesTown extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyD4', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassD4', this.world),
-        new Key('Key', this.world),
-        new Key('KeyD4', this.world),
-        new Map('Map', this.world),
-        new Map('MapD4', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyD4', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassD4', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyD4', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapD4', this.world)!
     ];
 
     public constructor(world: World) {
@@ -58,7 +58,7 @@ export class ThievesTown extends Region {
             return items.has('BigKeyD4');
         });
 
-        this.canComplete = (locations, items) => {
+        this.can_complete = (locations, items) => {
             return this.locations.get("Thieves' Town - Boss")?.canAccess(items, locations)!
         }
 
@@ -68,7 +68,7 @@ export class ThievesTown extends Region {
                 && this.boss?.canBeat(items, locations)!
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && items.has("MoonPearl")
                 && this.world.getRegion("North West Dark World")!.canEnter(locations, items);

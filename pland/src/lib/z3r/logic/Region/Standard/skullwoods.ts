@@ -1,4 +1,4 @@
-import type Item from "../../item";
+import Item from "../../item";
 import { BigKey, Compass, Key, Map } from "../../item";
 import { Chest } from "../../Location/chest";
 import { Region } from "../../region";
@@ -11,14 +11,14 @@ import { Crystal } from "../../Location/Prize/crystal";
 
 export class SkullWoods extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyD3', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassD3', this.world),
-        new Key('Key', this.world),
-        new Key('KeyD3', this.world),
-        new Map('Map', this.world),
-        new Map('MapD3', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyD3', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassD3', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyD3', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapD3', this.world)!
     ];
 
     public constructor(world: World) {
@@ -52,7 +52,7 @@ export class SkullWoods extends Region {
             return items.has('MoonPearl') && items.has('FireRod');
         });
 
-        this.canComplete = (locations, items) => {
+        this.can_complete = (locations, items) => {
             return this.locations.get('Skull Woods - Boss')?.canAccess(items, locations)!;
         };
 
@@ -64,7 +64,7 @@ export class SkullWoods extends Region {
                 && this.boss?.canBeat(items, locations)!;
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
                 && items.has('MoonPearl')
                 && this.world.getRegion('North West Dark World')!.canEnter(locations, items);

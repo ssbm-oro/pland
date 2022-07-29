@@ -10,14 +10,14 @@ import { Crystal } from "../../Location/Prize/crystal";
 
 export class MiseryMire extends Region {
     override region_items: Item[] = [
-        new BigKey('BigKey', this.world),
-        new BigKey('BigKeyD6', this.world),
-        new Compass('Compass', this.world),
-        new Compass('CompassD6', this.world),
-        new Key('Key', this.world),
-        new Key('KeyD6', this.world),
-        new Map('Map', this.world),
-        new Map('MapD6', this.world)
+        Item.get('BigKey', this.world)!,
+        Item.get('BigKeyD6', this.world)!,
+        Item.get('Compass', this.world)!,
+        Item.get('CompassD6', this.world)!,
+        Item.get('Key', this.world)!,
+        Item.get('KeyD6', this.world)!,
+        Item.get('Map', this.world)!,
+        Item.get('MapD6', this.world)!
     ];
 
     public constructor(world: World) {
@@ -65,7 +65,7 @@ export class MiseryMire extends Region {
                 && ((locations.get("Misery Mire - Big Key Chest")?.hasItem(Item.get('BigKeyD6', this.world)) && items.has('KeyD6', 2)) || items.has('KeyD6', 3));
         });
 
-        this.canComplete = (locations, items) => {
+        this.can_complete = (locations, items) => {
             return this.locations.get("Misery Mire - Boss")?.canAccess(items, locations)!;
         };
 
@@ -76,7 +76,7 @@ export class MiseryMire extends Region {
                 && this.boss?.canBeat(items, locations)!
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
                 && (items.has(locations.get('Misery Mire Medallion')?.item?.name!))
                 && items.hasSword()

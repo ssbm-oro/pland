@@ -36,7 +36,7 @@ export class East extends Region {
                 && this.world.getRegion("East Dark Death Mountain")!.canEnter(locations, items));
         });
 
-        this.canEnter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda")
                 && ((items.has("MagicMirror") || items.has("Hookshot")) && this.world.getRegion("West Death Mountain")!.canEnter(locations, items))
                 || (items.has("Hammer") && this.world.getRegion("Tower of Hera")!.canEnter(locations, items));

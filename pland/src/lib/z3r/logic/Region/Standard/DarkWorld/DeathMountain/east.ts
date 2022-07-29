@@ -40,9 +40,9 @@ export class East extends Region {
             return items.has("MoonPearl") && items.canLiftRocks() && (items.has("Hookshot") || items.has("PegasusBoots"));
         });
 
-        this.canEnter = (locations, items) => {
+        this.can_enter = (locations, items, messages) => {
             return items.has("RescueZelda")
-                && (items.canLiftDarkRocks() && this.world.getRegion("East Death Mountain")!.canEnter(locations, items));
+                && (items.canLiftDarkRocks() && this.world.getRegion("East Death Mountain")!.canEnter(locations, items, messages));
         };
 
         return this;
