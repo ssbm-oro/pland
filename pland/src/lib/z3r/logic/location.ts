@@ -66,7 +66,7 @@ export default class Location extends Entry {
     }
 
     public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([])) {
-        let total_locations = locations ?? this.region.locations;
+        let total_locations = locations.merge(this.region.locations);
 
         this.log(`Checking region access for ${this.region.name}.`);
         if (!this.region.canEnter(total_locations, items))
@@ -76,7 +76,7 @@ export default class Location extends Entry {
         }
 
         this.log(`Checking requirement callback for ${this.name}.`);
-        if (!this.requirement_callback || this.requirement_callback.call(this, locations, items)) {
+        if (!this.requirement_callback || this.requirement_callback.call(this, total_locations, items)) {
             this.log(`Can access requirements.`);
             return true
         }

@@ -30,7 +30,7 @@ export class IcePalace extends Region {
             new Chest("Ice Palace - Big Key Chest", this),
             new Chest("Ice Palace - Compass Chest", this),
             new Chest("Ice Palace - Map Chest", this),
-            new Chest("Ice Palace - Spike Chest", this),
+            new Chest("Ice Palace - Spike Room", this),
             new Chest("Ice Palace - Freezor Chest", this),
             new Chest("Ice Palace - Iced T Chest", this),
             new BigChest("Ice Palace - Big Chest", this),
@@ -56,7 +56,7 @@ export class IcePalace extends Region {
 
         this.locations.get("Ice Palace - Spike Room")?.setRequirements((locations, items) => {
             return items.has('Hammer') && items.canLiftRocks()
-            && ((items.has('Hookshot') || items.has('ShopKey') || (items.has('KeyD5', 1) && (locations.itemInLocations(Item.get('BigKeyD5', this.world)!, ["Ice Palace - Big Key Chest", "Ice Palace - Map Room"])))));
+            && ((items.has('Hookshot') || items.has('ShopKey') || (items.has('KeyD5', 1) && (locations.itemInLocations(Item.get('BigKeyD5', this.world)!, ["Ice Palace - Big Key Chest", "Ice Palace - Map Chest"])))));
         });
 
         this.locations.get("Ice Palace - Freezor Chest")?.setRequirements((locations, items) => {
