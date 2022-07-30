@@ -52,9 +52,7 @@ describe("Sample Logic Bombs", () =>{
             world.locations.get('Turtle Rock - Chain Chomps')!,
             planted,
             messages);
-
-        plantable = finalize_plants(plantable, planted, world, available);
-        messages.forEach(message => console.log(message));
+        
         expect(plantable).toBe(false);
     })
 });
