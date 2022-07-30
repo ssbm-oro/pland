@@ -82,6 +82,8 @@
                 Item.get('PendantOfWisdom',world)!,
                 Item.get('PendantOfCourage',world)!,
                 Item.get('PendantOfPower',world)!,
+                Item.get('DefeatAgahnim',world)!,
+                Item.get('DefeatAgahnim2',world)!,
             ]);
             available.setChecksForWorld(world);
             let planted = new LocationCollection();

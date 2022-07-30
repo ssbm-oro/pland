@@ -61,7 +61,9 @@ export class ItemCollection extends Collection {
     public diff(items: ItemCollection) {
         let difference = this.clone();
         items.items.forEach((entry, key) => {
-            difference.removeItem(entry as Item);
+            for (let i = 0; i < items.item_counts.get(key)!; i++) {
+                difference.removeItem(entry as Item);
+            }
         });
 
         return difference;

@@ -24,7 +24,7 @@ export class PalaceOfDarkness extends Region {
     public constructor(world: World) {
         super("Dark Palace", world);
 
-        this.boss = Boss.get("Helmasaur", world);
+        this.boss = Boss.get("Helmasaur King", world);
 
         this.locations = new LocationCollection([
             new Chest("Palace of Darkness - Shooter Room", this),
@@ -107,7 +107,7 @@ export class PalaceOfDarkness extends Region {
             return this.canEnter(locations, items)
                 && this.boss?.canBeat(items, locations)!
                 && items.has('Hammer') && items.has('Lamp') && items.canShootArrows(this.world)
-                && items.has('BigKeyD6') && items.has('KeyD6', 6);
+                && items.has('BigKeyD1') && items.has('KeyD1', 6);
         });
 
         this.can_enter = (locations, items) => {
