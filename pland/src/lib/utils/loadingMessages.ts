@@ -49,7 +49,19 @@ const loading_messages = [
     `Listen to the 216 Podcast!`,
     `Rolling - 69% complete`,
     `Actually just browsing old ladder seeds`,
-    `Stop all the downloading!`
+    `Stop all the downloading!`,
+    `*Batteries not included`,
+    `It stinks.`,
+    `It's like poetry. It rhymes.`,
+    `Please don't tell anybody how I live`,
+    `And the timer starts... Now! Jk ;)`,
+    `Gotta get down on Friday`,
+    `How about a nice game of chess?`,
+    `Feed me a stray cat`,
+    `You gotta do the cooking by the book`,
+    `Hoisted by my own plant`,
+    `Nude mode unlocked!`,
+    `Like a boss.`
 ];
 
 export function get_loading_message() {

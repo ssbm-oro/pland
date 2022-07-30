@@ -61,7 +61,13 @@ export default class World {
         gtItems.addItem(Item.get('Crystal5', this)!)
         gtItems.addItem(Item.get('Crystal6', this)!)
         gtItems.addItem(Item.get('Crystal7', this)!)
+        gtItems.addItem(Item.get('DefeatAgahnim', this)!)
         const nonGtItems = items.diff(gtItems);
+
+        if (this.getRegion('Hyrule Castle Tower')?.canComplete(this.locations, nonGtItems)) {
+            nonGtItems.addItem(Item.get('DefeatAgahnim',this)!)
+        }
+
         this.regions.forEach(region => {
             if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonGtItems)) {
                 requiredPendants.push(region);

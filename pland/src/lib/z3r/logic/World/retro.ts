@@ -1,8 +1,8 @@
 import type { Config } from "../config";
-import World from "../world";
+import Open from "./open";
 
-export default class Retro extends World {
+export default class Retro extends Open {
     public constructor (config:Config, messages: string[]|null = null) {
-        super(config)
+        super(config, messages);
     }
 }

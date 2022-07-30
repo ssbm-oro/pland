@@ -25,7 +25,7 @@ export class NorthEast extends Region {
     }
 
     override initialize(): Region {
-        this.locations.get("Catfish")?.setRequirements((locations, items) => {
+        this.locations.get("Catfish")?.setRequirements((_locations, items) => {
             return items.canLiftRocks();
         });
 
@@ -33,7 +33,7 @@ export class NorthEast extends Region {
             return items.has("Crystal5") && items.has("Crystal6")
                 && this.world.getRegion("South Dark World")!.canEnter(locations, items)
                 && ((items.has("MoonPearl") && items.has("Hammer"))
-                    || (items.has("Mirror") && (items.has("DefeatAgahnim"))))
+                    || (items.has("MagicMirror") && (items.has("DefeatAgahnim"))))
         }
 
         this.locations.get("Pyramid Fairy - Left")?.setRequirements(pyramidRequirements);

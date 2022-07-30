@@ -30,9 +30,9 @@ export default class Item extends Entry {
             new Sword('MasterSword', world),
             new Sword('L3Sword', world),
             new Sword('L4Sword', world),
-            new Item('BlueShield', world),
-            new Item('RedShield', world),
-            new Item('MirrorShield', world),
+            new Shield('BlueShield', world),
+            new Shield('RedShield', world),
+            new Shield('MirrorShield', world),
             new Item('FireRod', world),
             new Item('IceRod', world),
             new Item('Hammer', world),
@@ -226,7 +226,6 @@ export class Sword extends Item {
 export class Medallion extends Item {
     // purposefully empty class
 }
-
 
 export class Key extends Item {
     override is_dungeon_item = true;
