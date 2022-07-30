@@ -61,7 +61,24 @@ const loading_messages = [
     `You gotta do the cooking by the book`,
     `Hoisted by my own plant`,
     `Nude mode unlocked!`,
-    `Like a boss.`
+    `Like a boss.`,
+    `Don't think. Feel. It is like a finger pointing away to the moon. Don't concentrate on the finger or you will miss all the heavenly glory.`,
+    `BEES`,
+    `Don't make me load the practice hack`,
+    `Challenging AVIANART to a rumble`,
+    `Drawing the cool 90's S`,
+    `Welcome to oro's Plandotorium, you dole 'em, we roll 'em.`,
+    `Welcome to oro's Plandotorium, you design it, we refine it.`,
+    `Welcome to oro's Plandotorium, you plan it, you ran it.`,
+    `Welcome to oro's Plandotorium, you planted, we granted.`,
+    `Welcome to oro's Plandotorium, you say it, you play it.`,
+    `Welcome to oro's Plandotorium, you analyze, we surprise.`,
+    `Welcome to oro's Plandotorium, you supply it, we stirfry it.`,
+    `Welcome to oro's Plandotorium, you place it, you race it.`,
+    `Welcome to oro's Plandotorium, you bring the weed, we roll the seed.`,
+    `Welcome to oro's Plandotorium, you scheme it, we stream it.`,
+    `Welcome to oro's Plandotorium, we built it, you tilted.`
+
 ];
 
 export function get_loading_message() {
