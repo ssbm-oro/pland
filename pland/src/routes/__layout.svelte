@@ -6,9 +6,6 @@
 	import themeStore, { setTheme } from 'svelte-themes';
 	import Icon from '@iconify/svelte';
 
-
-
-
 	export const load: Load = async ({ fetch }) => {
 		const res = await fetch('/api/user/validateSession', { method: 'POST' });
 
@@ -68,6 +65,7 @@
 			<button on:click='{logout}'>Sign out</button>
 		{/if}
 	</nav>
+	<img src="under-construction.gif" alt="Under Construction">
 </header>
   
 <slot></slot>
