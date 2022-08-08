@@ -55,6 +55,7 @@
 <header>
 	<nav>
 		<a href="/">Home</a>
+		<a href="/lobby">Lobbies</a>
 		<a href="/logictest">Logic Test</a>
 		<a href="/about">About</a>
 		<button on:click='{toggleTheme}'>{toggleIcon}</button>
@@ -65,7 +66,7 @@
 			<button on:click='{logout}'>Sign out</button>
 		{/if}
 	</nav>
-	<img src="under-construction.gif" alt="Under Construction">
+	<img src="/under-construction.gif" alt="Under Construction">
 </header>
   
 <slot></slot>

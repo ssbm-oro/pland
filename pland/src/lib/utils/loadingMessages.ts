@@ -67,6 +67,7 @@ const loading_messages = [
     `Don't make me load the practice hack`,
     `Challenging AVIANART to a rumble`,
     `Drawing the cool 90's S`,
+    `Trying to think of the longest fetch quest chain`,
     `Welcome to oro's Plandotorium, you dole 'em, we roll 'em.`,
     `Welcome to oro's Plandotorium, you design it, we refine it.`,
     `Welcome to oro's Plandotorium, you plan it, you ran it.`,
@@ -77,7 +78,16 @@ const loading_messages = [
     `Welcome to oro's Plandotorium, you place it, you race it.`,
     `Welcome to oro's Plandotorium, you bring the weed, we roll the seed.`,
     `Welcome to oro's Plandotorium, you scheme it, we stream it.`,
-    `Welcome to oro's Plandotorium, we built it, you tilted.`
+    `Welcome to oro's Plandotorium, we built it, you tilted.`,
+    `Welcome to oro's Plandotorium, you plot it, we wrought it.`,
+    `One day, we're all going to be dead and none of this is going to have mattered. Glhf.`,
+    `I sell plando and plando accessories.`,
+    `Give cash money to oro to increase your chances of winning.`,
+    `If you want to see a wonderful person, look in the magic mirror!`,
+    `DISABLING QUICKSWAP!`,
+    `Banana bread.`,
+    `Empathy system online. :(`,
+    `Oh look! It's the big key to my heart!`
 
 ];
 

@@ -11,8 +11,9 @@
     import type Location from '$lib/z3r/logic/location';
     import { ItemCollection } from '$lib/z3r/logic/Support/itemcollection';
     import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
+    import Presets from '$lib/components/Presets.svelte'
 
-    let selectedPreset: string;
+    let selectedPreset: string = '';
     let world: World;
     let selectedItems: any[] = [];
     let selectedLocations: any[] = [];
@@ -163,11 +164,7 @@
 
 <main>
     <br/>
-    <select bind:value="{selectedPreset}" on:change="{presetChanged}">
-        {#each presets as preset}
-            <option value="{preset}">{preset}</option>
-        {/each}
-    </select>
+    <Presets bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
     <br/><br/>
     {#if world}
         <h2>{selectedPresetData.goal_name}</h2>

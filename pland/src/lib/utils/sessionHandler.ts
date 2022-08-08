@@ -3,8 +3,6 @@ import crypto from 'crypto';
 import type { APIUser } from 'discord-api-types/payloads';
 import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest';
 
-let x: RESTPostOAuth2AccessTokenResult;
-
 const sessionUsers = new Map<TSessionID, FullUser>();
 const sessionUserTimeouts = new Map<TSessionID, NodeJS.Timeout>();
 
@@ -28,7 +26,33 @@ export function setSession(userData: APIUser, tokenGrantData: RESTPostOAuth2Acce
 export function fetchSession(sessionId: TSessionID) {
     refreshTimeout(sessionId);
 
-    return sessionUsers.get(sessionId) || null;
+    return sessionUsers.get(sessionId);
+}
+
+export function fetchClientSession(sessionId: TSessionID) {
+    refreshTimeout(sessionId);
+
+    const user = sessionUsers.get(sessionId);
+    if (!user) return null;
+
+    const partialUser :APIUser = {
+        id: user.id,
+        username: user.username,
+        discriminator: user.discriminator,
+        avatar: user.avatar,
+        bot: user.bot!,
+        system: user.system!,
+        mfa_enabled: user.mfa_enabled!,
+        banner: user.banner!,
+        accent_color: user.accent_color!,
+        locale: user.locale!,
+        verified: user.verified!,
+        email: user.email!,
+        flags: user.flags!,
+        premium_type: user.premium_type!,
+        public_flags: user.public_flags!
+    };
+    return partialUser;
 }
 
 function refreshTimeout(sessionId: string) {

@@ -1,5 +1,4 @@
 <script lang="ts">
-import AutoComplete from "simple-svelte-autocomplete";
 import { onMount } from "svelte"
 
 let presets: string[] = [];
@@ -14,14 +13,12 @@ onMount(async () => {
 </script>
 
 <main>
-	<AutoComplete items='{presets}' bind:selectedItem='{selectedPreset}' showClear="true" on:onChange></AutoComplete>
+	<select bind:value="{selectedPreset}" on:change>
+        {#each presets as preset}
+            <option value="{preset}">{preset}</option>
+        {/each}
+    </select>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
 </style>
