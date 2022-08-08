@@ -12,6 +12,7 @@
     import { ItemCollection } from '$lib/z3r/logic/Support/itemcollection';
     import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
     import Presets from '$lib/components/Presets.svelte'
+import Plant from '$lib/components/Plant.svelte';
 
     let selectedPreset: string = '';
     let world: World;
@@ -173,22 +174,7 @@
         <button on:click="{addPlant}">Add Plant</button>
         {#key plantsModified}{#each selectedItems as selectedItem, index }
             <br/><br/>
-            <select bind:value="{selectedItem}">
-                {#each items as item}
-                    {#if item.count && item.count > 0}
-                        <option value="{item}">{item.value.replace(':1','')}</option>
-                    {/if}
-                {/each}
-            </select>
-            {#if selectedItem && selectedItem.icon && selectedItem.icon.icon }
-                <Icon icon="{selectedItem.icon.icon}" color="{selectedItem.icon.color}" vFlip="{selectedItem.icon.vFlip}" hFlip="{selectedItem.icon.hFlip}"></Icon>
-            {/if}
-            <br/>   
-            <select bind:value="{selectedLocations[index]}">
-                {#each world.locations.to_array() as location}
-                    <option value="{location}">{location.name}</option>
-                {/each}
-            </select>
+            <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}"></Plant>
             <br/>
             <button on:click="{() => removePlant(index)}">Remove Plant</button>
         {/each}{/key}

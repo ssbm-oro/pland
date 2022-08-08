@@ -117,7 +117,7 @@
         {/if}
 
 
-        <Presets bind:selectedPreset="{selectedPreset}" on:onChange={resetPlants}></Presets>
+        <!-- <Presets bind:selectedPreset="{selectedPreset}" on:onChange={resetPlants}></Presets>
         {#key reset_toggle}
             <h2>Player 1</h2>
             <Plant bind:this="{plant1}" bind:selectedPlant="{plant1data}"></Plant>
@@ -147,6 +147,6 @@
             {:else}
                 <p>hurry up i wanna roll 🥵🥵🥵🥵🥵</p>
             {/if}
-        {/if}
+        {/if} -->
     {/if}
 </main>

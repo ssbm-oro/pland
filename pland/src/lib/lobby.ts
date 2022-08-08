@@ -1,16 +1,35 @@
 import type { APIUser } from "discord-api-types/v10";
-import type { PlantData } from "./components/Plant.svelte";
 
 export const Lobbies = new Map<string, Lobby>();
+
+export class Entrant {
+    username: string;
+    discriminator: string;
+    discord_id: string;
+    avatar: string | null;
+    ready: boolean = false;
+    plantedItems: string[];
+    plantedLocations: string[];
+
+    constructor(user: APIUser, maxPlants: number) {
+        this.username = user.username;
+        this.discriminator = user.discriminator;
+        this.discord_id = user.id;
+        this.avatar = user.avatar;
+
+        this.plantedItems = Array(maxPlants);
+        this.plantedLocations = Array(maxPlants);
+    }
+}
 
 export default class Lobby {
     slug: string
     created_by: APIUser
-    entrants: APIUser[] = []
+    entrants: Entrant[] = []
     max_entrants: number = 2;
     max_plants: number = 2;
     preset: string;
-    plants: Map<string, PlantData> = new Map();
+
 
     public constructor(created_by: APIUser, preset:string, max_entrants:number, max_plants:number, slug:string | null = null) {
         this.created_by = created_by;
@@ -27,11 +46,33 @@ export default class Lobby {
     }
 
     public join(user: APIUser) {
-        this.entrants.push(user);
+        this.entrants.push(new Entrant(user, this.max_plants));
     }
 
     public leave(user: APIUser) {
-        this.entrants.splice(this.entrants.indexOf(user));
+        this.entrants.splice(this.entrants.findIndex(entrant => entrant.discord_id == user.id));
+    }
+
+    public plant(user: APIUser, plantedItems: string[], plantedLocations: string[]) {
+        const entrant = this.entrants.find(entrant => entrant.discord_id == user.id);
+        if (entrant) {
+            for(let i = 0; i < this.max_plants; i++) {
+                entrant.plantedItems[i] = plantedItems[i]!;
+                entrant.plantedLocations[i] = plantedLocations[i]!;
+            }
+            entrant.ready = true;
+        }
+    }
+
+    public unplant(user: APIUser) {
+        const entrant = this.entrants.find(entrant => entrant.discord_id == user.id);
+        if (entrant) {
+            for (let i = 0; i < this.max_plants; i++) {
+                entrant.plantedItems[i] = '';
+                entrant.plantedLocations[i] = '';
+            }
+            entrant.ready = false;
+        }
     }
     
     static getRandomSlug(): string {
@@ -111,6 +152,10 @@ export default class Lobby {
             'ultra',
             'sleepy',
             'dokidoki',
+            'doomed',
+            'solid',
+            'liquid',
+            'zap',
             //'horny', oro please, show some restraint
         ]
         
@@ -168,6 +213,8 @@ export default class Lobby {
             'shark',
             'moose',
             'newt',
+            'squirrel',
+            'urchin',
         ]
 
         const states = [
@@ -260,6 +307,7 @@ export default class Lobby {
             'timeline',
             'era',
             'escape',
+            'mansion',
         ]
 
         let getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] || '';

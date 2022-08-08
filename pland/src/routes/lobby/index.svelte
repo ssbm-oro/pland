@@ -1,6 +1,6 @@
 <script lang="ts">
-import { goto } from "$app/navigation";
-import Presets from "$lib/components/Presets.svelte";
+    import { goto } from "$app/navigation";
+    import Presets from "$lib/components/Presets.svelte";
 
     import type Lobby from "$lib/lobby";
     import { UserStore } from "$lib/stores";
@@ -29,9 +29,6 @@ import Presets from "$lib/components/Presets.svelte";
     Max Entrants: <input bind:value="{maxPlayers}" type="number" min="2" max="8"><br/>
     Num Plants: <input bind:value="{numPlants}" type="number" min="1" max="2"><br/>
     <button on:click="{createLobby}">Create Lobby</button>
-    <!-- <form action="lobby" method="post">
-        <button type="submit">Add Lobby</button>
-    </form> -->
     <ul>
         {#each lobbies as lobby}
             <li>

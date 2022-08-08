@@ -5,9 +5,11 @@ import type { RequestHandler } from "@sveltejs/kit";
 export const GET: RequestHandler = async ( { params} ) => {
     const lobby = Lobbies.get(params.slug!);
     if (lobby) {
+        let entrants = lobby.entrants;
+        entrants.forEach(entrant => { entrant.plantedItems=[]; entrant.plantedLocations=[]; })
         return {
             status: 200,
-            body: lobby.entrants
+            body: entrants
         }
     }
 
@@ -23,7 +25,7 @@ export const POST: RequestHandler = async( {params, locals } ) => {
     const user = fetchSession(locals.user.id)
     if (!user) return { status: 403 }
 
-    if (lobby.entrants.includes(user)) {
+    if (lobby.entrants.some(entrant => entrant.discord_id == user.id)) {
         lobby.leave(user);
     }
     else
