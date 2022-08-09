@@ -23,10 +23,7 @@ export const DELETE: RequestHandler = async ( { params, locals } ) => {
     
     Lobbies.delete(params.slug!)
 
-    const lobbies = Array.from(Lobbies.values())
     return {
-        status: 200,
-        body: { lobbies },
-        headers: {}
+        status: 204
     }
 }

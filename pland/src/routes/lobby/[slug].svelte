@@ -15,8 +15,10 @@
     let selectedLocations: any[] = new Array(lobby.max_plants);
     let world: World;
     let logicTestMessages: string[] = [];
+
     $: userInLobby = $UserStore && lobby.entrants.some(entrant => entrant.discord_id == $UserStore.id)
     $: userAsEntrant = $UserStore ? lobby.entrants.find(entrant => entrant.discord_id == $UserStore.id): undefined;
+
     onMount(async () => {
         try {
             let preset_res = await fetch(`/presets/${lobby.preset}`);
@@ -61,8 +63,8 @@
             params.append('ready', 'true');
             let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
             let data = await res.json();
-            // selectedItems = data.plantedItems;
-            // selectedLocations = data.plantedLocations;
+            selectedItems = data.plantedItems;
+            selectedLocations = data.plantedLocations;
             userAsEntrant.ready = data.ready;
         }
     }
@@ -89,9 +91,9 @@
     {/if}
     <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
     <ul>
-        {#each lobby.entrants as entrant }
+        {#each lobby.entrants as entrant }{#key userAsEntrant}
             <li>{entrant.username}#{entrant.discriminator} - {#if entrant.ready}✅{:else}☑️{/if}</li>
-        {/each}
+        {/key}{/each}
     </ul>
     {#if userAsEntrant && world}
         <p>Plants</p>

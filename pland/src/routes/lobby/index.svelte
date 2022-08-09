@@ -20,7 +20,8 @@
 
     async function deleteLobby(slug:string) {
         let res = await fetch(`/lobby/${slug}`, { method:'DELETE' } );
-        console.log(res);
+        res = await fetch(`/lobby/__data.json`);
+        lobbies = (await res.json()).lobbies;
     }
 </script>
 

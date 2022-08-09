@@ -156,6 +156,8 @@ export default class Lobby {
             'solid',
             'liquid',
             'zap',
+            'quilled',
+            'neutral',
             //'horny', oro please, show some restraint
         ]
         
@@ -215,6 +217,7 @@ export default class Lobby {
             'newt',
             'squirrel',
             'urchin',
+            'monkey',
         ]
 
         const states = [
@@ -308,6 +311,7 @@ export default class Lobby {
             'era',
             'escape',
             'mansion',
+            'messiah',
         ]
 
         let getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] || '';
