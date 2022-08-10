@@ -31,21 +31,12 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     if (!entrant) return { status: 404 };
 
     const f = await request.formData();
-    const plantedItemsData = f.get('plantedItems');
-    const plantedLocationsData = f.get('plantedLocations');
-    const readyData = f.get('ready');
+    
+    let plantedItems = JSON.parse(f.get('plantedItems')!.toString());
+    let plantedLocations = JSON.parse(f.get('plantedLocations')!.toString());
+    if (!plantedItems || !plantedLocations) return { status: 409 };
 
-    if (!plantedItemsData || !plantedLocationsData) {
-        let ready = readyData!.toString() === "true";
-        if (!ready) lobby.unplant(user);
-    }
-    else {
-        let plantedItems = JSON.parse(plantedItemsData.toString());
-        let plantedLocations = JSON.parse(plantedLocationsData.toString());
-        if (!plantedItems || !plantedLocations) return { status: 409 };
-
-        lobby.plant(user, plantedItems, plantedLocations);
-    }
+    lobby.plant(user, plantedItems, plantedLocations);
 
 
     return {
@@ -56,4 +47,20 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
             ready: entrant.ready
         }
     }
+}
+
+export const DELETE: RequestHandler = async( {params, locals, request } ) => {
+    const lobby = Lobbies.get(params.slug!);
+    if (!lobby) return { status: 404 };
+    if (!locals.user) return { status: 401 }
+    const user = fetchSession(locals.user.id);
+    if (!user) return { status: 403 }
+    let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
+    if (!entrant) return { status: 404 };
+
+    lobby.unplant(user);
+
+    return {
+        status: 200
+    };
 }

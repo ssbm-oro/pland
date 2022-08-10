@@ -79,9 +79,8 @@
 
     async function resetPlants() {
         if (userAsEntrant) {
-            let params = new URLSearchParams();
-            params.append('ready', 'false');
-            let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
+            let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'DELETE' });
+            res = await fetch(`/lobby/${$page.params['slug']}/plants`);
             let data = await res.json();
             userAsEntrant.ready = data.ready;
         }
