@@ -1,12 +1,14 @@
-<script context="module" lang="ts">
+<script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import type { APIUser } from 'discord-api-types/payloads';
 	import { UserStore } from '$lib/stores';
-    import type { Load } from '@sveltejs/kit';
 	import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
 	import themeStore, { setTheme } from 'svelte-themes';
 	import Icon from '@iconify/svelte';
 
-	export const load: Load = async ({ fetch }) => {
+	let intervalId: NodeJS.Timer;
+
+	onMount(async () => {
 		const res = await fetch('/api/user/validateSession', { method: 'POST' });
 
         if (res.status == 200)
@@ -15,17 +17,18 @@
             UserStore.setUser(User);
 
 			// refresh the user's token every 5 minutes while they are still using the app
-			setInterval(async () => await fetch('/api/user/refreshSession', {method: 'POST'}), 1000 * 60 * 5);
+			intervalId = setInterval(async () => await fetch('/api/user/refreshSession', {method: 'POST'}), 1000 * 60 * 5);
         }
 
 		return {
 			props: {}
 		};
-
-	}
-</script>
-
-<script lang="ts">
+	});
+	
+	onDestroy(() => {
+		clearInterval(intervalId);
+	});
+	
 	function toggleTheme(){
 		if ($themeStore.theme == 'light') {
 			setTheme('dark');

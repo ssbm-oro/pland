@@ -55,6 +55,14 @@
         }
     }
 
+    async function leaveLobby() {
+        let res = await fetch(`/lobby/${$page.params['slug']}/entrants`, { method: 'DELETE' });
+        res = await fetch(`/lobby/${$page.params['slug']}/entrants`);
+        if (res.ok) {
+            lobby.entrants = await res.json();
+        }
+    }
+
     async function submitPlants() {
         if (userAsEntrant) {
             let params = new URLSearchParams();
@@ -85,7 +93,7 @@
     <h2>Mode: {lobby.preset}</h2>
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if userInLobby}
-        <button on:click='{joinLobby}'>Leave</button>
+        <button on:click='{leaveLobby}'>Leave</button>
     {:else}
         <button on:click='{joinLobby}' disabled='{lobby.entrants.length >= lobby.max_entrants}'>Join</button>
     {/if}
