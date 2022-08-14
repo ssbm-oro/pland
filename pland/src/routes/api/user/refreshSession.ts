@@ -5,6 +5,8 @@ import type { APIUser } from 'discord-api-types/payloads/v10';
 import type { RESTPostOAuth2AccessTokenResult} from 'discord-api-types/rest/v10';
 import cookie from 'cookie';
 import log from 'loglevel';
+import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
+import { env } from '$env/dynamic/private';
 
 export const POST: RequestHandler = async ( { request} ) => {
 
@@ -16,8 +18,8 @@ export const POST: RequestHandler = async ( { request} ) => {
     if (!session) return { status: 400, body: { error: 'Invalid session.' } };
 
     const FormData = new URLSearchParams({
-        client_id: import.meta.env.VITE_DISCORD_OAUTH_CLIENT_ID!,
-        client_secret: import.meta.env.VITE_DISCORD_OAUTH_CLIENT_SECRET!,
+        client_id: env.DISCORD_OAUTH_CLIENT_ID!,
+        client_secret: DISCORD_OAUTH_CLIENT_SECRET!,
         grant_type: 'refresh_token',
         refresh_token: session.refresh_token
     });

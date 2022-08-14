@@ -24,15 +24,15 @@
     {#if selectedItem && selectedItem.icon && selectedItem.icon.icon }
         <Icon icon="{selectedItem.icon.icon}" color="{selectedItem.icon.color}" vFlip="{selectedItem.icon.vFlip}" hFlip="{selectedItem.icon.hFlip}"></Icon>
     {/if}
-    <br/>
     {#if !disabled}
+        <br/>
         <select bind:value="{selectedLocation}">
             {#each locations as location (location.name)}
                 <option value="{location}">{location.name}</option>
             {/each}
         </select>
     {:else}
-        <p>{selectedLocation.name}</p>
+        {selectedLocation.name}
     {/if}
 </main>
 

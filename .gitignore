@@ -226,3 +226,6 @@ $RECYCLE.BIN/
 .svelte-kit
 
 .vercel
+
+# node build output
+pland/build

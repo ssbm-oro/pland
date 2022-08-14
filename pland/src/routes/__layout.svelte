@@ -5,6 +5,8 @@
 	import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
 	import themeStore, { setTheme } from 'svelte-themes';
 	import Icon from '@iconify/svelte';
+	import { env } from '$env/dynamic/public';
+	import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
 
 	let intervalId: NodeJS.Timer;
 
@@ -28,7 +30,7 @@
 	onDestroy(() => {
 		clearInterval(intervalId);
 	});
-	
+
 	function toggleTheme(){
 		if ($themeStore.theme == 'light') {
 			setTheme('dark');
@@ -48,8 +50,8 @@
 		window.location.href = '/';
 	}
 
-	const redirect_uri = encodeURIComponent(import.meta.env.VITE_DISCORD_REDIRECT_URI);
-	const client_id = import.meta.env.VITE_DISCORD_OAUTH_CLIENT_ID;
+	const redirect_uri = encodeURIComponent(env.PUBLIC_DISCORD_REDIRECT_URI!);
+	const client_id = PUBLIC_DISCORD_OAUTH_CLIENT_ID;
 
 	const discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
 </script>

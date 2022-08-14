@@ -1,6 +1,6 @@
 import Lobby, {Entrant, Lobbies} from "$lib/lobby";
 import { fetchSession } from "$lib/utils/sessionHandler";
-import type { RequestHandler } from "@sveltejs/kit";
+import type { RequestHandler } from "./__types/entrants.d";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);

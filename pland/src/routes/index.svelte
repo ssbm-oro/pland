@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Plant from "$lib/components/Plant.svelte";
-    import type { PlantData } from "$lib/components/Plant.svelte";
+    import type Plant from "$lib/components/Plant.svelte";
+    import type PlantData from "$lib/components/Plant.svelte";
     import Presets from "$lib/components/Presets.svelte";
 	import { UserStore } from '$lib/stores';
     import log from 'loglevel';

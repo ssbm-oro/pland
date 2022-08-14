@@ -8,10 +8,11 @@ import axios from "axios";
 import { locations } from '../../../static/json/alttpr-customizer-schema.json';
 import type { FullUser } from "src/interfaces";
 import type { APIEmbed, APIEmbedField } from 'discord-api-types/payloads/v10';
+import { DISCORD_WEBHOOK_URI } from "$env/static/private";
 
 
 
-const webhook_uri = import.meta.env.VITE_DISCORD_WEBHOOK_URI;
+const webhook_uri = DISCORD_WEBHOOK_URI;
 const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`;
 const customizer_url = 'https://alttpr.com/api/customizer';
 
