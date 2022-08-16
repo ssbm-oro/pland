@@ -9,8 +9,10 @@
     import Retro from "$lib/z3r/logic/World/retro";
     import Standard from "$lib/z3r/logic/World/standard";
     import Plant from "$lib/components/Plant.svelte";
+    import type PageData from './$types';
 
-    export let lobby: Lobby;
+    export let data: PageData;
+    $: lobby = data as Lobby;
     let selectedItems: any[] = new Array(lobby.max_plants);
     let selectedLocations: any[] = new Array(lobby.max_plants);
     let world: World;

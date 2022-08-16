@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import { fetchSession, updateSession } from '$lib/utils/sessionHandler';
 import type { RequestHandler } from '@sveltejs/kit';
 import axios from 'axios';
@@ -12,10 +13,14 @@ export const POST: RequestHandler = async ( { request} ) => {
 
     let cookies = cookie.parse(request.headers.get('cookie') || '')
     let sessionId = cookies['session_id'];
-    if (!sessionId) return { status: 400, body: { error: 'Property "sessionId" is required.' } };
+    if (!sessionId) return json({ error: 'Property "sessionId" is required.' }, {
+        status: 400
+    });
 
     const session = fetchSession(sessionId);
-    if (!session) return { status: 400, body: { error: 'Invalid session.' } };
+    if (!session) return json({ error: 'Invalid session.' }, {
+        status: 400
+    });
 
     const FormData = new URLSearchParams({
         client_id: env.DISCORD_OAUTH_CLIENT_ID!,
@@ -46,8 +51,7 @@ export const POST: RequestHandler = async ( { request} ) => {
         updateSession(sessionId, UserData, GrantData);
 
         // update the session cookie
-        return {
-            status: 200,
+        return(new Response('',{
             headers: {
                 'Set-Cookie': cookie.serialize('session_id', sessionId as string, {
                     path: '/',
@@ -57,13 +61,10 @@ export const POST: RequestHandler = async ( { request} ) => {
                     maxAge: GrantData.expires_in
                 }),
             }
-        }
+        }));
     }
     catch (error) {
         log.error(error);
-        return {
-            status: 302,
-            Location: '/authorizationError'
-        }
+        return new Response(undefined, { status: 302 })
     }
 }

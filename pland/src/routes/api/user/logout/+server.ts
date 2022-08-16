@@ -7,8 +7,7 @@ export const POST: RequestHandler = async ( { request} ) => {
 
     if (cookies['session_id']) deleteSession(cookies['session_id']);
 
-    return {
-        status: 200,
+    return(new Response('', {
         headers: {
             'Set-Cookie': cookie.serialize('session_id', '', {
                 path: '/',
@@ -18,5 +17,5 @@ export const POST: RequestHandler = async ( { request} ) => {
                 maxAge: 0
             })
         }
-    };
+    }));
 }

@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import type { TSessionID } from 'src/interfaces';
 import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
@@ -12,7 +13,9 @@ import { env } from '$env/dynamic/public';
 
 export const GET: RequestHandler = async ( { url} ) => {
     const code = url.searchParams.get('code');
-    if (!code) return { status: 400, body: { error: 'No code provided' } };
+    if (!code) return json({ error: 'No code provided' }, {
+        status: 400
+    });
 
     const FormData = new URLSearchParams({
         client_id: PUBLIC_DISCORD_OAUTH_CLIENT_ID,
@@ -59,7 +62,7 @@ export const GET: RequestHandler = async ( { url} ) => {
         // Optionally, you can upsert the user in the DB here
 
         // Redirect the user and set the session cookie
-        return {
+        return(new Response('',{
             status: 302,
             headers: {
                 'Set-Cookie': cookie.serialize('session_id', SessionID as string, {
@@ -70,14 +73,10 @@ export const GET: RequestHandler = async ( { url} ) => {
                     maxAge: Grantdata.expires_in
                 }),
                 Location: '/'
-            }
-        }
+            }});
 
     } catch (error) {
         log.log(error);
-        return {
-            status: 302,
-            Location: '/authorizationError'
-        }
+        return new Response(undefined, { status: 302 })
     };
 }

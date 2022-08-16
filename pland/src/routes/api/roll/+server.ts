@@ -1,3 +1,4 @@
+import { json as json$1 } from '@sveltejs/kit';
 import { fetchSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "@sveltejs/kit";
 import log from "loglevel";
@@ -5,7 +6,7 @@ import fs from "fs";
 import FormData from "form-data";
 import * as tempy from "tempy";
 import axios from "axios";
-import { locations } from '../../../static/json/alttpr-customizer-schema.json';
+import { locations } from '../../../../static/json/alttpr-customizer-schema.json';
 import type { FullUser } from "src/interfaces";
 import type { APIEmbed, APIEmbedField } from 'discord-api-types/payloads/v10';
 import { DISCORD_WEBHOOK_URI } from "$env/static/private";
@@ -24,10 +25,7 @@ enum discord_log_levels {
 
 export const POST: RequestHandler = async ( {request, url, locals} ) => {
     if (!locals.user) {
-        return {
-            status: 401,
-            body: 'Unauthorized'
-        }
+        return new Response('Unauthorized', { status: 401 })
     }
 
     let params = new URLSearchParams(await request.text());
@@ -45,18 +43,12 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
     if ((!presetName) || (!plant1item1) || (!plant1location1) || (!plant1item2) ||
         (!plant1location2) || (!plant2item1) || (!plant2location1) ||
         (!plant2item2) || (!plant2location2)) {
-            return {
-                status: 400,
-                body: 'Missing parameter(s)'
-            }
+            return new Response('Missing parameter(s)', { status: 400 })
     }
 
     let user = fetchSession(locals.user.id);
     if (!user) {
-        return {
-            status: 403,
-            body: 'Forbidden'
-        }
+        return new Response('Forbidden', { status: 403 })
     }
     
     let preset_res = await fetch(new URL(`/presets/${presetName}`, url.origin));
@@ -145,10 +137,8 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
                 discord_webhook_data.append('files[0]', fs.createReadStream(file), {contentType: 'application/json'});
             }
             catch(err) { log.error(err); }
-            return {
-                status: res.status,
-                body: body
-            }
+
+            return(new Response(JSON.stringify(body)));
         }
         else
         {
@@ -156,17 +146,13 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             embed.title = 'Settings failed to roll'
             embed.description = `The following settings were submitted to the customizer and it said no bones: ${text}`
             embed.color = discord_log_levels.error;
-            return {
-                status: res.status,
-                body: text
-            }
+            
+            return(new Response(text));
         }
     }
     catch(err) {
         log.error(err);
-        return {
-            status: 500
-        }
+        return new Response(undefined, { status: 500 })
     }
     finally {
         let payload_json = {

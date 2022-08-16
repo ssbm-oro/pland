@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { locations, items } from '../../static/json/alttpr-customizer-schema.json';
+    import { locations, items } from '../../../static/json/alttpr-customizer-schema.json';
     import type World from "$lib/z3r/logic/world";
     import Inverted from "$lib/z3r/logic/World/inverted";
     import Open from "$lib/z3r/logic/World/open";

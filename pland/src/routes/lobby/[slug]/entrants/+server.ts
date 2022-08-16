@@ -1,6 +1,7 @@
+import { json } from '@sveltejs/kit';
 import Lobby, {Entrant, Lobbies} from "$lib/lobby";
 import { fetchSession } from "$lib/utils/sessionHandler";
-import type { RequestHandler } from "./__types/entrants.d";
+import type { RequestHandler } from "../$types";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
@@ -13,43 +14,33 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
                 entrant.plantedLocations=[]; 
             }
         })
-        return {
-            status: 200,
-            body: entrants
-        }
+        
+        return json(entrants);
     }
 
-    return {
-        status: 404
-    };
+    return new Response(undefined, { status: 404 });
 }
 
 export const POST: RequestHandler = async( {params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
-    if (!lobby) return { status: 404 }
-    if (!locals.user) return { status: 401 }
+    if (!lobby) return new Response(undefined, { status: 404 })
+    if (!locals.user) return new Response(undefined, { status: 401 })
     const user = fetchSession(locals.user.id)
-    if (!user) return { status: 403 }
+    if (!user) return new Response(undefined, { status: 403 })
 
     
     lobby.join(user);
-
-    return {
-        status: 200,
-        body: lobby.entrants
-    }
+    return new Response(JSON.stringify(lobby.entrants));
 }
 
 export const DELETE: RequestHandler = async( {params, locals} ) => {
     const lobby = Lobbies.get(params.slug!);
-    if (!lobby) return { status: 404 }
-    if (!locals.user) return { status: 401 }
+    if (!lobby) return new Response(undefined, { status: 404 })
+    if (!locals.user) return new Response(undefined, { status: 401 })
     const user = fetchSession(locals.user.id)
-    if (!user) return { status: 403 }
+    if (!user) return new Response(undefined, { status: 403 })
 
     lobby.leave(user);
 
-    return {
-        status: 200
-    }
+    return new Response(undefined)
 }

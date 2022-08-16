@@ -4,8 +4,10 @@
 
     import type Lobby from "$lib/lobby";
     import { UserStore } from "$lib/stores";
+    import type PageData from './$types';
 
-    export let lobbies: Lobby[];
+    export let data: PageData;
+    $: lobbies = data as Lobby[];
 
     let selectedPreset: string = '';
     let maxPlayers: number = 2;
