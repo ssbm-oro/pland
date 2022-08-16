@@ -9,12 +9,12 @@
     import Retro from "$lib/z3r/logic/World/retro";
     import Standard from "$lib/z3r/logic/World/standard";
     import Plant from "$lib/components/Plant.svelte";
-    import type PageData from './$types';
+    import type { PageData} from './$types';
 
     export let data: PageData;
-    $: lobby = data as Lobby;
-    let selectedItems: any[] = new Array(lobby.max_plants);
-    let selectedLocations: any[] = new Array(lobby.max_plants);
+    $: lobby = data.lobby;
+    let selectedItems: any[];
+    let selectedLocations: any[];
     let world: World;
     let logicTestMessages: string[] = [];
 
@@ -23,6 +23,9 @@
 
     onMount(async () => {
         try {
+            selectedItems = new Array(lobby.max_plants);
+            selectedLocations = new Array(lobby.max_plants);
+
             let preset_res = await fetch(`/presets/${lobby.preset}`);
             let selectedPresetData = await preset_res.json();
             switch(selectedPresetData.settings.mode) {

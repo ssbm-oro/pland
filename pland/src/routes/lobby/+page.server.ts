@@ -1,7 +1,8 @@
 import Lobby, {Lobbies} from "$lib/lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
-import type { PageServerLoad, Action } from "@sveltejs/kit";
+import type { Action } from "@sveltejs/kit";
 import type { APIUser } from "discord-api-types/v10";
+import { error, redirect } from '@sveltejs/kit'
 
 export async function load() {
     const lobbies = Array.from(Lobbies.values())
@@ -15,25 +16,12 @@ export const POST: Action = async ({locals, url}) => {
         const maxPlayers = +(url.searchParams.get("maxPlayers") || 2);
         const numPlants = +(url.searchParams.get("numPlants") || 2);
         if (user ) {
-            if (!preset) throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-            return { status: 409 }
+            if (!preset) throw error(409)
             let newLobby = new Lobby(user, preset, maxPlayers, numPlants);
             console.log(`/lobby/${newLobby.slug}`);
-            throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-            return {
-                status: 302,
-                headers: {
-                    Location: '/lobby/' + newLobby.slug
-                }
-            }
+            throw redirect(302, '/lobby/' + newLobby.slug);
         }
-        throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-        return {
-            status: 403
-        }
+        throw error(403);
     }
-    throw new Error("@migration task: Migrate this return statement (https://github.com/sveltejs/kit/discussions/5774#discussioncomment-3292699)");
-    return {
-        status: 401
-    }
+    throw error(401);
 }

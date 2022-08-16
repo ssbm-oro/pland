@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import Lobby, {Entrant, Lobbies} from "$lib/lobby";
 import { fetchSession } from "$lib/utils/sessionHandler";
-import type { RequestHandler } from "../$types";
+import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);

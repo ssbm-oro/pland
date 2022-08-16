@@ -1,17 +1,15 @@
-import { json } from '@sveltejs/kit';
+import { json, redirect } from '@sveltejs/kit';
 import type { TSessionID } from 'src/interfaces';
 import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
 import axios from 'axios';
 import type { RequestHandler } from '@sveltejs/kit';
-import log from 'loglevel';
 import type { APIUser, APIGuild } from 'discord-api-types/payloads/v10'
 import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest/v10'
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
 import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
-import { env } from '$env/dynamic/public';
 
-export const GET: RequestHandler = async ( { url} ) => {
+export const GET: RequestHandler = async ( { url, setHeaders } ) => {
     const code = url.searchParams.get('code');
     if (!code) return json({ error: 'No code provided' }, {
         status: 400
@@ -22,7 +20,7 @@ export const GET: RequestHandler = async ( { url} ) => {
         client_secret: DISCORD_OAUTH_CLIENT_SECRET,
         grant_type: 'authorization_code',
         code: code.toString(),
-        redirect_uri: env.PUBLIC_DISCORD_REDIRECT_URI!,
+        redirect_uri: url.href.split('?')[0]!,
     });
 
     console.log(FormData);
@@ -62,21 +60,19 @@ export const GET: RequestHandler = async ( { url} ) => {
         // Optionally, you can upsert the user in the DB here
 
         // Redirect the user and set the session cookie
-        return(new Response('',{
-            status: 302,
-            headers: {
-                'Set-Cookie': cookie.serialize('session_id', SessionID as string, {
-                    path: '/',
-                    httpOnly: true,
-                    sameSite: false,
-                    secure: true,
-                    maxAge: Grantdata.expires_in
-                }),
-                Location: '/'
-            }});
+        setHeaders({
+            'Set-Cookie': cookie.serialize('session_id', SessionID as string, {
+                path: '/',
+                httpOnly: true,
+                sameSite: false,
+                secure: true,
+                maxAge: Grantdata.expires_in
+            })});
+        setHeaders({'location': '/'});
+        return new Response('', {status: 302 });
 
     } catch (error) {
-        log.log(error);
+        console.log(error);
         return new Response(undefined, { status: 302 })
     };
 }

@@ -18,8 +18,4 @@ export const DELETE: Action = async ( { params, locals } ) => {
     if (!user) throw error(403);
     
     Lobbies.delete(params.slug!)
-
-    return {
-        status: 204
-    }
 }
