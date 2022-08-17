@@ -11,6 +11,10 @@ declare namespace App {
 			id: import('./interfaces').TUserDiscordID
 		}
 	}
+	interface PrivateEnv {}
+	interface PublicEnv {
+		PUBLIC_DISCORD_REDIRECT_URI: string
+	}
 	// interface Platform {}
 	// interface Session {}
 	// interface Stuff {}

@@ -1,4 +1,4 @@
-import { json, redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { TSessionID } from 'src/interfaces';
 import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
@@ -9,11 +9,10 @@ import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest/v10
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
 import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
 
+
 export const GET: RequestHandler = async ( { url, setHeaders } ) => {
     const code = url.searchParams.get('code');
-    if (!code) return json({ error: 'No code provided' }, {
-        status: 400
-    });
+    if (!code) throw error(400, 'No code provided.');
 
     const FormData = new URLSearchParams({
         client_id: PUBLIC_DISCORD_OAUTH_CLIENT_ID,

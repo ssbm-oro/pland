@@ -10,6 +10,7 @@
     import Standard from "$lib/z3r/logic/World/standard";
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
+    import { invalidate } from "$app/navigation";
 
     export let data: PageData;
     $: lobby = data.lobby;
@@ -84,10 +85,8 @@
 
     async function resetPlants() {
         if (userAsEntrant) {
-            let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'DELETE' });
-            res = await fetch(`/lobby/${$page.params['slug']}/plants`);
-            let data = await res.json();
-            userAsEntrant.ready = data.ready;
+            await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'DELETE' });
+            await invalidate($page.url.toString());
         }
     }
 </script>

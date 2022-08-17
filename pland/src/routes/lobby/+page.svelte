@@ -1,13 +1,12 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
+    import { goto, invalidate } from "$app/navigation";
     import Presets from "$lib/components/Presets.svelte";
-
-    import type Lobby from "$lib/lobby";
     import { UserStore } from "$lib/stores";
     import type { PageData} from './$types';
+    import { page } from "$app/stores";
 
     export let data: PageData;
-    let lobbies = data.lobbies;
+    $: lobbies = data.lobbies;
 
     let selectedPreset: string = '';
     let maxPlayers: number = 2;
@@ -21,9 +20,8 @@
     }
 
     async function deleteLobby(slug:string) {
-        let res = await fetch(`/lobby/${slug}`, { method:'DELETE' } );
-        res = await fetch(`/lobby/__data.json`);
-        lobbies = (await res.json()).lobbies;
+        await fetch(`/lobby/${slug}`, { method:'DELETE' } );
+        invalidate($page.url.href);
     }
 </script>
 
