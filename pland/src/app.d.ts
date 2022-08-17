@@ -16,6 +16,4 @@ declare namespace App {
 		PUBLIC_DISCORD_REDIRECT_URI: string
 	}
 	// interface Platform {}
-	// interface Session {}
-	// interface Stuff {}
 }

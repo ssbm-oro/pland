@@ -8,6 +8,7 @@ import type { APIUser, APIGuild } from 'discord-api-types/payloads/v10'
 import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest/v10'
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
 import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
+import { env } from '$env/dynamic/public';
 
 
 export const GET: RequestHandler = async ( { url, setHeaders } ) => {
@@ -19,10 +20,8 @@ export const GET: RequestHandler = async ( { url, setHeaders } ) => {
         client_secret: DISCORD_OAUTH_CLIENT_SECRET,
         grant_type: 'authorization_code',
         code: code.toString(),
-        redirect_uri: url.href.split('?')[0]!,
+        redirect_uri: env.PUBLIC_DISCORD_REDIRECT_URI,
     });
-
-    console.log(FormData);
 
     try {
         // Get the authentication object using the user's code
