@@ -33,7 +33,7 @@
     Max Entrants: <input bind:value="{maxPlayers}" type="number" min="2" max="8"><br/>
     Num Plants: <input bind:value="{numPlants}" type="number" min="1" max="2"><br/>
     {#if loading_message === ''}
-        <button on:click="{createLobby}">Create Lobby</button>
+        <button on:click="{createLobby}" disabled="{!user}">Create Lobby</button>
     {:else}
         {loading_message}
     {/if}

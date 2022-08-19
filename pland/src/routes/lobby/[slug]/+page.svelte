@@ -99,7 +99,7 @@
     {#if userInLobby}
         <button on:click='{leaveLobby}'>Leave</button>
     {:else}
-        <button on:click='{joinLobby}' disabled='{lobby.entrants.length >= lobby.max_entrants}'>Join</button>
+        <button on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</button>
     {/if}
     <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
     <ul>
