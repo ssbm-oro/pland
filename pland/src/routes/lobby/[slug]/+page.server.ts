@@ -1,6 +1,6 @@
 import {Lobbies} from "$lib/lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
-import type { PageServerLoad, Action } from "../$types";
+import type { PageServerLoad, Action } from "./$types";
 import { error } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ( { params} ) => {
@@ -13,8 +13,8 @@ export const load: PageServerLoad = async ( { params} ) => {
 }
 
 export const DELETE: Action = async ( { params, locals } ) => {
-    if (!locals.user) throw error(401);
-    const user = fetchClientSession(locals.user.id)
+    if (!locals.session) throw error(401);
+    const user = fetchClientSession(locals.session.id)
     if (!user) throw error(403);
     
     Lobbies.delete(params.slug!)

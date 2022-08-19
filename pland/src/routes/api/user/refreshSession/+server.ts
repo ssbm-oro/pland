@@ -1,9 +1,9 @@
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import { fetchSession, updateSession } from '$lib/utils/sessionHandler';
 import type { RequestHandler } from '@sveltejs/kit';
 import axios from 'axios';
-import type { APIUser } from 'discord-api-types/payloads/v10';
-import type { RESTPostOAuth2AccessTokenResult} from 'discord-api-types/rest/v10';
+import type { APIUser } from 'discord-api-types/v10';
+import type { RESTPostOAuth2AccessTokenResult} from 'discord-api-types/v10';
 import cookie from 'cookie';
 import log from 'loglevel';
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
@@ -13,14 +13,10 @@ export const POST: RequestHandler = async ( { request} ) => {
 
     let cookies = cookie.parse(request.headers.get('cookie') || '')
     let sessionId = cookies['session_id'];
-    if (!sessionId) return json({ error: 'Property "sessionId" is required.' }, {
-        status: 400
-    });
+    if (!sessionId) throw error(400, 'Property "sessionId" is required');
 
     const session = fetchSession(sessionId);
-    if (!session) return json({ error: 'Invalid session.' }, {
-        status: 400
-    });
+    if (!session) throw error(400, 'Invalid session.');
 
     const FormData = new URLSearchParams({
         client_id: env.DISCORD_OAUTH_CLIENT_ID!,

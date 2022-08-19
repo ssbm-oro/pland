@@ -5,7 +5,7 @@ import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
-    let user = fetchSession(locals.user!.id);
+    let user = fetchSession(locals.session!.id);
     if (lobby) {
         const entrants: Entrant[] = JSON.parse(JSON.stringify(lobby.entrants));
         entrants.forEach(entrant => {
@@ -24,8 +24,8 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
 export const POST: RequestHandler = async( {params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
     if (!lobby) return new Response(undefined, { status: 404 })
-    if (!locals.user) return new Response(undefined, { status: 401 })
-    const user = fetchSession(locals.user.id)
+    if (!locals.session) return new Response(undefined, { status: 401 })
+    const user = fetchSession(locals.session.id)
     if (!user) return new Response(undefined, { status: 403 })
 
     
@@ -36,8 +36,8 @@ export const POST: RequestHandler = async( {params, locals } ) => {
 export const DELETE: RequestHandler = async( {params, locals} ) => {
     const lobby = Lobbies.get(params.slug!);
     if (!lobby) return new Response(undefined, { status: 404 })
-    if (!locals.user) return new Response(undefined, { status: 401 })
-    const user = fetchSession(locals.user.id)
+    if (!locals.session) return new Response(undefined, { status: 401 })
+    const user = fetchSession(locals.session.id)
     if (!user) return new Response(undefined, { status: 403 })
 
     lobby.leave(user);

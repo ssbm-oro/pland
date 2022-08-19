@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
-	import type { APIUser } from 'discord-api-types/payloads';
-	import { UserStore } from '$lib/stores';
 	import SvelteTheme from 'svelte-themes/SvelteTheme.svelte';
 	import themeStore, { setTheme } from 'svelte-themes';
 	import Icon from '@iconify/svelte';
 	import { env } from '$env/dynamic/public';
 	import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
+	import type { LayoutData } from './$types';
+
+	export let data: LayoutData;
+	$: user = data.user;
 
 	let intervalId: NodeJS.Timer;
 
@@ -15,9 +17,6 @@
 
         if (res.status == 200)
         {
-            const User: APIUser = await res.json();
-            UserStore.setUser(User);
-
 			// refresh the user's token every 5 minutes while they are still using the app
 			intervalId = setInterval(async () => await fetch('/api/user/refreshSession', {method: 'POST'}), 1000 * 60 * 5);
         }
@@ -61,7 +60,7 @@
 		<a href="/logictest">Logic Test</a>
 		<a href="/about">About</a>
 		<button on:click='{toggleTheme}'>{toggleIcon}</button>
-		{#if !$UserStore}
+		{#if !user}
 			<button on:click={() => (window.location.href = discord_login_uri)}>
 				Login with Discord<Icon icon="bxl:discord-alt" /></button>
 		{:else}

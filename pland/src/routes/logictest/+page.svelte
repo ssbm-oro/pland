@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { locations, items } from '../../../static/json/alttpr-customizer-schema.json';
+    import { items } from '$lib/json/alttpr-customizer-schema.json';
     import type World from "$lib/z3r/logic/world";
     import Inverted from "$lib/z3r/logic/World/inverted";
     import Open from "$lib/z3r/logic/World/open";
@@ -12,7 +12,7 @@
     import { ItemCollection } from '$lib/z3r/logic/Support/itemcollection';
     import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
     import Presets from '$lib/components/Presets.svelte'
-import Plant from '$lib/components/Plant.svelte';
+    import Plant from '$lib/components/Plant.svelte';
 
     let selectedPreset: string = '';
     let world: World;

@@ -6,9 +6,8 @@ import fs from "fs";
 import FormData from "form-data";
 import * as tempy from "tempy";
 import axios from "axios";
-import { locations } from '../../../../static/json/alttpr-customizer-schema.json';
-import type { FullUser } from "src/interfaces";
-import type { APIEmbed, APIEmbedField } from 'discord-api-types/payloads/v10';
+import { locations } from '$lib/json/alttpr-customizer-schema.json';
+import type { APIEmbed, APIEmbedField } from 'discord-api-types/v10';
 import { DISCORD_WEBHOOK_URI } from "$env/static/private";
 
 
@@ -24,7 +23,7 @@ enum discord_log_levels {
 }
 
 export const POST: RequestHandler = async ( {request, url, locals} ) => {
-    if (!locals.user) {
+    if (!locals.session) {
         return new Response('Unauthorized', { status: 401 })
     }
 
@@ -46,7 +45,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             return new Response('Missing parameter(s)', { status: 400 })
     }
 
-    let user = fetchSession(locals.user.id);
+    let user = fetchSession(locals.session.id);
     if (!user) {
         return new Response('Forbidden', { status: 403 })
     }

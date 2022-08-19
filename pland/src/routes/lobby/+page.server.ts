@@ -10,8 +10,8 @@ export async function load() {
 }
 
 export const POST: Action = async ({locals, url}) => {
-    if (locals.user) {
-        const user = fetchClientSession(locals.user.id);
+    if (locals.session) {
+        const user = fetchClientSession(locals.session.id);
         const preset = url.searchParams.get("preset");
         const maxPlayers = +(url.searchParams.get("maxPlayers") || 2);
         const numPlants = +(url.searchParams.get("numPlants") || 2);

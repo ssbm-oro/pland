@@ -1,20 +1,23 @@
 <script lang="ts">
     import { goto, invalidate } from "$app/navigation";
     import Presets from "$lib/components/Presets.svelte";
-    import { UserStore } from "$lib/stores";
     import type { PageData} from './$types';
     import { page } from "$app/stores";
+    import { get_loading_message } from "$lib/utils/loadingMessages";
 
     export let data: PageData;
     $: lobbies = data.lobbies;
+    $: user = data.user;
 
     let selectedPreset: string = '';
     let maxPlayers: number = 2;
     let numPlants: number = 2;
+    let loading_message = '';
 
     async function createLobby() {
+        loading_message = get_loading_message();
         let res = await fetch(`/lobby?preset=${selectedPreset}&maxPlayers=${maxPlayers}&numPlants=${numPlants}`, { method:'POST' } );
-        if (res.ok) {
+        if (res.redirected) {
             goto(res.url);
         }
     }
@@ -29,12 +32,16 @@
     <Presets bind:selectedPreset></Presets>
     Max Entrants: <input bind:value="{maxPlayers}" type="number" min="2" max="8"><br/>
     Num Plants: <input bind:value="{numPlants}" type="number" min="1" max="2"><br/>
-    <button on:click="{createLobby}">Create Lobby</button>
+    {#if loading_message === ''}
+        <button on:click="{createLobby}">Create Lobby</button>
+    {:else}
+        {loading_message}
+    {/if}
     <ul>
         {#each lobbies as lobby}
             <li>
                 <a href='lobby/{lobby.slug}'>{lobby.slug}</a> - {lobby.preset} - {lobby.entrants.length} / {lobby.max_entrants} entrants.
-                {#if $UserStore} <button on:click="{() => deleteLobby(lobby.slug)}">Delete</button>{/if}
+                {#if user} <button on:click="{() => deleteLobby(lobby.slug)}">Delete</button>{/if}
             </li>
         {/each}
     </ul>

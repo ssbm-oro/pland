@@ -1,7 +1,10 @@
-import type { FullUser, TSessionID } from 'src/interfaces';
+
 import crypto from 'crypto';
-import type { APIUser } from 'discord-api-types/payloads';
-import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest';
+import type { APIUser } from 'discord-api-types/v10';
+import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
+
+type TSessionID = string;
+type FullUser = RESTPostOAuth2AccessTokenResult & APIUser;
 
 const sessionUsers = new Map<TSessionID, FullUser>();
 const sessionUserTimeouts = new Map<TSessionID, NodeJS.Timeout>();
@@ -35,23 +38,7 @@ export function fetchClientSession(sessionId: TSessionID) {
     const user = sessionUsers.get(sessionId);
     if (!user) return null;
 
-    const partialUser :APIUser = {
-        id: user.id,
-        username: user.username,
-        discriminator: user.discriminator,
-        avatar: user.avatar,
-        bot: user.bot!,
-        system: user.system!,
-        mfa_enabled: user.mfa_enabled!,
-        banner: user.banner!,
-        accent_color: user.accent_color!,
-        locale: user.locale!,
-        verified: user.verified!,
-        email: user.email!,
-        flags: user.flags!,
-        premium_type: user.premium_type!,
-        public_flags: user.public_flags!
-    };
+    const {...partialUser} :APIUser = user;
     return partialUser;
 }
 

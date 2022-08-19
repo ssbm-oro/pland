@@ -1,5 +1,6 @@
 /// <reference types="@sveltejs/kit" />
 /// <reference types="unplugin-icons/types/svelte" />
+
 declare module 'simple-svelte-autocomplete';
 
 // See https://kit.svelte.dev/docs/types#app
@@ -7,9 +8,10 @@ declare module 'simple-svelte-autocomplete';
 // and what to do when importing types
 declare namespace App {
 	interface Locals {
-		user: ?{
-			id: import('./interfaces').TUserDiscordID
-		}
+		session: ?{
+			id: string
+		},
+		user: ?import('discord-api-types/v10').APIUser
 	}
 	interface PrivateEnv {}
 	interface PublicEnv {

@@ -6,8 +6,8 @@ import type { RequestHandler } from "@sveltejs/kit";
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
     if (!lobby) return new Response(undefined, { status: 404 });
-    if (!locals.user) return new Response(undefined, { status: 401 })
-    const user = fetchSession(locals.user.id);
+    if (!locals.session) return new Response(undefined, { status: 401 })
+    const user = fetchSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
     let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });
@@ -22,8 +22,8 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
 export const POST: RequestHandler = async( {params, locals, request } ) => {
     const lobby = Lobbies.get(params.slug!);
     if (!lobby) return new Response(undefined, { status: 404 });
-    if (!locals.user) return new Response(undefined, { status: 401 })
-    const user = fetchSession(locals.user.id);
+    if (!locals.session) return new Response(undefined, { status: 401 })
+    const user = fetchSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
     let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });
@@ -47,8 +47,8 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
 export const DELETE: RequestHandler = async( {params, locals, request } ) => {
     const lobby = Lobbies.get(params.slug!);
     if (!lobby) return new Response(undefined, { status: 404 });
-    if (!locals.user) return new Response(undefined, { status: 401 })
-    const user = fetchSession(locals.user.id);
+    if (!locals.session) return new Response(undefined, { status: 401 })
+    const user = fetchSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
     let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });

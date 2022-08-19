@@ -1,11 +1,10 @@
 import { error } from '@sveltejs/kit';
-import type { TSessionID } from 'src/interfaces';
 import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
 import axios from 'axios';
 import type { RequestHandler } from '@sveltejs/kit';
-import type { APIUser, APIGuild } from 'discord-api-types/payloads/v10'
-import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/rest/v10'
+import type { APIUser, APIGuild } from 'discord-api-types/v10'
+import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10'
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
 import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
 import { env } from '$env/dynamic/public';
@@ -20,7 +19,7 @@ export const GET: RequestHandler = async ( { url, setHeaders } ) => {
         client_secret: DISCORD_OAUTH_CLIENT_SECRET,
         grant_type: 'authorization_code',
         code: code.toString(),
-        redirect_uri: env.PUBLIC_DISCORD_REDIRECT_URI,
+        redirect_uri: env.PUBLIC_DISCORD_REDIRECT_URI!,
     });
 
     try {
@@ -53,7 +52,7 @@ export const GET: RequestHandler = async ( { url, setHeaders } ) => {
         const UserGuildData: APIGuild[] = UserGuildRes.data;
 
         // Create new session for the user
-        const SessionID: TSessionID = setSession(UserData, Grantdata);
+        const SessionID = setSession(UserData, Grantdata);
 
         // Optionally, you can upsert the user in the DB here
 

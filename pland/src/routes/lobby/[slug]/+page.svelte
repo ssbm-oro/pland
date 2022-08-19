@@ -1,7 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import type Lobby from "$lib/lobby";
-    import { UserStore } from "$lib/stores";
     import type World from "$lib/z3r/logic/world";
     import { onMount } from "svelte";
     import Open from "$lib/z3r/logic/World/open";
@@ -14,13 +13,15 @@
 
     export let data: PageData;
     $: lobby = data.lobby;
+    $: user = data.user;
+
     let selectedItems: any[];
     let selectedLocations: any[];
     let world: World;
     let logicTestMessages: string[] = [];
 
-    $: userInLobby = $UserStore && lobby.entrants.some(entrant => entrant.discord_id == $UserStore.id)
-    $: userAsEntrant = $UserStore ? lobby.entrants.find(entrant => entrant.discord_id == $UserStore.id): undefined;
+    $: userInLobby = user ? lobby.entrants.some(entrant => entrant.discord_id == user!.id): undefined;
+    $: userAsEntrant = user ? lobby.entrants.find(entrant => entrant.discord_id == user!.id): undefined;
 
     onMount(async () => {
         try {

@@ -2,9 +2,12 @@
     import type Plant from "$lib/components/Plant.svelte";
     import type PlantData from "$lib/components/Plant.svelte";
     import Presets from "$lib/components/Presets.svelte";
-	import { UserStore } from '$lib/stores';
     import log from 'loglevel';
     import { get_loading_message } from '$lib/utils/loadingMessages'
+    import type { PageData } from './$types'
+
+    export let data: PageData;
+    $: user = data.user;
 
     let selectedPreset: string = '';
     let plant1data: PlantData;
@@ -107,13 +110,13 @@
 <main>
     <h1>Welcome to pland</h1>
     
-    {#if !$UserStore}
+    {#if !user}
         <p>Please log in if you wanna roll seeds. 🔐</p>
         <p>You can help me <a href="/logictest">test the logic</a> without logging in if you want.</p>
     {:else}
-        <h2>You are {$UserStore.username}</h2>
-        {#if $UserStore.avatar}
-            <img src='{discord_avatar_uri.replace('$userid', $UserStore.id).replace('$useravatar',$UserStore.avatar)}' alt="{$UserStore.username}'s avatar"/>
+        <h2>You are {user.username}</h2>
+        {#if user.avatar}
+            <img src='{discord_avatar_uri.replace('$userid', user.id).replace('$useravatar',user.avatar)}' alt="{user.username}'s avatar"/>
         {/if}
 
 
