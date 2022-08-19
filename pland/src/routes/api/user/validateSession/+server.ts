@@ -1,6 +1,5 @@
-import { error, json } from '@sveltejs/kit';
+import { error, json, type RequestHandler } from '@sveltejs/kit';
 import { fetchSession } from '$lib/utils/sessionHandler';
-import type { RequestHandler } from '@sveltejs/kit';
 import type { APIUser } from 'discord-api-types/v10';
 import cookie from 'cookie';
 

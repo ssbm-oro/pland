@@ -1,11 +1,13 @@
 import { json } from '@sveltejs/kit';
-import Lobby, {Entrant, Lobbies} from "$lib/lobby";
+import {Entrant, Lobbies} from "$lib/lobby";
 import { fetchSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
     let user = fetchSession(locals.session!.id);
+
+    // TODO revisit this
     if (lobby) {
         const entrants: Entrant[] = JSON.parse(JSON.stringify(lobby.entrants));
         entrants.forEach(entrant => {

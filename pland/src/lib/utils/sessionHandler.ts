@@ -1,7 +1,6 @@
 
 import crypto from 'crypto';
-import type { APIUser } from 'discord-api-types/v10';
-import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
+import type { APIUser, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 
 type TSessionID = string;
 type FullUser = RESTPostOAuth2AccessTokenResult & APIUser;

@@ -1,10 +1,8 @@
-import { error } from '@sveltejs/kit';
 import { setSession } from '$lib/utils/sessionHandler';
 import cookie from 'cookie';
 import axios from 'axios';
-import type { RequestHandler } from '@sveltejs/kit';
-import type { APIUser, APIGuild } from 'discord-api-types/v10'
-import type { RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10'
+import { error, type RequestHandler } from '@sveltejs/kit';
+import type { APIUser, APIGuild, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10'
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
 import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
 import { env } from '$env/dynamic/public';

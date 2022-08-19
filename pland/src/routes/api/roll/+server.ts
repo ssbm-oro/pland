@@ -1,4 +1,3 @@
-import { json as json$1 } from '@sveltejs/kit';
 import { fetchSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "@sveltejs/kit";
 import log from "loglevel";

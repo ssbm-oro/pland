@@ -1,9 +1,7 @@
-import { error, json } from '@sveltejs/kit';
+import { error, type RequestHandler } from '@sveltejs/kit';
 import { fetchSession, updateSession } from '$lib/utils/sessionHandler';
-import type { RequestHandler } from '@sveltejs/kit';
 import axios from 'axios';
-import type { APIUser } from 'discord-api-types/v10';
-import type { RESTPostOAuth2AccessTokenResult} from 'discord-api-types/v10';
+import type { APIUser, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 import cookie from 'cookie';
 import log from 'loglevel';
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
@@ -19,8 +17,8 @@ export const POST: RequestHandler = async ( { request} ) => {
     if (!session) throw error(400, 'Invalid session.');
 
     const FormData = new URLSearchParams({
-        client_id: env.DISCORD_OAUTH_CLIENT_ID!,
-        client_secret: DISCORD_OAUTH_CLIENT_SECRET!,
+        client_id: env.DISCORD_OAUTH_CLIENT_ID,
+        client_secret: DISCORD_OAUTH_CLIENT_SECRET,
         grant_type: 'refresh_token',
         refresh_token: session.refresh_token
     });

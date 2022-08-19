@@ -6,9 +6,7 @@
     import Retro from "$lib/z3r/logic/World/retro";
     import Standard from "$lib/z3r/logic/World/standard";
     import { onMount } from "svelte";
-    import Icon from '@iconify/svelte';
     import Item from '$lib/z3r/logic/item';
-    import type Location from '$lib/z3r/logic/location';
     import { ItemCollection } from '$lib/z3r/logic/Support/itemcollection';
     import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
     import Presets from '$lib/components/Presets.svelte'

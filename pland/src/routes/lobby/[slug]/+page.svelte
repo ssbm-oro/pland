@@ -1,6 +1,5 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import type Lobby from "$lib/lobby";
     import type World from "$lib/z3r/logic/world";
     import { onMount } from "svelte";
     import Open from "$lib/z3r/logic/World/open";
