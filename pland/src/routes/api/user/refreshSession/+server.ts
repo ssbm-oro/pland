@@ -1,6 +1,5 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
 import { fetchSession, updateSession } from '$lib/utils/sessionHandler';
-import axios from 'axios';
 import type { APIUser, RESTPostOAuth2AccessTokenResult, RESTPostOAuth2RefreshTokenURLEncodedData } from 'discord-api-types/v10';
 import cookie from 'cookie';
 import log from 'loglevel';
@@ -25,22 +24,21 @@ export const POST: RequestHandler = async ( { request} ) => {
 
     try {
         // Get the authentication object using the user's code
-        const AuthRes = await axios.post('https://discord.com/api/v10/oauth2/token', refreshData, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
+        const AuthRes = await fetch('https://discord.com/api/v10/oauth2/token',
+        {
+            body: JSON.stringify(refreshData)
         });
 
-        const GrantData : RESTPostOAuth2AccessTokenResult = AuthRes.data;
+        const GrantData : RESTPostOAuth2AccessTokenResult = await AuthRes.json();
 
         // Get the user's data using the access token
-        const UserRes = await axios.get(`https://discord.com/api/v10/users/@me`, {
+        const UserRes = await fetch(`https://discord.com/api/v10/users/@me`, {
             headers: {
                 Authorization: `Bearer ${GrantData.access_token}`,
             }
         });
 
-        const UserData: APIUser = UserRes.data;
+        const UserData: APIUser = await UserRes.json();
 
         updateSession(sessionId, UserData, GrantData);
 
