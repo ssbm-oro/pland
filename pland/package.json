@@ -46,7 +46,6 @@
 		"cookie": "^0.5.0",
 		"discord-api-types": "^0.36.3",
 		"loglevel": "^1.8.0",
-		"svelte-themes": "^0.0.98",
-		"tempy": "^3.0.0"
+		"svelte-themes": "^0.0.98"
 	}
 }

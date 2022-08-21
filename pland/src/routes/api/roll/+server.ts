@@ -2,10 +2,8 @@ import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "@sveltejs/kit";
 import log from "loglevel";
 import fetch from 'node-fetch'
-import fs from 'fs';
-import * as tempy from "tempy";
 import { locations } from '$lib/json/alttpr-customizer-schema.json';
-import type { APIEmbed, APIEmbedField, RESTPostAPIWebhookWithTokenFormDataBody, RESTPostAPIWebhookWithTokenJSONBody } from 'discord-api-types/v10';
+import type { APIEmbed, APIEmbedField, RESTPostAPIWebhookWithTokenJSONBody } from 'discord-api-types/v10';
 import { DISCORD_WEBHOOK_URI } from "$env/static/private";
 import * as default_settings from '$lib/json/default-customizer.json'
 
@@ -21,7 +19,7 @@ enum discord_log_levels {
     error = 0xe11d62
 }
 
-export const POST: RequestHandler = async ( {request, url, locals} ) => {
+export const POST: RequestHandler = async ( {request, url, locals } ) => {
     if (!locals.session) {
         return new Response('Unauthorized', { status: 401 })
     }
@@ -100,17 +98,14 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
 
     let endpoint = customizer_url + (test ? '/test' : '');
 
-    let discord_webhook_data : RESTPostAPIWebhookWithTokenFormDataBody = {
-        embeds: [embed]
-    }
-
-    let  file;
+    let file;
+    let json:any;
 
     try {
         let res = await fetch(endpoint, options);
         if (res.ok)
         {
-            let json :any = await res.json();
+            json = await res.json();
             let body = 'OK';
             embed.title = 'Settings tested successfully';
             embed.description = `The following settings were submitted to the customizer test and it said it'll roll! 🎲`;
@@ -127,15 +122,12 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             try {
                 let options;
                 if (test) {
-                    options = { extension: 'json' }
+                    file = 'tested_settings.json';
                 }
                 else {
-                    options = { name: `${body}.json`}
+                    file = `${body}.json`;
                 }
                 delete json['patch'];
-                file = tempy.temporaryWriteSync(JSON.stringify(json), options);
-                
-                discord_webhook_data.attachments = [{id:'0', filename: file}]
             }
             catch(err) { log.error(err); }
 
@@ -160,14 +152,11 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             content: embed.title,
             embeds: [embed]
         }
-        if (file) {
-            discord_webhook_data['files[0]'] = fs.readFileSync(file)
-        }
-        discord_webhook_data = {payload_json: JSON.stringify(payload_json)};
+
         const webhook_data = new FormData();
         webhook_data.append('payload_json', JSON.stringify(payload_json));
         if (file) {
-            webhook_data.append('files[0]', new Blob([fs.readFileSync(file)]), file)
+            webhook_data.append('files[0]', new Blob([JSON.stringify(json)]), file)
         }
 
         let discordres = await fetch(webhook_uri, {
