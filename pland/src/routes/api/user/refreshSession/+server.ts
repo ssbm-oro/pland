@@ -1,11 +1,11 @@
 import { error, type RequestHandler } from '@sveltejs/kit';
 import { fetchSession, updateSession } from '$lib/utils/sessionHandler';
 import axios from 'axios';
-import type { APIUser, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
+import type { APIUser, RESTPostOAuth2AccessTokenResult, RESTPostOAuth2RefreshTokenURLEncodedData } from 'discord-api-types/v10';
 import cookie from 'cookie';
 import log from 'loglevel';
 import { DISCORD_OAUTH_CLIENT_SECRET } from '$env/static/private';
-import { env } from '$env/dynamic/private';
+import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
 
 export const POST: RequestHandler = async ( { request} ) => {
 
@@ -16,16 +16,16 @@ export const POST: RequestHandler = async ( { request} ) => {
     const session = fetchSession(sessionId);
     if (!session) throw error(400, 'Invalid session.');
 
-    const FormData = new URLSearchParams({
-        client_id: env.DISCORD_OAUTH_CLIENT_ID,
+    const refreshData: RESTPostOAuth2RefreshTokenURLEncodedData = {
+        client_id: PUBLIC_DISCORD_OAUTH_CLIENT_ID,
         client_secret: DISCORD_OAUTH_CLIENT_SECRET,
         grant_type: 'refresh_token',
-        refresh_token: session.refresh_token
-    });
+        refresh_token: session.token.refresh_token
+    };
 
     try {
         // Get the authentication object using the user's code
-        const AuthRes = await axios.post('https://discord.com/api/v10/oauth2/token', FormData, {
+        const AuthRes = await axios.post('https://discord.com/api/v10/oauth2/token', refreshData, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             }

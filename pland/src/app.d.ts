@@ -13,9 +13,7 @@ declare namespace App {
 		},
 		user: ?import('discord-api-types/v10').APIUser
 	}
-	interface PrivateEnv {
-		DISCORD_OAUTH_CLIENT_ID: string
-	}
+	interface PrivateEnv {}
 	interface PublicEnv {
 		PUBLIC_DISCORD_REDIRECT_URI: string
 	}

@@ -1,6 +1,6 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { Lobbies } from "$lib/lobby";
-import { fetchSession } from "$lib/utils/sessionHandler";
+import { fetchClientSession } from "$lib/utils/sessionHandler";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
@@ -8,7 +8,7 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
 
     if (!locals.session) return new Response(undefined, { status: 401 })
 
-    const user = fetchSession(locals.session.id);
+    const user = fetchClientSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
 
     let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
@@ -26,7 +26,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     if (!lobby) return new Response(undefined, { status: 404 });
 
     if (!locals.session) return new Response(undefined, { status: 401 })
-    const user = fetchSession(locals.session.id);
+    const user = fetchClientSession(locals.session.id);
 
     if (!user) return new Response(undefined, { status: 403 })
 
@@ -55,7 +55,7 @@ export const DELETE: RequestHandler = async( {params, locals, request } ) => {
 
     if (!locals.session) return new Response(undefined, { status: 401 })
 
-    const user = fetchSession(locals.session.id);
+    const user = fetchClientSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
     
     let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);

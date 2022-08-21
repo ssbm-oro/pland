@@ -1,13 +1,11 @@
-import { fetchSession } from "$lib/utils/sessionHandler";
+import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "@sveltejs/kit";
 import log from "loglevel";
-import fs from "fs";
-import FormData from "form-data";
 import * as tempy from "tempy";
-import axios from "axios";
 import { locations } from '$lib/json/alttpr-customizer-schema.json';
-import type { APIEmbed, APIEmbedField } from 'discord-api-types/v10';
+import type { RESTPostAPIWebhookWithTokenJSONBody, APIEmbed, APIEmbedField } from 'discord-api-types/v10';
 import { DISCORD_WEBHOOK_URI } from "$env/static/private";
+import * as default_settings from '$lib/json/default-customizer.json'
 
 
 
@@ -44,7 +42,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
             return new Response('Missing parameter(s)', { status: 400 })
     }
 
-    let user = fetchSession(locals.session.id);
+    let user = fetchClientSession(locals.session.id);
     if (!user) {
         return new Response('Forbidden', { status: 403 })
     }
@@ -52,8 +50,6 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
     let preset_res = await fetch(new URL(`/presets/${presetName}`, url.origin));
     let preset = await preset_res.json();
 
-    let default_settings_uri = new URL(`/json/default-customizer.json`, url.origin);
-    const default_settings = await (await fetch(default_settings_uri)).json();
     add_default_customizer(preset, default_settings);
     
     preset.customizer = true;
@@ -102,7 +98,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
 
     let endpoint = customizer_url + (test ? '/test' : '');
 
-    let discord_webhook_data = new FormData();
+    let discord_webhook_data = new FormData()
 
     try {
         let res = await fetch(endpoint, options);
@@ -132,7 +128,7 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
                 }
                 delete json['patch'];
                 let file = tempy.temporaryWriteSync(JSON.stringify(json), options);
-                discord_webhook_data.append('files[0]', fs.createReadStream(file), {contentType: 'application/json'});
+                discord_webhook_data.append('files[0]', file);
             }
             catch(err) { log.error(err); }
 
@@ -153,13 +149,16 @@ export const POST: RequestHandler = async ( {request, url, locals} ) => {
         return new Response(undefined, { status: 500 })
     }
     finally {
-        let payload_json = {
+        let payload_json: RESTPostAPIWebhookWithTokenJSONBody = {
             content: embed.title,
             embeds: [embed]
         }
-        discord_webhook_data.append('payload_json', JSON.stringify(payload_json), {contentType: 'application/json'} );
-
-        let discordres = await axios.post(webhook_uri, discord_webhook_data, { headers: discord_webhook_data.getHeaders() });
+        discord_webhook_data.append('payload_json', JSON.stringify(payload_json as any));
+        //let discordres = await axios.post(webhook_uri, discord_webhook_data, { headers: discord_webhook_data.getHeaders() });
+        let discordres = await fetch(webhook_uri, {
+            method: 'POST',
+            body: discord_webhook_data
+        })
         log.debug(discordres);
     }
 }

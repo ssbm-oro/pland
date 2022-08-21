@@ -6,6 +6,7 @@
     import { get_loading_message } from '$lib/utils/loadingMessages'
     import type { PageData } from './$types'
 
+
     export let data: PageData;
     $: user = data.user;
 
@@ -53,15 +54,15 @@
         const options = {
 			method: 'POST',
             body: new URLSearchParams({
-                preset: selectedPreset,
-                plant1item1: plant1data.item?.value!,
-                plant1location1: plant1data.location?.hash!,
-                plant1item2: plant2data.item?.value!,
-                plant1location2: plant2data.location?.hash!,
-                plant2item1: plant3data.item?.value!,
-                plant2location1: plant3data.location?.hash!,
-                plant2item2: plant4data.item?.value!,
-                plant2location2: plant4data.location?.hash!,
+                preset: 'open.json',
+                plant1item1: 'test1',
+                plant1location1: 'test1',
+                plant1item2: 'test1',
+                plant1location2: 'test1',
+                plant2item1: 'test1',
+                plant2location1: 'test1',
+                plant2item2: 'taest1',
+                plant2location2: 'test1',
                 test: test.toString()
             })
 		}
@@ -118,7 +119,7 @@
         {#if user.avatar}
             <img src='{discord_avatar_uri.replace('$userid', user.id).replace('$useravatar',user.avatar)}' alt="{user.username}'s avatar"/>
         {/if}
-
+        <button on:click="{test_click}">Test those settings 🧪</button>
 
         <!-- <Presets bind:selectedPreset="{selectedPreset}" on:onChange={resetPlants}></Presets>
         {#key reset_toggle}

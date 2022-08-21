@@ -1,3 +1,7 @@
 {
-    "workbench.editor.labelFormat": "short"
+    "workbench.editor.labelFormat": "short",
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+    "+*.svelte": "+${capture}.js, +${capture}.server.tjs, +${capture}.ts, +${capture}.server.ts"
+  }
 }

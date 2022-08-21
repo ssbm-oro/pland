@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import type { APIUser, RESTPostOAuth2AccessTokenResult } from 'discord-api-types/v10';
 
 type TSessionID = string;
-type FullUser = RESTPostOAuth2AccessTokenResult & APIUser;
+type FullUser = { user:APIUser, token:RESTPostOAuth2AccessTokenResult };
 
 const sessionUsers = new Map<TSessionID, FullUser>();
 const sessionUserTimeouts = new Map<TSessionID, NodeJS.Timeout>();
@@ -12,7 +12,7 @@ export function setSession(userData: APIUser, tokenGrantData: RESTPostOAuth2Acce
 
     // Creating a new session ID that will be used as a cookie to authenticate the user in 
     const newSessionID: TSessionID = crypto.randomBytes(32).toString('hex');
-    const fullUser: FullUser = { ...userData, ...tokenGrantData };
+    const fullUser: FullUser = { user:userData, token:tokenGrantData };
 
     sessionUsers.set(newSessionID, fullUser);
 
@@ -34,11 +34,10 @@ export function fetchSession(sessionId: TSessionID) {
 export function fetchClientSession(sessionId: TSessionID) {
     refreshTimeout(sessionId);
 
-    const user = sessionUsers.get(sessionId);
-    if (!user) return null;
+    const session = sessionUsers.get(sessionId);
+    if (!session) return null;
 
-    const {...partialUser} :APIUser = user;
-    return partialUser;
+    return session.user;
 }
 
 function refreshTimeout(sessionId: string) {
@@ -59,7 +58,7 @@ export function deleteSession(sessionId: TSessionID) {
 
 export function updateSession(sessionId: TSessionID, userData: APIUser, tokenGrantData: RESTPostOAuth2AccessTokenResult) {
     refreshTimeout(sessionId);
-    const fullUser: FullUser = { ...userData, ...tokenGrantData };
+    const fullUser: FullUser = { user:userData, token:tokenGrantData };
     sessionUsers.set(sessionId, fullUser);
 
     return sessionId as TSessionID;

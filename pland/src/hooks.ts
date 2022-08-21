@@ -6,11 +6,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 
 	if (cookies['session_id']) {
-		const user = fetchSession(cookies['session_id']);
+		const session = fetchSession(cookies['session_id']);
 
-		if (user) {
+		if (session) {
 			event.locals.session = { id: cookies['session_id'] };
-			event.locals.user = user;
+			event.locals.user = session.user;
 
 			return await resolve(event);
 		}
