@@ -119,7 +119,6 @@
         {#if user.avatar}
             <img src='{discord_avatar_uri.replace('$userid', user.id).replace('$useravatar',user.avatar)}' alt="{user.username}'s avatar"/>
         {/if}
-        <button on:click="{test_click}">Test those settings 🧪</button>
 
         <!-- <Presets bind:selectedPreset="{selectedPreset}" on:onChange={resetPlants}></Presets>
         {#key reset_toggle}
