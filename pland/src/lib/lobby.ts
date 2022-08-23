@@ -390,7 +390,7 @@ export default class Lobby {
             'quest',
         ]
 
-        let getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] || '';
+        const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] || '';
         return `${getRandom(descriptors)}-${getRandom(animals)}-${getRandom(states)}`;
     }
 }

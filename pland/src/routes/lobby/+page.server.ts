@@ -13,7 +13,7 @@ export const POST: Action = async ({locals, url}) => {
         const maxPlayers = +(url.searchParams.get("maxPlayers") || 2);
         const numPlants = +(url.searchParams.get("numPlants") || 2);
         if (!preset) throw error(409)
-        let newLobby = new Lobby(locals.user, preset, maxPlayers, numPlants);
+        const newLobby = new Lobby(locals.user, preset, maxPlayers, numPlants);
         throw redirect(302, '/lobby/' + newLobby.slug);
     }
     throw error(401);

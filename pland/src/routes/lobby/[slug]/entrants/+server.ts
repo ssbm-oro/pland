@@ -5,7 +5,7 @@ import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!);
-    let user = fetchClientSession(locals.session!.id);
+    const user = fetchClientSession(locals.session!.id);
 
     // TODO revisit this
     if (lobby) {

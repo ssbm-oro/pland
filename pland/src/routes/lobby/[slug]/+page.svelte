@@ -9,13 +9,15 @@
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
     import { invalidate } from "$app/navigation";
+    import type Location from '$lib/z3r/logic/location';
+    import type Item from "$lib/z3r/logic/item";
 
     export let data: PageData;
     $: lobby = data.lobby;
     $: user = data.user;
 
-    let selectedItems: any[];
-    let selectedLocations: any[];
+    let selectedItems: Item[];
+    let selectedLocations: Location[];
     let world: World;
     let logicTestMessages: string[] = [];
 
@@ -45,8 +47,8 @@
                     break;
             }
             if (userAsEntrant) {
-                selectedItems = userAsEntrant.plantedItems;
-                selectedLocations = userAsEntrant.plantedLocations
+                selectedItems = userAsEntrant.plantedItems.map(item => { return JSON.parse(item);});
+                selectedLocations = userAsEntrant.plantedLocations.map(location => { return JSON.parse(location); });
             }
         }
         catch (err) {

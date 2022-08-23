@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
     const user = fetchClientSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
 
-    let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
+    const entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });
 
     return json({ 
@@ -30,13 +30,13 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
 
     if (!user) return new Response(undefined, { status: 403 })
 
-    let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
+    const entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });
 
     const f = await request.formData();
     
-    let plantedItems = JSON.parse(f.get('plantedItems')!.toString());
-    let plantedLocations = JSON.parse(f.get('plantedLocations')!.toString());
+    const plantedItems = JSON.parse(f.get('plantedItems')!.toString());
+    const plantedLocations = JSON.parse(f.get('plantedLocations')!.toString());
     if (!plantedItems || !plantedLocations) return new Response('You must define an item to plant and a location to plant it.', { status: 409 });
 
     lobby.plant(user, plantedItems, plantedLocations);
@@ -58,7 +58,7 @@ export const DELETE: RequestHandler = async( {params, locals, request } ) => {
     const user = fetchClientSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
     
-    let entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
+    const entrant = lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });
 
     lobby.unplant(user);

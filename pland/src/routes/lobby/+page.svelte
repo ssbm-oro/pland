@@ -16,7 +16,7 @@
 
     async function createLobby() {
         loading_message = get_loading_message();
-        let res = await fetch(`/lobby?preset=${selectedPreset}&maxPlayers=${maxPlayers}&numPlants=${numPlants}`, { method:'POST' } );
+        const res = await fetch(`/lobby?preset=${selectedPreset}&maxPlayers=${maxPlayers}&numPlants=${numPlants}`, { method:'POST' } );
         if (res.redirected) {
             goto(res.url);
         }

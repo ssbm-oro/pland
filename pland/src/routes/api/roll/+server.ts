@@ -19,12 +19,12 @@ enum discord_log_levels {
     error = 0xe11d62
 }
 
-export const POST: RequestHandler = async ( {request, url, locals } ) => {
+export const POST: RequestHandler = async ( { request, url, locals } ) => {
     if (!locals.session) {
         return new Response('Unauthorized', { status: 401 })
     }
 
-    let params = new URLSearchParams(await request.text());
+    const params = new URLSearchParams(await request.text());
     const presetName = params.get('preset');
     const plant1item1 = params.get('plant1item1');
     const plant1location1 = params.get('plant1location1');
@@ -42,7 +42,7 @@ export const POST: RequestHandler = async ( {request, url, locals } ) => {
             return new Response('Missing parameter(s)', { status: 400 })
     }
 
-    let user = fetchClientSession(locals.session.id);
+    const user = fetchClientSession(locals.session.id);
     if (!user) {
         return new Response('Forbidden', { status: 403 })
     }
