@@ -9,8 +9,8 @@
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
     import { invalidate } from "$app/navigation";
-    import type Location from '$lib/z3r/logic/location';
-    import type Item from "$lib/z3r/logic/item";
+    import type Location from '$lib/z3r/logic/Location';
+    import type Item from "$lib/z3r/logic/Item";
 
     export let data: PageData;
     $: lobby = data.lobby;

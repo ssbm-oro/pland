@@ -1,57 +1,54 @@
-import type { Region } from "./region";
+import { InItializeRegion, type Region } from "./region";
 import { ItemCollection } from "./Support/itemcollection";
 import { LocationCollection } from "./Support/locationcollection";
-import type { Config } from "./config";
-import Item from "./item";
+import type Item from "./item";
 import type Location from "./location";
+import type Config from "./config";
 
-export default class World {
+
+let messages: string[]|null = [];
+
+export default interface World {
     regions: Map<string, Region> = new Map();
     locations: LocationCollection = new LocationCollection([]);
     config: Config;
     win_condition?: (items: ItemCollection) => boolean;
     id: number = 0;
-    inverted = false;
-    messages: string[]|null = null;
+    inverted: boolean;
+}
 
-    public constructor(config:Config, messages: string[]|null = null)
-    {
-        this.config = config;
-        messages = messages;
-    }
-
-    public initialize() {
-        this.regions.forEach(region => {
-            if(this.config.glitches !== 'NoLogic') {
-                region.initialize();
+    export function initialize(world: World) {
+        world.regions.forEach(region => {
+            if(world.config.glitches !== 'NoLogic') {
+                InItializeRegion(region);
             }
-            this.locations = this.locations.merge(region.locations);
+            world.locations = world.locations.merge(region.locations);
         });
     }
 
-    getRegion(regionName: string) :Region | undefined {
-        return this.regions.get(regionName);
+    export function getRegion(world: World, regionName: string) :Region | undefined {
+        return world.regions.get(regionName);
     }
 
-    canPlant(item: Item, location: Location, messages:string[]|null): boolean {
-        return location.region.canFill(item);
+    export function canPlant(item: Item, location: Location, messages:string[]|null): boolean {
+        return canFillRegion(location.region, item);
     }
 
 
-    resetPlants() {
-        this.locations.locationsWithItem().forEach(location => {
-            this.locations.get(location.name)!.removeItem();
+    export function resetPlants(world: World) {
+        world.locations.locationsWithItem().forEach(location => {
+            removeItem(world.locations.get(location.name)!);
         });
     }
 
 
-    canPlacePrizes(items: ItemCollection): boolean {
+    export function canPlacePrizes(world: World, items: ItemCollection): boolean {
         let requiredPendants: Region[] = [];
         let requiredCrystals: Region[] = [];
 
 
         let gtItems = new ItemCollection();
-        this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
+        world.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
             gtItems.addItem((location as Location).item!);
         });
         gtItems.addItem(Item.get('Crystal1', this)!)
@@ -64,40 +61,40 @@ export default class World {
         gtItems.addItem(Item.get('DefeatAgahnim', this)!)
         const nonGtItems = items.diff(gtItems);
 
-        if (this.getRegion('Hyrule Castle Tower')?.canComplete(this.locations, nonGtItems)) {
-            nonGtItems.addItem(Item.get('DefeatAgahnim',this)!)
+        if (world.getRegion('Hyrule Castle Tower')?.canComplete(world.locations, nonGtItems)) {
+            nonGtItems.addItem(Item.get('DefeatAgahnim',world)!)
         }
 
-        this.regions.forEach(region => {
-            if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonGtItems)) {
+        world.regions.forEach(region => {
+            if (region.prize && region.prize.isCrystalPendant && !region.canComplete(world.locations, nonGtItems)) {
                 requiredPendants.push(region);
-                this.log(`Determined that ${region.name} must be a pendant based on GT items.`)
+                log(`Determined that ${region.name} must be a pendant based on GT items.`)
             }
         });
         if (requiredPendants.length > 3) {
-            this.log(`Too many pendants! Can't place crystals.`)
+            log(`Too many pendants! Can't place crystals.`)
             return false;
         }
 
         let pendItems = new ItemCollection();
-        pendItems.addItem(Item.get('PendantOfCourage', this)!);
-        pendItems.addItem(Item.get('PendantOfWisdom', this)!);
-        pendItems.addItem(Item.get('PendantOfPower', this)!);
-        if (this.locations.get('Master Sword Pedestal')?.item) {
-            pendItems.addItem(this.locations.get('Master Sword Pedestal')?.item!);
+        pendItems.addItem(Item.get('PendantOfCourage', world)!);
+        pendItems.addItem(Item.get('PendantOfWisdom', world)!);
+        pendItems.addItem(Item.get('PendantOfPower', world)!);
+        if (world.locations.get('Master Sword Pedestal')?.item) {
+            pendItems.addItem(world.locations.get('Master Sword Pedestal')?.item!);
         }
-        if (this.locations.get('Sahasrahla')?.item) {
-            pendItems.addItem(this.locations.get('Sahasrahla')?.item!);
+        if (world.locations.get('Sahasrahla')?.item) {
+            pendItems.addItem(world.locations.get('Sahasrahla')?.item!);
         }
         const nonPendItems = items.diff(pendItems);
-        this.regions.forEach(region => {
-            if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonPendItems)) {
+        world.regions.forEach(region => {
+            if (region.prize && region.prize.isCrystalPendant && !canComplete(region, world.locations, nonPendItems)) {
                 requiredCrystals.push(region);
-                this.log(`Determined that ${region.name} must be a crystal based on pendant items.`);
+                log(`Determined that ${region.name} must be a crystal based on pendant items.`);
             }
         });
         if (requiredCrystals.length > 7) {
-            this.log(`Too many crystals! Can't place pendants.`);
+            log(`Too many crystals! Can't place pendants.`);
             return false;
         }
 
@@ -105,7 +102,7 @@ export default class World {
         requiredCrystals.forEach(crystal => {
             requiredPendants.forEach(pendant => {
                 if (crystal == pendant) {
-                    this.log(`Paradox: ${crystal.name} must be both a pendant and a crystal.`);
+                    log(`Paradox: ${crystal.name} must be both a pendant and a crystal.`);
                     noDoubles = false;
                 }
             });
@@ -114,30 +111,32 @@ export default class World {
         return noDoubles;
     }
 
-    canPlaceBosses(): boolean {
+    // TODO: Implement
+    export function canPlaceBosses(): boolean {
         return true;
     }
 
-    canPlaceMedallions(items:ItemCollection): boolean {
-        return this.canPlaceMedallion("Misery Mire Medallion", items) && this.canPlaceMedallion("Turtle Rock Medallion", items);
+
+    export function canPlaceMedallions(world: World, items:ItemCollection): boolean {
+        return canPlaceMedallion(world, "Misery Mire Medallion", items) && canPlaceMedallion(world, "Turtle Rock Medallion", items);
     }
     
-    canPlaceMedallion(location: string,items: ItemCollection): boolean {
+    export function canPlaceMedallion(world: World, location: string,items: ItemCollection): boolean {
         let haveMedallion = false;
-        let medallion = this.locations.get(location);
+        let medallion = world.locations.get(location);
         if (!medallion || !medallion.item) {
             console.log(items);
             haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake');
-            this.log(`${location} not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+            log(`${location} not set. HaveMedallion based on any medallion: ${haveMedallion}`);
         }
         else {
             haveMedallion = items.has(medallion.item.name);
-            this.log(`${location} is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
+            log(`${location} is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
         }
         return haveMedallion;
     }
 
-    log(message: string) {
-        if (this.messages) this.messages.push(message); else console.log(message);
+    export function log(message: string) {
+        if (messages) messages.push(message); else console.log(message);
     }
 }
