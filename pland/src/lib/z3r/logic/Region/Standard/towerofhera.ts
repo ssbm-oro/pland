@@ -3,7 +3,7 @@ import { Chest } from "../../Location/chest";
 import { Region } from "../../region";
 import { LocationCollection } from "../../Support/locationcollection";
 import type World from "../../world";
-import { Boss } from "../../boss";
+import { Boss } from "../../Boss";
 import { BigChest } from "../../Location/bigchest";
 import { Drop } from "../../Location/drop";
 import { Standing } from "../../Location/standing";

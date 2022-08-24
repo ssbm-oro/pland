@@ -25,7 +25,7 @@ import { TurtleRock } from "../Region/Standard/turtlerock";
 import { GanonsTower } from "../Region/Standard/ganonstower";
 import { Medallion } from "../Region/Standard/medallions";
 import { Fountains } from "../Region/Standard/fountains";
-import type { Config } from "../config";
+import type { Config } from "../Config";
 
 export default class Standard extends World {
     public constructor (config:Config, messages: string[]|null = null) {

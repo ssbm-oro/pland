@@ -1,4 +1,4 @@
-import { Boss } from "../../boss";
+import { Boss } from "../../Boss";
 import Item from "../../item";
 import { Pendant } from "../../Location/Prize/pendant";
 import { BigChest } from "../../Location/bigchest";

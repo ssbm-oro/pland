@@ -1,9 +1,5 @@
-export class Entry {
+export interface Entry {
         name: string;
-
-        public constructor(name: string){
-            this.name = name;
-        }
 }
 
 export class Collection {

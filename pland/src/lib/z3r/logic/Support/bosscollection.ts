@@ -1,4 +1,4 @@
-import type { Boss } from "../boss";
+import type { Boss } from "../Boss";
 import { Collection } from "./collection";
 import type { ItemCollection } from "./itemcollection";
 
@@ -19,7 +19,8 @@ export default class BossCollection extends Collection {
 
     public canBeat(items: ItemCollection) {
         return (this.filter((boss: Boss) => {
-            return boss.canBeat(items);
+            if (boss.canBeat) return boss.canBeat(items, null);
+            else return true;
         }));
     }
 }

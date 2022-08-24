@@ -1,12 +1,14 @@
-export class Config {
+
+// TODO: Add enumerable values where possible
+export default interface Config {
     item: {
         pool: 'normal' | 'hard';
         functionality: 'normal' | 'hard';
     }
-    lang: string = 'en';
-    mode: 'open' | 'standard' | 'inverted' | 'retro' = 'standard';
-    hints: 'on' | 'off' = 'off';
-    weapons: 'randomized' | 'vanilla' | 'swordless' | 'assured' = 'randomized';
+    lang: string;
+    mode: 'open' | 'standard' | 'inverted' | 'retro';
+    hints: 'on' | 'off';
+    weapons: 'randomized' | 'vanilla' | 'swordless' | 'assured';
     crystals: {
         tower: number;
         ganon: number;
@@ -17,13 +19,13 @@ export class Config {
         enemy_health: string;
         enemy_shuffle: string;
     }
-    glitches: string = "none";
-    spoilers: string = "false";
-    entrances: string = "none";
-    tournament: boolean = true;
-    accessibility: "items" | "locations" | "beatable" = "items";
-    dungeon_items: string = "standard";
-    item_placement: "basic" | "advanced" = "advanced";
+    glitches: string;
+    spoilers: string;
+    entrances: string;
+    tournament: boolean;
+    accessibility: "items" | "locations" | "beatable";
+    dungeon_items: string;
+    item_placement: "basic" | "advanced";
     eq: any;
     l: any;
     drops: any
@@ -69,54 +71,4 @@ export class Config {
         "rom.timerStart": string;
         "spoil.BootsLocation": boolean;
     }
-
-    public constructor()
-    {
-        this.item = {pool:"normal", functionality:"normal"};
-        this.crystals = {tower:7, ganon:7};
-        this.enemizer = {boss_shuffle:"none", enemy_damage:"default", enemy_health:"default", enemy_shuffle:"none"};
-        this.custom = {
-            canBombJump: false,
-            canBootsClip: false,
-            canBunnyRevive: false,
-            canBunnySurf: false,
-            canDungeonRevive: false,
-            canFakeFlipper: false,
-            canMirrorClip: false,
-            canMirrorWrap: false,
-            canOWYBA: false,
-            canOneFrameClipOW: false,
-            canSuperBunny: false,
-            canSuperSpeed: false,
-            canWaterFairyRevive: false,
-            canWaterWalk: false,
-            customPrizePacks: false,
-            drop: {},
-            item: {},
-            "item.Goal.Required": '',
-            "item.require.Lamp": true,
-            "item.value.BlueClock": '',
-            "item.value.GreenClock": '',
-            "item.value.RedClock": '',
-            "item.value.Rupoor": '',
-            "prizes.crossworld": true,
-            "prize.shuffleCrystals": true,
-            "prize.shufflePendants": true,
-            "region.bossNormalLocation": true,
-            "region.wildBigKeys": false,
-            "region.wildKeys": false,
-            "region.wildMaps": false,
-            "region.wildCompasses": false,
-            "rom.dungeonCount": '',
-            "rom.freeItemMenu": false,
-            "rom.freeItemText": false,
-            "rom.genericKeys": false,
-            "rom.mapOnPickup": false,
-            "rom.rupeeBow": false,
-            "rom.timerMode": '',
-            "rom.timerStart": '',
-            "spoil.BootsLocation": false
-        }
-    }
-
 }

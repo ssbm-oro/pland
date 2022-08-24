@@ -4,7 +4,7 @@ import { Region } from "../../region";
 import { LocationCollection } from "../../Support/locationcollection";
 import type World from "../../world";
 import type { ItemCollection } from "../../Support/itemcollection";
-import { Boss } from "../../boss";
+import { Boss } from "../../Boss";
 import { BigChest } from "../../Location/bigchest";
 import { Drop } from "../../Location/drop";
 import { Crystal } from "../../Location/Prize/crystal";

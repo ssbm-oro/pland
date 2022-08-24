@@ -1,7 +1,7 @@
 import { Region } from "../../region";
 import Item, { BigKey, Key, Compass, Map} from "../../item";
 import type World from "../../world";
-import { Boss } from "../../boss";
+import { Boss } from "../../Boss";
 import { LocationCollection } from "../../Support/locationcollection";
 import { Dash } from "../../Location/dash";
 import { Chest } from "../../Location/chest";

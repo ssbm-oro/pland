@@ -1,302 +1,301 @@
 import { ItemCollection } from "./Support/itemcollection";
-import { Entry } from "./Support/collection";
+import type { Entry } from "./Support/collection";
 import type World from "./world";
+import type { Region } from "./region";
 
-export default class Item extends Entry {
-    nice_name: string;
+export default interface Item extends Entry {
     world: World;
-    is_dungeon_item = false;
-    is_bottle = false;
-
-    public static items: ItemCollection;
-    public static world: World;
-
-    constructor(name: string, world: World) {
-        super(name);
-        this.nice_name = "item." + name;
-        this.world = world;
-    }
-
-    public static all(world: World) {
-        if (Item.items) return Item.items;
-
-        Item.world = world;
-        this.items = new ItemCollection([
-            new Item('Nothing', world),
-            
-            new Sword('L1Sword', world),
-            new Sword('L1SwordAndShield', world),
-            new Sword('L2Sword', world),
-            new Sword('MasterSword', world),
-            new Sword('L3Sword', world),
-            new Sword('L4Sword', world),
-            new Shield('BlueShield', world),
-            new Shield('RedShield', world),
-            new Shield('MirrorShield', world),
-            new Item('FireRod', world),
-            new Item('IceRod', world),
-            new Item('Hammer', world),
-            new Item('Hookshot', world),
-            new Item('Bow', world),
-            new Item('Boomerang', world),
-            new Item('Powder', world),
-            //new BottleContents('Bee', [0x0E], $world),
-            new Medallion('Bombos', world),
-            new Medallion('Ether', world),
-            new Medallion('Quake', world),
-            new Item('Lamp', world),
-            new Item('Shovel', world),
-            new Item('OcarinaInactive', world),
-            new Item('CaneOfSomaria', world),
-            new Bottle('Bottle', world),
-            new HealthUpgrade('PieceOfHeart', world),
-            new Item('CaneOfByrna', world),
-            new Item('Cape', world),
-            new Item('MagicMirror', world),
-            new Item('PowerGlove', world),
-            new Item('TitansMitt', world),
-            new Item('BookOfMudora', world),
-            new Item('Flippers', world),
-            new Item('MoonPearl', world),
-            new Item('BugCatchingNet', world),
-            new Armor('BlueMail', world),
-            new Armor('RedMail', world),
-            new Key('Key', world),
-            new Compass('Compass', world),
-            new HealthUpgrade('HeartContainerNoAnimation', world),
-            new Item('Bomb', world),
-            new Item('ThreeBombs', world),
-            new Item('Mushroom', world),
-            new Item('RedBoomerang', world),
-            new Bottle('BottleWithRedPotion', world),
-            new Bottle('BottleWithGreenPotion', world),
-            new Bottle('BottleWithBluePotion', world),
-            //new Item\BottleContents('RedPotion', [0x2E], $world),
-            // new Item\BottleContents('GreenPotion', [0x2F], $world),
-            // new Item\BottleContents('BluePotion', [0x30], $world),
-            new Item('TenBombs', world),
-            new BigKey('BigKey', world),
-            new Map('Map', world),
-            new Item('OneRupee', world),
-            new Item('FiveRupees', world),
-            new Item('TwentyRupees', world),
-            new Pendant('PendantOfCourage', world),
-            new Pendant('PendantOfWisdom', world),
-            new Pendant('PendantOfPower', world),
-            new Bow('BowAndArrows', world),
-            new Bow('BowAndSilverArrows', world),
-            new Bottle('BottleWithBee', world),
-            new Bottle('BottleWithFairy', world),
-            new Bottle('BottleWithRandom', world),
-            new HealthUpgrade('BossHeartContainer', world),
-            new HealthUpgrade('HeartContainer', world),
-            new Item('OneHundredRupees', world),
-            new Item('FiftyRupees', world),
-            new Item('Heart', world),
-            new Arrow('Arrow', world),
-            new Arrow('TenArrows', world),
-            new Item('SmallMagic', world),
-            new Item('ThreeHundredRupees', world),
-            new Item('TwentyRupees2', world),
-            new Bottle('BottleWithGoldBee', world),
-            new Item('OcarinaActive', world),
-            new Item('PegasusBoots', world),
-            new BombUpgrade('BombUpgrade5', world),
-            new BombUpgrade('BombUpgrade10', world),
-            new BombUpgrade('BombUpgrade50', world),
-            new ArrowUpgrade('ArrowUpgrade5', world),
-            new ArrowUpgrade('ArrowUpgrade10', world),
-            new ArrowUpgrade('ArrowUpgrade70', world),
-            new MagicUpgrade('HalfMagic', world),
-            new MagicUpgrade('QuarterMagic', world),
-            new Programmable('Programmable1', world),
-            new Programmable('Programmable2', world),
-            new Programmable('Programmable3', world),
-            new Item('SilverArrowUpgrade', world),
-            new Item('Rupoor', world),
-            new Item('RedClock', world),
-            new Item('BlueClock', world),
-            new Item('GreenClock', world),
-            new Sword('ProgressiveSword', world),
-            new Shield('ProgressiveShield', world),
-            new Armor('ProgressiveArmor', world),
-            new Item('ProgressiveGlove', world),
-            new Item('singleRNG', world),
-            new Item('multiRNG', world),
-            new Bow('ProgressiveBow', world),
-            new Bow('ProgressiveBowAlternate', world),
-            new Event('Triforce', world),
-            new Item('PowerStar', world),
-            new Item('TriforcePiece', world),
-            new Map('MapLW', world),
-            new Map('MapDW', world),
-            new Map('MapA2', world),
-            new Map('MapD7', world),
-            new Map('MapD4', world),
-            new Map('MapP3', world),
-            new Map('MapD5', world),
-            new Map('MapD3', world),
-            new Map('MapD6', world),
-            new Map('MapD1', world),
-            new Map('MapD2', world),
-            new Map('MapA1', world),
-            new Map('MapP2', world),
-            new Map('MapP1', world),
-            new Map('MapH1', world),
-            new Map('MapH2', world),
-            new Compass('CompassA2', world),
-            new Compass('CompassD7', world),
-            new Compass('CompassD4', world),
-            new Compass('CompassP3', world),
-            new Compass('CompassD5', world),
-            new Compass('CompassD3', world),
-            new Compass('CompassD6', world),
-            new Compass('CompassD1', world),
-            new Compass('CompassD2', world),
-            new Compass('CompassA1', world),
-            new Compass('CompassP2', world),
-            new Compass('CompassP1', world),
-            new Compass('CompassH1', world),
-            new Compass('CompassH2', world),
-            new BigKey('BigKeyA2', world),
-            new BigKey('BigKeyD7', world),
-            new BigKey('BigKeyD4', world),
-            new BigKey('BigKeyP3', world),
-            new BigKey('BigKeyD5', world),
-            new BigKey('BigKeyD3', world),
-            new BigKey('BigKeyD6', world),
-            new BigKey('BigKeyD1', world),
-            new BigKey('BigKeyD2', world),
-            new BigKey('BigKeyA1', world),
-            new BigKey('BigKeyP2', world),
-            new BigKey('BigKeyP1', world),
-            new BigKey('BigKeyH1', world),
-            new BigKey('BigKeyH2', world),
-            new Key('KeyH2', world),
-            new Key('KeyH1', world),
-            new Key('KeyP1', world),
-            new Key('KeyP2', world),
-            new Key('KeyA1', world),
-            new Key('KeyD2', world),
-            new Key('KeyD1', world),
-            new Key('KeyD6', world),
-            new Key('KeyD3', world),
-            new Key('KeyD5', world),
-            new Key('KeyP3', world),
-            new Key('KeyD4', world),
-            new Key('KeyD7', world),
-            new Key('KeyA2', world),
-            new Key('KeyGK', world),
-            new Crystal('Crystal1', world),
-            new Crystal('Crystal2', world),
-            new Crystal('Crystal3', world),
-            new Crystal('Crystal4', world),
-            new Crystal('Crystal5', world),
-            new Crystal('Crystal6', world),
-            new Crystal('Crystal7', world),
-            new Event('RescueZelda', world),
-            new Event('DefeatAgahnim', world),
-            new Event('BigRedBomb', world),
-            new Event('DefeatAgahnim2', world),
-            new Event('DefeatGanon', world)
-        ]);
-        this.items.setChecksForWorld(world);
-
-        return Item.items;
-    }
-
-    public static get(name: string, world: World) {
-        return Item.all(world).get(name) as Item | undefined;
-    }
+    //public static world: World;
 }
 
-export class Armor extends Item {
-    // purposefully empty class
+export function getNiceName(item: Item) {
+    return item.name + ':' + item.world.id;
 }
 
-export class Arrow extends Item {
-    // purposefully empty class
+let items = new Map<World, ItemCollection>()
+
+export function allItems(world: World) {
+    if (items.has(world)) return items.get(world);
+
+    const allItems = new ItemCollection([
+        {name: 'Nothing', world},
+        
+        { name: 'L1Sword', world},
+        { name: 'L1SwordAndShield', world},
+        { name: 'L2Sword', world},
+        { name: 'MasterSword', world},
+        { name: 'L3Sword', world},
+        { name: 'L4Sword', world},
+        { name: 'BlueShield', world: world },
+        { name: 'RedShield', world: world },
+        { name: 'MirrorShield', world: world },
+        { name: 'FireRod', world: world },
+        { name: 'IceRod', world: world },
+        { name: 'Hammer', world: world },
+        { name: 'Hookshot', world: world },
+        { name: 'Bow', world: world },
+        { name: 'Boomerang', world: world },
+        { name: 'Powder', world: world },
+        //new BottleContents('Bee', [0x0E], $world),
+        { name: 'Bombos', world: world },
+        { name: 'Ether', world: world },
+        { name: 'Quake', world: world },
+        { name: 'Lamp', world: world },
+        { name: 'Shovel', world: world },
+        { name: 'OcarinaInactive', world: world },
+        { name: 'CaneOfSomaria', world: world },
+        { name: 'Bottle', world: world },
+        { name: 'PieceOfHeart', world: world },
+        { name: 'CaneOfByrna', world: world },
+        { name: 'Cape', world: world },
+        { name: 'MagicMirror', world: world },
+        { name: 'PowerGlove', world: world },
+        { name: 'TitansMitt', world: world },
+        { name: 'BookOfMudora', world: world },
+        { name: 'Flippers', world: world },
+        { name: 'MoonPearl', world: world },
+        { name: 'BugCatchingNet', world: world },
+        { name: 'BlueMail', world: world },
+        { name: 'RedMail', world: world },
+        { name: 'Key', world: world },
+        { name: 'Compass', world: world },
+        { name: 'HeartContainerNoAnimation', world: world },
+        { name: 'Bomb', world: world },
+        { name: 'ThreeBombs', world: world },
+        { name: 'Mushroom', world: world },
+        { name: 'RedBoomerang', world: world },
+        { name: 'BottleWithRedPotion', world: world },
+        { name: 'BottleWithGreenPotion', world: world },
+        { name: 'BottleWithBluePotion', world: world },
+        //new Item\BottleContents('RedPotion', [0x2E], $world),
+        // new Item\BottleContents('GreenPotion', [0x2F], $world),
+        // new Item\BottleContents('BluePotion', [0x30], $world),
+        { name: 'TenBombs', world: world },
+        { name: 'BigKey', world: world },
+        { name: 'Map', world: world },
+        { name: 'OneRupee', world: world },
+        { name: 'FiveRupees', world: world },
+        { name: 'TwentyRupees', world: world },
+        { name: 'PendantOfCourage', world: world },
+        { name: 'PendantOfWisdom', world: world },
+        { name: 'PendantOfPower', world: world },
+        { name: 'BowAndArrows', world: world },
+        { name: 'BowAndSilverArrows', world: world },
+        { name: 'BottleWithBee', world: world },
+        { name: 'BottleWithFairy', world: world },
+        { name: 'BottleWithRandom', world: world },
+        { name: 'BossHeartContainer', world: world },
+        { name: 'HeartContainer', world: world },
+        { name: 'OneHundredRupees', world: world },
+        { name: 'FiftyRupees', world: world },
+        { name: 'Heart', world: world },
+        { name: 'Arrow', world: world },
+        { name: 'TenArrows', world: world },
+        { name: 'SmallMagic', world: world },
+        { name: 'ThreeHundredRupees', world: world },
+        { name: 'TwentyRupees2', world: world },
+        { name: 'BottleWithGoldBee', world: world },
+        { name: 'OcarinaActive', world: world },
+        { name: 'PegasusBoots', world: world },
+        { name: 'BombUpgrade5', world: world },
+        { name: 'BombUpgrade10', world: world },
+        { name: 'BombUpgrade50', world: world },
+        { name: 'ArrowUpgrade5', world: world },
+        { name: 'ArrowUpgrade10', world: world },
+        { name: 'ArrowUpgrade70', world: world },
+        { name: 'HalfMagic', world: world },
+        { name: 'QuarterMagic', world: world },
+        { name: 'Programmable1', world: world },
+        { name: 'Programmable2', world: world },
+        { name: 'Programmable3', world: world },
+        { name: 'SilverArrowUpgrade', world: world },
+        { name: 'Rupoor', world: world },
+        { name: 'RedClock', world: world },
+        { name: 'BlueClock', world: world },
+        { name: 'GreenClock', world: world },
+        { name: 'ProgressiveSword', world: world },
+        { name: 'ProgressiveShield', world: world },
+        { name: 'ProgressiveArmor', world: world },
+        { name: 'ProgressiveGlove', world: world },
+        { name: 'singleRNG', world: world },
+        { name: 'multiRNG', world: world },
+        { name: 'ProgressiveBow', world: world },
+        { name: 'ProgressiveBowAlternate', world: world },
+        { name: 'Triforce', world: world },
+        { name: 'PowerStar', world: world },
+        { name: 'TriforcePiece', world: world },
+        { name: 'MapLW', world: world },
+        { name: 'MapDW', world: world },
+        { name: 'MapA2', world: world },
+        { name: 'MapD7', world: world },
+        { name: 'MapD4', world: world },
+        { name: 'MapP3', world: world },
+        { name: 'MapD5', world: world },
+        { name: 'MapD3', world: world },
+        { name: 'MapD6', world: world },
+        { name: 'MapD1', world: world },
+        { name: 'MapD2', world: world },
+        { name: 'MapA1', world: world },
+        { name: 'MapP2', world: world },
+        { name: 'MapP1', world: world },
+        { name: 'MapH1', world: world },
+        { name: 'MapH2', world: world },
+        { name: 'CompassA2', world: world },
+        { name: 'CompassD7', world: world },
+        { name: 'CompassD4', world: world },
+        { name: 'CompassP3', world: world },
+        { name: 'CompassD5', world: world },
+        { name: 'CompassD3', world: world },
+        { name: 'CompassD6', world: world },
+        { name: 'CompassD1', world: world },
+        { name: 'CompassD2', world: world },
+        { name: 'CompassA1', world: world },
+        { name: 'CompassP2', world: world },
+        { name: 'CompassP1', world: world },
+        { name: 'CompassH1', world: world },
+        { name: 'CompassH2', world: world },
+        { name: 'BigKeyA2', world: world },
+        { name: 'BigKeyD7', world: world },
+        { name: 'BigKeyD4', world: world },
+        { name: 'BigKeyP3', world: world },
+        { name: 'BigKeyD5', world: world },
+        { name: 'BigKeyD3', world: world },
+        { name: 'BigKeyD6', world: world },
+        { name: 'BigKeyD1', world: world },
+        { name: 'BigKeyD2', world: world },
+        { name: 'BigKeyA1', world: world },
+        { name: 'BigKeyP2', world: world },
+        { name: 'BigKeyP1', world: world },
+        { name: 'BigKeyH1', world: world },
+        { name: 'BigKeyH2', world: world },
+        { name: 'KeyH2', world: world },
+        { name: 'KeyH1', world: world },
+        { name: 'KeyP1', world: world },
+        { name: 'KeyP2', world: world },
+        { name: 'KeyA1', world: world },
+        { name: 'KeyD2', world: world },
+        { name: 'KeyD1', world: world },
+        { name: 'KeyD6', world: world },
+        { name: 'KeyD3', world: world },
+        { name: 'KeyD5', world: world },
+        { name: 'KeyP3', world: world },
+        { name: 'KeyD4', world: world },
+        { name: 'KeyD7', world: world },
+        { name: 'KeyA2', world: world },
+        { name: 'KeyGK', world: world },
+        { name: 'Crystal1', world: world },
+        { name: 'Crystal2', world: world },
+        { name: 'Crystal3', world: world },
+        { name: 'Crystal4', world: world },
+        { name: 'Crystal5', world: world },
+        { name: 'Crystal6', world: world },
+        { name: 'Crystal7', world: world },
+        { name: 'RescueZelda', world: world },
+        { name: 'DefeatAgahnim', world: world },
+        { name: 'BigRedBomb', world: world },
+        { name: 'DefeatAgahnim2', world: world },
+        { name: 'DefeatGanon', world }
+    ]);
+
+    return allItems;
 }
 
-export class Sword extends Item {
-    // purposefully empty class
+export function getItem(name: string, world: World) {
+    return allItems(world)!.get(name) as Item | undefined;
 }
 
 
-export class Medallion extends Item {
-    // purposefully empty class
+export interface Armor extends Item {
+    // purposefully empty interface
 }
 
-export class Key extends Item {
-    override is_dungeon_item = true;
+export interface Arrow extends Item {
+    // purposefully empty interface
 }
 
-
-export class Compass extends Item {
-    override is_dungeon_item = true;
-}
-
-export class Map extends Item {
-    override is_dungeon_item = true;
+export interface Sword extends Item {
+    // purposefully empty interface
 }
 
 
-export class Bottle extends Item {
-    override is_bottle = true;
+export interface Medallion extends Item {
+    // purposefully empty interface
+}
+
+export interface IDungeonItem extends Item {
+    dungeon: Region;
+}
+
+export interface Key extends IDungeonItem {
 }
 
 
-export class BigKey extends Item {
-    override is_dungeon_item = true;
+export interface Compass extends IDungeonItem {
+}
+
+export interface Map extends IDungeonItem {
 }
 
 
-export class Pendant extends Item {
-    // purposefully empty class
-}
-
-export class Crystal extends Item {
-    // purposefully empty class
+export interface Bottle extends Item {
+    is_bottle: boolean;
 }
 
 
-export class Bow extends Item {
-    // purposefully empty class
+export interface BigKey extends IDungeonItem {
+}
+
+export interface IPrize extends Item {
+    // purposefully empty interface
 }
 
 
-export class Upgrade extends Item {
-    // purposefully empty class
+export interface Pendant extends IPrize {
+    // purposefully empty interface
+}
+
+export interface Crystal extends IPrize {
+    // purposefully empty interface
 }
 
 
-export class HealthUpgrade extends Upgrade {
-    // purposefully empty class
+export interface Bow extends Item {
+    // purposefully empty interface
 }
 
 
-export class BombUpgrade extends Upgrade {
-    // purposefully empty class
+export interface Upgrade extends Item {
+    // purposefully empty interface
 }
 
 
-export class MagicUpgrade extends Upgrade {
-    // purposefully empty class
+export interface HealthUpgrade extends Upgrade {
+    // purposefully empty interface
 }
 
 
-export class ArrowUpgrade extends Upgrade {
-    // purposefully empty class
+export interface BombUpgrade extends Upgrade {
+    // purposefully empty interface
 }
 
-export class Programmable extends Item {
-    // purposefully empty class
+
+export interface MagicUpgrade extends Upgrade {
+    // purposefully empty interface
 }
 
-export class Event extends Item {
-    // purposefully empty class
+
+export interface ArrowUpgrade extends Upgrade {
+    // purposefully empty interface
 }
 
-export class Shield extends Item {
-    // purposefully empty class
+export interface Programmable extends Item {
+    // purposefully empty interface
+}
+
+export interface Event extends Item {
+    // purposefully empty interface
+}
+
+export interface Shield extends Item {
+    // purposefully empty interface
 }

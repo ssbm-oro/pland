@@ -1,4 +1,4 @@
-import type { Config } from "../config";
+import type { Config } from "../Config";
 import Open from "./open";
 
 export default class Retro extends Open {
