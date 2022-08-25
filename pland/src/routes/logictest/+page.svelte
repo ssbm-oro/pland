@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { items } from '$lib/json/alttpr-customizer-schema.json';
+    import { items } from '$lib/data/json/alttpr-customizer-schema.json';
     import type World from "$lib/z3r/logic/world";
     import Inverted from "$lib/z3r/logic/World/inverted";
     import Open from "$lib/z3r/logic/World/open";
@@ -31,7 +31,7 @@
 
     async function presetChanged() {
         try {
-            let preset_res = await fetch(`/presets/${selectedPreset}`);
+            const preset_res = await fetch(`/presets/${selectedPreset}`);
             selectedPresetData = await preset_res.json();
             switch(selectedPresetData.settings.mode) {
                 case 'open':

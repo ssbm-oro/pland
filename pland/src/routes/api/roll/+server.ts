@@ -2,10 +2,10 @@ import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "@sveltejs/kit";
 import log from "loglevel";
 import fetch from 'node-fetch'
-import { locations } from '$lib/json/alttpr-customizer-schema.json';
+import { locations } from '$lib/data/json/alttpr-customizer-schema.json';
 import type { APIEmbed, APIEmbedField, RESTPostAPIWebhookWithTokenJSONBody } from 'discord-api-types/v10';
 import { DISCORD_WEBHOOK_URI } from "$env/static/private";
-import * as default_settings from '$lib/json/default-customizer.json'
+import * as default_settings from '$lib/data/json/default-customizer.json'
 
 // this needs to get cleaned up so much but it works 😖
 

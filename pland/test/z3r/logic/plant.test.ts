@@ -6,7 +6,7 @@ import { ItemCollection } from "../../../src/lib/z3r/logic/Support/itemcollectio
 import Item from "../../../src/lib/z3r/logic/item";
 import Location from "../../../src/lib/z3r/logic/location";
 import { LocationCollection } from "../../../src/lib/z3r/logic/Support/locationcollection";
-import { items as itemPool } from '../../../src/lib/json/alttpr-customizer-schema.json';
+import { items as itemPool } from '../../../src/lib/data/json/alttpr-customizer-schema.json';
 
 describe("Sample Logic Bombs", () =>{
     it("Mire and TR Can't Have all the swords", () => {
