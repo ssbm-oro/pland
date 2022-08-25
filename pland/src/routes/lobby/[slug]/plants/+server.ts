@@ -23,7 +23,6 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
 }
 
 export const POST: RequestHandler = async( {params, locals, request } ) => {
-    console.log('plant')
     const lobby = Lobbies.get(params.slug!);
     if (!lobby) return new Response(undefined, { status: 404 });
 
@@ -38,9 +37,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     const f = await request.formData();
     
     const plantedItems = JSON.parse(f.get('plantedItems')!.toString());
-    console.log(' planted locations: ' + f.get('plantedLocations'));
     const plantedLocations: ILocation[] = JSON.parse(f.get('plantedLocations')!.toString());
-    console.log(`plantedLocations: ${plantedLocations[0]}`);
     if (!plantedItems || !plantedLocations) return new Response('You must define an item to plant and a location to plant it.', { status: 409 });
 
     await lobby.initialize();

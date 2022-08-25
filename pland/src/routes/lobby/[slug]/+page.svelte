@@ -77,8 +77,6 @@
             let params = new URLSearchParams();
             params.append('plantedItems', JSON.stringify(selectedItems));
             params.append('plantedLocations', JSON.stringify(selectedLocations));
-            console.log(selectedLocations);
-            console.log(JSON.stringify(selectedLocations));
             params.append('ready', 'true');
             let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
             let data = await res.json();

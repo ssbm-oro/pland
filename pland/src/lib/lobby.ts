@@ -124,17 +124,14 @@ export default class Lobby {
     }
 
     public plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
-        console.log(plantedItems);
-        console.log(plantedLocations);
         const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
         if (entrant) {
             for(let i = 0; i < this.lobby!.max_plants; i++) {
                 const realWorld = this.world as World;
-                console.log('plant');
-                console.log(realWorld);
                 entrant.plantedItems[i] = plantedItems[i]!;
-                console.log(`plantedLocations[i]: ${plantedLocations[i]}`)
+
                 const z3rLocation = realWorld.locations.get(plantedLocations[i]!.name)!
+                
                 entrant.plantedLocations[i]! = {
                     name: z3rLocation.name,
                     item: z3rLocation.item,

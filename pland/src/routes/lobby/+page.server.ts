@@ -4,7 +4,6 @@ import { error, redirect } from '@sveltejs/kit'
 
 export async function load() {
     const lobbies = Array.from(Lobbies.values()).map(lobby => lobby.lobby!) ?? []
-    console.log(lobbies);
     return {lobbies};
 }
 
