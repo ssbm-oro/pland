@@ -41,7 +41,6 @@ export default class Region implements IRegion {
 
 
     canComplete(locations: LocationCollection, items: ItemCollection) {
-        console.log('in can complete')
         if (this.can_complete) {
             this.world.log(`Checking if we can complete ${this.name}`);
             return this.can_complete(locations, items);

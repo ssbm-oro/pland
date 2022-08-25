@@ -80,7 +80,6 @@ export class MiseryMire extends Dungeon {
             if (!medallion || !medallion.item) {
                 haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
                 this.world.log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
-                console.log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
             }
             else {
                 haveMedallion = items.has(medallion.item.name);

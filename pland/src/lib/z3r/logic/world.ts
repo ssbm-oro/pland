@@ -70,11 +70,7 @@ export default class World {
             nonGtItems.addItem(Item.get('DefeatAgahnim',this)!)
         }
 
-        console.log('can complete hyrule castle tower')
-        console.log(this.regions);
-
         this.regions.forEach(region => {
-            console.log(region);
             if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonGtItems)) {
                 requiredPendants.push(region);
                 this.log(`Determined that ${region.name} must be a pendant based on GT items.`)
