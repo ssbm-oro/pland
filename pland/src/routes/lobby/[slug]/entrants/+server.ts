@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { type Entrant, Lobbies} from "$lib/Lobby";
+import Lobby, { type Entrant, Lobbies} from "$lib/Lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { RequestHandler } from "./$types";
 
@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
 
     // TODO revisit this
     if (lobby) {
-        const entrants: Entrant[] = JSON.parse(JSON.stringify(lobby.entrants));
+        const entrants: Entrant[] = JSON.parse(JSON.stringify(lobby.lobby!.entrants));
         entrants.forEach(entrant => {
             if (user && user.id != entrant.discord_id) {
                 entrant.plantedItems=[];
@@ -32,7 +32,7 @@ export const POST: RequestHandler = async( {params, locals } ) => {
 
     
     lobby.join(user);
-    return new Response(JSON.stringify(lobby.entrants));
+    return new Response(JSON.stringify(lobby.lobby!.entrants));
 }
 
 export const DELETE: RequestHandler = async( {params, locals} ) => {

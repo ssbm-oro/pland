@@ -1,24 +1,25 @@
 import { Bosses } from "../../Boss";
 import Item from "../../Item";
+import type IItem from "../../Item";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
 import { BigChest, Chest, Dash, Drop, Pendant, type Prize } from "../../Location";
 
 export class DesertPalace extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyP2', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassP2', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyP2', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapP2', this.world)!
-    ]
-
     public constructor(world: World) {
         super("Desert Palace", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyP2', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassP2', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyP2', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapP2', this.world)!
+        ]
 
         this.boss = Bosses.get("Lanmolas", world);
 

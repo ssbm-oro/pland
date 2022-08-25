@@ -1,4 +1,5 @@
 import Item from "../../Item";
+import type IItem from "../../Item";
 import { Chest, Event } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -6,7 +7,7 @@ import type World from "../../World";
 import type { ItemCollection } from "../../Support/ItemCollection";
 
 export class HyruleCastleTower extends Dungeon {
-    override region_items: Item[] = [
+    override region_items = [
         Item.get('BigKey', this.world)!,
         Item.get('BigKeyA1', this.world)!,
         Item.get('Compass', this.world)!,

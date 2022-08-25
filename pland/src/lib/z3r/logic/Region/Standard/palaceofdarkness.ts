@@ -1,4 +1,5 @@
 import Item from "../../Item";
+import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -7,19 +8,19 @@ import { Bosses } from "../../Boss";
 import type { ItemCollection } from "../../Support/ItemCollection";
 
 export class PalaceOfDarkness extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD1', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD1', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD1', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD1', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Dark Palace", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD1', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD1', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD1', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD1', this.world)!
+        ];
 
         this.boss = Bosses.get("Helmasaur King", world);
 

@@ -1,28 +1,27 @@
 import type { ItemCollection } from "./Support/ItemCollection";
 import type { Entry } from "./Support/Collection";
-import Item from "./Item";
+import type { IItem } from "./Item";
 import type Region from "./Region";
 import { LocationCollection } from "./Support/LocationCollection";
 
 export interface ILocation extends Entry {
-    region: Region;
-    item: Item | null;
+    item: IItem | null;
     messages: string[]|null;
     isCrystalPendant: boolean;
-    always_callback?: (item: Item, items: ItemCollection) => boolean;
-    fill_callback?: (item: Item, locations: LocationCollection) => boolean;
+    always_callback?: (item: IItem, items: ItemCollection) => boolean;
+    fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
     requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
 }
 
-export class Location implements ILocation {
+export class Z3rLocation implements ILocation {
     name: string;
     region: Region;
-    item: Item | null;
+    item: IItem | null;
     messages: string[]|null;
     isCrystalPendant: boolean;
 
-    always_callback?: (item: Item, items: ItemCollection) => boolean;
-    fill_callback?: (item: Item, locations: LocationCollection) => boolean;
+    always_callback?: (item: IItem, items: ItemCollection) => boolean;
+    fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
     requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
 
     public constructor(name: string, region: Region, messages: string[]|null = null) {
@@ -33,11 +32,11 @@ export class Location implements ILocation {
         this.isCrystalPendant = false;
     }
 
-    public fill(newItem:Item, items: ItemCollection, check_access: boolean = false): boolean {
+    public fill(newItem:IItem, items: ItemCollection, check_access: boolean = false): boolean {
         let oldItem = this.item;
         this.setItem(newItem);
         if (this.canFill(newItem, items, check_access)) {
-            Item.items?.addItem(newItem);
+            // Item.items?.addItem(newItem); TODO - do i need this line?
             return true;
         }
 
@@ -46,7 +45,7 @@ export class Location implements ILocation {
         return false;
     }
 
-    public setItem(newItem: Item | null) {
+    public setItem(newItem: IItem | null) {
         this.item = newItem;
         return this;
     }
@@ -55,13 +54,13 @@ export class Location implements ILocation {
         this.requirement_callback = requirement_callback;
     }
 
-    public canFill(newItem: Item, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
+    public canFill(newItem: IItem, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
         if (check_access) {
             items = items.clone();
 
             plants.filter(location => location.canAccess(items)).forEach(accessible => {
-                let accessible_item = (accessible as Location).item;
-                if ((accessible as Location).region.canEnter(this.region.world.locations, items) && accessible_item) {
+                let accessible_item = (accessible as Z3rLocation).item;
+                if ((accessible as Z3rLocation).region.canEnter(this.region.world.locations, items) && accessible_item) {
                     this.log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
                     items.addItem(accessible_item!);
                 }
@@ -99,7 +98,7 @@ export class Location implements ILocation {
         return false;
     }
 
-    public hasItem(item: Item | null = null) {
+    public hasItem(item: IItem | null = null) {
         return item ? this.item == item : this.item !== null;
     }
 
@@ -110,9 +109,19 @@ export class Location implements ILocation {
     public log(message:string) {
         this.region.world.log(message);
     }
+
+    public toJSON() {
+        return {
+            name: this.name,
+            region: {
+                name: this.region.name
+            },
+            item: this.item,
+        }
+    }
 }
 
-export class Chest extends Location { 
+export class Chest extends Z3rLocation { 
     // purposefully empty class
 }
 
@@ -120,15 +129,15 @@ export class BigChest extends Chest {
     // purposefully empty class
 }
 
-export class Dash extends Location { 
+export class Dash extends Z3rLocation { 
     // purposefully empty class
 }
 
-export class Dig extends Location { 
+export class Dig extends Z3rLocation { 
     // purposefully empty class
 }
 
-export class Drop extends Location { 
+export class Drop extends Z3rLocation { 
     // purposefully empty class
 }
 
@@ -140,15 +149,15 @@ export class Ether extends Drop {
     // purposefully empty class
 }
 
-export class Fountain extends Location { 
+export class Fountain extends Z3rLocation { 
     // purposefully empty class
 }
 
-export class Medallion extends Location { 
+export class Medallion extends Z3rLocation { 
     // purposefully empty class
 }
 
-export class Npc extends Location { 
+export class Npc extends Z3rLocation { 
     // purposefully empty class
 }
 
@@ -168,11 +177,11 @@ export class Zora extends Npc {
     // purposefully empty class
 }
 
-export class Pedestal extends Location { 
+export class Pedestal extends Z3rLocation { 
     // purposefully empty class
 }
 
-export class Prize extends Location {
+export class Prize extends Z3rLocation {
     // purposefully empty class
 }
 
@@ -190,7 +199,7 @@ export class Event extends Prize {
     // purposefully empty class
 }
 
-export class Standing extends Location { 
+export class Standing extends Z3rLocation { 
     // purposefully empty class
 }
 
@@ -198,6 +207,6 @@ export class HeraBasement extends Standing {
     
 }
 
-export class Trade extends Location { 
+export class Trade extends Z3rLocation { 
     // purposefully empty class
 }

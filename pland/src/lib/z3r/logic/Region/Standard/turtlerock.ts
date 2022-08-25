@@ -1,4 +1,5 @@
-import Item, { BigKey, Compass, Key, Map } from "../../Item";
+import Item from "../../Item";
+import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -7,19 +8,19 @@ import { Bosses } from "../../Boss";
 import type { ItemCollection } from "../../Support/ItemCollection";
 
 export class TurtleRock extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD7', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD7', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD7', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD7', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Turtle Rock", world,);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD7', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD7', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD7', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD7', this.world)!
+        ];
 
         this.boss = Bosses.get("Trinexx", world);
 

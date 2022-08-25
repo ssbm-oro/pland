@@ -1,4 +1,5 @@
-import Item, { BigKey, Key, Compass, Map} from "../../Item";
+import Item from "../../Item";
+import type IItem from "../../Item";
 import type World from "../../World";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type { ItemCollection } from "../../Support/ItemCollection";
@@ -11,19 +12,19 @@ export class GanonsTower extends Region {
     boss_middle?: Boss;
     boss_bottom?: Boss;
 
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyA2', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassA2', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyA2', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapA2', this.world)!
-    ]
-
     public constructor(world: World) {
         super("Ganons Tower", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyA2', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassA2', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyA2', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapA2', this.world)!
+        ];
 
         this.boss = Bosses.get("Agahnim2", world);
         this.boss_top = Bosses.get("Moldorm", world);

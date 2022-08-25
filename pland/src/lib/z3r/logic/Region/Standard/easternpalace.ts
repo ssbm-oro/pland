@@ -1,24 +1,26 @@
 import { Bosses } from "../../Boss";
 import Item from "../../Item";
+import type IItem from "../../Item";
 import { Pendant, BigChest, Chest, Drop, Prize } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
 
 export class EasternPalace extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyP1', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassP1', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapP1', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyP1', this.world)!
-    ];
 
     public constructor(world: World) {
         super("Eastern Palace", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyP1', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassP1', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapP1', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyP1', this.world)!
+        ];
 
         this.boss = Bosses.get("Armos Knights", world);
 

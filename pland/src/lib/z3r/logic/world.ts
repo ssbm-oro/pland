@@ -2,14 +2,19 @@
 import { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
 import Item from "./Item";
-import type { Location } from "./Location";
+import type { Z3rLocation } from "./Location";
 import type  Config from "./Config";
 import type { IRegion } from "./Region";
 import type Region from "./Region";
 
-export default class World {
+export interface IWorld {
+    config: Config;
+    id: number;
+}
+
+export default class World implements IWorld {
     regions: Map<string, Region> = new Map();
-    locations: LocationCollection = new LocationCollection([]);
+    locations: LocationCollection = new LocationCollection([], this.log);
     config: Config;
     win_condition?: (items: ItemCollection) => boolean;
     id: number = 0;
@@ -35,7 +40,7 @@ export default class World {
         return this.regions.get(regionName) as Region;
     }
 
-    canPlant(item: Item, location: Location, messages:string[]|null): boolean {
+    canPlant(item: Item, location: Z3rLocation, messages:string[]|null): boolean {
         return location.region.canFill(item);
     }
 
@@ -52,9 +57,9 @@ export default class World {
         let requiredCrystals: IRegion[] = [];
 
 
-        let gtItems = new ItemCollection();
+        let gtItems = new ItemCollection([], this.log);
         this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
-            gtItems.addItem((location as Location).item!);
+            gtItems.addItem((location as Z3rLocation).item!);
         });
         gtItems.addItem(Item.get('Crystal1', this)!)
         gtItems.addItem(Item.get('Crystal2', this)!)
@@ -81,7 +86,7 @@ export default class World {
             return false;
         }
 
-        const pendItems = new ItemCollection();
+        const pendItems = new ItemCollection([], this.log);
         pendItems.addItem(Item.get('PendantOfCourage', this)!);
         pendItems.addItem(Item.get('PendantOfWisdom', this)!);
         pendItems.addItem(Item.get('PendantOfPower', this)!);
@@ -141,5 +146,14 @@ export default class World {
 
     log(message: string) {
         if (this.messages) this.messages.push(message); else console.log(message);
+    }
+
+    toJSON() {
+        return {
+            config: this.config,
+            id: this.id,
+            inverted: this.inverted,
+            regions: this.regions,
+        }
     }
 }

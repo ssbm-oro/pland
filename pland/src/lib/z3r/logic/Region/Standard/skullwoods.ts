@@ -1,4 +1,5 @@
 import Item from "../../Item";
+import type IItem from "../../Item";
 import Region from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
@@ -6,19 +7,19 @@ import { Bosses } from "../../Boss";
 import { BigChest, Chest, Crystal, Drop } from "../../Location";
 
 export class SkullWoods extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD3', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD3', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD3', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD3', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Skull Woods", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD3', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD3', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD3', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD3', this.world)!
+        ];
 
         this.boss = Bosses.get("Mothula", world);
 

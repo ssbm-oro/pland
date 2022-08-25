@@ -1,5 +1,5 @@
 import Item from "../../Item";
-import { BigKey, Compass, Key, Map } from "../../Item";
+import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -7,19 +7,19 @@ import type World from "../../World";
 import { Bosses } from "../../Boss";
 
 export class SwampPalace extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD2', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD2', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD2', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD2', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Swamp Palace", world,);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD2', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD2', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD2', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD2', this.world)!
+        ];
 
         this.boss = Bosses.get("Arrghus", world);
 

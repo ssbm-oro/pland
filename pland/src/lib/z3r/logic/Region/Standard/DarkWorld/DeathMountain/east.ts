@@ -15,7 +15,8 @@ export class East extends Region {
             new Chest("Hookshot Cave - Top Left", this),
             new Chest("Hookshot Cave - Bottom Left", this),
             new Chest("Hookshot Cave - Bottom Right", this),
-        ]);
+        ],
+        world.log);
         this.locations.setChecksForWorld(world);
     }
 

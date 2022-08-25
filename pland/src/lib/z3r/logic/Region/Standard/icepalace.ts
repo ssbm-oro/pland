@@ -1,4 +1,4 @@
-import Item from "../../Item";
+import Item, { type IItem } from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -7,19 +7,19 @@ import type { ItemCollection } from "../../Support/ItemCollection";
 import { Bosses } from "../../Boss";
 
 export class IcePalace extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD5', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD5', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD5', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD5', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Ice Palace", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD5', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD5', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD5', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD5', this.world)!
+        ];
 
         this.boss = Bosses.get("Kholdstare", world);
 

@@ -4,24 +4,24 @@ import { ItemCollection } from "./Support/ItemCollection";
 import type World from "./World";
 
 export interface IItem extends Entry {
-    world: World;
+    world_id: number;
     //public static world: World;
 }
 
 export default class Item implements IItem {
     name: string;
-    world: World;
+    world_id: number;
 
     public constructor(name: string, world: World) {
         this.name = name;
-        this.world = world;
+        this.world_id = world.id;
     }
 
     public getNiceName() {
-        return this.name + ':' + this.world.id;
+        return this.name + ':' + this.world_id;
     }
 
-    public static items: ItemCollection;
+    private static items: ItemCollection;
 
     public static allItems(world: World) {
         if (Item.items) return Item.items;
@@ -212,7 +212,7 @@ export default class Item implements IItem {
     }
 
     public static get(name: string, world: World) {
-        return Item.allItems(world)!.get(name) as Item | undefined;
+        return Item.allItems(world)!.get(name);
     }
 
     public static addItem(item: Item) {

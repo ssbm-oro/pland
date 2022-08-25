@@ -1,4 +1,5 @@
 import Item from "../../Item";
+import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Standing, Pendant } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -6,19 +7,19 @@ import type World from "../../World";
 import { Bosses } from "../../Boss";
 
 export class TowerOfHera extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyP3', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassP3', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyP3', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapP3', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Tower of Hera", world,);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyP3', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassP3', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyP3', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapP3', this.world)!
+        ];
 
         this.boss = Bosses.get("Moldorm", world);
 

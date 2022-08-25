@@ -9,15 +9,16 @@
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
     import { invalidate } from "$app/navigation";
-    import type Location from '$lib/z3r/logic/Location';
-    import type Item from "$lib/z3r/logic/Item";
+    import type { ILocation } from '$lib/z3r/logic/Location';
+    import type { IItem } from "$lib/z3r/logic/Item";
+
 
     export let data: PageData;
     $: lobby = data.lobby;
     $: user = data.user;
 
-    let selectedItems: Item[];
-    let selectedLocations: Location[];
+    let selectedItems: IItem[];
+    let selectedLocations: ILocation[];
     let world: World;
     let logicTestMessages: string[] = [];
 
@@ -47,8 +48,8 @@
                     break;
             }
             if (userAsEntrant) {
-                selectedItems = userAsEntrant.plantedItems.map(item => { return JSON.parse(item);});
-                selectedLocations = userAsEntrant.plantedLocations.map(location => { return JSON.parse(location); });
+                selectedItems = userAsEntrant.plantedItems; //.map(item => { return JSON.parse(item);});
+                selectedLocations = userAsEntrant.plantedLocations; //.map(location => { return JSON.parse(location); });
             }
         }
         catch (err) {
@@ -76,6 +77,8 @@
             let params = new URLSearchParams();
             params.append('plantedItems', JSON.stringify(selectedItems));
             params.append('plantedLocations', JSON.stringify(selectedLocations));
+            console.log(selectedLocations);
+            console.log(JSON.stringify(selectedLocations));
             params.append('ready', 'true');
             let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
             let data = await res.json();

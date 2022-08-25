@@ -1,5 +1,5 @@
-import type Item from "../Item";
-import type { Location as Z3rLocation } from "../Location";
+import type { IItem } from "../Item";
+import type { ILocation, Z3rLocation as Z3rLocation } from "../Location";
 import type { IRegion } from "../Region";
 import type World from "../World";
 import { Collection, type Entry } from "./Collection";
@@ -8,8 +8,8 @@ import { ItemCollection } from "./ItemCollection";
 export class LocationCollection extends Collection {
     protected override items: Map<string, Z3rLocation>;
 
-    public constructor(locations: Z3rLocation[] = []) {
-        super();
+    public constructor(locations: Z3rLocation[] = [], log: ((message:string) => void) = (_message:string) => {}) {
+        super(locations, log);
         this.items = new Map<string, Z3rLocation>();
         locations.forEach(item => {
             this.items.set(item.name, item);
@@ -38,7 +38,7 @@ export class LocationCollection extends Collection {
         return this.filter(location => { return ((location as Z3rLocation).hasItem()); }) 
     }
 
-    public itemInLocations(item: Item, LocationKeys: string[], count: number = 1) {
+    public itemInLocations(item: IItem, LocationKeys: string[], count: number = 1) {
         LocationKeys.forEach(locationKey => {
             if ((this.items.get(locationKey) as Z3rLocation).hasItem(item)) {
                 count--;
@@ -49,16 +49,16 @@ export class LocationCollection extends Collection {
     }
 
     public getItems(world: World) {
-        let items:Item[] = [];
+        const item_array: IItem[] = Array();
 
         this.items.forEach(entry => {
             let Z3rLocation = entry as Z3rLocation;
             const item = Z3rLocation.item;
-            if ((item) && (world) && (item.world == world)) {
-                items.push(item);
+            if ((item) && (world) && (item.world_id == world.id)) {
+                item_array.push(item as IItem);
             }
         });
-        let ret = new ItemCollection(items);
+        let ret = new ItemCollection(item_array, world.log);
         ret.setChecksForWorld(world);
         return ret;
     }
@@ -76,7 +76,7 @@ export class LocationCollection extends Collection {
         return regions;
     }
 
-    public LocationsWithItem(item?: Item) {
+    public LocationsWithItem(item?: IItem) {
         return this.filter(location => { return (location as Z3rLocation).hasItem(item); })
     }
 
@@ -92,10 +92,18 @@ export class LocationCollection extends Collection {
         let items1 = this.items as Map<string, Z3rLocation>;
         let items2 = locations.items as Map<string, Z3rLocation>;
 
-        return new  LocationCollection([...items1.values(), ...items2.values()]);
+        return new  LocationCollection([...items1.values(), ...items2.values()], this.log);
     }
 
     public to_array() {
-        return Array.from<Z3rLocation>(this.items.values() as IterableIterator<Z3rLocation>);
+        return Array.from<ILocation>(this.items.values() as IterableIterator<ILocation>);
+    }
+
+    public toJSON() {
+        let locations = Array();
+        this.items.forEach(location => {
+            locations.push(location.toJSON());
+        })
+        return locations;
     }
 }

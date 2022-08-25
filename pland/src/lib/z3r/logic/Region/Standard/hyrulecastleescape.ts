@@ -1,4 +1,5 @@
 import Item from "../../Item";
+import type IItem from "../../Item";
 import Region from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type { ItemCollection } from "../../Support/ItemCollection";
@@ -6,19 +7,19 @@ import { Chest, Uncle, Event } from "../../Location";
 import type World from "../../World";
 
 export class HyruleCastleEscape extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyH2', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassH2', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyH2', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapH2', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Hyrule Castle", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyH2', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassH2', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyH2', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapH2', this.world)!
+        ];
 
         this.locations = new LocationCollection([
             new Chest("Sanctuary", this),

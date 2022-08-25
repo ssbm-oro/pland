@@ -4,18 +4,17 @@ import type World from "./World";
 import type { Prize } from "./Location";
 import type { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
-import type Item from "./Item";
-import type { IDungeonItem } from "./Item";
+import type { IDungeonItem, IItem } from "./Item";
 
 export interface IRegion {
     name: string;
     locations: LocationCollection;
     boss?: Boss;
-    world: World;
+
     prize?: Prize;
     can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
     can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
-    region_items: Item[];
+    region_items: IItem[];
 }
 
 export default class Region implements IRegion {
@@ -26,7 +25,7 @@ export default class Region implements IRegion {
     prize?: Prize;
     can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
     can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
-    region_items: Item[];
+    region_items: IItem[];
 
     public constructor(name: string, world: World) {
         this.world = world;
@@ -58,9 +57,9 @@ export default class Region implements IRegion {
         return true;
     }
 
-    canFill(item: Item) {
+    canFill(item: IItem) {
         this.world.log(`Checking if ${item.name} can be go in Region ${this.name}.`);
-        let from_world = item.world;
+        let from_world = item.world_id;
 
         // TODO: Add wild dungeon items
         const dungeonItem = item as IDungeonItem
@@ -74,7 +73,7 @@ export default class Region implements IRegion {
         return true;
     }
 
-    isRegionItem(item: Item) {
+    isRegionItem(item: IItem) {
         return this.region_items.includes(item);
     }
 
@@ -88,7 +87,7 @@ export default class Region implements IRegion {
 }
 
 export class Dungeon extends Region {
-    canPlaceBoss(region: IRegion, boss: Boss, level: string = 'top') {
+    canPlaceBoss(region: Region, boss: Boss, level: string = 'top') {
         if (region.name != "Ice Palace" && region.world.config.weapons == 'swordless' && boss.name == "Kholdstare") {
             return false;
         }
@@ -114,11 +113,20 @@ export class Dungeon extends Region {
         return this.prize.item;
     }
 
-    hasPrize(item: Item | null = null) {
+    hasPrize(item: IItem | null = null) {
         if (!this.prize || !this.prize.hasItem()) {
             return false;
         }
 
         return this.prize.hasItem(item);
+    }
+
+    toJSON() {
+        return {
+            name: this.name,
+            boss: this.boss,
+            locations: this.locations,
+            region_items: this.region_items,
+        }
     }
 }

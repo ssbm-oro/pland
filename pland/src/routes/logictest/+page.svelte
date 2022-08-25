@@ -2,20 +2,22 @@
     import { items } from '$lib/data/json/alttpr-customizer-schema.json';
     import type World from "$lib/z3r/logic/World";
     import Inverted from "$lib/z3r/logic/World/Inverted";
-    import Open from "$lib/z3r/logic/World/Open";
     import Retro from "$lib/z3r/logic/World/Retro";
     import Standard from "$lib/z3r/logic/World/Standard";
     import { onMount } from "svelte";
-    import Item from '$lib/z3r/logic/Item';
     import { ItemCollection } from '$lib/z3r/logic/Support/ItemCollection';
     import { LocationCollection } from '$lib/z3r/logic/Support/LocationCollection';
     import Presets from '$lib/components/Presets.svelte'
     import Plant from '$lib/components/Plant.svelte';
+    import Open from '$lib/z3r/logic/World/Open';
+    import type { IItem } from '$lib/z3r/logic/Item';
+    import type { Z3rLocation } from '$lib/z3r/logic/Location';
+    import Item from '$lib/z3r/logic/Item';
 
     let selectedPreset: string = '';
     let world: World;
-    let selectedItems: any[] = [];
-    let selectedLocations: any[] = [];
+    let selectedItems: IItem[] = [];
+    let selectedLocations: Z3rLocation[] = [];
     let plantsModified = false;
     let selectedPresetData: any;
     let logicTestMessages: string[] = [];
@@ -55,8 +57,8 @@
     }
 
     function addPlant() {
-        selectedItems.push('');
-        selectedLocations.push('');
+        selectedItems.push();
+        selectedLocations.push();
         plantsModified = !plantsModified;
     }
 
@@ -106,8 +108,8 @@
             world.resetPlants();
             
             for(let i = 0; i < selectedItems.length; i++) {
-                let location = world.locations.get(selectedLocations[i].name)!;
-                let item = Item.get(selectedItems[i].value.slice(0,-2), world)!;
+                let location = world.locations.get(selectedLocations[i]!.name)!;
+                let item = selectedItems[i]!;
                 logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
                 if (!available.has(item.name)) {
                     logicTestMessages.push(`${item.name} not available to plant.`);
@@ -139,7 +141,7 @@
             }
 
             if (plantable) {
-                planted.to_array().forEach(location => {
+                planted.to_array().map(location => location as Z3rLocation).forEach(location => {
                     if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
                         available.addItem(location.item);
                     }

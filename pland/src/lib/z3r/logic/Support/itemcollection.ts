@@ -1,32 +1,30 @@
-import type Item from "../Item";
+import type { IItem } from "../Item";
 import type World from "../World";
 import { Collection } from "./Collection";
 
 export class ItemCollection extends Collection {
-    override items: Map<string, Item> = new Map();
+    override items: Map<string, IItem> = new Map();
     item_counts : Map<string, number> = new Map();
 
-    public constructor(items:Item[] = []) {
-        super();
+    public constructor(items:IItem[] = [], log: ((message:string) => void) = (_message:string) => {}) {
+        super(items, log);
         items.forEach(item => this.addItem(item));
     }
 
     clone(): ItemCollection {
-        let items_clone = new ItemCollection([]);
+        let items_clone = new ItemCollection([], this.log);
         this.items.forEach(item => {
             for (let i = 0; i < this.item_counts.get(item.name)!; i++) {
-                items_clone.addItem(item as Item)
+                items_clone.addItem(item as IItem)
             }
         });
 
-        if (this.world) {
-            items_clone.setChecksForWorld(this.world);
-        }
+        items_clone.world_id = this.world_id;
 
         return items_clone;
     }
 
-    public override addItem(item: Item) {
+    public override addItem(item: IItem) {
         let count = this.item_counts.get(item.name) || 0;
 
         this.item_counts.set(item.name, count+1);
@@ -35,7 +33,7 @@ export class ItemCollection extends Collection {
         return this;
     }
 
-    public override removeItem(item: Item) {
+    public override removeItem(item: IItem) {
         if (!this.item_counts.has(item.name)) {
             return this;
         }
@@ -56,7 +54,7 @@ export class ItemCollection extends Collection {
         const merged = this.clone();
         items.items.forEach((entry, key) => {
             for (let i = 0; i < items.item_counts.get(key)!; i++) {
-                merged.addItem(entry as Item);
+                merged.addItem(entry as IItem);
             }
         })
 
@@ -67,7 +65,7 @@ export class ItemCollection extends Collection {
         const difference = this.clone();
         items.items.forEach((entry, key) => {
             for (let i = 0; i < items.item_counts.get(key)!; i++) {
-                difference.removeItem(entry as Item);
+                difference.removeItem(entry as IItem);
             }
         });
 
@@ -85,7 +83,7 @@ export class ItemCollection extends Collection {
         return this.items.get(name);
 }
 
-public override filter(f: (item: Item) => boolean): Item[] { 
+public override filter(f: (item: IItem) => boolean): IItem[] { 
     return Array.from(this.items.values()).filter(f);
 }
 
@@ -224,7 +222,7 @@ public override filter(f: (item: Item) => boolean): Item[] {
         const crystals = new ItemCollection();
         this.items.forEach(entry => {
             if (entry.name.startsWith('Crystal')) {
-                crystals.addItem(entry as Item);
+                crystals.addItem(entry as IItem);
             }
         })
 

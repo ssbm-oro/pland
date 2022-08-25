@@ -1,4 +1,5 @@
 import Item from "../../Item";
+import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -6,19 +7,19 @@ import type World from "../../World";
 import { Bosses } from "../../Boss";
 
 export class ThievesTown extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD4', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD4', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD4', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD4', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Thieves Town", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD4', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD4', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD4', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD4', this.world)!
+        ];
 
         this.boss = Bosses.get("Blind", world);
 

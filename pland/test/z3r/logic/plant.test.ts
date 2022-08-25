@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import fs from "fs";
 import World from "../../../src/lib/z3r/logic/World";
-import Open from "../../../src/lib/z3r/logic/World/open";
+import Open from "../../../src/lib/z3r/logic/World/Open";
 import { ItemCollection } from "../../../src/lib/z3r/logic/Support/ItemCollection";
 import Item from "../../../src/lib/z3r/logic/Item";
-import Location from "../../../src/lib/z3r/logic/Location";
+import { Z3rLocation } from "../../../src/lib/z3r/logic/Location";
 import { LocationCollection } from "../../../src/lib/z3r/logic/Support/LocationCollection";
-import { items as itemPool } from '../../../src/lib/json/alttpr-customizer-schema.json';
+import { items as itemPool } from '../../../src/lib/data/json/alttpr-customizer-schema.json';
 
 describe("Sample Logic Bombs", () =>{
     it("Mire and TR Can't Have all the swords", () => {
@@ -71,7 +71,7 @@ function finalize_plants(plantable: boolean, planted: LocationCollection, world:
     return plantable;
 }
 
-function test_plant(world: World, available: ItemCollection, item: Item, location: Location, planted: LocationCollection, messages:string[] = []) {
+function test_plant(world: World, available: ItemCollection, item: Item, location: Z3rLocation, planted: LocationCollection, messages:string[] = []) {
     let plantable = true;
     messages.push(`Attempting to plant ${item.name} in ${location.name}.`);
     if (!available.has(item.name)) {

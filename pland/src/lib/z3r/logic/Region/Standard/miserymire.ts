@@ -1,4 +1,5 @@
 import Item from "../../Item";
+import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -6,19 +7,19 @@ import type World from "../../World";
 import { Bosses } from "../../Boss";
 
 export class MiseryMire extends Dungeon {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD6', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD6', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD6', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD6', this.world)!
-    ];
-
     public constructor(world: World) {
         super("MiseryMire", world);
+
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD6', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD6', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD6', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD6', this.world)!
+        ];
 
         this.boss = Bosses.get("Vitreous", world);
 

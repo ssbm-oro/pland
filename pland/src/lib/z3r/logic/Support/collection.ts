@@ -1,17 +1,19 @@
 import type World from "../World";
-
 export interface Entry {
         name: string;
 }
 
 export class Collection {
     protected items: Map<string, Entry> = new Map();
-    protected world?: World;
+    protected world_id = 0;
+    protected log = (_message:string) => {};
 
-    public constructor(items:Entry[] = []) {
+    public constructor(items:Entry[] = [], log: (message:string) => void = (_message:string) => {}) {
         items.forEach(item => {
             this.items.set(item.name, item);
         });
+
+        this.log = log;
     }
 
     public get(key:string) {
@@ -19,7 +21,7 @@ export class Collection {
     }
 
     public setChecksForWorld(world: World) {
-        this.world = world;
+        this.world_id = world.id;
     }
 
     // public merge(items: Collection) {
@@ -50,9 +52,5 @@ export class Collection {
 
     getCount() {
         return this.items.size;
-    }
-
-    public log(message:string) {
-        if (this.world) this.world.log(message);
     }
 }
