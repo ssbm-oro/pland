@@ -1,10 +1,11 @@
+import type Config from "./Config";
 import Inverted from "./World/Inverted";
 import Open from "./World/Open";
 import Retro from "./World/Retro";
 import Standard from "./World/Standard";
 
 export default class WorldFactory {
-    public static createWorld(type: string, config: any) {
+    public static createWorld(type: string, config: Config) {
         switch(type) {
             case 'open':
                 return new Open(config);

@@ -65,7 +65,7 @@ export class DesertPalace extends Dungeon {
 
         this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
-                && (items.has('Book of Mudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
+                && (items.has('BookofMudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
         };
 
         this.prize!.setRequirements(this.canComplete);
