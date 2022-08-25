@@ -5,16 +5,19 @@ import type World from "./World";
 
 export interface IItem extends Entry {
     world_id: number;
+    value: string;
     //public static world: World;
 }
 
 export default class Item implements IItem {
     name: string;
     world_id: number;
+    value: string;
 
     public constructor(name: string, world: World) {
         this.name = name;
         this.world_id = world.id;
+        this.value = name.replace('item.', '');
     }
 
     public getNiceName() {

@@ -17,7 +17,7 @@ export default class World implements IWorld {
     locations: LocationCollection = new LocationCollection([], this.log);
     config: Config;
     win_condition?: (items: ItemCollection) => boolean;
-    id: number = 0;
+    id: number = 1;
     inverted = false;
     messages: string[]|null = null;
 

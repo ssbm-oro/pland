@@ -11,6 +11,7 @@
     import { invalidate } from "$app/navigation";
     import type { ILocation } from '$lib/z3r/logic/Location';
     import type { IItem } from "$lib/z3r/logic/Item";
+    import { checkPlants } from "$lib/z3r/logic/Logic";
 
 
     export let data: PageData;
@@ -74,15 +75,21 @@
 
     async function submitPlants() {
         if (userAsEntrant) {
-            let params = new URLSearchParams();
-            params.append('plantedItems', JSON.stringify(selectedItems));
-            params.append('plantedLocations', JSON.stringify(selectedLocations));
-            params.append('ready', 'true');
-            let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
-            let data = await res.json();
-            selectedItems = data.plantedItems;
-            selectedLocations = data.plantedLocations;
-            userAsEntrant.ready = data.ready;
+            let {plantable} = checkPlants(world, selectedItems, selectedLocations)
+            if (plantable) {
+                let params = new URLSearchParams();
+                params.append('plantedItems', JSON.stringify(selectedItems));
+                params.append('plantedLocations', JSON.stringify(selectedLocations));
+                params.append('ready', 'true');
+                let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
+                let data = await res.json();
+                selectedItems = data.plantedItems;
+                selectedLocations = data.plantedLocations;
+                userAsEntrant.ready = data.ready;
+            }
+            else {
+                alert('A conflict was detected! Check your plants!')
+            }
         }
     }
 

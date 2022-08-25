@@ -1,5 +1,5 @@
-import { json, type RequestHandler } from '@sveltejs/kit';
-import Lobby, { Lobbies, type ILobby } from "$lib/Lobby";
+import { error, json, type RequestHandler } from '@sveltejs/kit';
+import { Lobbies } from "$lib/Lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { ILocation } from '$lib/z3r/logic/Location';
 
@@ -41,14 +41,19 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     if (!plantedItems || !plantedLocations) return new Response('You must define an item to plant and a location to plant it.', { status: 409 });
 
     await lobby.initialize();
-    lobby.plant(user, plantedItems, plantedLocations);
+    let {plantable, messages} = lobby.plant(user, plantedItems, plantedLocations);
 
-
-    return json({
-        plantedItems: entrant.plantedItems,
-        plantedLocations: entrant.plantedLocations,
-        ready: entrant.ready
-    })
+    if (plantable) {
+        return json({
+            plantedItems: entrant.plantedItems,
+            plantedLocations: entrant.plantedLocations,
+            ready: entrant.ready
+        })
+    }
+    else {
+        messages.map(console.log);
+        throw error(409, 'Conflict: unable to plant');
+    }
 }
 
 export const DELETE: RequestHandler = async( {params, locals } ) => {

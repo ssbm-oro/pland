@@ -7,6 +7,7 @@ import type { IWorld } from "./z3r/logic/World";
 import Open from "./z3r/logic/World/Open";
 const presets = import.meta.glob('./data/presets/*.json');
 import { browser } from '$app/env'
+import { checkPlants } from "./z3r/logic/Logic";
 
 export const Lobbies = new Map<string, Lobby>();
 
@@ -123,26 +124,39 @@ export default class Lobby {
         saveLobby(this);
     }
 
+    public canPlant(plantedItems: IItem[], plantedLocations: ILocation[]) {
+        return checkPlants(this.world as World, plantedItems, plantedLocations);
+    }
+
     public plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
         const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
+        let plantable: boolean = false, messages: string[] = [];
         if (entrant) {
-            for(let i = 0; i < this.lobby!.max_plants; i++) {
-                const realWorld = this.world as World;
-                entrant.plantedItems[i] = plantedItems[i]!;
+            const canPlant = this.canPlant(plantedItems, plantedLocations);
+            plantable = canPlant.plantable;
+            messages = canPlant.messages;
 
-                const z3rLocation = realWorld.locations.get(plantedLocations[i]!.name)!
-                
-                entrant.plantedLocations[i]! = {
-                    name: z3rLocation.name,
-                    item: z3rLocation.item,
-                    isCrystalPendant: z3rLocation.isCrystalPendant,
-                    messages: z3rLocation.messages
-                };
+            if (plantable) {
+                for(let i = 0; i < this.lobby!.max_plants; i++) {
+                    const realWorld = this.world as World;
+                    entrant.plantedItems[i] = plantedItems[i]!;
+
+                    const z3rLocation = realWorld.locations.get(plantedLocations[i]!.name)!
+
+                    entrant.plantedLocations[i]! = {
+                        name: z3rLocation.name,
+                        item: z3rLocation.item,
+                        isCrystalPendant: z3rLocation.isCrystalPendant,
+                        messages: z3rLocation.messages
+                    };
+                }
+                entrant.ready = true;
             }
-            entrant.ready = true;
         }
 
         saveLobby(this);
+
+        return {plantable, messages};
     }
 
     public unplant(user: APIUser) {
