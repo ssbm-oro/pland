@@ -2,7 +2,7 @@ import { East as EastDarkWorldDeathMountain } from "../Region/Standard/DarkWorld
 import { West as WestDarkWorldDeathMountain } from "../Region/Standard/DarkWorld/DeathMountain/West";
 import { DesertPalace } from "../Region/Standard/DesertPalace";
 import { EasternPalace } from "../Region/Standard/EasternPalace";
-import { OpenHyruleCastleEscape } from "../Region/Open/hyrulecastleescape";
+import { OpenHyruleCastleEscape } from "../Region/Open/HyruleCastleEscape";
 import { HyruleCastleTower } from "../Region/Standard/HyruleCastleTower";
 import { West as WestDeathMountain} from "../Region/Standard/LightWorld/DeathMountain/West";
 import { East as EastDeathMountain} from "../Region/Standard/LightWorld/DeathMountain/East";
