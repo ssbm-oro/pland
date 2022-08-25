@@ -1,15 +1,12 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../Boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
-import type { ItemCollection } from "../../Support/itemcollection";
+import Item, { BigKey, Compass, Key, Map } from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
+import type { ItemCollection } from "../../Support/ItemCollection";
 
-export class TurtleRock extends Region {
+export class TurtleRock extends Dungeon {
     override region_items: Item[] = [
         Item.get('BigKey', this.world)!,
         Item.get('BigKeyD7', this.world)!,
@@ -24,7 +21,7 @@ export class TurtleRock extends Region {
     public constructor(world: World) {
         super("Turtle Rock", world,);
 
-        this.boss = Boss.get("Trinexx", world);
+        this.boss = Bosses.get("Trinexx", world);
 
         this.locations = new LocationCollection([
             new Chest("Turtle Rock - Chain Chomps", this),
@@ -42,12 +39,12 @@ export class TurtleRock extends Region {
 
             new Crystal("Turtle Rock - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Turtle Rock - Prize")!;
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         const upper = (locations: LocationCollection, items: ItemCollection) => {
             let haveMedallion = false;
             let medallion = locations.get('Turtle Rock Medallion')

@@ -1,11 +1,11 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import type World from "$lib/z3r/logic/world";
+    import type World from "$lib/z3r/logic/World";
     import { onMount } from "svelte";
-    import Open from "$lib/z3r/logic/World/open";
-    import Inverted from "$lib/z3r/logic/World/inverted";
-    import Retro from "$lib/z3r/logic/World/retro";
-    import Standard from "$lib/z3r/logic/World/standard";
+    import Open from "$lib/z3r/logic/World/Open";
+    import Inverted from "$lib/z3r/logic/World/Inverted";
+    import Retro from "$lib/z3r/logic/World/Retro";
+    import Standard from "$lib/z3r/logic/World/Standard";
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
     import { invalidate } from "$app/navigation";

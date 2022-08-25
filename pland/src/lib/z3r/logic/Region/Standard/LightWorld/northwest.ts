@@ -1,12 +1,8 @@
-import { Chest } from "$lib/z3r/logic/Location/chest";
-import { Npc } from "$lib/z3r/logic/Location/npc";
-import { BugCatchingKid } from "$lib/z3r/logic/Location/Npc/bugcatchingkid";
-import { Pedestal } from "$lib/z3r/logic/Location/pedestal";
-import { Standing } from "$lib/z3r/logic/Location/standing";
-import { Region } from "$lib/z3r/logic/region";
-import type { ItemCollection } from "$lib/z3r/logic/Support/itemcollection";
-import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type World from "$lib/z3r/logic/world";
+import { Chest, Npc, BugCatchingKid, Pedestal, Standing } from "$lib/z3r/logic/Location";
+import Region from "$lib/z3r/logic/Region";
+import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
+import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
+import type World from "$lib/z3r/logic/World";
 
 export class NorthWest extends Region {
     public constructor(world: World) {
@@ -36,10 +32,10 @@ export class NorthWest extends Region {
             new Standing("Graveyard Ledge", this),
             new Standing("Mushroom", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         this.locations.get("Master Sword Pedestal")?.setRequirements((locations, items) => {
             return items.has("PendantOfPower") && items.has("PendantOfWisdom") && items.has("PendantOfCourage");
         });

@@ -1,15 +1,12 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../Boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
-import type { ItemCollection } from "../../Support/itemcollection";
+import Item from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
+import type { ItemCollection } from "../../Support/ItemCollection";
 
-export class PalaceOfDarkness extends Region {
+export class PalaceOfDarkness extends Dungeon {
     override region_items: Item[] = [
         Item.get('BigKey', this.world)!,
         Item.get('BigKeyD1', this.world)!,
@@ -24,7 +21,7 @@ export class PalaceOfDarkness extends Region {
     public constructor(world: World) {
         super("Dark Palace", world);
 
-        this.boss = Boss.get("Helmasaur King", world);
+        this.boss = Bosses.get("Helmasaur King", world);
 
         this.locations = new LocationCollection([
             new Chest("Palace of Darkness - Shooter Room", this),
@@ -46,11 +43,11 @@ export class PalaceOfDarkness extends Region {
             new Crystal("Palace of Darkness - Prize", this),
         ]);
 
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
         this.prize = this.locations.get("Palace of Darkness - Prize")!;
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         const bowLockedRequirements = (locations: LocationCollection, items: ItemCollection) => { return items.canShootArrows(this.world) };
         this.locations.get("Palace of Darkness - The Arena - Ledge")?.setRequirements(bowLockedRequirements);
         this.locations.get("Palace of Darkness - Map Chest")?.setRequirements(bowLockedRequirements);

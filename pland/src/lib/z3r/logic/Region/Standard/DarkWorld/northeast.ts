@@ -1,11 +1,9 @@
-import Item from "$lib/z3r/logic/item";
-import { Chest } from "$lib/z3r/logic/Location/chest";
-import { Event } from "$lib/z3r/logic/Location/Prize/event";
-import { Standing } from "$lib/z3r/logic/Location/standing";
-import { Region } from "$lib/z3r/logic/region";
-import type { ItemCollection } from "$lib/z3r/logic/Support/itemcollection";
-import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type World from "$lib/z3r/logic/world";
+import Item from "$lib/z3r/logic/Item";
+import { Chest, Event, Standing } from "$lib/z3r/logic/Location";
+import  Region from "$lib/z3r/logic/Region";
+import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
+import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
+import type World from "$lib/z3r/logic/World";
 
 export class NorthEast extends Region {
     public constructor(world: World) {
@@ -18,18 +16,18 @@ export class NorthEast extends Region {
             new Chest("Pyramid Fairy - Right", this),
             new Event("Ganon", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Ganon")!;
         this.prize.setItem(Item.get("DefeatGanon", world)!);
     }
 
-    override initialize(): Region {
+    override initialize() {
         this.locations.get("Catfish")?.setRequirements((_locations, items) => {
             return items.canLiftRocks();
         });
 
-        const pyramidRequirements = (locations:LocationCollection, items:ItemCollection) => {
+        const pyramidRequirements = (locations: LocationCollection, items: ItemCollection) => {
             return items.has("Crystal5") && items.has("Crystal6")
                 && this.world.getRegion("South Dark World")!.canEnter(locations, items)
                 && ((items.has("MoonPearl") && items.has("Hammer"))
@@ -39,7 +37,7 @@ export class NorthEast extends Region {
         this.locations.get("Pyramid Fairy - Left")?.setRequirements(pyramidRequirements);
         this.locations.get("Pyramid Fairy - Right")?.setRequirements(pyramidRequirements);
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (_locations, items) => {
             return items.has("RescueZelda")
                 && (items.has("DefeatAgahnim")
                     || (items.has("Hammer") && items.canLiftRocks() && items.has("MoonPearl"))

@@ -1,13 +1,9 @@
-import Item from "../../item";
-import { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../Boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
+import Item from "../../Item";
+import Region from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
+import { BigChest, Chest, Crystal, Drop } from "../../Location";
 
 export class SkullWoods extends Region {
     override region_items: Item[] = [
@@ -24,7 +20,7 @@ export class SkullWoods extends Region {
     public constructor(world: World) {
         super("Skull Woods", world);
 
-        this.boss = Boss.get("Mothula", world);
+        this.boss = Bosses.get("Mothula", world);
 
         this.locations = new LocationCollection([
             new BigChest("Skull Woods - Big Chest", this),
@@ -38,12 +34,12 @@ export class SkullWoods extends Region {
 
             new Crystal("Skull Woods - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Skull Woods - Prize")!;
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         this.locations.get("Skull Woods - Big Chest")?.setRequirements((locations, items) => {
             return items.has('BigKeyD3');
         });

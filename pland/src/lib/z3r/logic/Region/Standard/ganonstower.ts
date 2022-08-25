@@ -1,13 +1,10 @@
-import { Region } from "../../region";
-import Item, { BigKey, Key, Compass, Map} from "../../item";
-import type World from "../../world";
-import { Boss } from "../../Boss";
-import { LocationCollection } from "../../Support/locationcollection";
-import { Dash } from "../../Location/dash";
-import { Chest } from "../../Location/chest";
-import { BigChest } from "../../Location/bigchest";
-import { Event } from "../../Location/Prize/event";
-import type { ItemCollection } from "../../Support/itemcollection";
+import Item, { BigKey, Key, Compass, Map} from "../../Item";
+import type World from "../../World";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type { ItemCollection } from "../../Support/ItemCollection";
+import { Bosses, type Boss } from "../../Boss";
+import Region from "../../Region";
+import { Dash, Chest, BigChest, Event } from "../../Location";
 
 export class GanonsTower extends Region {
     boss_top?: Boss;
@@ -28,10 +25,10 @@ export class GanonsTower extends Region {
     public constructor(world: World) {
         super("Ganons Tower", world);
 
-        this.boss = Boss.get("Agahnim2", world);
-        this.boss_top = Boss.get("Moldorm", world);
-        this.boss_middle = Boss.get("Lanmolas", world);
-        this.boss_bottom = Boss.get("Armos Knights", world);
+        this.boss = Bosses.get("Agahnim2", world);
+        this.boss_top = Bosses.get("Moldorm", world);
+        this.boss_middle = Bosses.get("Lanmolas", world);
+        this.boss_bottom = Bosses.get("Armos Knights", world);
 
         this.locations = new LocationCollection([
             new Dash("Ganon's Tower - Bob's Torch", this),
@@ -64,7 +61,7 @@ export class GanonsTower extends Region {
             new Event("Agahnim 2", this)
         ]);
 
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
         this.prize = this.locations.get("Agahnim 2")!;
         this.prize.setItem(Item.get("DefeatAgahnim2",  world)!);
     }
@@ -106,7 +103,7 @@ export class GanonsTower extends Region {
         return this;
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         this.locations.get("Ganon's Tower - Bob's Torch")?.setRequirements((locations, items) => {
             return items.has('PegasusBoots');
         });
@@ -268,10 +265,7 @@ export class GanonsTower extends Region {
     }
 
     canOpen(items: ItemCollection, world: World) {
-        let crystals = 0;
-        for (let item of items.items.keys()) {
-            if (item.startsWith('Crystal')) crystals++;
-        }
+        const crystals = items.getCrystals().getCount();
 
         return crystals >= world.config.crystals.tower;
     }

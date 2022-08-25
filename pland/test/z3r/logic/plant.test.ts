@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import fs from "fs";
-import World from "../../../src/lib/z3r/logic/world";
+import World from "../../../src/lib/z3r/logic/World";
 import Open from "../../../src/lib/z3r/logic/World/open";
-import { ItemCollection } from "../../../src/lib/z3r/logic/Support/itemcollection";
-import Item from "../../../src/lib/z3r/logic/item";
-import Location from "../../../src/lib/z3r/logic/location";
-import { LocationCollection } from "../../../src/lib/z3r/logic/Support/locationcollection";
+import { ItemCollection } from "../../../src/lib/z3r/logic/Support/ItemCollection";
+import Item from "../../../src/lib/z3r/logic/Item";
+import Location from "../../../src/lib/z3r/logic/Location";
+import { LocationCollection } from "../../../src/lib/z3r/logic/Support/LocationCollection";
 import { items as itemPool } from '../../../src/lib/json/alttpr-customizer-schema.json';
 
 describe("Sample Logic Bombs", () =>{

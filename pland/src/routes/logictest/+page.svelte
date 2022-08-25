@@ -1,14 +1,14 @@
 <script lang="ts">
     import { items } from '$lib/json/alttpr-customizer-schema.json';
-    import type World from "$lib/z3r/logic/world";
-    import Inverted from "$lib/z3r/logic/World/inverted";
-    import Open from "$lib/z3r/logic/World/open";
-    import Retro from "$lib/z3r/logic/World/retro";
-    import Standard from "$lib/z3r/logic/World/standard";
+    import type World from "$lib/z3r/logic/World";
+    import Inverted from "$lib/z3r/logic/World/Inverted";
+    import Open from "$lib/z3r/logic/World/Open";
+    import Retro from "$lib/z3r/logic/World/Retro";
+    import Standard from "$lib/z3r/logic/World/Standard";
     import { onMount } from "svelte";
     import Item from '$lib/z3r/logic/Item';
-    import { ItemCollection } from '$lib/z3r/logic/Support/itemcollection';
-    import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
+    import { ItemCollection } from '$lib/z3r/logic/Support/ItemCollection';
+    import { LocationCollection } from '$lib/z3r/logic/Support/LocationCollection';
     import Presets from '$lib/components/Presets.svelte'
     import Plant from '$lib/components/Plant.svelte';
 

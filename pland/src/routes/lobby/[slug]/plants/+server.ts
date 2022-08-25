@@ -1,5 +1,5 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { Lobbies } from "$lib/lobby";
+import { Lobbies } from "$lib/Lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
 
 export const GET: RequestHandler = async ( { params, locals } ) => {

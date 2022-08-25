@@ -1,10 +1,10 @@
-import type { Region } from "../../region";
-import type { LocationCollection } from "../../Support/locationcollection";
-import type { ItemCollection } from "../../Support/itemcollection";
-import { HyruleCastleEscape } from "../Standard/hyrulecastleescape";
+import type { IRegion } from "../../Region";
+import type { LocationCollection } from "../../Support/LocationCollection";
+import type { ItemCollection } from "../../Support/ItemCollection";
+import { HyruleCastleEscape } from "../Standard/HyruleCastleEscape";
 
 export class OpenHyruleCastleEscape extends HyruleCastleEscape {
-    public override initialize(): Region {
+    public override initialize() {
         const secretRoomRequirements = (locations: LocationCollection, items: ItemCollection) => {
             return items.canLiftRocks() || ((items.canLightTorches() && items.has("KeyH2") && (items.canKillMostThings(this.world))));
         }

@@ -1,7 +1,7 @@
-import Inverted from "./World/inverted";
-import Open from "./World/open";
-import Retro from "./World/retro";
-import Standard from "./World/standard";
+import Inverted from "./World/Inverted";
+import Open from "./World/Open";
+import Retro from "./World/Retro";
+import Standard from "./World/Standard";
 
 export default class WorldFactory {
     public static createWorld(type: string, config: any) {

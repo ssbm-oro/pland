@@ -1,11 +1,9 @@
-import Item, { BigKey, Compass, Key, Map} from "../../item";
-import { Region } from "../../region";
-import type World from "../../world";
-import { LocationCollection } from "../../Support/locationcollection";
-import { Event } from "../../Location/Prize/event";
-import { Uncle } from "../../Location/Npc/uncle";
-import { Chest } from "../../Location/chest";
-import type { ItemCollection } from "../../Support/itemcollection";
+import Item from "../../Item";
+import Region from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type { ItemCollection } from "../../Support/ItemCollection";
+import { Chest, Uncle, Event } from "../../Location";
+import type World from "../../World";
 
 export class HyruleCastleEscape extends Region {
     override region_items: Item[] = [
@@ -40,7 +38,7 @@ export class HyruleCastleEscape extends Region {
         this.prize.setItem(Item.get('RescueZelda', world)!);
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         const backOfEscapeRequirements = (location: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world) && items.has('KeyH2');
         };

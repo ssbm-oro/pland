@@ -1,6 +1,6 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
-    import type Location from '$lib/z3r/logic/Location';
+    import type { Location } from '$lib/z3r/logic/Location';
     import { items } from '$lib/json/alttpr-customizer-schema.json';
 
     export let selectedItem:any;

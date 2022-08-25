@@ -1,8 +1,8 @@
-import { Chest } from "$lib/z3r/logic/Location/chest";
-import { Region } from "$lib/z3r/logic/region";
-import type { ItemCollection } from "$lib/z3r/logic/Support/itemcollection";
-import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type World from "$lib/z3r/logic/world";
+import { Chest } from "$lib/z3r/logic/Location";
+import Region from "$lib/z3r/logic/Region";
+import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
+import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
+import type World from "$lib/z3r/logic/World";
 
 export class East extends Region {
     public constructor(world: World) {
@@ -16,10 +16,10 @@ export class East extends Region {
             new Chest("Hookshot Cave - Bottom Left", this),
             new Chest("Hookshot Cave - Bottom Right", this),
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         this.locations.get("Super Bunny Cave - Top")?.setRequirements((locations, items) => {
             return items.has("Moon Pearl")
         });

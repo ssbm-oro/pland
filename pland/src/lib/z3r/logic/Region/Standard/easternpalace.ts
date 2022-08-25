@@ -1,16 +1,11 @@
-import { Boss } from "../../Boss";
-import Item from "../../item";
-import { Pendant } from "../../Location/Prize/pendant";
-import { BigChest } from "../../Location/bigchest";
-import { Chest } from "../../Location/chest";
-import { Drop } from "../../Location/drop";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import type { Prize } from "../../Location/prize";
-import { BigKey, Compass, Key, Map } from "../../item";
+import { Bosses } from "../../Boss";
+import Item from "../../Item";
+import { Pendant, BigChest, Chest, Drop, Prize } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
 
-export class EasternPalace extends Region {
+export class EasternPalace extends Dungeon {
     override region_items: Item[] = [
         Item.get('BigKey', this.world)!,
         Item.get('BigKeyP1', this.world)!,
@@ -25,7 +20,7 @@ export class EasternPalace extends Region {
     public constructor(world: World) {
         super("Eastern Palace", world);
 
-        this.boss = Boss.get("Armos Knights", world);
+        this.boss = Bosses.get("Armos Knights", world);
 
         this.locations = new LocationCollection([
             new Chest("Eastern Palace - Compass Chest", this),
@@ -38,11 +33,11 @@ export class EasternPalace extends Region {
             new Pendant("Eastern Palace - Prize", this)
         ]);
 
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
         this.setPrizeLocation(this.locations.get("Eastern Palace - Prize") as Prize);
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         this.locations.get("Eastern Palace - Big Chest")?.setRequirements((locations, items) => {
             return items.has('BigKeyP1');
         });

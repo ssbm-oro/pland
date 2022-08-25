@@ -1,15 +1,12 @@
-import Item from "../../item";
-import { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../Boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
+import Item from "../../Item";
+import { BigKey, Compass, Key, Map } from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
 
-export class SwampPalace extends Region {
+export class SwampPalace extends Dungeon {
     override region_items: Item[] = [
         Item.get('BigKey', this.world)!,
         Item.get('BigKeyD2', this.world)!,
@@ -24,7 +21,7 @@ export class SwampPalace extends Region {
     public constructor(world: World) {
         super("Swamp Palace", world,);
 
-        this.boss = Boss.get("Arrghus", world);
+        this.boss = Bosses.get("Arrghus", world);
 
         this.locations = new LocationCollection([
             new Chest("Swamp Palace - Entrance", this),
@@ -40,12 +37,12 @@ export class SwampPalace extends Region {
 
             new Crystal("Swamp Palace - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Swamp Palace - Prize")!;
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         this.locations.get("Swamp Palace - Big Chest")?.setRequirements((locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer")
