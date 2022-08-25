@@ -121,7 +121,7 @@ export default class Lobby {
         return checkPlants(this.world as World, plantedItems, plantedLocations);
     }
 
-    public plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
+    public async plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
         const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
         let plantable: boolean = false, messages: string[] = [];
         if (entrant) {
@@ -145,7 +145,7 @@ export default class Lobby {
                 }
                 entrant.ready = true;
 
-                this.checkAllReady();
+                plantable = await this.checkAllReady();
             }
         }
 
@@ -157,17 +157,24 @@ export default class Lobby {
     async checkAllReady() {
         if (this.lobby?.entrants.every(entrant => entrant.ready)) {
             const allItemsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedItems);
+            console.log(allItemsPlanted);
             const allLocationsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedLocations);
+            console.log(allLocationsPlanted);
             const {plantable, messages} = checkPlants(this.world as World, allItemsPlanted, allLocationsPlanted);
             if (plantable) {
                 this.lobby.ready_to_roll = true;
-                saveLobby(this);
+                console.log('could plant');
             }
             else {
                 console.log('could not plant');
-                this.lobby.entrants.forEach(this.unplantEntrant)
+                this.lobby.entrants.forEach(entrant => {
+                    this.unplantEntrant(entrant);
+                })
             }
+            saveLobby(this);
+            return (plantable)
         }
+        return false;
     }
 
     public unplant(user: APIUser) {
@@ -184,6 +191,7 @@ export default class Lobby {
         entrant.plantedItems = Array(this.lobby!.max_plants);
         entrant.plantedLocations = Array(this.lobby!.max_plants);
         entrant.ready = false;
+        if (this.lobby) this.lobby.ready_to_roll = false;
     }
 
     public toJSON() {

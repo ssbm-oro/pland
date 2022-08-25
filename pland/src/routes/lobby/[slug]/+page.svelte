@@ -75,6 +75,7 @@
 
     async function submitPlants() {
         if (userAsEntrant) {
+            console.log(selectedItems);
             let {plantable} = checkPlants(world, selectedItems, selectedLocations)
             if (plantable) {
                 let params = new URLSearchParams();

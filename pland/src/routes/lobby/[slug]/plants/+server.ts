@@ -41,7 +41,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     if (!plantedItems || !plantedLocations) return new Response('You must define an item to plant and a location to plant it.', { status: 409 });
 
     await lobby.initialize();
-    let {plantable, messages} = lobby.plant(user, plantedItems, plantedLocations);
+    let {plantable, messages} = await lobby.plant(user, plantedItems, plantedLocations);
 
     if (plantable) {
         return json({
@@ -52,7 +52,11 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     }
     else {
         //messages.map(console.log);
-        throw error(409, 'Conflict: unable to plant');
+        return json({
+            plantedItems: Array(),
+            plantedLocations: Array(),
+            ready: false
+        });
     }
 }
 
