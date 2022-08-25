@@ -40,11 +40,11 @@ export class SkullWoods extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Skull Woods - Big Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Skull Woods - Big Chest")?.setRequirements((_locations, items) => {
             return items.has('BigKeyD3');
         });
 
-        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((locations, items) => {
+        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((_locations, items) => {
             return items.has('MoonPearl') && items.has('FireRod');
         });
 

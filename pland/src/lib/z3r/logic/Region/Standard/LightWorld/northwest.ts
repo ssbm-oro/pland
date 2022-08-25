@@ -36,7 +36,7 @@ export class NorthWest extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Master Sword Pedestal")?.setRequirements((locations, items) => {
+        this.locations.get("Master Sword Pedestal")?.setRequirements((_locations, items) => {
             return items.has("PendantOfPower") && items.has("PendantOfWisdom") && items.has("PendantOfCourage");
         });
 
@@ -46,7 +46,7 @@ export class NorthWest extends Region {
                     || items.has("MagicMirror") && this.world.getRegion("North West Dark World")!.canEnter(locations, items));
         });
 
-        this.locations.get("Pegasus Rocks")?.setRequirements((locations, items) => {
+        this.locations.get("Pegasus Rocks")?.setRequirements((_locations, items) => {
             return items.has("PegasusBoots")
         });
 
@@ -57,11 +57,11 @@ export class NorthWest extends Region {
                     && items.has("MoonPearl") && this.world.getRegion("North West Dark World")!.canEnter(locations, items)));
         });
 
-        this.locations.get("Sick Kid")?.setRequirements((locations, items) => {
+        this.locations.get("Sick Kid")?.setRequirements((_locations, items) => {
             return items.hasABottle();
         });
 
-        this.locations.get("Lumberjack Tree")?.setRequirements((locations, items) => {
+        this.locations.get("Lumberjack Tree")?.setRequirements((_locations, items) => {
             return items.has("DefeatAgahnim") && items.has("PegasusBoots");
         });
 
@@ -70,7 +70,7 @@ export class NorthWest extends Region {
                 && items.has("MoonPearl");
         });
 
-        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda");
         }
 

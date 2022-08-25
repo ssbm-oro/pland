@@ -84,7 +84,7 @@ export class TurtleRock extends Dungeon {
                 && upper(locations, items) && items.has("KeyD7", 2);
         });
 
-        this.locations.get("Turtle Rock - Big Key Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Turtle Rock - Big Key Chest")?.setRequirements((_locations, items) => {
             if (!this.locations.get("Turtle Rock - Big Key Chest")?.hasItem(Item.get("BigKeyD7", this.world))) {
                 return this.locations.get("Turtle Rock - Big Key Chest")?.hasItem(Item.get("KeyD7", this.world)) ? items.has("KeyD7", 3) : items.has("KeyD7", 4);
             }

@@ -40,7 +40,7 @@ export class ThievesTown extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Thieves' Town - Attic")?.setRequirements((locations, items) => {
+        this.locations.get("Thieves' Town - Attic")?.setRequirements((_locations, items) => {
             return items.has('KeyD4') && items.has('BigKeyD4');
         });
 
@@ -51,7 +51,7 @@ export class ThievesTown extends Dungeon {
             return items.has("Hammer") && items.has('KeyD4') && items.has('BigKeyD4');
         });
 
-        this.locations.get("Thieves' Town - Blind's Cell")?.setRequirements((locations, items) => {
+        this.locations.get("Thieves' Town - Blind's Cell")?.setRequirements((_locations, items) => {
             return items.has('BigKeyD4');
         });
 

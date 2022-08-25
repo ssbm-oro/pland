@@ -43,57 +43,57 @@ export class SwampPalace extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer")
                 && items.has("BigKeyD2");
         });
 
-        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Map Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Map Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.canBombThings();
         });
 
-        this.locations.get("Swamp Palace - West Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - West Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.can_complete = (locations, items) => {
+        this.can_complete = (_locations, items) => {
             return this.locations.get("Swamp Palace - Boss")?.canAccess(items)!;
         }
 

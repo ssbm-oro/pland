@@ -24,27 +24,27 @@ export class South extends Region {
             return items.has("MoonPearl");
         });
         
-        this.locations.get("Hype Cave - Middle Right")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Middle Right")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Middle Left")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Middle Left")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Bottom")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Bottom")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - NPC")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - NPC")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Stumpy")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Stumpy")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Digging Game")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Digging Game")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 

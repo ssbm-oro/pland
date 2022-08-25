@@ -48,7 +48,7 @@ export class PalaceOfDarkness extends Dungeon {
     }
 
     public override initialize() {
-        const bowLockedRequirements = (locations: LocationCollection, items: ItemCollection) => { return items.canShootArrows(this.world) };
+        const bowLockedRequirements = (_locations: LocationCollection, items: ItemCollection) => { return items.canShootArrows(this.world) };
         this.locations.get("Palace of Darkness - The Arena - Ledge")?.setRequirements(bowLockedRequirements);
         this.locations.get("Palace of Darkness - Map Chest")?.setRequirements(bowLockedRequirements);
 
@@ -59,11 +59,11 @@ export class PalaceOfDarkness extends Dungeon {
             return (((items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6): items.has('KeyD1', 5) )));
         });
 
-        this.locations.get("Palace of Darkness - The Arena - Bridge")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - The Arena - Bridge")?.setRequirements((_locations, items) => {
             return items.has('KeyD1') || (items.canShootArrows(this.world) && items.has('Hammer'));
         })
 
-        const darkMazeRequirements = (locations:LocationCollection, items: ItemCollection) => {
+        const darkMazeRequirements = (_locations:LocationCollection, items: ItemCollection) => {
             return items.has('Lamp')
                 && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6): items.has('KeyD1', 5));
         };
@@ -72,7 +72,7 @@ export class PalaceOfDarkness extends Dungeon {
             return darkMazeRequirements(locations, items) && items.has('BigKeyD1');
         });
 
-        this.locations.get("Palace of Darkness - Compass Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - Compass Chest")?.setRequirements((_locations, items) => {
             return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4): items.has('KeyD1', 3));
         });
 
@@ -84,11 +84,11 @@ export class PalaceOfDarkness extends Dungeon {
             return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6) : items.has('KeyD1', 5));
         });
 
-        this.locations.get("Palace of Darkness - Stalfos Basement")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - Stalfos Basement")?.setRequirements((_locations, items) => {
             return items.has('KeyD1') || (items.canShootArrows(this.world) && items.has('Hammer'));
         });
 
-        const darkBasementRequirements = (locations: LocationCollection, items: ItemCollection) => items.canLightTorches() && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
+        const darkBasementRequirements = (_locations: LocationCollection, items: ItemCollection) => items.canLightTorches() && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
 
         this.locations.get("Palace of Darkness - Dark Basement - Left")?.setRequirements(darkBasementRequirements);
         this.locations.get("Palace of Darkness - Dark Basement - Right")?.setRequirements(darkBasementRequirements);

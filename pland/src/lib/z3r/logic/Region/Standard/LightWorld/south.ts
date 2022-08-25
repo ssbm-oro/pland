@@ -33,11 +33,11 @@ export class South extends Region {
     }
 
     override initialize() {
-        this.locations.get("Aginah's Cave")?.setRequirements((locations, items) => {
+        this.locations.get("Aginah's Cave")?.setRequirements((_locations, items) => {
             return items.canBombThings();
         });
 
-        const miniMoldormCaveRequirements = (locations: LocationCollection, items: ItemCollection) => {
+        const miniMoldormCaveRequirements = (_locations: LocationCollection, items: ItemCollection) => {
             return items.canBombThings() && items.canKillMostThings(this.world);
         }
 
@@ -47,7 +47,7 @@ export class South extends Region {
         this.locations.get("Minimoldorm Cave - Far Right")?.setRequirements(miniMoldormCaveRequirements);
         this.locations.get("Minimoldorm Cave - NPC")?.setRequirements(miniMoldormCaveRequirements);
 
-        this.locations.get("Hobo")?.setRequirements((locations, items) => {
+        this.locations.get("Hobo")?.setRequirements((_locations, items) => {
             return items.has("Flippers");
         });
 
@@ -65,7 +65,7 @@ export class South extends Region {
                 && (items.has("MagicMirror") && this.world.getRegion("Mire")!.canEnter(locations, items));
         });
 
-        this.locations.get("Library")?.setRequirements((locations, items) => {
+        this.locations.get("Library")?.setRequirements((_locations, items) => {
             return items.has("PegasusBoots");
         });
 
@@ -78,11 +78,11 @@ export class South extends Region {
                 && this.world.getRegion("North East Dark World")!.canEnter(locations, items);
         });
 
-        this.locations.get("Flute Spot")?.setRequirements((locations, items) => {
+        this.locations.get("Flute Spot")?.setRequirements((_locations, items) => {
             return items.has("Shovel");
         })
 
-        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda");
         }
 

@@ -56,11 +56,11 @@ export class IcePalace extends Dungeon {
             && ((items.has('Hookshot') || items.has('ShopKey') || (items.has('KeyD5', 1) && (locations.itemInLocations(Item.get('BigKeyD5', this.world)!, ["Ice Palace - Big Key Chest", "Ice Palace - Map Chest"])))));
         });
 
-        this.locations.get("Ice Palace - Freezor Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Ice Palace - Freezor Chest")?.setRequirements((_locations, items) => {
             return items.canMeltThings(this.world);
         });
         
-        this.locations.get("Ice Palace - Big Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Ice Palace - Big Chest")?.setRequirements((_locations, items) => {
             return items.has('BigKeyD5');
         });
 
@@ -75,7 +75,7 @@ export class IcePalace extends Dungeon {
                 && items.has('BigKeyD5') && ((items.has("CaneOfSomaria") && items.has('KeyD5')) || (items.has('KeyD5', 2)));
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (_locations, items) => {
             return items.has('RescueZelda')
             && items.canMeltThings(this.world)
             && items.has('MoonPearl') && items.has('Flippers') && items.canLiftDarkRocks();

@@ -40,15 +40,15 @@ export class MiseryMire extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Misery Mire - Big Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Big Chest")?.setRequirements((_locations, items) => {
             return items.has('BigKeyD6');
         });
 
-        this.locations.get("Misery Mire - Main Lobby")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Main Lobby")?.setRequirements((_locations, items) => {
             return items.has('KeyD6') || items.has('BigKeyD6');
         });
 
-        this.locations.get("Misery Mire - Map Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Map Chest")?.setRequirements((_locations, items) => {
             return items.has('KeyD6') || items.has('BigKeyD6');
         });
 

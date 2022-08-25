@@ -38,11 +38,11 @@ export class EasternPalace extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Eastern Palace - Big Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Eastern Palace - Big Chest")?.setRequirements((_locations, items) => {
             return items.has('BigKeyP1');
         });
 
-        this.locations.get("Eastern Palace - Big Key Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Eastern Palace - Big Key Chest")?.setRequirements((_locations, items) => {
             return items.has('Lamp');
         });
 

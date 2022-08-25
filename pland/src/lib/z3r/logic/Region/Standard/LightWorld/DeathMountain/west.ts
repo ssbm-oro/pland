@@ -18,7 +18,7 @@ export class West extends Region {
     }
 
     override initialize() {
-        this.locations.get("Old Man")?.setRequirements((locations, items) => {
+        this.locations.get("Old Man")?.setRequirements((_locations, items) => {
             return items.has("Lamp");
         });
 
@@ -27,11 +27,11 @@ export class West extends Region {
                 && this.world.getRegion("Tower of Hera")!.canEnter(locations, items);
         });
 
-        this.locations.get("Spectacle Rock")?.setRequirements((locations, items) => {
+        this.locations.get("Spectacle Rock")?.setRequirements((_locations, items) => {
             return items.has("MagicMirror");
         });
 
-        this.can_enter = (locations:LocationCollection, items: ItemCollection) => {
+        this.can_enter = (_locations:LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda")
                 && (items.canFly(this.world)
                     || (items.canLiftRocks() && items.has("Lamp")));

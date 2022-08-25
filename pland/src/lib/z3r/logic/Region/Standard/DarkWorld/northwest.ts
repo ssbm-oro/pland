@@ -20,27 +20,27 @@ export class NorthWest extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Brewery")?.setRequirements((locations, items) => {
+        this.locations.get("Brewery")?.setRequirements((_locations, items) => {
             return items.canBombThings() && items.has("MoonPearl");
         });
 
-        this.locations.get("C-Shaped House")?.setRequirements((locations, items) => {
+        this.locations.get("C-Shaped House")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Chest Game")?.setRequirements((locations, items) => {
+        this.locations.get("Chest Game")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hammer Pegs")?.setRequirements((locations, items) => {
+        this.locations.get("Hammer Pegs")?.setRequirements((_locations, items) => {
             return items.has("Hammer") && items.has("MoonPearl") && items.canLiftDarkRocks();
         });
 
-        this.locations.get("Bumper Cave")?.setRequirements((locations, items) => {
+        this.locations.get("Bumper Cave")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl") && items.has("Cape") && items.canLiftRocks();
         });
 
-        this.locations.get("Blacksmith")?.setRequirements((locations, items) => {
+        this.locations.get("Blacksmith")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl") && items.canLiftDarkRocks();
         });
 

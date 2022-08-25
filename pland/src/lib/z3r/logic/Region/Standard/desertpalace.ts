@@ -35,19 +35,19 @@ export class DesertPalace extends Dungeon {
         this.setPrizeLocation(this.locations.get("Desert Palace - Prize") as Prize);
 
 
-        this.locations.get("Desert Palace - Big Chest")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Big Chest")!.setRequirements((_locations, items) => {
             return items.has("BigKeyP2");
         });
 
-        this.locations.get("Desert Palace - Big Key Chest")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Big Key Chest")!.setRequirements((_locations, items) => {
             return items.has("KeyP2") && items.canKillMostThings(this.world);
         });
 
-        this.locations.get("Desert Palace - Compass Chest")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Compass Chest")!.setRequirements((_locations, items) => {
             return items.has("KeyP2");
         })
 
-        this.locations.get("Desert Palace - Torch")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Torch")!.setRequirements((_locations, items) => {
             return items.has('Pegasus Boots');
         })
 

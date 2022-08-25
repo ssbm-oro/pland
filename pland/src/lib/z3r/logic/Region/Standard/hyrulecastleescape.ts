@@ -39,7 +39,7 @@ export class HyruleCastleEscape extends Region {
     }
 
     public override initialize() {
-        const backOfEscapeRequirements = (location: LocationCollection, items: ItemCollection) => {
+        const backOfEscapeRequirements = (_location: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world) && items.has('KeyH2');
         };
 
@@ -48,20 +48,20 @@ export class HyruleCastleEscape extends Region {
         this.locations.get("Sewers - Secret Room - Middle")?.setRequirements(backOfEscapeRequirements);
         this.locations.get("Sewers - Secret Room - Right")?.setRequirements(backOfEscapeRequirements);
         
-        this.locations.get("Sewers - Dark Cross")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Sewers - Dark Cross")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
 
-        this.locations.get("Hyrule Castle - Boomerang Chest")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Hyrule Castle - Boomerang Chest")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
-        this.locations.get("Hyrule Castle - Map Chest")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Hyrule Castle - Map Chest")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
-        this.locations.get("Hyrule Castle - Zelda's Cell")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Hyrule Castle - Zelda's Cell")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
-        this.locations.get("Secret Passage")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Secret Passage")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
 
