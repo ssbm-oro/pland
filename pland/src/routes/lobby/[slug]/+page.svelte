@@ -99,11 +99,18 @@
             await invalidate($page.url.toString());
         }
     }
+
+    async function rollSeed() {
+        alert('This is next!');
+    }
 </script>
 
 <main>
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
+    {#if lobby.ready_to_roll}
+        <button on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</button>
+    {/if}
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if userInLobby}
         <button on:click='{leaveLobby}'>Leave</button>

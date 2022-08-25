@@ -51,7 +51,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
         })
     }
     else {
-        messages.map(console.log);
+        //messages.map(console.log);
         throw error(409, 'Conflict: unable to plant');
     }
 }

@@ -19,18 +19,9 @@ export async function reloadLobbies() {
 
                 const lobby: ILobby = JSON.parse(file).lobby;
 
-
-                // TODO: move this logic into a preset loader util
-                // const preset = await presets[`./data/presets/${lobby.preset}`]!() as any;
-                // const config = preset.settings 
-
                 const fullLobby = new Lobby(lobby.created_by, lobby.preset, lobby.max_entrants, lobby.max_plants, lobby.slug, lobby.entrants);
 
                 Lobbies.set(lobby.slug, fullLobby);
-                // lobby.entrants.forEach(entrant => {
-                //     entrant.plantedItems = Array(lobby.max_plants);
-                //     entrant.plantedLocations = Array(lobby.max_plants);
-                // });
             })
         }
         else {
@@ -56,6 +47,7 @@ export interface ILobby {
     max_entrants: number;
     max_plants: number;
     preset: string;
+    ready_to_roll: boolean;
 }
 
 function saveLobby(lobby: Lobby) {
@@ -85,7 +77,8 @@ export default class Lobby {
             max_entrants: max_entrants!,
             max_plants: max_plants!,
             slug:slug,
-            entrants: entrants
+            entrants: entrants,
+            ready_to_roll: false
         }
 
         if (save) saveLobby(this);
@@ -100,7 +93,7 @@ export default class Lobby {
             const config = preset.settings
 
             this.initialized = true;
-            this.world = new Open(config);
+            this.world = new Open(config, Array());
         }
     }
 
@@ -151,6 +144,8 @@ export default class Lobby {
                     };
                 }
                 entrant.ready = true;
+
+                this.checkAllReady();
             }
         }
 
@@ -159,16 +154,36 @@ export default class Lobby {
         return {plantable, messages};
     }
 
+    async checkAllReady() {
+        if (this.lobby?.entrants.every(entrant => entrant.ready)) {
+            const allItemsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedItems);
+            const allLocationsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedLocations);
+            const {plantable, messages} = checkPlants(this.world as World, allItemsPlanted, allLocationsPlanted);
+            if (plantable) {
+                this.lobby.ready_to_roll = true;
+                saveLobby(this);
+            }
+            else {
+                console.log('could not plant');
+                this.lobby.entrants.forEach(this.unplantEntrant)
+            }
+        }
+    }
+
     public unplant(user: APIUser) {
         const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
         if (entrant) {
             
-            entrant.plantedItems = Array(this.lobby!.max_plants);
-            entrant.plantedLocations = Array(this.lobby!.max_plants);
-            entrant.ready = false;
+            this.unplantEntrant(entrant);
         }
 
         saveLobby(this);
+    }
+
+    private unplantEntrant(entrant: Entrant) {
+        entrant.plantedItems = Array(this.lobby!.max_plants);
+        entrant.plantedLocations = Array(this.lobby!.max_plants);
+        entrant.ready = false;
     }
 
     public toJSON() {

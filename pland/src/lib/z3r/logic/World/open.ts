@@ -29,7 +29,7 @@ import type Config from "../Config";
 
 export default class Open extends World {
     public constructor (config:Config, messages: string[]|null = null) {
-        super(config);
+        super(config, messages);
         this.regions.set("North East Light World", new NorthEastLightWorld(this));
         this.regions.set("North West Light World", new NorthWestLightWorld(this));
         this.regions.set("South Light World", new SouthLightWorld(this));

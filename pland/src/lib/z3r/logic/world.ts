@@ -40,7 +40,7 @@ export default class World implements IWorld {
         return this.regions.get(regionName) as Region;
     }
 
-    canPlant(item: Item, location: Z3rLocation, messages:string[]|null): boolean {
+    canPlant(item: Item, location: Z3rLocation): boolean {
         return location.region.canFill(item);
     }
 
@@ -145,7 +145,7 @@ export default class World implements IWorld {
     }
 
     log(message: string) {
-        if (this.messages) this.messages.push(message); else console.log(message);
+        if (this.messages) this.messages.push(message);
     }
 
     toJSON() {
