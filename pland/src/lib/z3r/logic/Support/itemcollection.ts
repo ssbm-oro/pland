@@ -52,9 +52,19 @@ export class ItemCollection extends Collection {
 
         return this;
     }
+    merge(items: ItemCollection) {
+        const merged = this.clone();
+        items.items.forEach((entry, key) => {
+            for (let i = 0; i < items.item_counts.get(key)!; i++) {
+                merged.addItem(entry as Item);
+            }
+        })
+
+        return merged;
+    }
 
     public diff(items: ItemCollection) {
-        let difference = this.clone();
+        const difference = this.clone();
         items.items.forEach((entry, key) => {
             for (let i = 0; i < items.item_counts.get(key)!; i++) {
                 difference.removeItem(entry as Item);

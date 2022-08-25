@@ -81,17 +81,16 @@ export default class World {
             return false;
         }
 
-        let pendItems = new ItemCollection();
+        const pendItems = new ItemCollection();
         pendItems.addItem(Item.get('PendantOfCourage', this)!);
         pendItems.addItem(Item.get('PendantOfWisdom', this)!);
         pendItems.addItem(Item.get('PendantOfPower', this)!);
         if (this.locations.get('Master Sword Pedestal')?.item) {
             pendItems.addItem(this.locations.get('Master Sword Pedestal')?.item!);
         }
-        if (this.locations.get('Sahasrahla')?.item) {
-            pendItems.addItem(this.locations.get('Sahasrahla')?.item!);
-        }
-        const nonPendItems = items.diff(pendItems);
+
+        const nonPendItems = items.merge(gtItems).diff(pendItems);
+
         this.regions.forEach(region => {
             if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonPendItems)) {
                 requiredCrystals.push(region);
@@ -112,6 +111,8 @@ export default class World {
                 }
             });
         });
+
+        // TODO: Think of circumstances where Saha or Pyramid Fairy mandate a crystal/pendant
 
         return noDoubles;
     }
