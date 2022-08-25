@@ -51,4 +51,8 @@ export class Collection {
     getCount() {
         return this.items.size;
     }
+
+    public log(message:string) {
+        if (this.world) this.world.log(message);
+    }
 }

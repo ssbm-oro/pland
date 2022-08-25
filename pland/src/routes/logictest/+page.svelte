@@ -120,12 +120,9 @@
                     break;
                 }
                 available.removeItem(item);
-
-                console.log("available before plant:");
-                console.log(available);
+                
                 plantable = plantable && location.canFill(item, available, true, planted)!;
-                console.log("available after plant");
-                console.log(available);
+                
                 if (!plantable) {
                     logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
                     break;
@@ -139,7 +136,6 @@
                         logicTestMessages.push(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
                     }
                 }
-                // planted.addItem(item);
             }
 
             if (plantable) {

@@ -57,7 +57,7 @@ export class EasternPalace extends Dungeon {
                 && this.boss?.canBeat(items, locations)!;
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (_locations, items) => {
             return items.has('RescueZelda');
         };
 

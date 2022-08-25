@@ -1,4 +1,3 @@
-import type { IRegion } from "../../Region";
 import type { LocationCollection } from "../../Support/LocationCollection";
 import type { ItemCollection } from "../../Support/ItemCollection";
 import { HyruleCastleEscape } from "../Standard/HyruleCastleEscape";

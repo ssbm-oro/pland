@@ -108,7 +108,7 @@ export class Location implements ILocation {
     }
 
     public log(message:string) {
-        if (this.region.world.messages) this.region.world.messages.push(message);
+        this.region.world.log(message);
     }
 }
 
@@ -178,10 +178,12 @@ export class Prize extends Location {
 
 export class Crystal extends Prize { 
     // purposefully empty class
+    public override isCrystalPendant = true;
 }
 
 export class Pendant extends Prize { 
     // purposefully empty class
+    public override isCrystalPendant = true;
 }
 
 export class Event extends Prize { 

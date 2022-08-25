@@ -5,7 +5,6 @@ import { Collection } from "./Collection";
 export class ItemCollection extends Collection {
     override items: Map<string, Item> = new Map();
     item_counts : Map<string, number> = new Map();
-    checksForWorld?: World;
 
     public constructor(items:Item[] = []) {
         super();
@@ -20,8 +19,8 @@ export class ItemCollection extends Collection {
             }
         });
 
-        if (this.checksForWorld) {
-            items_clone.setChecksForWorld(this.checksForWorld);
+        if (this.world) {
+            items_clone.setChecksForWorld(this.world);
         }
 
         return items_clone;
@@ -220,9 +219,5 @@ public override filter(f: (item: Item) => boolean): Item[] {
         })
 
         return crystals;
-    }
-
-    public log(message:string) {
-        if (this.checksForWorld && this.checksForWorld.messages) this.checksForWorld.messages.push(message);
     }
 }

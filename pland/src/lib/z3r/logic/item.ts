@@ -206,6 +206,8 @@ export default class Item implements IItem {
             new Event('DefeatGanon', world)
         ]);
 
+        allItems.setChecksForWorld(world);
+
         return allItems;
     }
 

@@ -41,9 +41,12 @@ export default class Region implements IRegion {
 
 
     canComplete(locations: LocationCollection, items: ItemCollection) {
+        console.log('in can complete')
         if (this.can_complete) {
+            this.world.log(`Checking if we can complete ${this.name}`);
             return this.can_complete(locations, items);
         }
+        this.world.log(`can_complete not defined. Assuming we can complete ${this.name}.`)
         return true;
     }
 
@@ -52,7 +55,7 @@ export default class Region implements IRegion {
             this.world.log(`Checking if we can enter ${this.name}`);
             return this.can_enter(locations, items);
         }
-        this.world.log(`can_enter not defined. Assuming we can enter this region.`)
+        this.world.log(`can_enter not defined. Assuming we can enter ${this.name}.`)
         return true;
     }
 

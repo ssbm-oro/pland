@@ -9,8 +9,11 @@ export class LocationCollection extends Collection {
     protected override items: Map<string, Z3rLocation>;
 
     public constructor(locations: Z3rLocation[] = []) {
-        super(locations);
+        super();
         this.items = new Map<string, Z3rLocation>();
+        locations.forEach(item => {
+            this.items.set(item.name, item);
+        });
     }
 
     public override get(key:string) {
