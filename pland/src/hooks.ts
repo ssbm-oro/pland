@@ -1,8 +1,11 @@
+import { reloadLobbies } from '$lib/Lobby';
 import { fetchSession } from '$lib/utils/sessionHandler';
 import type { Handle } from '@sveltejs/kit';
 import cookie from 'cookie';
 
 export const handle: Handle = async ({ event, resolve }) => {
+	await reloadLobbies();
+
 	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 
 	if (cookies['session_id']) {
