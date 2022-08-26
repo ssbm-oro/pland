@@ -3,5 +3,6 @@
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
     "+*.svelte": "+${capture}.js, +${capture}.server.tjs, +${capture}.ts, +${capture}.server.ts"
-  }
+  },
+  "explorer.sortOrder": "filesFirst"
 }

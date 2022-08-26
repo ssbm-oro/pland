@@ -8,6 +8,7 @@
     export let data: PageData;
     $: lobbies = data.lobbies;
     $: user = data.user;
+    $: presets = data.presets;
 
     let selectedPreset: string = '';
     let maxPlayers: number = 2;
@@ -29,7 +30,7 @@
 </script>
 
 <main>
-    <Presets bind:selectedPreset></Presets>
+    <Presets bind:selectedPreset bind:presets></Presets>
     Max Entrants: <input bind:value="{maxPlayers}" type="number" min="2" max="8"><br/>
     Num Plants: <input bind:value="{numPlants}" type="number" min="1" max="2"><br/>
     {#if loading_message === ''}

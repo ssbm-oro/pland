@@ -3,15 +3,10 @@ import { get_loading_message } from "$lib/utils/loadingMessages";
 
 import { onMount } from "svelte"
 
-let presets: string[] = [];
+export let presets: string[];
 const loadingMessage = get_loading_message();
 
 export let selectedPreset :string;
-
-onMount(async () => {
-	const res = await fetch(`api/presets`);
-	presets = (await res.json()).data;
-});
 
 </script>
 

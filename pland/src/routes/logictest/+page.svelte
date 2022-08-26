@@ -4,7 +4,6 @@
     import Inverted from "$lib/z3r/logic/World/Inverted";
     import Retro from "$lib/z3r/logic/World/Retro";
     import Standard from "$lib/z3r/logic/World/Standard";
-    import { onMount } from "svelte";
     import { ItemCollection } from '$lib/z3r/logic/Support/ItemCollection';
     import { LocationCollection } from '$lib/z3r/logic/Support/LocationCollection';
     import Presets from '$lib/components/Presets.svelte'
@@ -13,22 +12,18 @@
     import type { IItem } from '$lib/z3r/logic/Item';
     import type { Z3rLocation } from '$lib/z3r/logic/Location';
     import Item from '$lib/z3r/logic/Item';
+    import type { PageData} from './$types';
 
     let selectedPreset: string = '';
     let world: World;
-    let selectedItems: IItem[] = [];
-    let selectedLocations: Z3rLocation[] = [];
-    let plantsModified = false;
+    $: selectedItems = Array() as IItem[];
+    $: selectedLocations = Array() as Z3rLocation[];
     let selectedPresetData: any;
     let logicTestMessages: string[] = [];
     let logicTestResult: boolean|null;
     
-    let presets: string[] = [];
-
-    onMount(async () => {
-        const res = await fetch(`api/presets`);
-        presets = (await res.json()).data;
-    });
+    export let data: PageData;
+    const presets = data.presets;
 
 
     async function presetChanged() {
@@ -57,15 +52,15 @@
     }
 
     function addPlant() {
-        selectedItems.push();
+        selectedItems.push({world_id:world.id, value:'', name:''});
         selectedLocations.push();
-        plantsModified = !plantsModified;
+        selectedItems = selectedItems;
     }
 
     function removePlant(index: number) {
         selectedItems.splice(index, 1);
         selectedLocations.splice(index, 1);
-        plantsModified = !plantsModified;
+        selectedItems = selectedItems;
     }
 
     function checkPlants() {
@@ -161,19 +156,19 @@
 
 <main>
     <br/>
-    <Presets bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
+    <Presets {presets} bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
     <br/><br/>
     {#if world}
         <h2>{selectedPresetData.goal_name}</h2>
         <p>{selectedPresetData.description}</p>
         <br/><br/>
         <button on:click="{addPlant}">Add Plant</button>
-        {#key plantsModified}{#each selectedItems as selectedItem, index }
+        {#each selectedItems as selectedItem, index }
             <br/><br/>
             <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}"></Plant>
             <br/>
             <button on:click="{() => removePlant(index)}">Remove Plant</button>
-        {/each}{/key}
+        {/each}
         <br/><br/>
         <button on:click="{checkPlants}">Check Plants</button>
         {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
