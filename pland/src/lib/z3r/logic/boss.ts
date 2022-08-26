@@ -1,79 +1,73 @@
-import type { ItemCollection } from "./Support/itemcollection";
-import type { LocationCollection } from "./Support/locationcollection";
-import BossCollection from "./Support/bosscollection";
-import type World from "./world";
-import { Entry } from "./Support/collection";
+import type { Entry } from "./Support/Collection";
+import type { ItemCollection } from "./Support/ItemCollection";
+import type { LocationCollection } from "./Support/LocationCollection";
+import BossCollection from "./Support/BossCollection";
+import type World from "./World";
 
-export class Boss extends Entry {
-    protected static bosses: BossCollection;
+export interface Boss extends Entry {
+    canBeat: (items: ItemCollection, locations: LocationCollection | null) => boolean;
+}
 
-    constructor(name: string, can_beat:(items:ItemCollection, locations?:LocationCollection) => boolean) {
-        super(name)
-        this.canBeat = can_beat;
+export class Bosses {
+    private static bosses: BossCollection;
+
+    public static get(key: string, world: World): Boss {
+        return Bosses.all(world).get(key)! as Boss;
     }
-
-    static get(key: string, world: World): Boss {
-        Boss.bosses = Boss.all(world);
-        return this.bosses.get(key)! as Boss;
-    }
-
-    static all(world: World): BossCollection {
-        if (Boss.bosses) {
-            return Boss.bosses;
+    
+    public static all(world: World): BossCollection {
+        if (Bosses.bosses) {
+            return Bosses.bosses;
         }
-
-        Boss.bosses = new BossCollection([
-            new Boss("Armos Knights", items => {
+    
+        Bosses.bosses = new BossCollection([
+            {name: "Armos Knights", canBeat: items => {
                 return items.hasSword() || items.has('Hammer') || items.canShootArrows(world) || items.has('Boomerang')
                     || items.has('RedBoomerang') || (items.canExtendMagic(world, 4) && items.has('FireRod') || items.has('IceRod'))
-                    || (items.canExtendMagic(world, 2) && (items.has('CaneOfSomaria') || items.has('CaneOfByrna')))
-            }),
-            new Boss("Lanmolas", items => {
+                    || (items.canExtendMagic(world, 2) && (items.has('CaneOfSomaria') || items.has('CaneOfByrna')))}
+            },
+            {name: "Lanmolas", canBeat: items => {
                 return items.hasSword() || items.has('Hammer') || items.canShootArrows(world) || items.has('FireRod') || items.has('IceRod')
-                    || items.has('CaneOfSomaria') || items.has('CaneOfByrna');
-            }),
-            new Boss("Moldorm", items => {
+                    || items.has('CaneOfSomaria') || items.has('CaneOfByrna')}
+            },
+            {name:"Moldorm", canBeat:items => {
                 return items.hasSword() || items.has('Hammer');
-            }),
-            new Boss("Helmasaur King", items => {
+            }},
+            {name: "Helmasaur King", canBeat: items => {
                 return (items.canBombThings() || items.has('Hammer'))
                     && items.hasSword() || items.canShootArrows(world);
-            }),
+            }},
             // TODO this is wrong but the logic looked complicated
-            new Boss("Arrghus", items => {
+            {name: "Arrghus", canBeat: items => {
                 return items.has('Hookshot') && (items.has('Hammer') || items.hasSword() || world.config.weapons == 'swordless')
-            }),
-            new Boss("Mothula", items => {
+            }},
+            {name: "Mothula", canBeat: items => {
                 return items.hasSword() || items.has('Hammer') 
                     || (items.canExtendMagic(world, 2) && items.has('FireRod') || items.has('CaneOfSomaria') || (items.has('CaneOfByrna')))
                     || items.canGetGoodBee();
-            }),
-            new Boss("Blind", items => {
+            }},
+            {name: "Blind", canBeat: items => {
                 return items.hasSword() || items.has('Hammer') || items.has('CaneOfSomaria') || items.has('CaneOfByrna');
-            }),
+            }},
             // TODO this is also very simplified
-            new Boss("Kholdstare", items => {
+            {name: "Kholdstare", canBeat: items => {
                 return items.canMeltThings(world) && (items.has('Hammer') || items.hasSword());
-            }),
-            new Boss("Vitreous", (items) => {
+            }},
+            {name: "Vitreous", canBeat: (items) => {
                 return items.hasSword() || items.has('Hammer') || items.canShootArrows(world)
-            }),
+            }},
             // TODO check if this is right
-            new Boss("Trinexx", items => {
+            {name: "Trinexx", canBeat: items => {
                 return items.has('FireRod') && items.has('IceRod')
                     && ((items.has('Hammer') || items.hasSword(3))
                         || (items.hasSword(2) && items.canExtendMagic(world, 2)
                         || (items.hasSword() && items.canExtendMagic(world, 4))));
-            }),
-            new Boss("Agahnim2", items => {
+            }},
+            {name: "Agahnim2", canBeat: items => {
                 return items.hasSword() || items.has('Hammer') || items.has('BugCatchingNet');
-            }),
+            }},
         ]);
-
-        return Boss.bosses;
-    }
-
-    canBeat(items: ItemCollection, locations?: LocationCollection): boolean {
-        throw new Error("Method not implemented.");
+    
+        return Bosses.bosses;
     }
 }

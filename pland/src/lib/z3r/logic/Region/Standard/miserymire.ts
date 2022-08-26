@@ -1,29 +1,27 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
 
-export class MiseryMire extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD6', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD6', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD6', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD6', this.world)!
-    ];
-
+export class MiseryMire extends Dungeon {
     public constructor(world: World) {
         super("MiseryMire", world);
 
-        this.boss = Boss.get("Vitreous", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD6', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD6', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD6', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD6', this.world)!
+        ];
+
+        this.boss = Bosses.get("Vitreous", world);
 
         this.locations = new LocationCollection([
             new BigChest("Misery Mire - Big Chest", this),
@@ -38,20 +36,20 @@ export class MiseryMire extends Region {
             new Crystal("Misery Mire - Prize", this)
         ]);
 
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
         this.prize = this.locations.get("Misery Mire - Prize")!;
     }
 
-    public override initialize(): Region {
-        this.locations.get("Misery Mire - Big Chest")?.setRequirements((locations, items) => {
+    public override initialize() {
+        this.locations.get("Misery Mire - Big Chest")?.setRequirements((_locations, items) => {
             return items.has('BigKeyD6');
         });
 
-        this.locations.get("Misery Mire - Main Lobby")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Main Lobby")?.setRequirements((_locations, items) => {
             return items.has('KeyD6') || items.has('BigKeyD6');
         });
 
-        this.locations.get("Misery Mire - Map Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Map Chest")?.setRequirements((_locations, items) => {
             return items.has('KeyD6') || items.has('BigKeyD6');
         });
 
@@ -83,7 +81,6 @@ export class MiseryMire extends Region {
             if (!medallion || !medallion.item) {
                 haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
                 this.world.log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
-                console.log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
             }
             else {
                 haveMedallion = items.has(medallion.item.name);

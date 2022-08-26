@@ -1,30 +1,27 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Standing } from "../../Location/standing";
-import { Pendant } from "../../Location/Prize/pendant";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Chest, BigChest, Drop, Standing, Pendant } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
 
-export class TowerOfHera extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyP3', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassP3', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyP3', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapP3', this.world)!
-    ];
-
+export class TowerOfHera extends Dungeon {
     public constructor(world: World) {
         super("Tower of Hera", world,);
 
-        this.boss = Boss.get("Moldorm", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyP3', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassP3', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyP3', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapP3', this.world)!
+        ];
+
+        this.boss = Bosses.get("Moldorm", world);
 
         this.locations = new LocationCollection([
             new Chest("Tower of Hera - Big Key Chest", this),
@@ -36,21 +33,21 @@ export class TowerOfHera extends Region {
 
             new Pendant("Tower of Hera - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Tower of Hera - Prize")!
     }
 
-    public override initialize(): Region {
-        this.locations.get("Tower of Hera - Big Key Chest")?.setRequirements((locations, items) => {
+    public override initialize() {
+        this.locations.get("Tower of Hera - Big Key Chest")?.setRequirements((_locations, items) => {
             return items.canLightTorches() && items.has("KeyP3");
         });
 
-        this.locations.get("Tower of Hera - Compass Chest")?.setRequirements((locatinos, items) => {
+        this.locations.get("Tower of Hera - Compass Chest")?.setRequirements((_locatinos, items) => {
             return items.has("BigKeyP3");
         })
 
-        this.locations.get("Tower of Hera - Big Chest")?.setRequirements((locatinos, items) => {
+        this.locations.get("Tower of Hera - Big Chest")?.setRequirements((_locatinos, items) => {
             return items.has("BigKeyP3");
         })
 

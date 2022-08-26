@@ -1,21 +1,23 @@
 <script lang="ts">
     import { items } from '$lib/data/json/alttpr-customizer-schema.json';
-    import type World from "$lib/z3r/logic/world";
-    import Inverted from "$lib/z3r/logic/World/inverted";
-    import Open from "$lib/z3r/logic/World/open";
-    import Retro from "$lib/z3r/logic/World/retro";
-    import Standard from "$lib/z3r/logic/World/standard";
+    import type World from "$lib/z3r/logic/World";
+    import Inverted from "$lib/z3r/logic/World/Inverted";
+    import Retro from "$lib/z3r/logic/World/Retro";
+    import Standard from "$lib/z3r/logic/World/Standard";
     import { onMount } from "svelte";
-    import Item from '$lib/z3r/logic/item';
-    import { ItemCollection } from '$lib/z3r/logic/Support/itemcollection';
-    import { LocationCollection } from '$lib/z3r/logic/Support/locationcollection';
+    import { ItemCollection } from '$lib/z3r/logic/Support/ItemCollection';
+    import { LocationCollection } from '$lib/z3r/logic/Support/LocationCollection';
     import Presets from '$lib/components/Presets.svelte'
     import Plant from '$lib/components/Plant.svelte';
+    import Open from '$lib/z3r/logic/World/Open';
+    import type { IItem } from '$lib/z3r/logic/Item';
+    import type { Z3rLocation } from '$lib/z3r/logic/Location';
+    import Item from '$lib/z3r/logic/Item';
 
     let selectedPreset: string = '';
     let world: World;
-    let selectedItems: any[] = [];
-    let selectedLocations: any[] = [];
+    let selectedItems: IItem[] = [];
+    let selectedLocations: Z3rLocation[] = [];
     let plantsModified = false;
     let selectedPresetData: any;
     let logicTestMessages: string[] = [];
@@ -55,8 +57,8 @@
     }
 
     function addPlant() {
-        selectedItems.push('');
-        selectedLocations.push('');
+        selectedItems.push();
+        selectedLocations.push();
         plantsModified = !plantsModified;
     }
 
@@ -106,8 +108,8 @@
             world.resetPlants();
             
             for(let i = 0; i < selectedItems.length; i++) {
-                let location = world.locations.get(selectedLocations[i].name)!;
-                let item = Item.get(selectedItems[i].value.slice(0,-2), world)!;
+                let location = world.locations.get(selectedLocations[i]!.name)!;
+                let item = selectedItems[i]!;
                 logicTestMessages.push(`Attempting to plant ${item.name} in ${location.name}.`);
                 if (!available.has(item.name)) {
                     logicTestMessages.push(`${item.name} not available to plant.`);
@@ -120,12 +122,9 @@
                     break;
                 }
                 available.removeItem(item);
-
-                console.log("available before plant:");
-                console.log(available);
+                
                 plantable = plantable && location.canFill(item, available, true, planted)!;
-                console.log("available after plant");
-                console.log(available);
+                
                 if (!plantable) {
                     logicTestMessages.push(`Could not plant ${item.name} in ${location.name}.`)
                     break;
@@ -139,11 +138,10 @@
                         logicTestMessages.push(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
                     }
                 }
-                // planted.addItem(item);
             }
 
             if (plantable) {
-                planted.to_array().forEach(location => {
+                planted.to_array().map(location => location as Z3rLocation).forEach(location => {
                     if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
                         available.addItem(location.item);
                     }

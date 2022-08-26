@@ -1,16 +1,23 @@
-import type { Region } from "./region";
-import { ItemCollection } from "./Support/itemcollection";
-import { LocationCollection } from "./Support/locationcollection";
-import type { Config } from "./config";
-import Item from "./item";
-import type Location from "./location";
 
-export default class World {
+import { ItemCollection } from "./Support/ItemCollection";
+import { LocationCollection } from "./Support/LocationCollection";
+import Item from "./Item";
+import type { Z3rLocation } from "./Location";
+import type  Config from "./Config";
+import type { IRegion } from "./Region";
+import type Region from "./Region";
+
+export interface IWorld {
+    config: Config;
+    id: number;
+}
+
+export default class World implements IWorld {
     regions: Map<string, Region> = new Map();
-    locations: LocationCollection = new LocationCollection([]);
+    locations: LocationCollection = new LocationCollection([], this.log);
     config: Config;
     win_condition?: (items: ItemCollection) => boolean;
-    id: number = 0;
+    id: number = 1;
     inverted = false;
     messages: string[]|null = null;
 
@@ -29,30 +36,30 @@ export default class World {
         });
     }
 
-    getRegion(regionName: string) :Region | undefined {
-        return this.regions.get(regionName);
+    getRegion(regionName: string) : Region | undefined {
+        return this.regions.get(regionName) as Region;
     }
 
-    canPlant(item: Item, location: Location, messages:string[]|null): boolean {
+    canPlant(item: Item, location: Z3rLocation): boolean {
         return location.region.canFill(item);
     }
 
 
     resetPlants() {
-        this.locations.locationsWithItem().forEach(location => {
+        this.locations.LocationsWithItem().forEach(location => {
             this.locations.get(location.name)!.removeItem();
         });
     }
 
 
     canPlacePrizes(items: ItemCollection): boolean {
-        let requiredPendants: Region[] = [];
-        let requiredCrystals: Region[] = [];
+        let requiredPendants: IRegion[] = [];
+        let requiredCrystals: IRegion[] = [];
 
 
-        let gtItems = new ItemCollection();
+        let gtItems = new ItemCollection([], this.log);
         this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
-            gtItems.addItem((location as Location).item!);
+            gtItems.addItem((location as Z3rLocation).item!);
         });
         gtItems.addItem(Item.get('Crystal1', this)!)
         gtItems.addItem(Item.get('Crystal2', this)!)
@@ -79,17 +86,16 @@ export default class World {
             return false;
         }
 
-        let pendItems = new ItemCollection();
+        const pendItems = new ItemCollection([], this.log);
         pendItems.addItem(Item.get('PendantOfCourage', this)!);
         pendItems.addItem(Item.get('PendantOfWisdom', this)!);
         pendItems.addItem(Item.get('PendantOfPower', this)!);
         if (this.locations.get('Master Sword Pedestal')?.item) {
             pendItems.addItem(this.locations.get('Master Sword Pedestal')?.item!);
         }
-        if (this.locations.get('Sahasrahla')?.item) {
-            pendItems.addItem(this.locations.get('Sahasrahla')?.item!);
-        }
-        const nonPendItems = items.diff(pendItems);
+
+        const nonPendItems = items.merge(gtItems).diff(pendItems);
+
         this.regions.forEach(region => {
             if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonPendItems)) {
                 requiredCrystals.push(region);
@@ -111,6 +117,8 @@ export default class World {
             });
         });
 
+        // TODO: Think of circumstances where Saha or Pyramid Fairy mandate a crystal/pendant
+
         return noDoubles;
     }
 
@@ -126,7 +134,6 @@ export default class World {
         let haveMedallion = false;
         let medallion = this.locations.get(location);
         if (!medallion || !medallion.item) {
-            console.log(items);
             haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake');
             this.log(`${location} not set. HaveMedallion based on any medallion: ${haveMedallion}`);
         }
@@ -138,6 +145,15 @@ export default class World {
     }
 
     log(message: string) {
-        if (this.messages) this.messages.push(message); else console.log(message);
+        if (this.messages) this.messages.push(message);
+    }
+
+    toJSON() {
+        return {
+            config: this.config,
+            id: this.id,
+            inverted: this.inverted,
+            regions: this.regions,
+        }
     }
 }

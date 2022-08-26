@@ -1,37 +1,30 @@
-import type Item from "../item";
-import type World from "../world";
-import { Collection } from "./collection";
+import type { IItem } from "../Item";
+import type World from "../World";
+import { Collection } from "./Collection";
 
 export class ItemCollection extends Collection {
-    //items: Map<string, Item> = new Map();
+    override items: Map<string, IItem> = new Map();
     item_counts : Map<string, number> = new Map();
-    checksForWorld?: World;
 
-    public constructor(items:Item[] = []) {
-        super();
+    public constructor(items:IItem[] = [], log: ((message:string) => void) = (_message:string) => {}) {
+        super(items, log);
         items.forEach(item => this.addItem(item));
     }
 
     clone(): ItemCollection {
-        let items_clone = new ItemCollection([]);
+        let items_clone = new ItemCollection([], this.log);
         this.items.forEach(item => {
             for (let i = 0; i < this.item_counts.get(item.name)!; i++) {
-                items_clone.addItem(item as Item)
+                items_clone.addItem(item as IItem)
             }
         });
 
-        if (this.checksForWorld) {
-            items_clone.setChecksForWorld(this.checksForWorld);
-        }
+        items_clone.world_id = this.world_id;
 
         return items_clone;
     }
 
-    public setChecksForWorld(world: World) {
-        this.checksForWorld = world;
-    }
-
-    public addItem(item: Item) {
+    public override addItem(item: IItem) {
         let count = this.item_counts.get(item.name) || 0;
 
         this.item_counts.set(item.name, count+1);
@@ -40,7 +33,7 @@ export class ItemCollection extends Collection {
         return this;
     }
 
-    public removeItem(item: Item) {
+    public override removeItem(item: IItem) {
         if (!this.item_counts.has(item.name)) {
             return this;
         }
@@ -57,19 +50,29 @@ export class ItemCollection extends Collection {
 
         return this;
     }
-
-    public diff(items: ItemCollection) {
-        let difference = this.clone();
+    merge(items: ItemCollection) {
+        const merged = this.clone();
         items.items.forEach((entry, key) => {
             for (let i = 0; i < items.item_counts.get(key)!; i++) {
-                difference.removeItem(entry as Item);
+                merged.addItem(entry as IItem);
+            }
+        })
+
+        return merged;
+    }
+
+    public diff(items: ItemCollection) {
+        const difference = this.clone();
+        items.items.forEach((entry, key) => {
+            for (let i = 0; i < items.item_counts.get(key)!; i++) {
+                difference.removeItem(entry as IItem);
             }
         });
 
         return difference;
     }
 
-    has(key: string, count: number = 1) {
+    public override has(key: string, count: number = 1) {
         this.log(`checking if we have at least ${count} of ${key} item.`);
         this.log(`Do we have a ${key}?: ${this.items.has(key)}, Do we have a count of ${key}: ${this.item_counts.has(key)}, the count of ${key}: ${this.item_counts.get(key)!}`);
 
@@ -78,11 +81,11 @@ export class ItemCollection extends Collection {
 
     override get(name: string) {
         return this.items.get(name);
-    }
+}
 
-    // public filter(predicate: (value: Item, index: number, array: Item[]) => value is Item){
-    //     return new ItemCollection([...this.items.values()].filter(predicate));
-    // }
+public override filter(f: (item: IItem) => boolean): IItem[] { 
+    return Array.from(this.items.values()).filter(f);
+}
 
     public values() {
         this.items.values();
@@ -99,7 +102,7 @@ export class ItemCollection extends Collection {
     //     return merged;
     // }
 
-    canKillMostThings(world:World, enemies: number = 5, messages: string[]|null = null): boolean {
+    public canKillMostThings(world:World, enemies: number = 5, messages: string[]|null = null): boolean {
         return this.hasSword()
             || this.has('CaneOfSomaria')
             || (this.canBombThings() && enemies < 6
@@ -111,22 +114,22 @@ export class ItemCollection extends Collection {
             || this.has('FireRod');
     }
 
-    canLightTorches(): boolean {
+    public canLightTorches(): boolean {
         this.log(`Checking CanLightTorches: Lamp: ${this.has('Lamp')}, FireRod: ${this.has('FireRod')}`);
         return this.has('Lamp') || this.has('FireRod');
     }
 
-    canLiftRocks(): boolean {
+    public canLiftRocks(): boolean {
         this.log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}, PowerGlove: ${this.has('PowerGlove')}`);
         return this.has('PowerGlove') || this.has('ProgressiveGlove') || this.has('TitansMitts');
     }
 
-    canLiftDarkRocks(): boolean {
+    public canLiftDarkRocks(): boolean {
         this.log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}`);
         return this.has('ProgressiveGlove', 2) || this.has('TitansMitts');
     }
 
-    canShootArrows(world: World, min_level = 1): boolean{
+    public canShootArrows(world: World, min_level = 1): boolean{
         switch(min_level) {
             case 2:
                 return this.has('BowAndSilverArrows')
@@ -143,7 +146,7 @@ export class ItemCollection extends Collection {
         }
     }
 
-    hasSword(min_level: number = 1): boolean {
+    public hasSword(min_level: number = 1): boolean {
         switch(min_level) {
             case 4:
                 return this.has('ProgressiveSword', 4)
@@ -174,24 +177,24 @@ export class ItemCollection extends Collection {
         }
     }
     
-    canMeltThings(world: World): boolean {
+    public canMeltThings(world: World): boolean {
         return this.has('FireRod') || (this.has('Bombos') && (this.hasSword() || world.config.weapons == 'swordless'));
     }
 
-    canBombThings(): boolean {
+    public canBombThings(): boolean {
         return true;
     }
 
-    hasABottle(at_least = 1): boolean {
+    public hasABottle(at_least = 1): boolean {
         return this.bottleCount() > at_least;
     }
 
-    canFly(world: World): boolean {
+    public canFly(world: World): boolean {
         this.log(`Checking CanFly: Have OcarinaActive: ${this.has('OcarinaActive')}, Have OcarinaInactive: ${this.has('OcarinaInactive')}`);
         return this.has('OcarinaActive') || (this.has('OcarinaInactive') && this.canActivateOcarina(world));
     }
 
-    canActivateOcarina(world: World): boolean {
+    public canActivateOcarina(world: World): boolean {
         if (world.inverted) {
             this.log(`Checking if activate ocarina inverted: MoonPearl: ${this.has('MoonPear')}, DefeatAgahnim: ${this.has('DefeatAgahnim')}, Hammer: ${this.has('Hammer')}`)
             return this.has('MoonPearl') && (this.has('DefeatAgahnim') || ((this.has('Hammer') && this.canLiftRocks()) || (this.canLiftDarkRocks())));
@@ -199,23 +202,30 @@ export class ItemCollection extends Collection {
         return true;
     }
 
-    canExtendMagic(world?: World, bars:number = 2): boolean {
+    public canExtendMagic(world?: World, bars:number = 2): boolean {
         let baseMagic = (this.has('QuarterMagic') ? 4 : (this.has('HalfMagic') ? 2 : 1));
         let bottleMagic = baseMagic * this.bottleCount();
         return baseMagic + bottleMagic >= bars;
     }
 
-    bottleCount(): number {
-        return this.filter(item => item.is_bottle).length;
+    public bottleCount(): number {
+        return  0//this.filter(item => item.is_bottle).length;
     }
 
-    canGetGoodBee(): boolean {
+    public canGetGoodBee(): boolean {
         return this.has('BugCatchingNet')
             && this.hasABottle()
             && this.has('PegasusBoots') || (this.hasSword() && this.has('Quake'));
     }
 
-    log(message:string) {
-        if (this.checksForWorld && this.checksForWorld.messages) this.checksForWorld.messages.push(message);
+    getCrystals() {
+        const crystals = new ItemCollection();
+        this.items.forEach(entry => {
+            if (entry.name.startsWith('Crystal')) {
+                crystals.addItem(entry as IItem);
+            }
+        })
+
+        return crystals;
     }
 }

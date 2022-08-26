@@ -1,30 +1,28 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
-import type { ItemCollection } from "../../Support/itemcollection";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
+import type { ItemCollection } from "../../Support/ItemCollection";
 
-export class PalaceOfDarkness extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD1', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD1', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD1', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD1', this.world)!
-    ];
-
+export class PalaceOfDarkness extends Dungeon {
     public constructor(world: World) {
         super("Dark Palace", world);
 
-        this.boss = Boss.get("Helmasaur King", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD1', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD1', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD1', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD1', this.world)!
+        ];
+
+        this.boss = Bosses.get("Helmasaur King", world);
 
         this.locations = new LocationCollection([
             new Chest("Palace of Darkness - Shooter Room", this),
@@ -46,12 +44,12 @@ export class PalaceOfDarkness extends Region {
             new Crystal("Palace of Darkness - Prize", this),
         ]);
 
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
         this.prize = this.locations.get("Palace of Darkness - Prize")!;
     }
 
-    public override initialize(): Region {
-        const bowLockedRequirements = (locations: LocationCollection, items: ItemCollection) => { return items.canShootArrows(this.world) };
+    public override initialize() {
+        const bowLockedRequirements = (_locations: LocationCollection, items: ItemCollection) => { return items.canShootArrows(this.world) };
         this.locations.get("Palace of Darkness - The Arena - Ledge")?.setRequirements(bowLockedRequirements);
         this.locations.get("Palace of Darkness - Map Chest")?.setRequirements(bowLockedRequirements);
 
@@ -62,11 +60,11 @@ export class PalaceOfDarkness extends Region {
             return (((items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6): items.has('KeyD1', 5) )));
         });
 
-        this.locations.get("Palace of Darkness - The Arena - Bridge")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - The Arena - Bridge")?.setRequirements((_locations, items) => {
             return items.has('KeyD1') || (items.canShootArrows(this.world) && items.has('Hammer'));
         })
 
-        const darkMazeRequirements = (locations:LocationCollection, items: ItemCollection) => {
+        const darkMazeRequirements = (_locations:LocationCollection, items: ItemCollection) => {
             return items.has('Lamp')
                 && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6): items.has('KeyD1', 5));
         };
@@ -75,7 +73,7 @@ export class PalaceOfDarkness extends Region {
             return darkMazeRequirements(locations, items) && items.has('BigKeyD1');
         });
 
-        this.locations.get("Palace of Darkness - Compass Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - Compass Chest")?.setRequirements((_locations, items) => {
             return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4): items.has('KeyD1', 3));
         });
 
@@ -87,11 +85,11 @@ export class PalaceOfDarkness extends Region {
             return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6) : items.has('KeyD1', 5));
         });
 
-        this.locations.get("Palace of Darkness - Stalfos Basement")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - Stalfos Basement")?.setRequirements((_locations, items) => {
             return items.has('KeyD1') || (items.canShootArrows(this.world) && items.has('Hammer'));
         });
 
-        const darkBasementRequirements = (locations: LocationCollection, items: ItemCollection) => items.canLightTorches() && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
+        const darkBasementRequirements = (_locations: LocationCollection, items: ItemCollection) => items.canLightTorches() && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
 
         this.locations.get("Palace of Darkness - Dark Basement - Left")?.setRequirements(darkBasementRequirements);
         this.locations.get("Palace of Darkness - Dark Basement - Right")?.setRequirements(darkBasementRequirements);

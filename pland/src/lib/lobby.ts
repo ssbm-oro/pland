@@ -1,11 +1,13 @@
 import type { APIUser } from "discord-api-types/v10";
 import fs from 'fs';
-import type { Config } from "./z3r/logic/config";
-import Item from "./z3r/logic/item";
-import type Z3rLocation from "./z3r/logic/location"
-import type World from "./z3r/logic/world";
-import Open from "./z3r/logic/World/open";
+import type { IItem } from "./z3r/logic/Item";
+import type { ILocation } from "./z3r/logic/Location"
+import type World from "./z3r/logic/World";
+import type { IWorld } from "./z3r/logic/World";
+import Open from "./z3r/logic/World/Open";
 const presets = import.meta.glob('./data/presets/*.json');
+import { browser } from '$app/env'
+import { checkPlants } from "./z3r/logic/Logic";
 
 export const Lobbies = new Map<string, Lobby>();
 
@@ -13,19 +15,13 @@ export async function reloadLobbies() {
     if (Lobbies.size == 0) {
         if (fs.existsSync('lobbies')) {
             fs.readdirSync('lobbies').forEach(async lobbyFile => {
-                const lobby: ILobby = JSON.parse(fs.readFileSync(`lobbies/${lobbyFile}`).toString());
+                let file = fs.readFileSync(`lobbies/${lobbyFile}`).toString();
 
+                const lobby: ILobby = JSON.parse(file).lobby;
 
-                // TODO: move this logic into a preset loader util
-                const preset = await presets[`./data/presets/${lobby.preset}`]!() as any;
-                const config = preset.settings 
+                const fullLobby = new Lobby(lobby.created_by, lobby.preset, lobby.max_entrants, lobby.max_plants, lobby.slug, lobby.entrants);
 
-                Lobbies.set(lobby.slug, new Lobby(lobby.created_by, lobby.preset, config, lobby.max_entrants, lobby.max_plants, lobby.slug));
-                Lobbies.get(lobby.slug)!.entrants = lobby.entrants;
-                lobby.entrants.forEach(entrant => {
-                    entrant.plantedItems = Array(lobby.max_plants);
-                    entrant.plantedLocations = Array(lobby.max_plants);
-                });
+                Lobbies.set(lobby.slug, fullLobby);
             })
         }
         else {
@@ -40,8 +36,8 @@ export interface Entrant {
     discord_id: string;
     avatar: string | null;
     ready: boolean;
-    plantedItems: Item[];
-    plantedLocations: Z3rLocation[];
+    plantedItems: IItem[];
+    plantedLocations: ILocation[];
 }
 
 export interface ILobby {
@@ -51,83 +47,158 @@ export interface ILobby {
     max_entrants: number;
     max_plants: number;
     preset: string;
+    ready_to_roll: boolean;
 }
 
-export default class Lobby implements ILobby {
-    slug: string
-    created_by: APIUser
-    entrants: Entrant[] = []
-    max_entrants: number = 2;
-    max_plants: number = 2;
-    preset: string;
-    world: World;
+function saveLobby(lobby: Lobby) {
+    if (!browser) {
+        fs.writeFileSync(`lobbies/${lobby.lobby!.slug}`, JSON.stringify(lobby));
+    }
+}
+
+export default class Lobby {
+    lobby: ILobby | null = null;
+    world: IWorld | null = null;
+    initialized = false;
 
 
-    public constructor(created_by: APIUser, preset:string, config: Config, max_entrants:number, max_plants:number, slug:string | null = null) {
-        this.created_by = created_by;
-        this.preset = preset;
-        this.max_entrants = max_entrants;
-        this.max_plants = max_plants;
-        while ((!slug) || (Lobbies.has(slug))) {
-            slug = Lobby.getRandomSlug();
+    public constructor(created_by: APIUser | null = null, preset:string | null = null, max_entrants:number | null = null, max_plants:number | null = null, slug:string | null = null, entrants: Entrant[]= []) {
+        const save = slug == null;
+        if (!slug) {
+            do  {
+                slug = Lobby.getRandomSlug();
+            } while (Lobbies.has(slug))
+        }
+        
+        // TODO: check and error if null or some other type safety >_<
+        this.lobby = {
+            created_by: created_by!,
+            preset: preset!,
+            max_entrants: max_entrants!,
+            max_plants: max_plants!,
+            slug:slug,
+            entrants: entrants,
+            ready_to_roll: false
         }
 
-        this.slug = slug;
+        if (save) saveLobby(this);
 
-        Lobbies.set(this.slug, this);
+        Lobbies.set(this.lobby.slug, this);
+    }
 
-        this.world = new Open(config, null);
+    public async initialize() {
+        if (!this.initialized) {
+            // TODO: move this logic into a preset loader util
+            const preset = await presets[`./data/presets/${this.lobby!.preset}`]!() as any;
+            const config = preset.settings
 
-        this.saveLobby();
+            this.initialized = true;
+            this.world = new Open(config, Array());
+        }
     }
 
     public join(user: APIUser) {
-        this.entrants.push({
+        this.lobby!.entrants.push({
             username: user.username,
             discriminator: user.discriminator,
             discord_id: user.id,
             avatar: user.avatar,
             ready: false,
-            plantedItems: Array(this.max_plants),
-            plantedLocations: Array(this.max_plants)
+            plantedItems: Array(this.lobby!.max_plants),
+            plantedLocations: Array(this.lobby!.max_plants)
         });
 
-        this.saveLobby();
+        saveLobby(this);
     }
 
     public leave(user: APIUser) {
-        this.entrants.splice(this.entrants.findIndex(entrant => entrant.discord_id == user.id));
+        this.lobby!.entrants.splice(this.lobby!.entrants.findIndex(entrant => entrant.discord_id == user.id));
 
-        this.saveLobby();
+        saveLobby(this);
     }
 
-    saveLobby() {
-        fs.writeFileSync(`lobbies/${this.slug}`, JSON.stringify(this));
+    public canPlant(plantedItems: IItem[], plantedLocations: ILocation[]) {
+        return checkPlants(this.world as World, plantedItems, plantedLocations);
     }
 
-    public plant(user: APIUser, plantedItems: string[], plantedLocations: string[]) {
-        const entrant = this.entrants.find(entrant => entrant.discord_id == user.id);
+    public async plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
+        const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
+        let plantable: boolean = false, messages: string[] = [];
         if (entrant) {
-            for(let i = 0; i < this.max_plants; i++) {
-                entrant.plantedItems[i] = new Item(plantedItems[i]!, this.world)
-                entrant.plantedLocations[i]! = this.world.locations.get(plantedLocations[i]!)!;
+            const canPlant = this.canPlant(plantedItems, plantedLocations);
+            plantable = canPlant.plantable;
+            messages = canPlant.messages;
+
+            if (plantable) {
+                for(let i = 0; i < this.lobby!.max_plants; i++) {
+                    const realWorld = this.world as World;
+                    entrant.plantedItems[i] = plantedItems[i]!;
+
+                    const z3rLocation = realWorld.locations.get(plantedLocations[i]!.name)!
+
+                    entrant.plantedLocations[i]! = {
+                        name: z3rLocation.name,
+                        item: z3rLocation.item,
+                        isCrystalPendant: z3rLocation.isCrystalPendant,
+                        messages: z3rLocation.messages
+                    };
+                }
+                entrant.ready = true;
+
+                plantable = await this.checkAllReady();
             }
-            entrant.ready = true;
         }
 
-        this.saveLobby();
+        saveLobby(this);
+
+        return {plantable, messages};
+    }
+
+    async checkAllReady() {
+        if (this.lobby?.entrants.every(entrant => entrant.ready)) {
+            const allItemsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedItems);
+            console.log(allItemsPlanted);
+            const allLocationsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedLocations);
+            console.log(allLocationsPlanted);
+            const {plantable, messages} = checkPlants(this.world as World, allItemsPlanted, allLocationsPlanted);
+            if (plantable) {
+                this.lobby.ready_to_roll = true;
+                console.log('could plant');
+            }
+            else {
+                console.log('could not plant');
+                this.lobby.entrants.forEach(entrant => {
+                    this.unplantEntrant(entrant);
+                })
+            }
+            saveLobby(this);
+            return (plantable)
+        }
+        return false;
     }
 
     public unplant(user: APIUser) {
-        const entrant = this.entrants.find(entrant => entrant.discord_id == user.id);
+        const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
         if (entrant) {
             
-            entrant.plantedItems = Array(this.max_plants);
-            entrant.plantedLocations = Array(this.max_plants);
-            entrant.ready = false;
+            this.unplantEntrant(entrant);
         }
 
-        this.saveLobby();
+        saveLobby(this);
+    }
+
+    private unplantEntrant(entrant: Entrant) {
+        entrant.plantedItems = Array(this.lobby!.max_plants);
+        entrant.plantedLocations = Array(this.lobby!.max_plants);
+        entrant.ready = false;
+        if (this.lobby) this.lobby.ready_to_roll = false;
+    }
+
+    public toJSON() {
+        return {
+            lobby: this.lobby,
+            world: this.world
+        }
     }
     
     static getRandomSlug(): string {

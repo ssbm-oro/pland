@@ -1,30 +1,28 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
-import type { ItemCollection } from "../../Support/itemcollection";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
+import type { ItemCollection } from "../../Support/ItemCollection";
 
-export class TurtleRock extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD7', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD7', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD7', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD7', this.world)!
-    ];
-
+export class TurtleRock extends Dungeon {
     public constructor(world: World) {
         super("Turtle Rock", world,);
 
-        this.boss = Boss.get("Trinexx", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD7', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD7', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD7', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD7', this.world)!
+        ];
+
+        this.boss = Bosses.get("Trinexx", world);
 
         this.locations = new LocationCollection([
             new Chest("Turtle Rock - Chain Chomps", this),
@@ -42,12 +40,12 @@ export class TurtleRock extends Region {
 
             new Crystal("Turtle Rock - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Turtle Rock - Prize")!;
     }
 
-    public override initialize(): Region {
+    public override initialize() {
         const upper = (locations: LocationCollection, items: ItemCollection) => {
             let haveMedallion = false;
             let medallion = locations.get('Turtle Rock Medallion')
@@ -87,7 +85,7 @@ export class TurtleRock extends Region {
                 && upper(locations, items) && items.has("KeyD7", 2);
         });
 
-        this.locations.get("Turtle Rock - Big Key Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Turtle Rock - Big Key Chest")?.setRequirements((_locations, items) => {
             if (!this.locations.get("Turtle Rock - Big Key Chest")?.hasItem(Item.get("BigKeyD7", this.world))) {
                 return this.locations.get("Turtle Rock - Big Key Chest")?.hasItem(Item.get("KeyD7", this.world)) ? items.has("KeyD7", 3) : items.has("KeyD7", 4);
             }

@@ -1,9 +1,8 @@
-import { Chest } from "$lib/z3r/logic/Location/chest";
-import { Standing } from "$lib/z3r/logic/Location/standing";
-import { Region } from "$lib/z3r/logic/region";
-import type { ItemCollection } from "$lib/z3r/logic/Support/itemcollection";
-import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type World from "$lib/z3r/logic/world";
+import { Chest, Standing } from "$lib/z3r/logic/Location";
+import Region from "$lib/z3r/logic/Region";
+import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
+import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
+import type World from "$lib/z3r/logic/World";
 
 export class East extends Region {
     public constructor(world: World) {
@@ -21,10 +20,10 @@ export class East extends Region {
             new Chest("Paradox Cave Upper - Right", this),
             new Standing("Floating Island", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
     }
 
-    override initialize(): Region {
+    override initialize() {
         this.locations.get("Mimic Cave")?.setRequirements((locations, items) => {
             return items.has("Hammer") && items.has("MagicMirror")
                 && (items.has("KeyD7", 2) && this.world.getRegion("Turtle Rock")!.canEnter(locations, items));

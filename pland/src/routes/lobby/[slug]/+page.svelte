@@ -1,23 +1,25 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import type World from "$lib/z3r/logic/world";
+    import type World from "$lib/z3r/logic/World";
     import { onMount } from "svelte";
-    import Open from "$lib/z3r/logic/World/open";
-    import Inverted from "$lib/z3r/logic/World/inverted";
-    import Retro from "$lib/z3r/logic/World/retro";
-    import Standard from "$lib/z3r/logic/World/standard";
+    import Open from "$lib/z3r/logic/World/Open";
+    import Inverted from "$lib/z3r/logic/World/Inverted";
+    import Retro from "$lib/z3r/logic/World/Retro";
+    import Standard from "$lib/z3r/logic/World/Standard";
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
     import { invalidate } from "$app/navigation";
-    import type Location from '$lib/z3r/logic/location';
-    import type Item from "$lib/z3r/logic/item";
+    import type { ILocation } from '$lib/z3r/logic/Location';
+    import type { IItem } from "$lib/z3r/logic/Item";
+    import { checkPlants } from "$lib/z3r/logic/Logic";
+
 
     export let data: PageData;
     $: lobby = data.lobby;
     $: user = data.user;
 
-    let selectedItems: Item[];
-    let selectedLocations: Location[];
+    let selectedItems: IItem[];
+    let selectedLocations: ILocation[];
     let world: World;
     let logicTestMessages: string[] = [];
 
@@ -47,8 +49,8 @@
                     break;
             }
             if (userAsEntrant) {
-                selectedItems = userAsEntrant.plantedItems.map(item => { return JSON.parse(item);});
-                selectedLocations = userAsEntrant.plantedLocations.map(location => { return JSON.parse(location); });
+                selectedItems = userAsEntrant.plantedItems; //.map(item => { return JSON.parse(item);});
+                selectedLocations = userAsEntrant.plantedLocations; //.map(location => { return JSON.parse(location); });
             }
         }
         catch (err) {
@@ -73,15 +75,22 @@
 
     async function submitPlants() {
         if (userAsEntrant) {
-            let params = new URLSearchParams();
-            params.append('plantedItems', JSON.stringify(selectedItems));
-            params.append('plantedLocations', JSON.stringify(selectedLocations));
-            params.append('ready', 'true');
-            let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
-            let data = await res.json();
-            selectedItems = data.plantedItems;
-            selectedLocations = data.plantedLocations;
-            userAsEntrant.ready = data.ready;
+            console.log(selectedItems);
+            let {plantable} = checkPlants(world, selectedItems, selectedLocations)
+            if (plantable) {
+                let params = new URLSearchParams();
+                params.append('plantedItems', JSON.stringify(selectedItems));
+                params.append('plantedLocations', JSON.stringify(selectedLocations));
+                params.append('ready', 'true');
+                let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
+                let data = await res.json();
+                selectedItems = data.plantedItems;
+                selectedLocations = data.plantedLocations;
+                userAsEntrant.ready = data.ready;
+            }
+            else {
+                alert('A conflict was detected! Check your plants!')
+            }
         }
     }
 
@@ -91,11 +100,18 @@
             await invalidate($page.url.toString());
         }
     }
+
+    async function rollSeed() {
+        alert('This is next!');
+    }
 </script>
 
 <main>
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
+    {#if lobby.ready_to_roll}
+        <button on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</button>
+    {/if}
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if userInLobby}
         <button on:click='{leaveLobby}'>Leave</button>

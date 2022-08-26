@@ -1,7 +1,10 @@
 <script lang="ts">
+import { get_loading_message } from "$lib/utils/loadingMessages";
+
 import { onMount } from "svelte"
 
 let presets: string[] = [];
+const loadingMessage = get_loading_message();
 
 export let selectedPreset :string;
 
@@ -13,11 +16,15 @@ onMount(async () => {
 </script>
 
 <main>
-	<select bind:value="{selectedPreset}" on:change>
-        {#each presets as preset}
-            <option value="{preset}">{preset}</option>
-        {/each}
-    </select>
+    {#if presets.length > 0}
+        <select bind:value="{selectedPreset}" on:change>
+            {#each presets as preset}
+                <option value="{preset}">{preset}</option>
+            {/each}
+        </select>
+    {:else}
+        {loadingMessage}
+    {/if}
 </main>
 
 <style>

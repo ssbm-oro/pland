@@ -1,32 +1,27 @@
-import { Boss } from "../../boss";
-import Item from "../../item";
-import { Pendant } from "../../Location/Prize/pendant";
-import { BigChest } from "../../Location/bigchest";
-import { Chest } from "../../Location/chest";
-import { Dash } from "../../Location/dash";
-import { Drop } from "../../Location/drop";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import type { Prize } from "../../Location/prize";
-import { BigKey, Compass, Key, Map } from "../../item";
+import { Bosses } from "../../Boss";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { BigChest, Chest, Dash, Drop, Pendant, type Prize } from "../../Location";
 
-export class DesertPalace extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyP2', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassP2', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyP2', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapP2', this.world)!
-    ]
-
+export class DesertPalace extends Dungeon {
     public constructor(world: World) {
         super("Desert Palace", world);
 
-        this.boss = Boss.get("Lanmolas", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyP2', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassP2', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyP2', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapP2', this.world)!
+        ]
+
+        this.boss = Bosses.get("Lanmolas", world);
 
         this.locations = new LocationCollection([
             new BigChest("Desert Palace - Big Chest", this),
@@ -37,24 +32,23 @@ export class DesertPalace extends Region {
             new Drop("Desert Palace - Boss", this),
             new Pendant("Desert Palace - Prize", this)
         ])
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
         this.setPrizeLocation(this.locations.get("Desert Palace - Prize") as Prize);
-    }
 
-    public override initialize(): Region {
-        this.locations.get("Desert Palace - Big Chest")!.setRequirements((locations, items) => {
+
+        this.locations.get("Desert Palace - Big Chest")!.setRequirements((_locations, items) => {
             return items.has("BigKeyP2");
         });
 
-        this.locations.get("Desert Palace - Big Key Chest")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Big Key Chest")!.setRequirements((_locations, items) => {
             return items.has("KeyP2") && items.canKillMostThings(this.world);
         });
 
-        this.locations.get("Desert Palace - Compass Chest")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Compass Chest")!.setRequirements((_locations, items) => {
             return items.has("KeyP2");
         })
 
-        this.locations.get("Desert Palace - Torch")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Torch")!.setRequirements((_locations, items) => {
             return items.has('Pegasus Boots');
         })
 
@@ -67,16 +61,14 @@ export class DesertPalace extends Region {
                 && ((items.canLiftRocks() || items.has('Magic Mirror') && this.world.getRegion('Mire')!.canEnter(locations, items)))
                 && items.canLightTorches()
                 && items.has('BigKeyP2') && items.has('KeyP2')
-                && this.boss!.canBeat(items, locations))
+                && this.boss?.canBeat !== undefined && this.boss!.canBeat(items, locations))
         });
 
         this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
-                && (items.has('Book of Mudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
+                && (items.has('BookOfMudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
         };
 
         this.prize!.setRequirements(this.canComplete);
-
-        return this;
     }
 }

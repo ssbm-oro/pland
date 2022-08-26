@@ -1,57 +1,46 @@
-import type Item from "../item";
-import type Location from "../location";
-import type { Region } from "../region";
-import type World from "../world";
-import { Collection, type Entry } from "./collection";
-import { ItemCollection } from "./itemcollection";
+import type { IItem } from "../Item";
+import type { ILocation, Z3rLocation as Z3rLocation } from "../Location";
+import type { IRegion } from "../Region";
+import type World from "../World";
+import { Collection, type Entry } from "./Collection";
+import { ItemCollection } from "./ItemCollection";
 
 export class LocationCollection extends Collection {
-    world_id = 0;
+    protected override items: Map<string, Z3rLocation>;
 
-
-    public constructor(locations: Location[] = []) {
-        super(locations);
+    public constructor(locations: Z3rLocation[] = [], log: ((message:string) => void) = (_message:string) => {}) {
+        super(locations, log);
+        this.items = new Map<string, Z3rLocation>();
+        locations.forEach(item => {
+            this.items.set(item.name, item);
+        });
     }
 
-    public setChecksForWorld(world_id: number) {
-        this.world_id = world_id;
+    public override get(key:string) {
+        return super.get(key) as Z3rLocation;
     }
 
-    public addItem(location: Location) {
-        this.items.set(location.name, location);
-        return this;
+    public override filter(f: (location: Z3rLocation) => boolean): Z3rLocation[] { 
+        return Array.from(this.items.values()).filter(f);
     }
 
-    public removeItem(location: Location) {
-        this.items.delete(location.name);
-        return this;
-    }
-
-    has(key: string): boolean {
-        return this.items.has(key);
-    }
-
-    public override get(key: string): Location | undefined {
-        return super.get(key) as Location | undefined;
-    }
-
-    // public filter(predicate: (value: Location) => boolean){
-    //     let filtered = new LocationCollection([...this.locations.values()].filter(predicate));
+    // public filter(predicate: (value: Z3rLocation) => boolean){
+    //     let filtered = new  LocationCollection([...this.locations.values()].filter(predicate));
     //     filtered.world_id = this.world_id;
     //     return filtered;
     // }
 
     public getEmptyLocations() {
-        return this.filter(location => { return (!location.hasItem()); });
+        return this.filter(location => { return (!(location as Z3rLocation).hasItem()); });
     }
 
     public getNonEmptyLocations() { 
-        return this.filter(location => { return (location.hasItem()); }) 
+        return this.filter(location => { return ((location as Z3rLocation).hasItem()); }) 
     }
 
-    public itemInLocations(item: Item, locationKeys: string[], count: number = 1) {
-        locationKeys.forEach(locationKey => {
-            if ((this.items.get(locationKey) as Location).hasItem(item)) {
+    public itemInLocations(item: IItem, LocationKeys: string[], count: number = 1) {
+        LocationKeys.forEach(locationKey => {
+            if ((this.items.get(locationKey) as Z3rLocation).hasItem(item)) {
                 count--;
             }
 
@@ -60,25 +49,25 @@ export class LocationCollection extends Collection {
     }
 
     public getItems(world: World) {
-        let items:Item[] = [];
+        const item_array: IItem[] = Array();
 
         this.items.forEach(entry => {
-            let location = entry as Location;
-            const item = location.item;
-            if ((item) && (world) && (item.world == world)) {
-                items.push(item);
+            let Z3rLocation = entry as Z3rLocation;
+            const item = Z3rLocation.item;
+            if ((item) && (world) && (item.world_id == world.id)) {
+                item_array.push(item as IItem);
             }
         });
-        let ret = new ItemCollection(items);
+        let ret = new ItemCollection(item_array, world.log);
         ret.setChecksForWorld(world);
         return ret;
     }
 
     public getRegions() {
-        let regions: Region[] = [];
+        let regions: IRegion[] = [];
 
         this.items.forEach(entry => {
-            let location = entry as Location;
+            let location = entry as Z3rLocation;
             if (!regions.includes(location.region)) {
                 regions.push(location.region);
             }
@@ -87,26 +76,34 @@ export class LocationCollection extends Collection {
         return regions;
     }
 
-    public locationsWithItem(item?: Item) {
-        return this.filter(location => { return location.hasItem(item); })
+    public LocationsWithItem(item?: IItem) {
+        return this.filter(location => { return (location as Z3rLocation).hasItem(item); })
     }
 
     public canAccess(items: ItemCollection) { 
-        return this.filter(location => location.canAccess(items));
+        return this.filter(location => (location as Z3rLocation).canAccess(items));
     }
 
-    public merge(locations: LocationCollection): LocationCollection {
+    public merge(locations: LocationCollection):  LocationCollection {
         if (locations === this) {
             return this;
         }
 
-        let items1 = this.items as Map<string, Location>;
-        let items2 = locations.items as Map<string, Location>;
+        let items1 = this.items as Map<string, Z3rLocation>;
+        let items2 = locations.items as Map<string, Z3rLocation>;
 
-        return new LocationCollection([...items1.values(), ...items2.values()]);
+        return new  LocationCollection([...items1.values(), ...items2.values()], this.log);
     }
 
     public to_array() {
-        return Array.from<Location>(this.items.values() as IterableIterator<Location>);
+        return Array.from<ILocation>(this.items.values() as IterableIterator<ILocation>);
+    }
+
+    public toJSON() {
+        let locations = Array();
+        this.items.forEach(location => {
+            locations.push(location.toJSON());
+        })
+        return locations;
     }
 }

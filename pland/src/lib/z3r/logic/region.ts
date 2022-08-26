@@ -1,12 +1,23 @@
-import type Item from "./item";
-import type { BigKey, Key, Map, Compass } from "./item";
-import type { Boss } from "./boss";
-import type World from "./world";
-import type { Prize } from "./Location/prize";
-import type { ItemCollection } from "./Support/itemcollection";
-import { LocationCollection } from "./Support/locationcollection";
 
-export class Region {
+import type { Boss } from "./Boss";
+import type World from "./World";
+import type { Prize } from "./Location";
+import type { ItemCollection } from "./Support/ItemCollection";
+import { LocationCollection } from "./Support/LocationCollection";
+import type { IDungeonItem, IItem } from "./Item";
+
+export interface IRegion {
+    name: string;
+    locations: LocationCollection;
+    boss?: Boss;
+
+    prize?: Prize;
+    can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
+    can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
+    region_items: IItem[];
+}
+
+export default class Region implements IRegion {
     name: string;
     locations: LocationCollection;
     boss?: Boss;
@@ -14,75 +25,45 @@ export class Region {
     prize?: Prize;
     can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
     can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
-    region_items: Item[] = [];
+    region_items: IItem[];
 
-
-    constructor(name: string, world: World) {
-        this.name = name;
-        this.locations = new LocationCollection([]);
+    public constructor(name: string, world: World) {
         this.world = world;
+        this.name = name;
+        this.locations = new LocationCollection();
+        this.region_items = [];
     }
-    
-    initialize() : Region {
+
+    initialize() {
         return this;
     }
 
-    public canPlaceBoss(boss: Boss, level: string = 'top') {
-        if (this.name != "Ice Palace" && this.world.config.weapons == 'swordless' && boss.name == "Kholdstare") {
-            return false;
-        }
 
-        return !["Agahnim", "Agahnim2", "Ganon"].includes(boss.name);
-    }
-
-    public setPrizeLocation(prize: Prize) {
-        this.prize = prize;
-        this.prize.region = this;
+    canComplete(locations: LocationCollection, items: ItemCollection) {
         if (this.can_complete) {
-            this.prize.requirement_callback = this.can_complete;
-        }
-
-        return this;
-    }
-
-    public getPrize() {
-        if (!this.prize || !this.prize.hasItem()) {
-            return null;
-        }
-
-        return this.prize.item;
-    }
-
-    public hasPrize(item: Item | null = null) {
-        if (!this.prize || !this.prize.hasItem()) {
-            return false;
-        }
-
-        return this.prize.hasItem(item);
-    }
-
-    public canComplete(locations: LocationCollection, items: ItemCollection) {
-        if (this.can_complete) {
+            this.world.log(`Checking if we can complete ${this.name}`);
             return this.can_complete(locations, items);
         }
+        this.world.log(`can_complete not defined. Assuming we can complete ${this.name}.`)
         return true;
     }
 
-    public canEnter(locations: LocationCollection, items: ItemCollection) {
+    canEnter(locations: LocationCollection, items: ItemCollection) {
         if (this.can_enter) {
             this.world.log(`Checking if we can enter ${this.name}`);
             return this.can_enter(locations, items);
         }
-        this.world.log(`can_enter not defined. Assuming we can enter this region.`)
+        this.world.log(`can_enter not defined. Assuming we can enter ${this.name}.`)
         return true;
     }
 
-    public canFill(item: Item) {
+    canFill(item: IItem) {
         this.world.log(`Checking if ${item.name} can be go in Region ${this.name}.`);
-        let from_world = item.world;
+        let from_world = item.world_id;
 
         // TODO: Add wild dungeon items
-        if (item.is_dungeon_item)
+        const dungeonItem = item as IDungeonItem
+        if (dungeonItem.dungeon)
         {
             this.world.log(`Item is a dungeon item.`);
             return this.isRegionItem(item);
@@ -92,15 +73,60 @@ export class Region {
         return true;
     }
 
-    public isRegionItem(item: Item) {
+    isRegionItem(item: IItem) {
         return this.region_items.includes(item);
     }
 
-    public getEmptyLocations() {
+    getEmptyLocations() {
         return this.locations.filter(location => !location.hasItem());
     }
 
-    public locationsWithItem() {
+    locationsWithItem() {
         return this.locations.filter(location => location.hasItem());
+    }
+}
+
+export class Dungeon extends Region {
+    canPlaceBoss(region: Region, boss: Boss, level: string = 'top') {
+        if (region.name != "Ice Palace" && region.world.config.weapons == 'swordless' && boss.name == "Kholdstare") {
+            return false;
+        }
+
+        return !["Agahnim", "Agahnim2", "Ganon"].includes(boss.name);
+    }
+
+    setPrizeLocation(prize: Prize) {
+        this.prize = prize;
+        this.prize.region = this;
+        if (this.can_complete) {
+            this.prize.requirement_callback = this.can_complete;
+        }
+
+        return this;
+    }
+
+    getPrize() {
+        if (!this.prize || !this.prize.hasItem()) {
+            return null;
+        }
+
+        return this.prize.item;
+    }
+
+    hasPrize(item: IItem | null = null) {
+        if (!this.prize || !this.prize.hasItem()) {
+            return false;
+        }
+
+        return this.prize.hasItem(item);
+    }
+
+    toJSON() {
+        return {
+            name: this.name,
+            boss: this.boss,
+            locations: this.locations,
+            region_items: this.region_items,
+        }
     }
 }

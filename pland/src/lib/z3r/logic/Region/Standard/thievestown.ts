@@ -1,29 +1,27 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
 
-export class ThievesTown extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD4', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD4', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD4', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD4', this.world)!
-    ];
-
+export class ThievesTown extends Dungeon {
     public constructor(world: World) {
         super("Thieves Town", world);
 
-        this.boss = Boss.get("Blind", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD4', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD4', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD4', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD4', this.world)!
+        ];
+
+        this.boss = Bosses.get("Blind", world);
 
         this.locations = new LocationCollection([
             new Chest("Thieves' Town - Attic", this),
@@ -37,13 +35,13 @@ export class ThievesTown extends Region {
 
             new Crystal("Thieves' Town - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Thieves' Town - Prize")!;
     }
 
-    public override initialize(): Region {
-        this.locations.get("Thieves' Town - Attic")?.setRequirements((locations, items) => {
+    public override initialize() {
+        this.locations.get("Thieves' Town - Attic")?.setRequirements((_locations, items) => {
             return items.has('KeyD4') && items.has('BigKeyD4');
         });
 
@@ -54,7 +52,7 @@ export class ThievesTown extends Region {
             return items.has("Hammer") && items.has('KeyD4') && items.has('BigKeyD4');
         });
 
-        this.locations.get("Thieves' Town - Blind's Cell")?.setRequirements((locations, items) => {
+        this.locations.get("Thieves' Town - Blind's Cell")?.setRequirements((_locations, items) => {
             return items.has('BigKeyD4');
         });
 

@@ -1,30 +1,27 @@
-import Item from "../../item";
-import { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Chest, BigChest, Drop, Crystal } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
 
-export class SwampPalace extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD2', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD2', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD2', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD2', this.world)!
-    ];
-
+export class SwampPalace extends Dungeon {
     public constructor(world: World) {
         super("Swamp Palace", world,);
 
-        this.boss = Boss.get("Arrghus", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD2', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD2', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD2', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD2', this.world)!
+        ];
+
+        this.boss = Bosses.get("Arrghus", world);
 
         this.locations = new LocationCollection([
             new Chest("Swamp Palace - Entrance", this),
@@ -40,63 +37,63 @@ export class SwampPalace extends Region {
 
             new Crystal("Swamp Palace - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Swamp Palace - Prize")!;
     }
 
-    public override initialize(): Region {
-        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((locations, items) => {
+    public override initialize() {
+        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer")
                 && items.has("BigKeyD2");
         });
 
-        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Map Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Map Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.canBombThings();
         });
 
-        this.locations.get("Swamp Palace - West Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - West Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((_locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.can_complete = (locations, items) => {
+        this.can_complete = (_locations, items) => {
             return this.locations.get("Swamp Palace - Boss")?.canAccess(items)!;
         }
 

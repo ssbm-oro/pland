@@ -1,27 +1,35 @@
-import { ItemCollection } from "./Support/itemcollection";
-import { Entry } from "./Support/collection";
-import type World from "./world";
+import type { Dungeon } from "./Region";
+import type { Entry } from "./Support/Collection";
+import { ItemCollection } from "./Support/ItemCollection";
+import type World from "./World";
 
-export default class Item extends Entry {
-    nice_name: string;
-    world: World;
-    is_dungeon_item = false;
-    is_bottle = false;
+export interface IItem extends Entry {
+    world_id: number;
+    value: string;
+    //public static world: World;
+}
 
-    public static items: ItemCollection;
-    public static world: World;
+export default class Item implements IItem {
+    name: string;
+    world_id: number;
+    value: string;
 
-    constructor(name: string, world: World) {
-        super(name);
-        this.nice_name = "item." + name;
-        this.world = world;
+    public constructor(name: string, world: World) {
+        this.name = name;
+        this.world_id = world.id;
+        this.value = name.replace('item.', '');
     }
 
-    public static all(world: World) {
+    public getNiceName() {
+        return this.name + ':' + this.world_id;
+    }
+
+    private static items: ItemCollection;
+
+    public static allItems(world: World) {
         if (Item.items) return Item.items;
 
-        Item.world = world;
-        this.items = new ItemCollection([
+        const allItems = new ItemCollection([
             new Item('Nothing', world),
             
             new Sword('L1Sword', world),
@@ -200,103 +208,113 @@ export default class Item extends Entry {
             new Event('DefeatAgahnim2', world),
             new Event('DefeatGanon', world)
         ]);
-        this.items.setChecksForWorld(world);
 
-        return Item.items;
+        allItems.setChecksForWorld(world);
+
+        return allItems;
     }
 
     public static get(name: string, world: World) {
-        return Item.all(world).get(name) as Item | undefined;
+        return Item.allItems(world)!.get(name);
+    }
+
+    public static addItem(item: Item) {
+
     }
 }
 
+
 export class Armor extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 export class Arrow extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 export class Sword extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 
 export class Medallion extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
-export class Key extends Item {
-    override is_dungeon_item = true;
+export class IDungeonItem extends Item {
+    public dungeon?: Dungeon;
+}
+
+export class Key extends IDungeonItem {
 }
 
 
-export class Compass extends Item {
-    override is_dungeon_item = true;
+export class Compass extends IDungeonItem {
 }
 
-export class Map extends Item {
-    override is_dungeon_item = true;
+export class Map extends IDungeonItem {
 }
 
 
 export class Bottle extends Item {
-    override is_bottle = true;
+
 }
 
 
-export class BigKey extends Item {
-    override is_dungeon_item = true;
+export class BigKey extends IDungeonItem {
+}
+
+export class IPrize extends Item {
+    // purposefully empty interface
 }
 
 
-export class Pendant extends Item {
-    // purposefully empty class
+export class Pendant extends IPrize {
+    // purposefully empty interface
 }
 
-export class Crystal extends Item {
-    // purposefully empty class
+export class Crystal extends IPrize {
+    // purposefully empty interface
 }
 
 
 export class Bow extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 
 export class Upgrade extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 
 export class HealthUpgrade extends Upgrade {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 
 export class BombUpgrade extends Upgrade {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 
 export class MagicUpgrade extends Upgrade {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 
 export class ArrowUpgrade extends Upgrade {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 export class Programmable extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 export class Event extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }
 
 export class Shield extends Item {
-    // purposefully empty class
+    // purposefully empty interface
 }

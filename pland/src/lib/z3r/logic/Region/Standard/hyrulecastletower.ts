@@ -1,13 +1,13 @@
-import Item, { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Event } from "../../Location/Prize/event"
-import type { ItemCollection } from "../../Support/itemcollection";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import { Chest, Event } from "../../Location";
+import { Dungeon } from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import type { ItemCollection } from "../../Support/ItemCollection";
 
-export class HyruleCastleTower extends Region {
-    override region_items: Item[] = [
+export class HyruleCastleTower extends Dungeon {
+    override region_items = [
         Item.get('BigKey', this.world)!,
         Item.get('BigKeyA1', this.world)!,
         Item.get('Compass', this.world)!,
@@ -27,13 +27,13 @@ export class HyruleCastleTower extends Region {
             new Event("Agahnim", this)
         ]);
 
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
         this.prize = this.locations.get("Agahnim")!;
         this.prize.setItem(Item.get('DefeatAgahnim', world)!);
     }
 
-    public override initialize(): Region {
-        this.locations.get("Castle Tower - Dark Maze")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
+    public override initialize() {
+        this.locations.get("Castle Tower - Dark Maze")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
             return items.has('Lamp') && items.has('KeyA1');
         });
 
@@ -43,7 +43,7 @@ export class HyruleCastleTower extends Region {
 
         this.prize?.setRequirements(this.canComplete);
 
-        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world, 8)
                 && items.has('RescueZelda')
                 && (items.has('Cape') || (items.hasSword(2)));

@@ -1,30 +1,27 @@
-import Item from "../../item";
-import { BigKey, Compass, Key, Map } from "../../item";
-import { Chest } from "../../Location/chest";
-import { Region } from "../../region";
-import { LocationCollection } from "../../Support/locationcollection";
-import type World from "../../world";
-import { Boss } from "../../boss";
-import { BigChest } from "../../Location/bigchest";
-import { Drop } from "../../Location/drop";
-import { Crystal } from "../../Location/Prize/crystal";
+import Item from "../../Item";
+import type IItem from "../../Item";
+import Region from "../../Region";
+import { LocationCollection } from "../../Support/LocationCollection";
+import type World from "../../World";
+import { Bosses } from "../../Boss";
+import { BigChest, Chest, Crystal, Drop } from "../../Location";
 
 export class SkullWoods extends Region {
-    override region_items: Item[] = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyD3', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassD3', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyD3', this.world)!,
-        Item.get('Map', this.world)!,
-        Item.get('MapD3', this.world)!
-    ];
-
     public constructor(world: World) {
         super("Skull Woods", world);
 
-        this.boss = Boss.get("Mothula", world);
+        this.region_items = [
+            Item.get('BigKey', this.world)!,
+            Item.get('BigKeyD3', this.world)!,
+            Item.get('Compass', this.world)!,
+            Item.get('CompassD3', this.world)!,
+            Item.get('Key', this.world)!,
+            Item.get('KeyD3', this.world)!,
+            Item.get('Map', this.world)!,
+            Item.get('MapD3', this.world)!
+        ];
+
+        this.boss = Bosses.get("Mothula", world);
 
         this.locations = new LocationCollection([
             new BigChest("Skull Woods - Big Chest", this),
@@ -38,17 +35,17 @@ export class SkullWoods extends Region {
 
             new Crystal("Skull Woods - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
 
         this.prize = this.locations.get("Skull Woods - Prize")!;
     }
 
-    public override initialize(): Region {
-        this.locations.get("Skull Woods - Big Chest")?.setRequirements((locations, items) => {
+    public override initialize() {
+        this.locations.get("Skull Woods - Big Chest")?.setRequirements((_locations, items) => {
             return items.has('BigKeyD3');
         });
 
-        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((locations, items) => {
+        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((_locations, items) => {
             return items.has('MoonPearl') && items.has('FireRod');
         });
 

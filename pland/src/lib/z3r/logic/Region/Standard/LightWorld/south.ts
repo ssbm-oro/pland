@@ -1,13 +1,8 @@
-import { Chest } from "$lib/z3r/logic/Location/chest";
-import { Npc } from "$lib/z3r/logic/Location/npc";
-import { Standing } from "$lib/z3r/logic/Location/standing";
-import { Region } from "$lib/z3r/logic/region";
-import type { ItemCollection } from "$lib/z3r/logic/Support/itemcollection";
-import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type World from "$lib/z3r/logic/world";
-import { Dash } from "$lib/z3r/logic/Location/dash";
-import { Dig } from "$lib/z3r/logic/Location/dig";
-import { Bombos } from "$lib/z3r/logic/Location/Drop/bombos";
+import { Chest, Npc, Standing, Dash, Dig, Bombos } from "$lib/z3r/logic/Location";
+import Region from "$lib/z3r/logic/Region";
+import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
+import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
+import type World from "$lib/z3r/logic/World";
 
 export class South extends Region {
     public constructor(world: World) {
@@ -34,15 +29,15 @@ export class South extends Region {
             new Standing("Sunken Treasure", this),
             new Dig("Flute Spot", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
     }
 
-    override initialize(): Region {
-        this.locations.get("Aginah's Cave")?.setRequirements((locations, items) => {
+    override initialize() {
+        this.locations.get("Aginah's Cave")?.setRequirements((_locations, items) => {
             return items.canBombThings();
         });
 
-        const miniMoldormCaveRequirements = (locations: LocationCollection, items: ItemCollection) => {
+        const miniMoldormCaveRequirements = (_locations: LocationCollection, items: ItemCollection) => {
             return items.canBombThings() && items.canKillMostThings(this.world);
         }
 
@@ -52,7 +47,7 @@ export class South extends Region {
         this.locations.get("Minimoldorm Cave - Far Right")?.setRequirements(miniMoldormCaveRequirements);
         this.locations.get("Minimoldorm Cave - NPC")?.setRequirements(miniMoldormCaveRequirements);
 
-        this.locations.get("Hobo")?.setRequirements((locations, items) => {
+        this.locations.get("Hobo")?.setRequirements((_locations, items) => {
             return items.has("Flippers");
         });
 
@@ -70,7 +65,7 @@ export class South extends Region {
                 && (items.has("MagicMirror") && this.world.getRegion("Mire")!.canEnter(locations, items));
         });
 
-        this.locations.get("Library")?.setRequirements((locations, items) => {
+        this.locations.get("Library")?.setRequirements((_locations, items) => {
             return items.has("PegasusBoots");
         });
 
@@ -83,11 +78,11 @@ export class South extends Region {
                 && this.world.getRegion("North East Dark World")!.canEnter(locations, items);
         });
 
-        this.locations.get("Flute Spot")?.setRequirements((locations, items) => {
+        this.locations.get("Flute Spot")?.setRequirements((_locations, items) => {
             return items.has("Shovel");
         })
 
-        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
             return items.has("RescueZelda");
         }
 

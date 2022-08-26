@@ -1,29 +1,42 @@
-import type { Region } from "./region";
-import Item from "./item";
-import type { ItemCollection } from "./Support/itemcollection";
-import { LocationCollection } from "./Support/locationcollection";
-import { Entry } from "./Support/collection";
+import type { ItemCollection } from "./Support/ItemCollection";
+import type { Entry } from "./Support/Collection";
+import type { IItem } from "./Item";
+import type Region from "./Region";
+import { LocationCollection } from "./Support/LocationCollection";
 
-export default class Location extends Entry {
-    region: Region;
-    item: Item | null = null;
+export interface ILocation extends Entry {
+    item: IItem | null;
     messages: string[]|null;
-    isCrystalPendant = false;
-    always_callback?: (item: Item, items: ItemCollection) => boolean;
-    fill_callback?: (item: Item, locations: LocationCollection) => boolean;
+    isCrystalPendant: boolean;
+    always_callback?: (item: IItem, items: ItemCollection) => boolean;
+    fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
+    requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
+}
+
+export class Z3rLocation implements ILocation {
+    name: string;
+    region: Region;
+    item: IItem | null;
+    messages: string[]|null;
+    isCrystalPendant: boolean;
+
+    always_callback?: (item: IItem, items: ItemCollection) => boolean;
+    fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
     requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
 
-    constructor(name: string, region: Region, messages: string[]|null = null) {
-        super(name);
+    public constructor(name: string, region: Region, messages: string[]|null = null) {
+        this.name = name;
         this.region = region;
+        this.item = null;
         this.messages = messages;
+        this.isCrystalPendant = false;
     }
 
-    public fill(newItem:Item, items: ItemCollection, check_access: boolean = false): boolean {
+    public fill(newItem:IItem, items: ItemCollection, check_access: boolean = false): boolean {
         let oldItem = this.item;
         this.setItem(newItem);
         if (this.canFill(newItem, items, check_access)) {
-            Item.items?.addItem(newItem);
+            // Item.items?.addItem(newItem); TODO - do i need this line?
             return true;
         }
 
@@ -32,22 +45,22 @@ export default class Location extends Entry {
         return false;
     }
 
-    public setItem(newItem: Item | null) {
+    public setItem(newItem: IItem | null) {
         this.item = newItem;
         return this;
     }
 
-    setRequirements(requirement_callback: (locations: LocationCollection, items: ItemCollection) => boolean) {
+    public setRequirements(requirement_callback: (locations: LocationCollection, items: ItemCollection) => boolean) {
         this.requirement_callback = requirement_callback;
     }
 
-    public canFill(newItem: Item, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
+    public canFill(newItem: IItem, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
         if (check_access) {
             items = items.clone();
 
             plants.filter(location => location.canAccess(items)).forEach(accessible => {
-                let accessible_item = (accessible as Location).item;
-                if ((accessible as Location).region.canEnter(this.region.world.locations, items) && accessible_item) {
+                let accessible_item = (accessible as Z3rLocation).item;
+                if ((accessible as Z3rLocation).region.canEnter(this.region.world.locations, items) && accessible_item) {
                     this.log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
                     items.addItem(accessible_item!);
                 }
@@ -85,7 +98,7 @@ export default class Location extends Entry {
         return false;
     }
 
-    public hasItem(item: Item | null = null) {
+    public hasItem(item: IItem | null = null) {
         return item ? this.item == item : this.item !== null;
     }
 
@@ -94,6 +107,106 @@ export default class Location extends Entry {
     }
 
     public log(message:string) {
-        if (this.region.world.messages) this.region.world.messages.push(message);
+        this.region.world.log(message);
     }
+
+    public toJSON() {
+        return {
+            name: this.name,
+            region: {
+                name: this.region.name
+            },
+            item: this.item,
+        }
+    }
+}
+
+export class Chest extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class BigChest extends Chest { 
+    // purposefully empty class
+}
+
+export class Dash extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class Dig extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class Drop extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class Bombos extends Drop { 
+    // purposefully empty class
+}
+
+export class Ether extends Drop { 
+    // purposefully empty class
+}
+
+export class Fountain extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class Medallion extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class Npc extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class BugCatchingKid extends Npc { 
+    // purposefully empty class
+}
+
+export class Uncle extends Npc { 
+    // purposefully empty class
+}
+
+export class Witch extends Npc { 
+    // purposefully empty class
+}
+
+export class Zora extends Npc { 
+    // purposefully empty class
+}
+
+export class Pedestal extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class Prize extends Z3rLocation {
+    // purposefully empty class
+}
+
+export class Crystal extends Prize { 
+    // purposefully empty class
+    public override isCrystalPendant = true;
+}
+
+export class Pendant extends Prize { 
+    // purposefully empty class
+    public override isCrystalPendant = true;
+}
+
+export class Event extends Prize { 
+    // purposefully empty class
+}
+
+export class Standing extends Z3rLocation { 
+    // purposefully empty class
+}
+
+export class HeraBasement extends Standing { 
+    
+}
+
+export class Trade extends Z3rLocation { 
+    // purposefully empty class
 }

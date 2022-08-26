@@ -1,9 +1,7 @@
-import { Chest } from "$lib/z3r/logic/Location/chest";
-import { Dig } from "$lib/z3r/logic/Location/dig";
-import { Npc } from "$lib/z3r/logic/Location/npc";
-import { Region } from "$lib/z3r/logic/region";
-import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type World from "$lib/z3r/logic/world";
+import { Chest, Dig, Npc } from "$lib/z3r/logic/Location";
+import Region from "$lib/z3r/logic/Region";
+import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
+import type World from "$lib/z3r/logic/World";
 
 export class South extends Region {
     public constructor(world: World) {
@@ -18,35 +16,35 @@ export class South extends Region {
             new Npc("Hype Cave - NPC", this),
             new Dig("Digging Game", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
     }
 
-    public override initialize(): Region {
-        this.locations.get("Hype Cave - Top")?.setRequirements((locations, items) => {
+    public override initialize() {
+        this.locations.get("Hype Cave - Top")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
         
-        this.locations.get("Hype Cave - Middle Right")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Middle Right")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Middle Left")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Middle Left")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Bottom")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Bottom")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - NPC")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - NPC")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Stumpy")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Stumpy")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Digging Game")?.setRequirements((locations, items) => {
+        this.locations.get("Hype Cave - Digging Game")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 

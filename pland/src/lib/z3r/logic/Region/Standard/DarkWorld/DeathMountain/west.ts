@@ -1,7 +1,7 @@
-import { Chest } from "$lib/z3r/logic/Location/chest";
-import { Region } from "$lib/z3r/logic/region";
-import { LocationCollection } from "$lib/z3r/logic/Support/locationcollection";
-import type World from "$lib/z3r/logic/world";
+import { Chest } from "$lib/z3r/logic/Location";
+import Region from "$lib/z3r/logic/Region";
+import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
+import type World from "$lib/z3r/logic/World";
 
 export class West extends Region {
     public constructor(world: World) {
@@ -10,11 +10,11 @@ export class West extends Region {
         this.locations = new LocationCollection([
             new Chest("Spike Cave", this)
         ]);
-        this.locations.setChecksForWorld(world.id);
+        this.locations.setChecksForWorld(world);
     }
 
-    public override initialize(): Region {
-        this.locations.get("Spike Cave")?.setRequirements((locations, items) => {
+    public override initialize() {
+        this.locations.get("Spike Cave")?.setRequirements((_locations, items) => {
             return (items.has("MoonPearl") && items.has("Hammer") && items.canLiftRocks()
                     && (items.canExtendMagic() && items.has("Cape")) || items.has("CaneOfByrna"));
         });

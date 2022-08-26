@@ -1,9 +1,9 @@
-import type { Boss } from "../boss";
-import { Collection } from "./collection";
-import type { ItemCollection } from "./itemcollection";
+import type { Boss } from "../Boss";
+import { Collection } from "./Collection";
+import type { ItemCollection } from "./ItemCollection";
 
 export default class BossCollection extends Collection {
-    override items: Map<string, Boss> = new Map();
+    protected override items: Map<string, Boss> = new Map();
 
     public constructor(bosses:Boss[] = [])
     {
@@ -13,13 +13,19 @@ export default class BossCollection extends Collection {
         });
     }
 
-    public addItem(boss: Boss) {
+    public override filter(f: (boss: Boss) => boolean): Boss[] { 
+        return Array.from(this.items.values()).filter(f);
+    }
+
+    public override addItem(boss: Boss) {
         this.items.set(boss.name, boss);
+        return this;
     }
 
     public canBeat(items: ItemCollection) {
         return (this.filter((boss: Boss) => {
-            return boss.canBeat(items);
+            if (boss.canBeat) return boss.canBeat(items, null);
+            else return true;
         }));
     }
 }

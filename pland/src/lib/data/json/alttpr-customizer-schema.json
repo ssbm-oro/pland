@@ -1430,72 +1430,72 @@
     "items": [
         {
             "value": "auto_fill",
-            "name": "item.Random",
+            "name": "Random",
             "placed": 0
         },
         {
             "value": "BottleWithRandom",
-            "name": "item.BottleWithRandom",
+            "name": "BottleWithRandom",
             "count": 4,
             "placed": 0
         },
         {
             "value": "Nothing:1",
-            "name": "item.Nothing",
+            "name": "Nothing",
             "count": 0,
             "placed": 0
         },
         {
             "value": "L1Sword:1",
-            "name": "item.L1Sword",
+            "name": "L1Sword",
             "count": 0,
             "placed": 0
         },
         {
             "value": "L1SwordAndShield:1",
-            "name": "item.L1SwordAndShield",
+            "name": "L1SwordAndShield",
             "count": 0,
             "placed": 0
         },
         {
             "value": "MasterSword:1",
-            "name": "item.MasterSword",
+            "name": "MasterSword",
             "count": 0,
             "placed": 0
         },
         {
             "value": "L3Sword:1",
-            "name": "item.L3Sword",
+            "name": "L3Sword",
             "count": 0,
             "placed": 0
         },
         {
             "value": "L4Sword:1",
-            "name": "item.L4Sword",
+            "name": "L4Sword",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BlueShield:1",
-            "name": "item.BlueShield",
+            "name": "BlueShield",
             "count": 0,
             "placed": 0
         },
         {
             "value": "RedShield:1",
-            "name": "item.RedShield",
+            "name": "RedShield",
             "count": 0,
             "placed": 0
         },
         {
             "value": "MirrorShield:1",
-            "name": "item.MirrorShield",
+            "name": "MirrorShield",
             "count": 0,
             "placed": 0
         },
         {
             "value": "FireRod:1",
-            "name": "item.FireRod",
+            "name": "FireRod",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1505,7 +1505,7 @@
         },
         {
             "value": "IceRod:1",
-            "name": "item.IceRod",
+            "name": "IceRod",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1515,7 +1515,7 @@
         },
         {
             "value": "Hammer:1",
-            "name": "item.Hammer",
+            "name": "Hammer",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1525,7 +1525,7 @@
         },
         {
             "value": "Hookshot:1",
-            "name": "item.Hookshot",
+            "name": "Hookshot",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1536,13 +1536,13 @@
         },
         {
             "value": "Bow:1",
-            "name": "item.Bow",
+            "name": "Bow",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Boomerang:1",
-            "name": "item.Boomerang",
+            "name": "Boomerang",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1552,7 +1552,7 @@
         },
         {
             "value": "Powder:1",
-            "name": "item.Powder",
+            "name": "Powder",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1562,7 +1562,7 @@
         },
         {
             "value": "Bombos:1",
-            "name": "item.Bombos",
+            "name": "Bombos",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1573,7 +1573,7 @@
         },
         {
             "value": "Ether:1",
-            "name": "item.Ether",
+            "name": "Ether",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1583,7 +1583,7 @@
         },
         {
             "value": "Quake:1",
-            "name": "item.Quake",
+            "name": "Quake",
             "count": 1,
             "placed": 0,
             "icon":  {
@@ -1593,7 +1593,7 @@
         },
         {
             "value": "Lamp:1",
-            "name": "item.Lamp",
+            "name": "Lamp",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1603,7 +1603,7 @@
         },
         {
             "value": "Shovel:1",
-            "name": "item.Shovel",
+            "name": "Shovel",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1613,7 +1613,7 @@
         },
         {
             "value": "OcarinaInactive:1",
-            "name": "item.OcarinaInactive",
+            "name": "OcarinaInactive",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1623,7 +1623,7 @@
         },
         {
             "value": "CaneOfSomaria:1",
-            "name": "item.CaneOfSomaria",
+            "name": "CaneOfSomaria",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1633,13 +1633,13 @@
         },
         {
             "value": "Bottle:1",
-            "name": "item.Bottle",
+            "name": "Bottle",
             "count": 0,
             "placed": 0
         },
         {
             "value": "PieceOfHeart:1",
-            "name": "item.PieceOfHeart",
+            "name": "PieceOfHeart",
             "count": 24,
             "placed": 0,
             "icon": {
@@ -1649,7 +1649,7 @@
         },
         {
             "value": "CaneOfByrna:1",
-            "name": "item.CaneOfByrna",
+            "name": "CaneOfByrna",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1659,7 +1659,7 @@
         },
         {
             "value": "Cape:1",
-            "name": "item.Cape",
+            "name": "Cape",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1669,7 +1669,7 @@
         },
         {
             "value": "MagicMirror:1",
-            "name": "item.MagicMirror",
+            "name": "MagicMirror",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1679,19 +1679,19 @@
         },
         {
             "value": "PowerGlove:1",
-            "name": "item.PowerGlove",
+            "name": "PowerGlove",
             "count": 0,
             "placed": 0
         },
         {
             "value": "TitansMitt:1",
-            "name": "item.TitansMitt",
+            "name": "TitansMitt",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BookOfMudora:1",
-            "name": "item.BookOfMudora",
+            "name": "BookOfMudora",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1701,7 +1701,7 @@
         },
         {
             "value": "Flippers:1",
-            "name": "item.Flippers",
+            "name": "Flippers",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1711,7 +1711,7 @@
         },
         {
             "value": "MoonPearl:1",
-            "name": "item.MoonPearl",
+            "name": "MoonPearl",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1721,7 +1721,7 @@
         },
         {
             "value": "BugCatchingNet:1",
-            "name": "item.BugCatchingNet",
+            "name": "BugCatchingNet",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1731,25 +1731,25 @@
         },
         {
             "value": "BlueMail:1",
-            "name": "item.BlueMail",
+            "name": "BlueMail",
             "count": 0,
             "placed": 0
         },
         {
             "value": "RedMail:1",
-            "name": "item.RedMail",
+            "name": "RedMail",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Bomb:1",
-            "name": "item.Bomb",
+            "name": "Bomb",
             "count": 0,
             "placed": 0
         },
         {
             "value": "ThreeBombs:1",
-            "name": "item.ThreeBombs",
+            "name": "ThreeBombs",
             "count": 16,
             "placed": 0,
             "icon": {
@@ -1759,7 +1759,7 @@
         },
         {
             "value": "Mushroom:1",
-            "name": "item.Mushroom",
+            "name": "Mushroom",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1769,7 +1769,7 @@
         },
         {
             "value": "RedBoomerang:1",
-            "name": "item.RedBoomerang",
+            "name": "RedBoomerang",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1779,25 +1779,25 @@
         },
         {
             "value": "BottleWithRedPotion:1",
-            "name": "item.BottleWithRedPotion",
+            "name": "BottleWithRedPotion",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithGreenPotion:1",
-            "name": "item.BottleWithGreenPotion",
+            "name": "BottleWithGreenPotion",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithBluePotion:1",
-            "name": "item.BottleWithBluePotion",
+            "name": "BottleWithBluePotion",
             "count": 0,
             "placed": 0
         },
         {
             "value": "TenBombs:1",
-            "name": "item.TenBombs",
+            "name": "TenBombs",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1807,7 +1807,7 @@
         },
         {
             "value": "OneRupee:1",
-            "name": "item.OneRupee",
+            "name": "OneRupee",
             "count": 2,
             "placed": 0,
             "icon": {
@@ -1817,7 +1817,7 @@
         },
         {
             "value": "FiveRupees:1",
-            "name": "item.FiveRupees",
+            "name": "FiveRupees",
             "count": 4,
             "placed": 0,
             "icon": {
@@ -1827,7 +1827,7 @@
         },
         {
             "value": "TwentyRupees:1",
-            "name": "item.TwentyRupees",
+            "name": "TwentyRupees",
             "count": 28,
             "placed": 0,
             "icon": {
@@ -1837,31 +1837,31 @@
         },
         {
             "value": "BowAndArrows:1",
-            "name": "item.BowAndArrows",
+            "name": "BowAndArrows",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BowAndSilverArrows:1",
-            "name": "item.BowAndSilverArrows",
+            "name": "BowAndSilverArrows",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithBee:1",
-            "name": "item.BottleWithBee",
+            "name": "BottleWithBee",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithFairy:1",
-            "name": "item.BottleWithFairy",
+            "name": "BottleWithFairy",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BossHeartContainer:1",
-            "name": "item.BossHeartContainer",
+            "name": "BossHeartContainer",
             "count": 10,
             "placed": 0,
             "icon": {
@@ -1871,7 +1871,7 @@
         },
         {
             "value": "HeartContainer:1",
-            "name": "item.HeartContainer",
+            "name": "HeartContainer",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1881,7 +1881,7 @@
         },
         {
             "value": "OneHundredRupees:1",
-            "name": "item.OneHundredRupees",
+            "name": "OneHundredRupees",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1891,7 +1891,7 @@
         },
         {
             "value": "FiftyRupees:1",
-            "name": "item.FiftyRupees",
+            "name": "FiftyRupees",
             "count": 7,
             "placed": 0,
             "icon": {
@@ -1901,13 +1901,13 @@
         },
         {
             "value": "Heart:1",
-            "name": "item.Heart",
+            "name": "Heart",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Arrow:1",
-            "name": "item.Arrow",
+            "name": "Arrow",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1916,7 +1916,7 @@
         },
         {
             "value": "TenArrows:1",
-            "name": "item.TenArrows",
+            "name": "TenArrows",
             "count": 12,
             "placed": 0,
             "icon": {
@@ -1925,13 +1925,13 @@
         },
         {
             "value": "SmallMagic:1",
-            "name": "item.SmallMagic",
+            "name": "SmallMagic",
             "count": 0,
             "placed": 0
         },
         {
             "value": "ThreeHundredRupees:1",
-            "name": "item.ThreeHundredRupees",
+            "name": "ThreeHundredRupees",
             "count": 5,
             "placed": 0,
             "icon": {
@@ -1941,19 +1941,19 @@
         },
         {
             "value": "BottleWithGoldBee:1",
-            "name": "item.BottleWithGoldBee",
+            "name": "BottleWithGoldBee",
             "count": 0,
             "placed": 0
         },
         {
             "value": "OcarinaActive:1",
-            "name": "item.OcarinaActive",
+            "name": "OcarinaActive",
             "count": 0,
             "placed": 0
         },
         {
             "value": "PegasusBoots:1",
-            "name": "item.PegasusBoots",
+            "name": "PegasusBoots",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1963,31 +1963,31 @@
         },
         {
             "value": "BombUpgrade5:1",
-            "name": "item.BombUpgrade5",
+            "name": "BombUpgrade5",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BombUpgrade10:1",
-            "name": "item.BombUpgrade10",
+            "name": "BombUpgrade10",
             "count": 0,
             "placed": 0
         },
         {
             "value": "ArrowUpgrade5:1",
-            "name": "item.ArrowUpgrade5",
+            "name": "ArrowUpgrade5",
             "count": 0,
             "placed": 0
         },
         {
             "value": "ArrowUpgrade10:1",
-            "name": "item.ArrowUpgrade10",
+            "name": "ArrowUpgrade10",
             "count": 0,
             "placed": 0
         },
         {
             "value": "HalfMagic:1",
-            "name": "item.HalfMagic",
+            "name": "HalfMagic",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -1997,43 +1997,43 @@
         },
         {
             "value": "QuarterMagic:1",
-            "name": "item.QuarterMagic",
+            "name": "QuarterMagic",
             "count": 0,
             "placed": 0
         },
         {
             "value": "SilverArrowUpgrade:1",
-            "name": "item.SilverArrowUpgrade",
+            "name": "SilverArrowUpgrade",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Rupoor:1",
-            "name": "item.Rupoor",
+            "name": "Rupoor",
             "count": 0,
             "placed": 0
         },
         {
             "value": "RedClock:1",
-            "name": "item.RedClock",
+            "name": "RedClock",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BlueClock:1",
-            "name": "item.BlueClock",
+            "name": "BlueClock",
             "count": 0,
             "placed": 0
         },
         {
             "value": "GreenClock:1",
-            "name": "item.GreenClock",
+            "name": "GreenClock",
             "count": 0,
             "placed": 0
         },
         {
             "value": "ProgressiveSword:1",
-            "name": "item.ProgressiveSword",
+            "name": "ProgressiveSword",
             "count": 4,
             "placed": 0,
             "icon": {
@@ -2042,7 +2042,7 @@
         },
         {
             "value": "ProgressiveShield:1",
-            "name": "item.ProgressiveShield",
+            "name": "ProgressiveShield",
             "count": 3,
             "placed": 0,
             "icon": {
@@ -2052,7 +2052,7 @@
         },
         {
             "value": "ProgressiveArmor:1",
-            "name": "item.ProgressiveArmor",
+            "name": "ProgressiveArmor",
             "count": 2,
             "placed": 0,
             "icon": {
@@ -2062,7 +2062,7 @@
         },
         {
             "value": "ProgressiveGlove:1",
-            "name": "item.ProgressiveGlove",
+            "name": "ProgressiveGlove",
             "count": 2,
             "placed": 0,
             "icon": {
@@ -2071,7 +2071,7 @@
         },
         {
             "value": "ProgressiveBow:1",
-            "name": "item.ProgressiveBow",
+            "name": "ProgressiveBow",
             "count": 2,
             "placed": 0,
             "icon": {
@@ -2081,19 +2081,19 @@
         },
         {
             "value": "Triforce:1",
-            "name": "item.Triforce",
+            "name": "Triforce",
             "count": 0,
             "placed": 0
         },
         {
             "value": "TriforcePiece:1",
-            "name": "item.TriforcePiece",
+            "name": "TriforcePiece",
             "count": 0,
             "placed": 0
         },
         {
             "value": "MapA2:1",
-            "name": "item.MapA2",
+            "name": "MapA2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2102,7 +2102,7 @@
         },
         {
             "value": "MapD7:1",
-            "name": "item.MapD7",
+            "name": "MapD7",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2111,7 +2111,7 @@
         },
         {
             "value": "MapD4:1",
-            "name": "item.MapD4",
+            "name": "MapD4",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2120,7 +2120,7 @@
         },
         {
             "value": "MapP3:1",
-            "name": "item.MapP3",
+            "name": "MapP3",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2129,7 +2129,7 @@
         },
         {
             "value": "MapD5:1",
-            "name": "item.MapD5",
+            "name": "MapD5",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2138,7 +2138,7 @@
         },
         {
             "value": "MapD3:1",
-            "name": "item.MapD3",
+            "name": "MapD3",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2147,7 +2147,7 @@
         },
         {
             "value": "MapD6:1",
-            "name": "item.MapD6",
+            "name": "MapD6",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2156,7 +2156,7 @@
         },
         {
             "value": "MapD1:1",
-            "name": "item.MapD1",
+            "name": "MapD1",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2165,7 +2165,7 @@
         },
         {
             "value": "MapD2:1",
-            "name": "item.MapD2",
+            "name": "MapD2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2174,13 +2174,13 @@
         },
         {
             "value": "MapA1:1",
-            "name": "item.MapA1",
+            "name": "MapA1",
             "count": 0,
             "placed": 0
         },
         {
             "value": "MapP2:1",
-            "name": "item.MapP2",
+            "name": "MapP2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2189,7 +2189,7 @@
         },
         {
             "value": "MapP1:1",
-            "name": "item.MapP1",
+            "name": "MapP1",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2198,7 +2198,7 @@
         },
         {
             "value": "MapH1:1",
-            "name": "item.MapH1",
+            "name": "MapH1",
             "count": 0,
             "placed": 0,
             "icon": {
@@ -2207,7 +2207,7 @@
         },
         {
             "value": "MapH2:1",
-            "name": "item.MapH2",
+            "name": "MapH2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2216,7 +2216,7 @@
         },
         {
             "value": "CompassA2:1",
-            "name": "item.CompassA2",
+            "name": "CompassA2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2226,7 +2226,7 @@
         },
         {
             "value": "CompassD7:1",
-            "name": "item.CompassD7",
+            "name": "CompassD7",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2236,7 +2236,7 @@
         },
         {
             "value": "CompassD4:1",
-            "name": "item.CompassD4",
+            "name": "CompassD4",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2246,7 +2246,7 @@
         },
         {
             "value": "CompassP3:1",
-            "name": "item.CompassP3",
+            "name": "CompassP3",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2256,7 +2256,7 @@
         },
         {
             "value": "CompassD5:1",
-            "name": "item.CompassD5",
+            "name": "CompassD5",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2266,7 +2266,7 @@
         },
         {
             "value": "CompassD3:1",
-            "name": "item.CompassD3",
+            "name": "CompassD3",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2276,7 +2276,7 @@
         },
         {
             "value": "CompassD6:1",
-            "name": "item.CompassD6",
+            "name": "CompassD6",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2286,7 +2286,7 @@
         },
         {
             "value": "CompassD1:1",
-            "name": "item.CompassD1",
+            "name": "CompassD1",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2296,7 +2296,7 @@
         },
         {
             "value": "CompassD2:1",
-            "name": "item.CompassD2",
+            "name": "CompassD2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2306,7 +2306,7 @@
         },
         {
             "value": "CompassA1:1",
-            "name": "item.CompassA1",
+            "name": "CompassA1",
             "count": 0,
             "placed": 0,
             "icon": {
@@ -2316,7 +2316,7 @@
         },
         {
             "value": "CompassP2:1",
-            "name": "item.CompassP2",
+            "name": "CompassP2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2326,7 +2326,7 @@
         },
         {
             "value": "CompassP1:1",
-            "name": "item.CompassP1",
+            "name": "CompassP1",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2336,19 +2336,19 @@
         },
         {
             "value": "CompassH1:1",
-            "name": "item.CompassH1",
+            "name": "CompassH1",
             "count": 0,
             "placed": 0
         },
         {
             "value": "CompassH2:1",
-            "name": "item.CompassH2",
+            "name": "CompassH2",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BigKeyA2:1",
-            "name": "item.BigKeyA2",
+            "name": "BigKeyA2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2358,7 +2358,7 @@
         },
         {
             "value": "BigKeyD7:1",
-            "name": "item.BigKeyD7",
+            "name": "BigKeyD7",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2368,7 +2368,7 @@
         },
         {
             "value": "BigKeyD4:1",
-            "name": "item.BigKeyD4",
+            "name": "BigKeyD4",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2378,7 +2378,7 @@
         },
         {
             "value": "BigKeyP3:1",
-            "name": "item.BigKeyP3",
+            "name": "BigKeyP3",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2388,7 +2388,7 @@
         },
         {
             "value": "BigKeyD5:1",
-            "name": "item.BigKeyD5",
+            "name": "BigKeyD5",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2398,7 +2398,7 @@
         },
         {
             "value": "BigKeyD3:1",
-            "name": "item.BigKeyD3",
+            "name": "BigKeyD3",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2408,7 +2408,7 @@
         },
         {
             "value": "BigKeyD6:1",
-            "name": "item.BigKeyD6",
+            "name": "BigKeyD6",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2418,7 +2418,7 @@
         },
         {
             "value": "BigKeyD1:1",
-            "name": "item.BigKeyD1",
+            "name": "BigKeyD1",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2428,7 +2428,7 @@
         },
         {
             "value": "BigKeyD2:1",
-            "name": "item.BigKeyD2",
+            "name": "BigKeyD2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2438,13 +2438,13 @@
         },
         {
             "value": "BigKeyA1:1",
-            "name": "item.BigKeyA1",
+            "name": "BigKeyA1",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BigKeyP2:1",
-            "name": "item.BigKeyP2",
+            "name": "BigKeyP2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2454,7 +2454,7 @@
         },
         {
             "value": "BigKeyP1:1",
-            "name": "item.BigKeyP1",
+            "name": "BigKeyP1",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2464,19 +2464,19 @@
         },
         {
             "value": "BigKeyH1:1",
-            "name": "item.BigKeyH1",
+            "name": "BigKeyH1",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BigKeyH2:1",
-            "name": "item.BigKeyH2",
+            "name": "BigKeyH2",
             "count": 0,
             "placed": 0
         },
         {
             "value": "KeyH2:1",
-            "name": "item.KeyH2",
+            "name": "KeyH2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2486,19 +2486,19 @@
         },
         {
             "value": "KeyH1:1",
-            "name": "item.KeyH1",
+            "name": "KeyH1",
             "count": 0,
             "placed": 0
         },
         {
             "value": "KeyP1:1",
-            "name": "item.KeyP1",
+            "name": "KeyP1",
             "count": 0,
             "placed": 0
         },
         {
             "value": "KeyP2:1",
-            "name": "item.KeyP2",
+            "name": "KeyP2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2508,7 +2508,7 @@
         },
         {
             "value": "KeyA1:1",
-            "name": "item.KeyA1",
+            "name": "KeyA1",
             "count": 2,
             "placed": 0,
             "icon": {
@@ -2518,7 +2518,7 @@
         },
         {
             "value": "KeyD2:1",
-            "name": "item.KeyD2",
+            "name": "KeyD2",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2528,7 +2528,7 @@
         },
         {
             "value": "KeyD1:1",
-            "name": "item.KeyD1",
+            "name": "KeyD1",
             "count": 6,
             "placed": 0,
             "icon": {
@@ -2538,7 +2538,7 @@
         },
         {
             "value": "KeyD6:1",
-            "name": "item.KeyD6",
+            "name": "KeyD6",
             "count": 3,
             "placed": 0,
             "icon": {
@@ -2548,7 +2548,7 @@
         },
         {
             "value": "KeyD3:1",
-            "name": "item.KeyD3",
+            "name": "KeyD3",
             "count": 3,
             "placed": 0,
             "icon": {
@@ -2558,7 +2558,7 @@
         },
         {
             "value": "KeyD5:1",
-            "name": "item.KeyD5",
+            "name": "KeyD5",
             "count": 2,
             "placed": 0,
             "icon": {
@@ -2568,7 +2568,7 @@
         },
         {
             "value": "KeyP3:1",
-            "name": "item.KeyP3",
+            "name": "KeyP3",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2578,7 +2578,7 @@
         },
         {
             "value": "KeyD4:1",
-            "name": "item.KeyD4",
+            "name": "KeyD4",
             "count": 1,
             "placed": 0,
             "icon": {
@@ -2588,7 +2588,7 @@
         },
         {
             "value": "KeyD7:1",
-            "name": "item.KeyD7",
+            "name": "KeyD7",
             "count": 4,
             "placed": 0,
             "icon": {
@@ -2598,7 +2598,7 @@
         },
         {
             "value": "KeyA2:1",
-            "name": "item.KeyA2",
+            "name": "KeyA2",
             "count": 4,
             "placed": 0,
             "icon": {
@@ -2610,66 +2610,66 @@
     "prizes": [
         {
             "value": "auto_fill",
-            "name": "item.Random",
+            "name": "Random",
             "placed": 0
         },
         {
             "value": "PendantOfCourage:1",
-            "name": "item.PendantOfCourage",
+            "name": "PendantOfCourage",
             "count": 0,
             "placed": 0
         },
         {
             "value": "PendantOfWisdom:1",
-            "name": "item.PendantOfWisdom",
+            "name": "PendantOfWisdom",
             "count": 0,
             "placed": 0
         },
         {
             "value": "PendantOfPower:1",
-            "name": "item.PendantOfPower",
+            "name": "PendantOfPower",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Crystal1:1",
-            "name": "item.Crystal1",
+            "name": "Crystal1",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Crystal2:1",
-            "name": "item.Crystal2",
+            "name": "Crystal2",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Crystal3:1",
-            "name": "item.Crystal3",
+            "name": "Crystal3",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Crystal4:1",
-            "name": "item.Crystal4",
+            "name": "Crystal4",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Crystal5:1",
-            "name": "item.Crystal5",
+            "name": "Crystal5",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Crystal6:1",
-            "name": "item.Crystal6",
+            "name": "Crystal6",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Crystal7:1",
-            "name": "item.Crystal7",
+            "name": "Crystal7",
             "count": 0,
             "placed": 0
         }
@@ -2677,24 +2677,24 @@
     "medallions": [
         {
             "value": "auto_fill",
-            "name": "item.Random",
+            "name": "Random",
             "placed": 0
         },
         {
             "value": "Bombos:1",
-            "name": "item.Bombos",
+            "name": "Bombos",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Ether:1",
-            "name": "item.Ether",
+            "name": "Ether",
             "count": 0,
             "placed": 0
         },
         {
             "value": "Quake:1",
-            "name": "item.Quake",
+            "name": "Quake",
             "count": 0,
             "placed": 0
         }
@@ -2702,48 +2702,48 @@
     "bottles": [
         {
             "value": "auto_fill",
-            "name": "item.Random",
+            "name": "Random",
             "placed": 0
         },
         {
             "value": "Bottle:1",
-            "name": "item.Bottle",
+            "name": "Bottle",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithRedPotion:1",
-            "name": "item.BottleWithRedPotion",
+            "name": "BottleWithRedPotion",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithGreenPotion:1",
-            "name": "item.BottleWithGreenPotion",
+            "name": "BottleWithGreenPotion",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithBluePotion:1",
-            "name": "item.BottleWithBluePotion",
+            "name": "BottleWithBluePotion",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithBee:1",
-            "name": "item.BottleWithBee",
+            "name": "BottleWithBee",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithFairy:1",
-            "name": "item.BottleWithFairy",
+            "name": "BottleWithFairy",
             "count": 0,
             "placed": 0
         },
         {
             "value": "BottleWithGoldBee:1",
-            "name": "item.BottleWithGoldBee",
+            "name": "BottleWithGoldBee",
             "count": 0,
             "placed": 0
         }
@@ -2751,7 +2751,7 @@
     "droppables": [
         {
             "value": "auto_fill",
-            "name": "item.Random",
+            "name": "Random",
             "placed": 0
         },
         {
