@@ -30,11 +30,14 @@ export async function reloadLobbies() {
     }
 }
 
-export interface Entrant {
+export interface User {
     username: string;
     discriminator: string;
     discord_id: string;
     avatar: string | null;
+}
+
+export interface Entrant extends User{
     ready: boolean;
     plantedItems: IItem[];
     plantedLocations: ILocation[];
@@ -42,7 +45,7 @@ export interface Entrant {
 
 export interface ILobby {
     slug: string;
-    created_by: APIUser;
+    created_by: User;
     entrants: Entrant[];
     max_entrants: number;
     max_plants: number;
@@ -57,12 +60,12 @@ function saveLobby(lobby: Lobby) {
 }
 
 export default class Lobby {
-    lobby: ILobby | null = null;
+    lobby: ILobby;
     world: IWorld | null = null;
     initialized = false;
 
 
-    public constructor(created_by: APIUser | null = null, preset:string | null = null, max_entrants:number | null = null, max_plants:number | null = null, slug:string | null = null, entrants: Entrant[]= []) {
+    public constructor(created_by: User | null = null, preset:string | null = null, max_entrants:number | null = null, max_plants:number | null = null, slug:string | null = null, entrants: Entrant[]= []) {
         const save = slug == null;
         if (!slug) {
             do  {
@@ -72,7 +75,12 @@ export default class Lobby {
         
         // TODO: check and error if null or some other type safety >_<
         this.lobby = {
-            created_by: created_by!,
+            created_by: {
+                username: created_by!.username,
+                discriminator: created_by!.discriminator,
+                discord_id: created_by!.discord_id,
+                avatar: created_by!.avatar
+            },
             preset: preset!,
             max_entrants: max_entrants!,
             max_plants: max_plants!,
@@ -89,7 +97,7 @@ export default class Lobby {
     public async initialize() {
         if (!this.initialized) {
             // TODO: move this logic into a preset loader util
-            const preset = await presets[`./data/presets/${this.lobby!.preset}`]!() as any;
+            const preset = await presets[`./data/presets/${this.lobby.preset}`]!() as any;
             const config = preset.settings
 
             this.initialized = true;
@@ -98,21 +106,21 @@ export default class Lobby {
     }
 
     public join(user: APIUser) {
-        this.lobby!.entrants.push({
+        this.lobby.entrants.push({
             username: user.username,
             discriminator: user.discriminator,
             discord_id: user.id,
             avatar: user.avatar,
             ready: false,
-            plantedItems: Array(this.lobby!.max_plants),
-            plantedLocations: Array(this.lobby!.max_plants)
+            plantedItems: Array(this.lobby.max_plants),
+            plantedLocations: Array(this.lobby.max_plants)
         });
 
         saveLobby(this);
     }
 
     public leave(user: APIUser) {
-        this.lobby!.entrants.splice(this.lobby!.entrants.findIndex(entrant => entrant.discord_id == user.id));
+        this.lobby.entrants.splice(this.lobby.entrants.findIndex(entrant => entrant.discord_id == user.id));
 
         saveLobby(this);
     }
@@ -122,7 +130,7 @@ export default class Lobby {
     }
 
     public async plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
-        const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
+        const entrant = this.lobby.entrants.find(entrant => entrant.discord_id == user.id);
         let plantable: boolean = false, messages: string[] = [];
         if (entrant) {
             const canPlant = this.canPlant(plantedItems, plantedLocations);
@@ -130,7 +138,7 @@ export default class Lobby {
             messages = canPlant.messages;
 
             if (plantable) {
-                for(let i = 0; i < this.lobby!.max_plants; i++) {
+                for(let i = 0; i < this.lobby.max_plants; i++) {
                     const realWorld = this.world as World;
                     entrant.plantedItems[i] = plantedItems[i]!;
 
@@ -178,7 +186,7 @@ export default class Lobby {
     }
 
     public unplant(user: APIUser) {
-        const entrant = this.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
+        const entrant = this.lobby.entrants.find(entrant => entrant.discord_id == user.id);
         if (entrant) {
             
             this.unplantEntrant(entrant);
@@ -188,8 +196,8 @@ export default class Lobby {
     }
 
     private unplantEntrant(entrant: Entrant) {
-        entrant.plantedItems = Array(this.lobby!.max_plants);
-        entrant.plantedLocations = Array(this.lobby!.max_plants);
+        entrant.plantedItems = Array(this.lobby.max_plants);
+        entrant.plantedLocations = Array(this.lobby.max_plants);
         entrant.ready = false;
         if (this.lobby) this.lobby.ready_to_roll = false;
     }
