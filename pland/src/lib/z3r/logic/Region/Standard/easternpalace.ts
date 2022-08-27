@@ -1,6 +1,5 @@
 import { Bosses } from "../../Boss";
 import Item from "../../Item";
-import type IItem from "../../Item";
 import { Pendant, BigChest, Chest, Drop, Prize } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";

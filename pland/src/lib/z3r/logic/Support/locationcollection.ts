@@ -8,8 +8,8 @@ import { ItemCollection } from "./ItemCollection";
 export class LocationCollection extends Collection {
     protected override items: Map<string, Z3rLocation>;
 
-    public constructor(locations: Z3rLocation[] = [], log: ((message:string) => void) = (_message:string) => {}) {
-        super(locations, log);
+    public constructor(locations: Z3rLocation[] = []) {
+        super(locations);
         this.items = new Map<string, Z3rLocation>();
         locations.forEach(item => {
             this.items.set(item.name, item);
@@ -58,7 +58,7 @@ export class LocationCollection extends Collection {
                 item_array.push(item as IItem);
             }
         });
-        let ret = new ItemCollection(item_array, world.log);
+        let ret = new ItemCollection(item_array);
         ret.setChecksForWorld(world);
         return ret;
     }
@@ -92,7 +92,11 @@ export class LocationCollection extends Collection {
         let items1 = this.items as Map<string, Z3rLocation>;
         let items2 = locations.items as Map<string, Z3rLocation>;
 
-        return new  LocationCollection([...items1.values(), ...items2.values()], this.log);
+        return new  LocationCollection([...items1.values(), ...items2.values()]);
+    }
+
+    public forEach(callbackfn: (value: Z3rLocation, key: string, map:Map<string, Z3rLocation>) => void, thisArg?: any) {
+        this.items.forEach(callbackfn, thisArg)
     }
 
     public to_array() {

@@ -5,6 +5,7 @@ import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
 import { Bosses } from "../../Boss";
+import { log } from "../../Logic";
 
 export class MiseryMire extends Dungeon {
     public constructor(world: World) {
@@ -80,11 +81,11 @@ export class MiseryMire extends Dungeon {
             let medallion = locations.get('Misery Mire Medallion')
             if (!medallion || !medallion.item) {
                 haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
-                this.world.log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+                log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
             }
             else {
                 haveMedallion = items.has(medallion.item.name);
-                this.world.log(`Misery Mire Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
+                log(`Misery Mire Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
             }
 
             return items.has('RescueZelda')

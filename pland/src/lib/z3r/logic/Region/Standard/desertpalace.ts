@@ -1,6 +1,5 @@
 import { Bosses } from "../../Boss";
 import Item from "../../Item";
-import type IItem from "../../Item";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
@@ -31,7 +30,7 @@ export class DesertPalace extends Dungeon {
             new Chest("Desert Palace - Compass Chest", this),
             new Drop("Desert Palace - Boss", this),
             new Pendant("Desert Palace - Prize", this)
-        ])
+        ]);
         this.locations.setChecksForWorld(world);
         this.setPrizeLocation(this.locations.get("Desert Palace - Prize") as Prize);
 

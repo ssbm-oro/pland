@@ -5,8 +5,7 @@ import type { ItemCollection } from "./ItemCollection";
 export default class BossCollection extends Collection {
     protected override items: Map<string, Boss> = new Map();
 
-    public constructor(bosses:Boss[] = [])
-    {
+    public constructor(bosses:Boss[] = []) {
         super();
         bosses.forEach(boss => {
             this.items.set(boss.name, boss);

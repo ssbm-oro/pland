@@ -1,11 +1,11 @@
 import Item from "../../Item";
-import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
 import { Bosses } from "../../Boss";
 import type { ItemCollection } from "../../Support/ItemCollection";
+import { log } from "../../Logic";
 
 export class TurtleRock extends Dungeon {
     public constructor(world: World) {
@@ -51,11 +51,11 @@ export class TurtleRock extends Dungeon {
             let medallion = locations.get('Turtle Rock Medallion')
             if (!medallion || !medallion.item) {
                 haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
-                this.world.log(`Turtle Rock Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+                log(`Turtle Rock Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
             }
             else {
                 haveMedallion = items.has(medallion.item.name);
-                this.world.log(`Turtle Rock Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
+                log(`Turtle Rock Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
             }
             return (haveMedallion
                 && items.hasSword()

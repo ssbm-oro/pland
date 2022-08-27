@@ -1,8 +1,6 @@
 <script lang="ts">
 import { get_loading_message } from "$lib/utils/loadingMessages";
 
-import { onMount } from "svelte"
-
 export let presets: string[];
 const loadingMessage = get_loading_message();
 

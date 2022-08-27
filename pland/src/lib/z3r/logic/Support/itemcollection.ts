@@ -1,4 +1,5 @@
 import type { IItem } from "../Item";
+import { log } from "../Logic";
 import type World from "../World";
 import { Collection } from "./Collection";
 
@@ -6,13 +7,13 @@ export class ItemCollection extends Collection {
     override items: Map<string, IItem> = new Map();
     item_counts : Map<string, number> = new Map();
 
-    public constructor(items:IItem[] = [], log: ((message:string) => void) = (_message:string) => {}) {
-        super(items, log);
+    public constructor(items:IItem[] = []) {
+        super(items);
         items.forEach(item => this.addItem(item));
     }
 
     clone(): ItemCollection {
-        let items_clone = new ItemCollection([], this.log);
+        let items_clone = new ItemCollection([]);
         this.items.forEach(item => {
             for (let i = 0; i < this.item_counts.get(item.name)!; i++) {
                 items_clone.addItem(item as IItem)
@@ -73,8 +74,8 @@ export class ItemCollection extends Collection {
     }
 
     public override has(key: string, count: number = 1) {
-        this.log(`checking if we have at least ${count} of ${key} item.`);
-        this.log(`Do we have a ${key}?: ${this.items.has(key)}, Do we have a count of ${key}: ${this.item_counts.has(key)}, the count of ${key}: ${this.item_counts.get(key)!}`);
+        log(`checking if we have at least ${count} of ${key} item.`);
+        log(`Do we have a ${key}?: ${this.items.has(key)}, Do we have a count of ${key}: ${this.item_counts.has(key)}, the count of ${key}: ${this.item_counts.get(key)!}`);
 
         return this.items.has(key) && this.item_counts.has(key) && this.item_counts.get(key)! >= count;
     }
@@ -115,17 +116,17 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
     }
 
     public canLightTorches(): boolean {
-        this.log(`Checking CanLightTorches: Lamp: ${this.has('Lamp')}, FireRod: ${this.has('FireRod')}`);
+        log(`Checking CanLightTorches: Lamp: ${this.has('Lamp')}, FireRod: ${this.has('FireRod')}`);
         return this.has('Lamp') || this.has('FireRod');
     }
 
     public canLiftRocks(): boolean {
-        this.log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}, PowerGlove: ${this.has('PowerGlove')}`);
+        log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}, PowerGlove: ${this.has('PowerGlove')}`);
         return this.has('PowerGlove') || this.has('ProgressiveGlove') || this.has('TitansMitts');
     }
 
     public canLiftDarkRocks(): boolean {
-        this.log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}`);
+        log(`Checking CanLiftDarkRocks: ProgressiveGlove Count: ${this.item_counts.get('ProgressiveGlove')}, TitansMitts: ${this.has('TitansMitts')}`);
         return this.has('ProgressiveGlove', 2) || this.has('TitansMitts');
     }
 
@@ -147,6 +148,7 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
     }
 
     public hasSword(min_level: number = 1): boolean {
+        log(`Checking if we have at least a Level ${min_level} Sword`);
         switch(min_level) {
             case 4:
                 return this.has('ProgressiveSword', 4)
@@ -190,13 +192,13 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
     }
 
     public canFly(world: World): boolean {
-        this.log(`Checking CanFly: Have OcarinaActive: ${this.has('OcarinaActive')}, Have OcarinaInactive: ${this.has('OcarinaInactive')}`);
+        log(`Checking CanFly: Have OcarinaActive: ${this.has('OcarinaActive')}, Have OcarinaInactive: ${this.has('OcarinaInactive')}`);
         return this.has('OcarinaActive') || (this.has('OcarinaInactive') && this.canActivateOcarina(world));
     }
 
     public canActivateOcarina(world: World): boolean {
         if (world.inverted) {
-            this.log(`Checking if activate ocarina inverted: MoonPearl: ${this.has('MoonPear')}, DefeatAgahnim: ${this.has('DefeatAgahnim')}, Hammer: ${this.has('Hammer')}`)
+            log(`Checking if activate ocarina inverted: MoonPearl: ${this.has('MoonPear')}, DefeatAgahnim: ${this.has('DefeatAgahnim')}, Hammer: ${this.has('Hammer')}`)
             return this.has('MoonPearl') && (this.has('DefeatAgahnim') || ((this.has('Hammer') && this.canLiftRocks()) || (this.canLiftDarkRocks())));
         }
         return true;

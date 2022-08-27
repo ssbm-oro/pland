@@ -1,4 +1,5 @@
 import { Chest } from "$lib/z3r/logic/Location";
+import { log } from "$lib/z3r/logic/Logic";
 import Region from "$lib/z3r/logic/Region";
 import { LocationCollection } from "$lib/z3r/logic/Support/LocationCollection";
 import type World from "$lib/z3r/logic/World";
@@ -24,7 +25,7 @@ export class Mire extends Region {
         });
 
         this.can_enter = (_locations, items) => {
-            this.world.log(`Checking access for Mire Area. Moon Pearl: ${items.has("MoonPearl")}`)
+            log(`Checking access for Mire Area. Moon Pearl: ${items.has("MoonPearl")}`)
             return items.has("MoonPearl")
                 && items.canLiftDarkRocks() && items.canFly(this.world);
         };

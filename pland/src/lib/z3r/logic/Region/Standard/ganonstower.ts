@@ -1,5 +1,4 @@
 import Item from "../../Item";
-import type IItem from "../../Item";
 import type World from "../../World";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type { ItemCollection } from "../../Support/ItemCollection";

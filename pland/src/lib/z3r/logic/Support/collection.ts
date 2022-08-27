@@ -6,14 +6,11 @@ export interface Entry {
 export class Collection {
     protected items: Map<string, Entry> = new Map();
     protected world_id = 0;
-    protected log = (_message:string) => {};
 
-    public constructor(items:Entry[] = [], log: (message:string) => void = (_message:string) => {}) {
+    public constructor(items:Entry[] = []) {
         items.forEach(item => {
             this.items.set(item.name, item);
         });
-
-        this.log = log;
     }
 
     public get(key:string) {

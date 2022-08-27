@@ -6,7 +6,6 @@ import type World from "./World";
 export interface IItem extends Entry {
     world_id: number;
     value: string;
-    //public static world: World;
 }
 
 export default class Item implements IItem {

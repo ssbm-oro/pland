@@ -5,6 +5,7 @@ import type { Prize } from "./Location";
 import type { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
 import type { IDungeonItem, IItem } from "./Item";
+import { log } from "./Logic";
 
 export interface IRegion {
     name: string;
@@ -12,8 +13,8 @@ export interface IRegion {
     boss?: Boss;
 
     prize?: Prize;
-    can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
-    can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
+    can_complete: (location: LocationCollection, items: ItemCollection) => boolean;
+    can_enter: (location: LocationCollection, items: ItemCollection) => boolean;
     region_items: IItem[];
 }
 
@@ -23,8 +24,8 @@ export default class Region implements IRegion {
     boss?: Boss;
     world: World;
     prize?: Prize;
-    can_complete?: (location: LocationCollection, items: ItemCollection) => boolean;
-    can_enter?: (location: LocationCollection, items: ItemCollection) => boolean;
+    can_complete: (location: LocationCollection, items: ItemCollection) => boolean = () => {return true;};
+    can_enter: (location: LocationCollection, items: ItemCollection) => boolean = () => {return true;};
     region_items: IItem[];
 
     public constructor(name: string, world: World) {
@@ -41,35 +42,35 @@ export default class Region implements IRegion {
 
     canComplete(locations: LocationCollection, items: ItemCollection) {
         if (this.can_complete) {
-            this.world.log(`Checking if we can complete ${this.name}`);
+            log(`Checking if we can complete ${this.name}`);
             return this.can_complete(locations, items);
         }
-        this.world.log(`can_complete not defined. Assuming we can complete ${this.name}.`)
+        log(`can_complete not defined. Assuming we can complete ${this.name}.`)
         return true;
     }
 
     canEnter(locations: LocationCollection, items: ItemCollection) {
         if (this.can_enter) {
-            this.world.log(`Checking if we can enter ${this.name}`);
+            log(`Checking if we can enter ${this.name}`);
             return this.can_enter(locations, items);
         }
-        this.world.log(`can_enter not defined. Assuming we can enter ${this.name}.`)
+        log(`can_enter not defined. Assuming we can enter ${this.name}.`)
         return true;
     }
 
     canFill(item: IItem) {
-        this.world.log(`Checking if ${item.name} can be go in Region ${this.name}.`);
+        log(`Checking if ${item.name} can be go in Region ${this.name}.`);
         let from_world = item.world_id;
 
         // TODO: Add wild dungeon items
         const dungeonItem = item as IDungeonItem
         if (dungeonItem.dungeon)
         {
-            this.world.log(`Item is a dungeon item.`);
+            log(`Item is a dungeon item.`);
             return this.isRegionItem(item);
         }
 
-        this.world.log(`Item not a dungeon item.`);
+        log(`Item not a dungeon item.`);
         return true;
     }
 

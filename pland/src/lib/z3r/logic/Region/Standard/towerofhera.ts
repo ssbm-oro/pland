@@ -1,5 +1,4 @@
 import Item from "../../Item";
-import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Standing, Pendant } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";

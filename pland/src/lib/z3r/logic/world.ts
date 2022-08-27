@@ -6,6 +6,7 @@ import type { Z3rLocation } from "./Location";
 import type  Config from "./Config";
 import type { IRegion } from "./Region";
 import type Region from "./Region";
+import { log } from "./Logic";
 
 export interface IWorld {
     config: Config;
@@ -14,17 +15,17 @@ export interface IWorld {
 
 export default class World implements IWorld {
     regions: Map<string, Region> = new Map();
-    locations: LocationCollection = new LocationCollection([], this.log);
+    locations: LocationCollection;
     config: Config;
     win_condition?: (items: ItemCollection) => boolean;
     id: number = 1;
     inverted = false;
-    messages: string[]|null = null;
 
     public constructor(config:Config, messages: string[]|null = null)
     {
         this.config = config;
         messages = messages;
+        this.locations = new LocationCollection([]);
     }
 
     public initialize() {
@@ -57,7 +58,7 @@ export default class World implements IWorld {
         let requiredCrystals: IRegion[] = [];
 
 
-        let gtItems = new ItemCollection([], this.log);
+        let gtItems = new ItemCollection([]);
         this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
             gtItems.addItem((location as Z3rLocation).item!);
         });
@@ -71,22 +72,24 @@ export default class World implements IWorld {
         gtItems.addItem(Item.get('DefeatAgahnim', this)!)
         const nonGtItems = items.diff(gtItems);
 
+        log(`Checking if Aghanim1 is defeatable.`)
         if (this.getRegion('Hyrule Castle Tower')?.canComplete(this.locations, nonGtItems)) {
+            log(`Determined that Agahnim1 is defeatable.`)
             nonGtItems.addItem(Item.get('DefeatAgahnim',this)!)
         }
 
         this.regions.forEach(region => {
             if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonGtItems)) {
                 requiredPendants.push(region);
-                this.log(`Determined that ${region.name} must be a pendant based on GT items.`)
+                log(`Determined that ${region.name} must be a pendant based on GT items.`)
             }
         });
         if (requiredPendants.length > 3) {
-            this.log(`Too many pendants! Can't place crystals.`)
+            log(`Too many pendants! Can't place crystals.`)
             return false;
         }
 
-        const pendItems = new ItemCollection([], this.log);
+        const pendItems = new ItemCollection([]);
         pendItems.addItem(Item.get('PendantOfCourage', this)!);
         pendItems.addItem(Item.get('PendantOfWisdom', this)!);
         pendItems.addItem(Item.get('PendantOfPower', this)!);
@@ -99,11 +102,11 @@ export default class World implements IWorld {
         this.regions.forEach(region => {
             if (region.prize && region.prize.isCrystalPendant && !region.canComplete(this.locations, nonPendItems)) {
                 requiredCrystals.push(region);
-                this.log(`Determined that ${region.name} must be a crystal based on pendant items.`);
+                log(`Determined that ${region.name} must be a crystal based on pendant items.`);
             }
         });
         if (requiredCrystals.length > 7) {
-            this.log(`Too many crystals! Can't place pendants.`);
+            log(`Too many crystals! Can't place pendants.`);
             return false;
         }
 
@@ -111,7 +114,7 @@ export default class World implements IWorld {
         requiredCrystals.forEach(crystal => {
             requiredPendants.forEach(pendant => {
                 if (crystal == pendant) {
-                    this.log(`Paradox: ${crystal.name} must be both a pendant and a crystal.`);
+                    log(`Paradox: ${crystal.name} must be both a pendant and a crystal.`);
                     noDoubles = false;
                 }
             });
@@ -135,17 +138,13 @@ export default class World implements IWorld {
         let medallion = this.locations.get(location);
         if (!medallion || !medallion.item) {
             haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake');
-            this.log(`${location} not set. HaveMedallion based on any medallion: ${haveMedallion}`);
+            log(`${location} not set. HaveMedallion based on any medallion: ${haveMedallion}`);
         }
         else {
             haveMedallion = items.has(medallion.item.name);
-            this.log(`${location} is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
+            log(`${location} is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
         }
         return haveMedallion;
-    }
-
-    log(message: string) {
-        if (this.messages) this.messages.push(message);
     }
 
     toJSON() {

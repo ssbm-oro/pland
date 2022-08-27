@@ -6,9 +6,12 @@ import type World from "./World";
 import { items } from '$lib/data/json/alttpr-customizer-schema.json';
 
 export function checkPlants(world: World, selectedItems: IItem[], selectedLocations: ILocation[]) {
-    world.messages = [];
+    messages = [];
     let logicTestResult = false;
     try {
+        if (selectedItems.length != selectedLocations.length) {
+            throw Error('Different lengths of item array and location array received!')
+        }
         let plantable = true;
         let available = new ItemCollection([
             Item.get('RescueZelda',world)!,
@@ -24,9 +27,9 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             Item.get('PendantOfPower',world)!,
             Item.get('DefeatAgahnim',world)!,
             Item.get('DefeatAgahnim2',world)!,
-        ], world.log);
+        ]);
         available.setChecksForWorld(world);
-        let planted = new LocationCollection();
+        let planted = new LocationCollection([]);
 
         items.forEach(item => {
             if (item.count && item.count > 0)
@@ -48,34 +51,48 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
         for(let i = 0; i < selectedItems.length; i++) {
             const location = world.locations.get(selectedLocations[i]!.name)!;
             const item = selectedItems[i]!;
-            world.log(`Attempting to plant ${item.value} in ${location.name}.`);
+            log(`Attempting to plant ${item.value} in ${location.name}.`);
             if (!available.has(item.value.slice(0,-2))) {
-                world.log(`${item.value} not available to plant.`);
+                log(`${item.value} not available to plant.`);
                 plantable = false;
                 break;
             }
 
             if (location.hasItem() && !location.hasItem(item)) {
-                world.log(`${location.name} already has item planted: ${location.item?.name}.`);
+                log(`${location.name} already has item planted: ${location.item?.name}.`);
                 plantable = false;
                 break;
             }
 
             available.removeItem(item);
 
+            // if another item is in logic, we can get use it to plant this item
+            const availablePlants: IItem[] = []
+            planted.forEach(location => {
+                if (location.canAccess(available, planted)) {
+                    available.addItem(location.item!);
+                    availablePlants.push(location.item!);
+                }
+            });
+
             plantable = plantable && location.canFill(item, available, true, planted)!;
 
+            // remove the planted items for next iteration
+            availablePlants.forEach(item => {
+                available.removeItem(item);
+            })
+
             if (!plantable) {
-                world.log(`Could not plant ${item.name} in ${location.name}.`)
+                log(`Could not plant ${item.name} in ${location.name}.`)
                 break;
             }
             else {
                 if (location.fill(item, available)) {
-                    world.log(`Planted ${item.name} at ${location.name}.`)
+                    log(`Planted ${item.name} at ${location.name}.`)
                     planted.addItem(location);
                 }
                 else {
-                    world.log(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
+                    log(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
                 }
             }
         }
@@ -94,12 +111,18 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
         logicTestResult = plantable;
     }
     catch (err:any) {
-        world.log(err);
+        log(err);
     }
     finally {
         return {
             plantable: logicTestResult,
-            messages: world.messages
+            messages: messages
         }
     }
+}
+
+let messages: string[] = [];
+
+export function log(message: string) {
+    messages.push(message);
 }

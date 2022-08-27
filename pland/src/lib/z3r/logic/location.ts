@@ -3,10 +3,10 @@ import type { Entry } from "./Support/Collection";
 import type { IItem } from "./Item";
 import type Region from "./Region";
 import { LocationCollection } from "./Support/LocationCollection";
+import { log } from "./Logic";
 
 export interface ILocation extends Entry {
     item: IItem | null;
-    messages: string[]|null;
     isCrystalPendant: boolean;
     always_callback?: (item: IItem, items: ItemCollection) => boolean;
     fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
@@ -17,18 +17,16 @@ export class Z3rLocation implements ILocation {
     name: string;
     region: Region;
     item: IItem | null;
-    messages: string[]|null;
     isCrystalPendant: boolean;
 
     always_callback?: (item: IItem, items: ItemCollection) => boolean;
     fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
     requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
 
-    public constructor(name: string, region: Region, messages: string[]|null = null) {
+    public constructor(name: string, region: Region) {
         this.name = name;
         this.region = region;
         this.item = null;
-        this.messages = messages;
         this.isCrystalPendant = false;
     }
 
@@ -61,7 +59,7 @@ export class Z3rLocation implements ILocation {
             plants.filter(location => location.canAccess(items)).forEach(accessible => {
                 let accessible_item = (accessible as Z3rLocation).item;
                 if ((accessible as Z3rLocation).region.canEnter(this.region.world.locations, items) && accessible_item) {
-                    this.log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
+                    log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
                     items.addItem(accessible_item!);
                 }
             });
@@ -80,18 +78,18 @@ export class Z3rLocation implements ILocation {
     }
 
     public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([])) {
-        let total_locations = locations.merge(this.region.locations);
+        const total_locations = locations.merge(this.region.locations);
 
-        this.log(`Checking region access for ${this.region.name}.`);
+        log(`Checking region access for ${this.region.name}.`);
         if (!this.region.canEnter(total_locations, items))
         {
-            this.log(`Cannot access region.`);
+            log(`Cannot access region.`);
             return false;
         }
 
-        this.log(`Checking requirement callback for ${this.name}.`);
+        log(`Checking requirement callback for ${this.name}.`);
         if (!this.requirement_callback || this.requirement_callback.call(this, total_locations, items)) {
-            this.log(`Can access requirements.`);
+            log(`Can access requirements.`);
             return true
         }
 
@@ -104,10 +102,6 @@ export class Z3rLocation implements ILocation {
 
     public getName() {
         return this.name + ":" + this.region.world.id;
-    }
-
-    public log(message:string) {
-        this.region.world.log(message);
     }
 
     public toJSON() {
