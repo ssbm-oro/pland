@@ -10,6 +10,7 @@
     import type { Z3rLocation } from '$lib/z3r/logic/Location';
     import type { PageData} from './$types';
     import { checkPlants } from '$lib/z3r/logic/Logic'
+    import { Button, Card } from '@brainandbones/skeleton';
 
     let selectedPreset: string = '';
     let world: World;
@@ -72,24 +73,28 @@
     <Presets {presets} bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
     <br/><br/>
     {#if world}
-        <h2>{selectedPresetData.goal_name}</h2>
-        <p>{selectedPresetData.description}</p>
-        <br/><br/>
-        <button on:click="{addPlant}">Add Plant</button>
-        {#each selectedItems as selectedItem, index }
-            <br/><br/>
-            <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}"></Plant>
-            <br/>
-            <button on:click="{() => removePlant(index)}">Remove Plant</button>
-        {/each}
-        <br/><br/>
-        <button on:click="{checkPlantsClick}">Check Plants</button>
-        {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
-        <br/>
-        <ul>
-            {#each logicTestMessages as message}
-                <li>{message}</li>
+        <Card>
+            <svelte:fragment slot="header">
+                <h2>{selectedPresetData.goal_name}</h2>
+                <p>{selectedPresetData.description}</p>
+                <br/><br/>
+            </svelte:fragment>
+            <Button variant="ring-accent" on:click="{addPlant}">Add Plant</Button>
+            {#each selectedItems as selectedItem, index }
+                <br/><br/>
+                <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}"></Plant>
+                <br/>
+                <Button variant="ring-warning" on:click="{() => removePlant(index)}">Remove Plant</Button>
             {/each}
-        </ul>
+            <br/><br/>
+            <Button variant="filled-primary" on:click="{checkPlantsClick}">Check Plants</Button>
+            {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
+            <br/>
+            <ul>
+                {#each logicTestMessages as message}
+                    <li>{message}</li>
+                {/each}
+            </ul>
+        </Card>
     {/if}
 </main>

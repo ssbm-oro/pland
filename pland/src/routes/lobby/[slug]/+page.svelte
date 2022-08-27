@@ -13,7 +13,7 @@
     import type { IItem } from "$lib/z3r/logic/Item";
     import { checkPlants } from "$lib/z3r/logic/Logic";
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
-    import { Badge, List, ListItem, Card } from "@brainandbones/skeleton"
+    import { Badge, List, ListItem, Card, Button } from "@brainandbones/skeleton"
 
 
     export let data: PageData;
@@ -89,6 +89,7 @@
                 selectedItems = data.plantedItems;
                 selectedLocations = data.plantedLocations;
                 userAsEntrant.ready = data.ready;
+                await invalidate($page.url.toString());
             }
             else {
                 alert('A conflict was detected! Check your plants!')
@@ -112,13 +113,13 @@
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
     {#if lobby.ready_to_roll}
-        <button on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</button>
+        <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
     {/if}
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if userInLobby}
-        <button on:click='{leaveLobby}'>Leave</button>
+        <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
     {:else}
-        <button on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</button>
+        <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
     {/if}
     <Card>
         <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
@@ -145,9 +146,9 @@
                 <br/>
             {/each}
             {#if !userAsEntrant.ready}
-                <button on:click="{submitPlants}">Submit</button>
+                <Button variant="filled-primary" on:click="{submitPlants}">Submit</Button>
             {:else}
-                <button on:click="{resetPlants}">Reset</button>
+                <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
             {/if}
         </Card>
     {/if}

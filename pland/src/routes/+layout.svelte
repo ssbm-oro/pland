@@ -14,7 +14,6 @@
     $: user = data.user;
 
     let intervalId: NodeJS.Timer;
-    $: discord_avatar_uri = user && user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : undefined;
 
 	const drawer = writable(false)
 
@@ -53,12 +52,12 @@
 
 	<svelte:fragment slot="header">
 		<div class="flex">
-			<GradientHeading tag="h3">pland</GradientHeading>
+			<a href="/"><GradientHeading tag="h3">pland</GradientHeading></a>
 			<LightSwitch />
 			{#if !user}
 				<Button variant="ring-accent" on:click="{() => (window.location.href = discord_login_uri)}">
 					<svelte:fragment slot="lead"><Icon icon="bxl:discord-alt"/></svelte:fragment>
-					Login with Discord
+					Login
 				</Button>
 			{:else}
 				<Menu>

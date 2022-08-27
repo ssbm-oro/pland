@@ -1,29 +1,18 @@
 <script lang="ts">
-    import Icon from '@iconify/svelte';
     import type { ILocation } from '$lib/z3r/logic/Location';
-    import { items } from '$lib/data/json/alttpr-customizer-schema.json';
+    import Z3rItemSelector from './Z3rItemSelector.svelte';
+    import type { SelectedItem } from './ComponentInterfaces';
+    import Icon from '@iconify/svelte';
 
-    export let selectedItem:any;
+    export let selectedItem:SelectedItem;
     export let selectedLocation:any;
     export let locations: ILocation[];
     export let disabled:boolean = false;
 </script>
 
 <main>
-    {#if !disabled}
-        <select bind:value="{selectedItem}">
-            {#each items as item (item.value)}
-                {#if item.count && item.count > 0}
-                    <option value="{item}">{item.value.replace(':1','')}</option>
-                {/if}
-            {/each}
-        </select>
-    {:else}
-        {selectedItem.value.replace(':1','')}
-    {/if}
-    {#if selectedItem && selectedItem.icon && selectedItem.icon.icon }
-        <Icon icon="{selectedItem.icon.icon}" color="{selectedItem.icon.color}" vFlip="{selectedItem.icon.vFlip}" hFlip="{selectedItem.icon.hFlip}"></Icon>
-    {/if}
+    <Z3rItemSelector bind:Item={selectedItem} {disabled} />
+    <div class="relative left-8"><Icon icon="el:arrow-down" width="60"></Icon></div>
     {#if !disabled}
         <br/>
         <select bind:value="{selectedLocation}">

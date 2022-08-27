@@ -10,9 +10,12 @@ import { browser } from '$app/env'
 import { checkPlants } from "./z3r/logic/Logic";
 
 export const Lobbies = new Map<string, Lobby>();
+let readOnly = false;
 
 export async function reloadLobbies() {
     if (Lobbies.size == 0) {
+        fs.access('lobbies', fs.constants.W_OK, () => { readOnly = true});
+        if (readOnly) return;
         if (fs.existsSync('lobbies')) {
             fs.readdirSync('lobbies').forEach(async lobbyFile => {
                 let file = fs.readFileSync(`lobbies/${lobbyFile}`).toString();
@@ -54,7 +57,7 @@ export interface ILobby {
 }
 
 function saveLobby(lobby: Lobby) {
-    if (!browser) {
+    if ((!browser) && (!readOnly)) {
         fs.writeFileSync(`lobbies/${lobby.lobby!.slug}`, JSON.stringify(lobby));
     }
 }
