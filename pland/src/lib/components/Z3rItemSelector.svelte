@@ -7,10 +7,8 @@
 
 
     const selectedItem:Writable<string> = writable(items[0]!.name);
-    $: selection = items.filter(item => item.name === $selectedItem)[0] as SelectedItem;
-    $: console.log(selection);
-    export const Item = selection;
-    $: console.log(Item);
+    export let Item: SelectedItem;
+    $: Item = items.filter(item => item.name === $selectedItem)[0] as SelectedItem;
     export let disabled:boolean = false;
 
     $: search = undefined as string | undefined;
@@ -34,10 +32,10 @@
 <main>
     {#if !disabled}
         <Card>
-            {#if selection.name != "Random"}
+            {#if Item.name != "Random"}
                 <Button variant="ring-primary" on:click={changeSelection}>
                     <svelte:fragment slot="lead">
-                        <Icon icon={selection.icon?.icon} color={selection.icon?.color} hFlip={selection.icon?.hFlip} vFlip={selection.icon?.vFlip}></Icon>
+                        <Icon icon={Item.icon?.icon} color={Item.icon?.color} hFlip={Item.icon?.hFlip} vFlip={Item.icon?.vFlip}></Icon>
                     </svelte:fragment>
                     {$selectedItem}
                 </Button>
@@ -56,11 +54,6 @@
             ></Paginator>
             {/if}
         </Card>
-    {:else}
-        {Item?.value.replace(':1','')}
-    {/if}
-    {#if Item && Item.icon && Item.icon.icon }
-        <Icon icon="{Item.icon.icon}" color="{Item.icon.color}" vFlip="{Item.icon.vFlip}" hFlip="{Item.icon.hFlip}"></Icon>
     {/if}
 </main>
 
