@@ -98,11 +98,16 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
         }
 
         if (plantable) {
-            planted.to_array().map(location => location as Z3rLocation).forEach(location => {
-                if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
-                    available.addItem(location.item);
-                }
-            });
+
+            // We already checked and saw we can plant them? Surely that means we can access them...
+            // planted.to_array().map(location => location as Z3rLocation).forEach(location => {
+            //     if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
+            //         available.addItem(location.item);
+            //     }
+            // });
+
+            planted.forEach(location => available.addItem(location.item!))
+
             plantable &&= world.canPlaceMedallions(available);
             plantable &&= world.canPlaceBosses();
             plantable &&= world.canPlacePrizes(available);

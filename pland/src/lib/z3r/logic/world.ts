@@ -60,7 +60,7 @@ export default class World implements IWorld {
 
         let gtItems = new ItemCollection([]);
         this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
-            gtItems.addItem((location as Z3rLocation).item!);
+            gtItems.addItem(location.item!);
         });
         gtItems.addItem(Item.get('Crystal1', this)!)
         gtItems.addItem(Item.get('Crystal2', this)!)

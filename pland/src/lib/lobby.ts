@@ -162,7 +162,7 @@ export default class Lobby {
     }
 
     async checkAllReady() {
-        if (this.lobby?.entrants.every(entrant => entrant.ready)) {
+        if ((this.lobby.entrants.length == this.lobby.max_entrants) && (this.lobby?.entrants.every(entrant => entrant.ready))) {
             const allItemsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedItems);
             console.log(allItemsPlanted);
             const allLocationsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedLocations);
