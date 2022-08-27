@@ -12,6 +12,8 @@
     import type { ILocation } from '$lib/z3r/logic/Location';
     import type { IItem } from "$lib/z3r/logic/Item";
     import { checkPlants } from "$lib/z3r/logic/Logic";
+    import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
+    import { Badge, List, ListItem, Card } from "@brainandbones/skeleton"
 
 
     export let data: PageData;
@@ -118,22 +120,35 @@
     {:else}
         <button on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</button>
     {/if}
-    <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
-    <ul>
-        {#each lobby.entrants as entrant }{#key userAsEntrant}
-            <li>{entrant.username}#{entrant.discriminator} - {#if entrant.ready}✅{:else}☑️{/if}</li>
-        {/key}{/each}
-    </ul>
+    <Card>
+        <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
+        <List>
+            {#each lobby.entrants as entrant }{#key userAsEntrant}
+                <ListItem>
+                    <Card>
+                        <Badge>
+                            <DiscordAvatar user={{id:entrant.discord_id, ...entrant}} size="sm"/>
+                            <svelte:fragment slot="trail">{#if entrant.ready}🟢{:else}⚪️{/if}</svelte:fragment>
+                        </Badge>
+                        {entrant.username}#{entrant.discriminator}
+                    </Card>
+                </ListItem>
+            {/key}{/each}
+        </List>
+    </Card>
     {#if userAsEntrant && world}
-        <p>Plants</p>
-        {#each selectedItems as selectedItem, index}
-            <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" disabled="{userAsEntrant.ready}"></Plant>
-            <br/>
-        {/each}
-        {#if !userAsEntrant.ready}
-            <button on:click="{submitPlants}">Submit</button>
-        {:else}
-            <button on:click="{resetPlants}">Reset</button>
-        {/if}
+    <br/><br/>
+        <Card>
+            <p>Plants</p>
+            {#each selectedItems as selectedItem, index}
+                <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" disabled="{userAsEntrant.ready}"></Plant>
+                <br/>
+            {/each}
+            {#if !userAsEntrant.ready}
+                <button on:click="{submitPlants}">Submit</button>
+            {:else}
+                <button on:click="{resetPlants}">Reset</button>
+            {/if}
+        </Card>
     {/if}
 </main>

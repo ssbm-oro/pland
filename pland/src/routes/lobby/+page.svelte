@@ -4,6 +4,8 @@
     import type { PageData} from './$types';
     import { page } from "$app/stores";
     import { get_loading_message } from "$lib/utils/loadingMessages";
+    import { List, ListItem, Button, RadioGroup, RadioItem, Card, Menu } from '@brainandbones/skeleton';
+    import { writable, type Writable } from "svelte/store";
 
     export let data: PageData;
     $: lobbies = data.lobbies;
@@ -11,13 +13,13 @@
     $: presets = data.presets;
 
     let selectedPreset: string = '';
-    let maxPlayers: number = 2;
-    let numPlants: number = 2;
+    const maxPlayers: Writable<number> = writable(2);
+    const numPlants: Writable<number> = writable(2);
     let loading_message = '';
 
     async function createLobby() {
         loading_message = get_loading_message();
-        const res = await fetch(`/lobby?preset=${selectedPreset}&maxPlayers=${maxPlayers}&numPlants=${numPlants}`, { method:'POST' } );
+        const res = await fetch(`/lobby?preset=${selectedPreset}&maxPlayers=${$maxPlayers}&numPlants=${$numPlants}`, { method:'POST' } );
         if (res.redirected) {
             goto(res.url);
         }
@@ -30,20 +32,46 @@
 </script>
 
 <main>
-    <Presets bind:selectedPreset bind:presets></Presets>
-    Max Entrants: <input bind:value="{maxPlayers}" type="number" min="2" max="8"><br/>
-    Num Plants: <input bind:value="{numPlants}" type="number" min="1" max="2"><br/>
-    {#if loading_message === ''}
-        <button on:click="{createLobby}" disabled="{!user}">Create Lobby</button>
-    {:else}
-        {loading_message}
-    {/if}
-    <ul>
-        {#each lobbies as lobby}
-            <li>
-                <a href='lobby/{lobby.slug}'>{lobby.slug}</a> - {lobby.preset} - {lobby.entrants.length} / {lobby.max_entrants} entrants.
-                {#if user} <button on:click="{() => deleteLobby(lobby.slug)}">Delete</button>{/if}
-            </li>
-        {/each}
-    </ul>
+    <Card>
+        <h3>Create Lobby</h3>
+        <Presets bind:selectedPreset bind:presets></Presets>
+        <br/>
+        <Menu select={true} open={false} origin='tl'>
+            <Button slot="trigger">Max Entrants: {$maxPlayers}</Button>
+            <Card slot="content">
+                <List tag="nav" selected={maxPlayers}>
+                    <ListItem value={2}>Two</ListItem>
+                    <ListItem value={3}>Three</ListItem>
+                    <ListItem value={4}>Four</ListItem>
+                    <ListItem value={5}>Five</ListItem>
+                    <ListItem value={6}>Six</ListItem>
+                    <ListItem value={7}>Seven</ListItem>
+                    <ListItem value={8}>Eight</ListItem>
+                </List>
+            </Card>
+        </Menu>
+        Num Plants: 
+        <RadioGroup selected="{numPlants}">
+            <RadioItem value={1}>One</RadioItem>
+            <RadioItem value={2}>Two</RadioItem>
+        </RadioGroup>
+        <br/>
+        {#if loading_message === ''}
+            <br/>
+            <Button background="bg-primary-500" on:click="{createLobby}" disabled="{!user}">Create Lobby</Button>
+        {:else}
+            {loading_message}
+        {/if}
+    </Card><br/>
+    <Card>
+        <h3>Join a Lobby</h3>
+        <List tag="nav">
+            {#each lobbies as lobby}
+                <ListItem href='lobby/{lobby.slug}'>
+                    {lobby.slug} - {lobby.preset} - {lobby.entrants.length} / {lobby.max_entrants} entrants.
+                    {#if user} <Button background="bg-warning-500" on:click="{() => deleteLobby(lobby.slug)}">Delete</Button>{/if}
+                </ListItem>
+            {/each}
+        </List>
+    </Card>
 </main>

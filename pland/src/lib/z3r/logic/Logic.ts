@@ -1,5 +1,5 @@
 import Item, { type IItem } from "./Item";
-import type { ILocation, Z3rLocation } from "./Location";
+import type { ILocation } from "./Location";
 import { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
 import type World from "./World";
