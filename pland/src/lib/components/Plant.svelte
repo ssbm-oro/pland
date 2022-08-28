@@ -9,7 +9,6 @@ import Z3rLocationSelector from './Z3rLocationSelector.svelte';
     export let selectedLocation:any;
     export let locations: ILocation[];
     export let disabled:boolean = false;
-    $: console.log(selectedItem);
 </script>
 
 <main>

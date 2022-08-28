@@ -50,7 +50,7 @@
     }
 
     function addPlant() {
-        selectedItems.push({world_id:world.id, value:'', name:''});
+        selectedItems.push({world_id:world.id, value:'', name:'Random'});
         selectedLocations.push();
         selectedItems = selectedItems;
     }
