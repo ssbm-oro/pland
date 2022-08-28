@@ -32,7 +32,7 @@
 <main>
     <Card>
         {#if disabled || Item && Item.name != "Random"}
-            <Button variant="filled-primary" on:click={changeSelection} {disabled}>
+            <Button variant="ring-primary" on:click={changeSelection} {disabled}>
                 <svelte:fragment slot="lead">
                     <Icon icon={Item.icon?.icon} color={Item.icon?.color} hFlip={Item.icon?.hFlip} vFlip={Item.icon?.vFlip}></Icon>
                 </svelte:fragment>
