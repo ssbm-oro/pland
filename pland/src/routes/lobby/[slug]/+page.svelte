@@ -77,19 +77,15 @@
 
     async function submitPlants() {
         if (userAsEntrant) {
-            console.log(selectedItems);
             let {plantable} = checkPlants(world, selectedItems, selectedLocations)
             if (plantable) {
                 let params = new URLSearchParams();
                 params.append('plantedItems', JSON.stringify(selectedItems));
                 params.append('plantedLocations', JSON.stringify(selectedLocations));
                 params.append('ready', 'true');
-                let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
-                let data = await res.json();
-                selectedItems = data.plantedItems;
-                selectedLocations = data.plantedLocations;
-                userAsEntrant.ready = data.ready;
-                await invalidate($page.url.toString());
+                await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
+                let res = await fetch(`/lobby/${$page.params['slug']}/entrants`);
+                lobby.entrants = await res.json();
             }
             else {
                 alert('A conflict was detected! Check your plants!')
@@ -100,7 +96,8 @@
     async function resetPlants() {
         if (userAsEntrant) {
             await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'DELETE' });
-            await invalidate($page.url.toString());
+            let res = await fetch(`/lobby/${$page.params['slug']}/entrants`);
+            lobby.entrants = await res.json();
         }
     }
 
@@ -112,7 +109,7 @@
 <main>
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
-    {#if lobby.ready_to_roll}
+    {#if userAsEntrant && userAsEntrant.ready || lobby.ready_to_roll}
         <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
     {/if}
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
