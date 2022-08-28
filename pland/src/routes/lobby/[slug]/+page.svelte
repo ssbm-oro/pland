@@ -137,7 +137,7 @@
         <Card>
             <p>Plants</p>
             {#each selectedItems as selectedItem, index}
-                <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" disabled="{userAsEntrant.ready}"></Plant>
+                <Plant bind:selectedItem bind:selectedLocation={selectedLocations[index]} locations={world.locations.to_array()} {world} disabled={userAsEntrant.ready}></Plant>
                 <br/>
             {/each}
             {#if !userAsEntrant.ready}

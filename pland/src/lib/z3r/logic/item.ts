@@ -220,6 +220,9 @@ export default class Item implements IItem {
     public static addItem(item: Item) {
 
     }
+    static isPrize(item: IItem) {
+        return item instanceof IPrize;
+    }
 }
 
 

@@ -12,15 +12,16 @@
     export let disabled:boolean = false;
 
     $: search = undefined as string | undefined;
-    $: itemsPaginated = items.filter(item => item.count && item.count > 0).filter(item => item.name.toLowerCase().includes(search ? search.toLowerCase(): '')).slice(
+    $: itemsFiltered = items.filter(item => item.count && item.count > 0).filter(item => item.name.toLowerCase().includes(search ? search.toLowerCase(): ''))
+    $: itemsPaginated = itemsFiltered.slice(
         page.offset * page.limit, // start
         page.offset * page.limit + page.limit // end
     );
 
-    const page = {
+    $: page = {
         offset: 0,
         limit: 10,
-        size: items.filter(item => item.count && item.count > 0).length,
+        size: itemsFiltered.length,
         amounts: [5,10,20,40],
     };
 

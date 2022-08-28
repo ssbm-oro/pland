@@ -32,7 +32,7 @@ export class East extends Region {
         this.locations.get("Floating Island")?.setRequirements((locations, items) => {
             return (items.has("MagicMirror")
                 && (items.has("MoonPearl") && (items.canBombThings()) && items.canLiftRocks())
-                && this.world.getRegion("East Dark Death Mountain")!.canEnter(locations, items));
+                && this.world.getRegion("East Dark World Death Mountain")!.canEnter(locations, items));
         });
 
         this.can_enter = (locations: LocationCollection, items: ItemCollection) => {

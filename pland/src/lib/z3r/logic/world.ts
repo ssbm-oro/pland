@@ -42,7 +42,10 @@ export default class World implements IWorld {
     }
 
     canPlant(item: Item, location: Z3rLocation): boolean {
-        return location.region.canFill(item);
+        if (location) {
+            return location.region.canFill(item);
+        }
+        return false;
     }
 
 

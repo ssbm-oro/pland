@@ -4,7 +4,8 @@ import type World from "./World";
 import type { Prize } from "./Location";
 import type { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
-import type { IDungeonItem, IItem } from "./Item";
+import  type { IDungeonItem, IItem } from "./Item";
+import Item from './Item';
 import { log } from "./Logic";
 
 export interface IRegion {

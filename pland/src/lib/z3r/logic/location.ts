@@ -4,6 +4,7 @@ import type { IItem } from "./Item";
 import type Region from "./Region";
 import { LocationCollection } from "./Support/LocationCollection";
 import { log } from "./Logic";
+import Item from "./Item";
 
 export interface ILocation extends Entry {
     item: IItem | null;
@@ -53,6 +54,7 @@ export class Z3rLocation implements ILocation {
     }
 
     public canFill(newItem: IItem, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
+        if (this.isCrystalPendant && !Item.isPrize(newItem)) return false;
         if (check_access) {
             items = items.clone();
 

@@ -82,7 +82,7 @@
             <Button variant="ring-accent" on:click="{addPlant}">Add Plant</Button>
             {#each selectedItems as selectedItem, index }
                 <br/><br/>
-                <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}"></Plant>
+                <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" {world}></Plant>
                 <br/>
                 <Button variant="ring-warning" on:click="{() => removePlant(index)}">Remove Plant</Button>
             {/each}
