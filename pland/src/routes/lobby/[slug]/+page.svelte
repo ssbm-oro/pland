@@ -84,8 +84,7 @@
                 params.append('plantedLocations', JSON.stringify(selectedLocations));
                 params.append('ready', 'true');
                 await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
-                let res = await fetch(`/lobby/${$page.params['slug']}/entrants`);
-                lobby.entrants = await res.json();
+                invalidate();
             }
             else {
                 alert('A conflict was detected! Check your plants!')
@@ -96,8 +95,7 @@
     async function resetPlants() {
         if (userAsEntrant) {
             await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'DELETE' });
-            let res = await fetch(`/lobby/${$page.params['slug']}/entrants`);
-            lobby.entrants = await res.json();
+            invalidate();
         }
     }
 
@@ -109,7 +107,7 @@
 <main>
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
-    {#if userAsEntrant && userAsEntrant.ready || lobby.ready_to_roll}
+    {#if (lobby.ready_to_roll && !userInLobby) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
         <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
     {/if}
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>

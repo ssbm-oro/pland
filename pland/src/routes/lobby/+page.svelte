@@ -27,7 +27,7 @@
 
     async function deleteLobby(slug:string) {
         await fetch(`/lobby/${slug}`, { method:'DELETE' } );
-        invalidate($page.url.href);
+        invalidate();
     }
 </script>
 

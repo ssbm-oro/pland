@@ -124,7 +124,7 @@ export default class Lobby {
 
     public leave(user: APIUser) {
         this.lobby.entrants.splice(this.lobby.entrants.findIndex(entrant => entrant.discord_id == user.id));
-
+        this.checkAllReady();
         saveLobby(this);
     }
 
@@ -165,7 +165,7 @@ export default class Lobby {
     }
 
     async checkAllReady() {
-        if ((this.lobby.entrants.length == this.lobby.max_entrants) && (this.lobby?.entrants.every(entrant => entrant.ready))) {
+        if ((this.lobby.entrants.length >= 2) && (this.lobby?.entrants.every(entrant => entrant.ready))) {
             const allItemsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedItems);
             const allLocationsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedLocations);
             const {plantable, messages} = checkPlants(this.world as World, allItemsPlanted, allLocationsPlanted);
@@ -179,9 +179,10 @@ export default class Lobby {
                     this.unplantEntrant(entrant);
                 })
             }
-            saveLobby(this);
             return (plantable)
         }
+        this.lobby.ready_to_roll = false;
+        saveLobby(this);
         return false;
     }
 

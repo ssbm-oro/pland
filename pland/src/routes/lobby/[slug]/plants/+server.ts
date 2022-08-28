@@ -43,21 +43,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     await lobby.initialize();
     let {plantable, messages} = await lobby.plant(user, plantedItems, plantedLocations);
 
-    if (plantable) {
-        return json({
-            plantedItems: entrant.plantedItems,
-            plantedLocations: entrant.plantedLocations,
-            ready: entrant.ready
-        })
-    }
-    else {
-        //messages.map(console.log);
-        return json({
-            plantedItems: Array(),
-            plantedLocations: Array(),
-            ready: false
-        });
-    }
+    return new Response();
 }
 
 export const DELETE: RequestHandler = async( {params, locals } ) => {
@@ -75,5 +61,5 @@ export const DELETE: RequestHandler = async( {params, locals } ) => {
     await lobby.initialize();
     lobby.unplant(user);
 
-    return new Response(undefined);
+    return new Response();
 }

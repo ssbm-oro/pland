@@ -20,7 +20,7 @@
     const page = {
         offset: 0,
         limit: 10,
-        size: items.length,
+        size: items.filter(item => item.count && item.count > 0).length,
         amounts: [5,10,20,40],
     };
 
