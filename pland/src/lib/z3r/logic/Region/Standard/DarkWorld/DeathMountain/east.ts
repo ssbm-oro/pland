@@ -41,7 +41,7 @@ export class East extends Region {
         });
 
         this.can_enter = (locations, items) => {
-            return items.has("RescueZelda")
+            return items.has("RescueZelda") && items.has('MoonPearl')
                 && (items.canLiftDarkRocks() && this.world.getRegion("East Death Mountain")!.canEnter(locations, items));
         };
 

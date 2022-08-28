@@ -13,7 +13,7 @@
     import type { IItem } from "$lib/z3r/logic/Item";
     import { checkPlants } from "$lib/z3r/logic/Logic";
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
-    import { Badge, List, ListItem, Card, Button } from "@brainandbones/skeleton"
+    import { Badge, List, ListItem, Card, Button, Alert } from "@brainandbones/skeleton"
 
 
     export let data: PageData;
@@ -99,18 +99,26 @@
         }
     }
 
+    let rollAlertVisible = false;
+    let rollAlertMessage = `It looks like this seed would roll. I haven't implemented
+                            that because I want to test what's here so far more. 
+                            Let's make another lobby and try again!`
     async function rollSeed() {
-        alert('This is next!');
+        rollAlertVisible = true;
     }
 </script>
 
 <main>
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
+    <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if (lobby.ready_to_roll && !userInLobby) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
         <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
+        <Alert bind:visible={rollAlertVisible}>
+            <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
+            <svelte:fragment slot="message">{rollAlertMessage}</svelte:fragment>
+        </Alert>
     {/if}
-    <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if userInLobby}
         <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
     {:else}

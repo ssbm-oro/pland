@@ -40,11 +40,11 @@ export class South extends Region {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Stumpy")?.setRequirements((_locations, items) => {
+        this.locations.get("Stumpy")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Digging Game")?.setRequirements((_locations, items) => {
+        this.locations.get("Digging Game")?.setRequirements((_locations, items) => {
             return items.has("MoonPearl");
         });
 

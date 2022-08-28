@@ -24,7 +24,7 @@ export class NorthEast extends Region {
 
     override initialize() {
         this.locations.get("Catfish")?.setRequirements((_locations, items) => {
-            return items.canLiftRocks();
+            return items.has('MoonPearl') && items.canLiftRocks();
         });
 
         const pyramidRequirements = (locations: LocationCollection, items: ItemCollection) => {

@@ -12,4 +12,14 @@ export class Medallion extends Region {
             new MedallionLocation("Misery Mire Medallion", this)
         ]);
     }
+
+    public override initialize() {
+        this.locations.get("Turtle Rock Medallion")?.setFillCriteria((item, _locations) => {
+            return ['Ether','Bombos','Quake'].includes(item.name);
+        });
+        this.locations.get("Misery Mire Medallion")?.setFillCriteria((item, _locations) => {
+            return ['Ether','Bombos','Quake'].includes(item.name);
+        });
+        return this;
+    }
 }

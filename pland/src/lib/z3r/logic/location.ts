@@ -53,6 +53,10 @@ export class Z3rLocation implements ILocation {
         this.requirement_callback = requirement_callback;
     }
 
+    public setFillCriteria(fill_callback: (item: IItem, locations: LocationCollection) => boolean) {
+        this.fill_callback = fill_callback;
+    }
+
     public canFill(newItem: IItem, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
         if (this.isCrystalPendant && !Item.isPrize(newItem)) return false;
         if (check_access) {
@@ -146,7 +150,11 @@ export class Ether extends Drop {
 }
 
 export class Fountain extends Z3rLocation { 
-    // purposefully empty class
+    public constructor(name: string, region: Region) {
+        super(name, region);
+        // TODO: Fill Criteria should be a bottle
+        this.setFillCriteria(() => {return false;});
+    }
 }
 
 export class Medallion extends Z3rLocation { 
@@ -192,7 +200,10 @@ export class Pendant extends Prize {
 }
 
 export class Event extends Prize { 
-    // purposefully empty class
+    public constructor(name: string, region: Region) {
+        super(name, region);
+        this.setFillCriteria(() => {return false;});
+    }
 }
 
 export class Standing extends Z3rLocation { 
