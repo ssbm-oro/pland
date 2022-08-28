@@ -9,6 +9,7 @@
 	import { Button, LightSwitch, Menu, Card, Drawer, Divider, List, ListItem, GradientHeading } from '@brainandbones/skeleton';
 	import { writable } from "svelte/store";
 	import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
+import { invalidate } from "$app/navigation";
 
     export let data: LayoutData;
     $: user = data.user;
@@ -37,8 +38,7 @@
 
     async function logout() {
 		await fetch('/api/user/logout', {method: 'POST' });
-
-		window.location.href = '/';
+		invalidate();
 	}
 
     const redirect_uri = env.PUBLIC_DISCORD_REDIRECT_URI;

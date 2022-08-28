@@ -14,11 +14,9 @@ let readOnly = false;
 
 export async function reloadLobbies() {
     if (Lobbies.size == 0) {
-        fs.access('lobbies', fs.constants.W_OK, () => { readOnly = true});
-        if (readOnly) return;
         if (fs.existsSync('lobbies')) {
             fs.readdirSync('lobbies').forEach(async lobbyFile => {
-                let file = fs.readFileSync(`lobbies/${lobbyFile}`).toString();
+                const file = fs.readFileSync(`lobbies/${lobbyFile}`).toString();
 
                 const lobby: ILobby = JSON.parse(file).lobby;
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Card, List, ListItem, Paginator, Button } from '@brainandbones/skeleton';
+    import { Card, List, ListItem, Button } from '@brainandbones/skeleton';
     import { writable, type Writable } from 'svelte/store';
     import type { ILocation } from '$lib/z3r/logic/Location';
     import type { SelectedItem } from './ComponentInterfaces';
@@ -25,22 +25,6 @@
 
     $: search = undefined as string | undefined;
     $: locationsFiltered = locations.filter(location => filterLocationsByItem(location, selectedItem)).filter(location => location.name.toLowerCase().includes(search ? search.toLowerCase(): ''))
-    $: locationsPaginated = locationsFiltered.slice(
-        page.offset * page.limit, // start
-        page.offset * page.limit + page.limit // end
-    );
-
-    // Reset page back to zero when the user starts a search
-    $: page.offset = search != undefined ? 0 : page.offset;
-
-    const page = {
-        offset: 0,
-        limit: 10,
-        size: locations.length,
-        amounts: [5,10,20,40],
-    };
-
-    $: page.size = locationsFiltered.length;
 
     function filterLocationsByItem(location: ILocation, item: SelectedItem) {
         if ((available && item && item.name != "Random") && (location.name != "Random")) {
@@ -90,6 +74,14 @@
             }
         });
     })
+
+    // Selects the top location from the list when the enter button is pressed
+    // in the search box
+    function selectOnEnter(event: KeyboardEvent) {
+        if (event.isTrusted && event.key == "Enter" && locationsFiltered[0]) {
+            $selectedLocation = locationsFiltered[0].name;
+        }
+    }
 </script>
 
 <main>
@@ -99,18 +91,12 @@
                 {Location.name}
             </Button>
         {:else}
-            <input type="search" placeholder="Select a location..." bind:value={search}>
-            <List tag="nav" selected={selectedLocation}>
-                {#each locationsPaginated as location }
+            <input type="search" placeholder="Select a location..." bind:value={search} on:keypress={selectOnEnter}>
+            <List tag="nav" selected={selectedLocation} class="max-h-96 overflow-y-auto">
+                {#each locationsFiltered as location }
                     <ListItem value={location.name}>{location.name}</ListItem>
                 {/each}
             </List>
-            <Paginator
-                bind:offset={page.offset}
-                bind:limit={page.limit}
-                bind:amounts={page.amounts}
-                bind:size={page.size}
-            ></Paginator>
         {/if}
     </Card>
 </main>
