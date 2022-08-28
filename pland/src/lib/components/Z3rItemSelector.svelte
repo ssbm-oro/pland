@@ -18,6 +18,9 @@
         page.offset * page.limit + page.limit // end
     );
 
+    // Reset page back to zero when the user starts a search
+    $: page.offset = search != undefined ? 0 : page.offset;
+
     $: page = {
         offset: 0,
         limit: 10,

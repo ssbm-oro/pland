@@ -118,7 +118,7 @@ export class GanonsTower extends Region {
         this.locations.get("Ganon's Tower - DMs Room - Top Left")?.setRequirements(leftGtRequirements);
         this.locations.get("Ganon's Tower - DMs Room - Top Right")?.setRequirements(leftGtRequirements);
         this.locations.get("Ganon's Tower - DMs Room - Bottom Left")?.setRequirements(leftGtRequirements);
-        this.locations.get("Ganon's Tower - DMs Room - Top Right")?.setRequirements(leftGtRequirements);
+        this.locations.get("Ganon's Tower - DMs Room - Bottom Right")?.setRequirements(leftGtRequirements);
 
         this.locations.get("Ganon's Tower - Randomizer Room - Top Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return leftGtRequirements(locations, items)
@@ -242,7 +242,7 @@ export class GanonsTower extends Region {
         this.locations.get("Ganon's Tower - Pre-Moldorm Chest")?.setRequirements(upstairsGtRequiremets);
 
         this.locations.get("Ganon's Tower - Moldorm Chest")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
-            return items.canShootArrows(this.world) && items.canLightTorches()
+            return items.has('Hookshot') && items.canShootArrows(this.world) && items.canLightTorches()
                 && items.has('BigKeyA2') && items.has('KeyA2', 4)
                 && this.boss_middle?.canBeat(items, locations)! && this.boss_top?.canBeat(items, locations)!;
         });

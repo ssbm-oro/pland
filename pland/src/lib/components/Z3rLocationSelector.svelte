@@ -9,7 +9,7 @@
     import { ItemCollection } from '$lib/z3r/logic/Support/ItemCollection';
     import { onMount } from 'svelte';
 
-    let available = new ItemCollection();
+    let available: ItemCollection;
 
     export let locations: ILocation[];
     locations.push({name:'Random',item:null,isCrystalPendant:false});
@@ -30,6 +30,9 @@
         page.offset * page.limit + page.limit // end
     );
 
+    // Reset page back to zero when the user starts a search
+    $: page.offset = search != undefined ? 0 : page.offset;
+
     const page = {
         offset: 0,
         limit: 10,
@@ -40,7 +43,7 @@
     $: page.size = locationsFiltered.length;
 
     function filterLocationsByItem(location: ILocation, item: SelectedItem) {
-        if ((item && item.name != "Random") && (location.name != "Random")) {
+        if ((available && item && item.name != "Random") && (location.name != "Random")) {
             const z3rLocation = world.locations.get(location.name);
             const z3rItem = Item.get(item.name, world);
             if (z3rLocation && z3rItem) {
@@ -58,6 +61,21 @@
     }
 
     onMount(() => {
+        available = new ItemCollection([
+            Item.get('RescueZelda',world)!,
+            Item.get('Crystal1',world)!,
+            Item.get('Crystal2',world)!,
+            Item.get('Crystal3',world)!,
+            Item.get('Crystal4',world)!,
+            Item.get('Crystal5',world)!,
+            Item.get('Crystal6',world)!,
+            Item.get('Crystal7',world)!,
+            Item.get('PendantOfWisdom',world)!,
+            Item.get('PendantOfCourage',world)!,
+            Item.get('PendantOfPower',world)!,
+            Item.get('DefeatAgahnim',world)!,
+            Item.get('DefeatAgahnim2',world)!,
+        ]);
         items.forEach(item => {
             if (item.count && item.count > 0) {
                 let itemObj = Item.get(item.value, world);
@@ -71,7 +89,6 @@
                 }
             }
         });
-        available.addItem({name:'RescueZelda', world_id: world.id, value:'RescueZelda'})
     })
 </script>
 
