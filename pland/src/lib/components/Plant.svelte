@@ -13,9 +13,11 @@ import Z3rLocationSelector from './Z3rLocationSelector.svelte';
 </script>
 
 <main>
-    <Z3rItemSelector bind:Item={selectedItem} {disabled} />
-    <div class="relative left-8"><Icon icon="el:arrow-down" width="60"></Icon></div>
-    <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations}/>
+    <div class="flex flex-row">
+        <Z3rItemSelector bind:Item={selectedItem} {disabled} />
+        <div class="relative"><Icon icon="el:arrow-right" width="60"></Icon></div>
+        <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations}/>
+    </div>
 </main>
 
 <style>

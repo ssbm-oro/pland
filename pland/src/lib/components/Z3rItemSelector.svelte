@@ -43,7 +43,12 @@
             <input type="search" placeholder="Select an item..." bind:value={search}>
             <List tag="nav" selected={selectedItem}>
                 {#each itemsPaginated as item }
-                    <ListItem value={item.name}><Icon icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} vFlip={item.icon?.vFlip}></Icon>{item.name}</ListItem>
+                    <ListItem value={item.name}>
+                        <svelte:fragment slot="lead">
+                            <Icon icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} vFlip={item.icon?.vFlip}></Icon>
+                        </svelte:fragment>
+                        {item.name}
+                    </ListItem>
                 {/each}
             </List>
             <Paginator
