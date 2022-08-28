@@ -121,7 +121,7 @@ export default class Lobby {
     }
 
     public leave(user: APIUser) {
-        this.lobby.entrants.splice(this.lobby.entrants.findIndex(entrant => entrant.discord_id == user.id));
+        this.lobby.entrants.splice(this.lobby.entrants.findIndex(entrant => entrant.discord_id == user.id), 1);
         this.checkAllReady();
         saveLobby(this);
     }

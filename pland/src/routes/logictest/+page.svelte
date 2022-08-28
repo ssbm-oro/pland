@@ -69,6 +69,7 @@
 </script>
 
 <main>
+    <h1>Select a Preset</h1>
     <br/>
     <Presets {presets} bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
     <br/><br/>
