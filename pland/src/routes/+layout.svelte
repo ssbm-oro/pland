@@ -82,7 +82,13 @@
 	<svelte:fragment slot="footer">
 		<Divider></Divider>
 		<!-- svelte-ignore missing-declaration -->
-		<footer>&#xa9; oro 2022 - Version {__APP_VERSION__}</footer>
+		<footer>&#xa9; oro 2022 - Version {__APP_VERSION__} 
+			<Button href="https://github.com/ssbm-oro/pland" size="none" action="_">
+				<svelte:fragment slot="lead">
+					<Icon icon="fa:github-square" width=24 inline={true}/>
+				</svelte:fragment>
+				Github
+			</Button></footer>
 		<br/>
 	</svelte:fragment>
 	</Drawer>
