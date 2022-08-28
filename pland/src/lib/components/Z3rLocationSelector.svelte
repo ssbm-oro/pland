@@ -24,18 +24,20 @@
     export let disabled:boolean = false;
 
     $: search = undefined as string | undefined;
-    $: locationsFiltered = locations.filter(location => filterLocationsByItem(location, selectedItem)).filter(location => location.name.toLowerCase().includes(search ? search.toLowerCase(): ''));
+    $: locationsFiltered = locations.filter(location => filterLocationsByItem(location, selectedItem)).filter(location => location.name.toLowerCase().includes(search ? search.toLowerCase(): ''))
     $: locationsPaginated = locationsFiltered.slice(
         page.offset * page.limit, // start
         page.offset * page.limit + page.limit // end
     );
 
-    $: page = {
+    const page = {
         offset: 0,
         limit: 10,
-        size: locationsFiltered.length,
+        size: locations.length,
         amounts: [5,10,20,40],
     };
+
+    $: page.size = locationsFiltered.length;
 
     function filterLocationsByItem(location: ILocation, item: SelectedItem) {
         if ((item && item.name != "Random") && (location.name != "Random")) {
