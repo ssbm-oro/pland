@@ -12,6 +12,8 @@
     import type { ILocation } from '$lib/z3r/logic/Location';
     import type { IItem } from "$lib/z3r/logic/Item";
     import { checkPlants } from "$lib/z3r/logic/Logic";
+    import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
+    import { Badge, List, ListItem, Card, Button } from "@brainandbones/skeleton"
 
 
     export let data: PageData;
@@ -75,18 +77,15 @@
 
     async function submitPlants() {
         if (userAsEntrant) {
-            console.log(selectedItems);
             let {plantable} = checkPlants(world, selectedItems, selectedLocations)
             if (plantable) {
                 let params = new URLSearchParams();
                 params.append('plantedItems', JSON.stringify(selectedItems));
                 params.append('plantedLocations', JSON.stringify(selectedLocations));
                 params.append('ready', 'true');
-                let res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
-                let data = await res.json();
-                selectedItems = data.plantedItems;
-                selectedLocations = data.plantedLocations;
-                userAsEntrant.ready = data.ready;
+                await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
+                let res = await fetch(`/lobby/${$page.params['slug']}/entrants`);
+                lobby.entrants = await res.json();
             }
             else {
                 alert('A conflict was detected! Check your plants!')
@@ -97,7 +96,8 @@
     async function resetPlants() {
         if (userAsEntrant) {
             await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'DELETE' });
-            await invalidate($page.url.toString());
+            let res = await fetch(`/lobby/${$page.params['slug']}/entrants`);
+            lobby.entrants = await res.json();
         }
     }
 
@@ -109,31 +109,44 @@
 <main>
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
-    {#if lobby.ready_to_roll}
-        <button on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</button>
+    {#if userAsEntrant && userAsEntrant.ready || lobby.ready_to_roll}
+        <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
     {/if}
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if userInLobby}
-        <button on:click='{leaveLobby}'>Leave</button>
+        <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
     {:else}
-        <button on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</button>
+        <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
     {/if}
-    <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
-    <ul>
-        {#each lobby.entrants as entrant }{#key userAsEntrant}
-            <li>{entrant.username}#{entrant.discriminator} - {#if entrant.ready}✅{:else}☑️{/if}</li>
-        {/key}{/each}
-    </ul>
+    <Card>
+        <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
+        <List>
+            {#each lobby.entrants as entrant }{#key userAsEntrant}
+                <ListItem>
+                    <Card>
+                        <Badge>
+                            <DiscordAvatar user={{id:entrant.discord_id, ...entrant}} size="sm"/>
+                            <svelte:fragment slot="trail">{#if entrant.ready}🟢{:else}⚪️{/if}</svelte:fragment>
+                        </Badge>
+                        {entrant.username}#{entrant.discriminator}
+                    </Card>
+                </ListItem>
+            {/key}{/each}
+        </List>
+    </Card>
     {#if userAsEntrant && world}
-        <p>Plants</p>
-        {#each selectedItems as selectedItem, index}
-            <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" disabled="{userAsEntrant.ready}"></Plant>
-            <br/>
-        {/each}
-        {#if !userAsEntrant.ready}
-            <button on:click="{submitPlants}">Submit</button>
-        {:else}
-            <button on:click="{resetPlants}">Reset</button>
-        {/if}
+    <br/><br/>
+        <Card>
+            <p>Plants</p>
+            {#each selectedItems as selectedItem, index}
+                <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" disabled="{userAsEntrant.ready}"></Plant>
+                <br/>
+            {/each}
+            {#if !userAsEntrant.ready}
+                <Button variant="filled-primary" on:click="{submitPlants}">Submit</Button>
+            {:else}
+                <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
+            {/if}
+        </Card>
     {/if}
 </main>

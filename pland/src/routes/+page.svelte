@@ -5,6 +5,7 @@
     import log from 'loglevel';
     import { get_loading_message } from '$lib/utils/loadingMessages'
     import type { PageData } from './$types'
+    import { GradientHeading } from '@brainandbones/skeleton'
 
 
     export let data: PageData;
@@ -109,7 +110,7 @@
 </script>
 
 <main>
-    <h1>Welcome to pland</h1>
+    <GradientHeading>Welcome to pland</GradientHeading>
     
     {#if !user}
         <p>Please log in if you wanna roll seeds. 🔐</p>
