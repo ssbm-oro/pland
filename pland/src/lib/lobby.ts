@@ -107,7 +107,8 @@ export default class Lobby {
     }
 
     public join(user: APIUser) {
-        if (this.lobby.entrants.length < this.lobby.max_entrants) {
+        if ((this.lobby.entrants.length < this.lobby.max_entrants) &&
+                (this.lobby.entrants.every(entrant => entrant.discord_id != user.id))) {
             this.lobby.entrants.push({
                 username: user.username,
                 discriminator: user.discriminator,
