@@ -244,7 +244,11 @@ export class Medallion extends Item {
 }
 
 export class IDungeonItem extends Item {
-    public dungeon?: Dungeon;
+    public dungeon?: string;
+    constructor(name: string, world: World) {
+        super(name, world);
+        this.dungeon = name.slice(-2)
+    }
 }
 
 export class Key extends IDungeonItem {

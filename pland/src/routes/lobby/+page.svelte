@@ -2,7 +2,6 @@
     import { goto, invalidate } from "$app/navigation";
     import Presets from "$lib/components/Presets.svelte";
     import type { PageData} from './$types';
-    import { page } from "$app/stores";
     import { get_loading_message } from "$lib/utils/loadingMessages";
     import { List, ListItem, Button, RadioGroup, RadioItem, Card, Menu } from '@brainandbones/skeleton';
     import { writable, type Writable } from "svelte/store";

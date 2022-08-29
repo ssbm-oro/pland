@@ -5,7 +5,6 @@ import type { Prize } from "./Location";
 import type { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
 import  type { IDungeonItem, IItem } from "./Item";
-import Item from './Item';
 import { log } from "./Logic";
 
 export interface IRegion {
@@ -76,7 +75,7 @@ export default class Region implements IRegion {
     }
 
     isRegionItem(item: IItem) {
-        return this.region_items.includes(item);
+        return this.region_items.some(region_item => region_item.name == item.name);
     }
 
     getEmptyLocations() {
