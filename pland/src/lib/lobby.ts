@@ -107,15 +107,17 @@ export default class Lobby {
     }
 
     public join(user: APIUser) {
-        this.lobby.entrants.push({
-            username: user.username,
-            discriminator: user.discriminator,
-            discord_id: user.id,
-            avatar: user.avatar,
-            ready: false,
-            plantedItems: Array(this.lobby.max_plants),
-            plantedLocations: Array(this.lobby.max_plants)
-        });
+        if (this.lobby.entrants.length < this.lobby.max_entrants) {
+            this.lobby.entrants.push({
+                username: user.username,
+                discriminator: user.discriminator,
+                discord_id: user.id,
+                avatar: user.avatar,
+                ready: false,
+                plantedItems: Array(this.lobby.max_plants),
+                plantedLocations: Array(this.lobby.max_plants)
+            });
+        }
 
         saveLobby(this);
     }
