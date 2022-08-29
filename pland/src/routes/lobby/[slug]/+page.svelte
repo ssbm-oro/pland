@@ -115,7 +115,7 @@
     <h1>{$page.params['slug']}</h1>
     <h2>Mode: {lobby.preset}</h2>
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
-    {#if (lobby.ready_to_roll && !userInLobby) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
+    {#if (lobby.ready_to_roll && !userAsEntrant) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
         <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
         <Alert bind:visible={rollAlertVisible}>
             <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
