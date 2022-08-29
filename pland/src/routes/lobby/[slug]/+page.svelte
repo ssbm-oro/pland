@@ -75,9 +75,11 @@
         }
     }
 
+    let conflictAlertVisible = false;
+    let conflictAlertMessage: string;
     async function submitPlants() {
         if (userAsEntrant) {
-            let {plantable} = checkPlants(world, selectedItems, selectedLocations)
+            let {plantable, messages} = checkPlants(world, selectedItems, selectedLocations)
             if (plantable) {
                 let params = new URLSearchParams();
                 params.append('plantedItems', JSON.stringify(selectedItems));
@@ -87,7 +89,8 @@
                 invalidate();
             }
             else {
-                alert('A conflict was detected! Check your plants!')
+                conflictAlertVisible = true;
+                conflictAlertMessage = messages[messages.length-1]!;
             }
         }
     }
@@ -117,6 +120,7 @@
         <Alert bind:visible={rollAlertVisible}>
             <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
             <svelte:fragment slot="message">{rollAlertMessage}</svelte:fragment>
+            <svelte:fragment slot="trail"><Button on:click={() => {rollAlertVisible=false;}}>X</Button></svelte:fragment>
         </Alert>
     {/if}
     {#if userInLobby}
@@ -149,6 +153,11 @@
                 <br/>
             {/each}
             {#if !userAsEntrant.ready}
+                <Alert bind:visible={conflictAlertVisible} background="bg-warning-500/30">
+                    <svelte:fragment slot="title">A conflict was detected</svelte:fragment>
+                    <svelte:fragment slot="message">Check your plants, a conflict was detected: {conflictAlertMessage}</svelte:fragment>
+                    <svelte:fragment slot="trail"><Button on:click={() => {conflictAlertVisible=false;}}>X</Button></svelte:fragment>
+                </Alert>
                 <Button variant="filled-primary" on:click="{submitPlants}">Submit</Button>
             {:else}
                 <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>

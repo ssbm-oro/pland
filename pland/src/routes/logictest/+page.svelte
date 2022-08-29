@@ -12,7 +12,7 @@
     import { checkPlants } from '$lib/z3r/logic/Logic'
     import { Button, Card } from '@brainandbones/skeleton';
 
-    let selectedPreset: string = '';
+    let selectedPreset: string = 'open.json';
     let world: World;
     $: selectedItems = Array() as IItem[];
     $: selectedLocations = Array() as Z3rLocation[];
@@ -66,6 +66,7 @@
         logicTestResult = plantable;
         logicTestMessages = messages;
     }
+    presetChanged();
 </script>
 
 <main>

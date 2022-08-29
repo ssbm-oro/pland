@@ -11,12 +11,13 @@
     export let locations: ILocation[];
     export let disabled:boolean = false;
     export let world: World;
+    $: iconColor = selectedItem && selectedItem.name != "Random" && selectedLocation && selectedLocation.name != "Random" ? "green" : undefined;
 </script>
 
 <main>
     <div class="flex flex-row">
         <Z3rItemSelector bind:Item={selectedItem} {disabled} />
-        <div class="relative"><Icon icon="el:arrow-right" width="60"></Icon></div>
+        <div class="relative"><Icon icon="el:arrow-right" width="60" bind:color={iconColor}></Icon></div>
         <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world}/>
     </div>
 </main>

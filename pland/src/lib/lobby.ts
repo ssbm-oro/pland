@@ -169,10 +169,8 @@ export default class Lobby {
             const {plantable, messages} = checkPlants(this.world as World, allItemsPlanted, allLocationsPlanted);
             if (plantable) {
                 this.lobby.ready_to_roll = true;
-                console.log('could plant');
             }
             else {
-                console.log('could not plant');
                 this.lobby.entrants.forEach(entrant => {
                     this.unplantEntrant(entrant);
                 })

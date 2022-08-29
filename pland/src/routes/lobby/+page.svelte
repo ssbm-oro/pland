@@ -34,11 +34,15 @@
 <main>
     <Card>
         <h3>Create Lobby</h3>
+        <p>
+            Please note that modes other than Standard/Open are very unimplemented/untested.
+            Dungeon item shuffle logic is also not implemented.
+        </p>
         <Presets bind:selectedPreset bind:presets></Presets>
         <br/>
-        <Menu select={true} open={false} origin='tl'>
+        <Menu select={true} open={false}>
             <Button slot="trigger">Max Entrants: {$maxPlayers}</Button>
-            <Card slot="content">
+            <Card slot="content" background="bg-surface-300/80 dark:bg-surface-700/80">
                 <List tag="nav" selected={maxPlayers}>
                     <ListItem value={2}>Two</ListItem>
                     <ListItem value={3}>Three</ListItem>
@@ -51,7 +55,7 @@
             </Card>
         </Menu>
         Num Plants: 
-        <RadioGroup selected="{numPlants}">
+        <RadioGroup selected="{numPlants}" color="bg-accent-500">
             <RadioItem value={1}>One</RadioItem>
             <RadioItem value={2}>Two</RadioItem>
         </RadioGroup>
