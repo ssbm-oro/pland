@@ -115,7 +115,7 @@
     
     {#if !user}
         <p>Please log in if you wanna roll seeds. 🔐</p>
-        <p>You can help me <a href="/logictest">test the logic</a> without logging in if you want.</p>
+        <p>You can help me <a class="text-primary-500" href="/logictest">test the logic</a> without logging in if you want.</p>
     {:else}
         <h2>You are {user.username}</h2>
         {#if user.avatar}

@@ -52,7 +52,7 @@
                     <div>
                         <ListItem value={item.name}>
                             <svelte:fragment slot="lead">
-                                <Icon icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} vFlip={item.icon?.vFlip} width={6*scale} height={6*scale}></Icon>
+                                <Icon icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} width={6*scale} height={6*scale}></Icon>
                             </svelte:fragment>
                             {item.name}
                         </ListItem>

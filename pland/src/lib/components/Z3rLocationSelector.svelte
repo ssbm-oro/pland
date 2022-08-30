@@ -1,20 +1,21 @@
 <script lang="ts">
-    import { Card, List, ListItem, Button } from '@brainandbones/skeleton';
+    import { Card, List, ListItem, Button, Tooltip } from '@brainandbones/skeleton';
     import { writable, type Writable } from 'svelte/store';
     import type { ILocation } from '$lib/z3r/logic/Location';
     import type { SelectedItem } from './ComponentInterfaces';
     import type World from '$lib/z3r/logic/World';
     import Item from '$lib/z3r/logic/Item';
-    import { items } from '$lib/data/json/alttpr-customizer-schema.json';
+    import { items, locations as default_locations } from '$lib/data/json/alttpr-customizer-schema.json';
     import { ItemCollection } from '$lib/z3r/logic/Support/ItemCollection';
     import { onMount } from 'svelte';
     import { blur, crossfade } from 'svelte/transition'
-import { quintOut } from 'svelte/easing';
+    import { quintOut } from 'svelte/easing';
 
     let available: ItemCollection;
 
     export let locations: ILocation[];
-    locations.push({name:'Random',item:null,isCrystalPendant:false});
+    $: locationImages = new Map(default_locations.map(location => [location.name.slice(0,-2), location.image]));
+    locations.push({name:'Random',item:null,isCrystalPendant:false, class:"events"});
 
     export let Location: ILocation;
 
@@ -93,7 +94,7 @@ import { quintOut } from 'svelte/easing';
 </script>
 
 <main>
-    <Card>
+    <Card class="flex-none w-96">
         {#if disabled || $selectedLocation != 'Random' }
             <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
                 <Button variant="ring-primary" on:click={changeSelection} {disabled}>
@@ -103,17 +104,30 @@ import { quintOut } from 'svelte/easing';
         {:else}
             <div in:send={{key:"ItemList"}} out:blur={{duration:300}}>
                 <input type="search" placeholder="Select a location..." bind:value={search} on:keypress={selectOnEnter}>
-                <List tag="nav" selected={selectedLocation} class="max-h-96 overflow-auto">
-                    {#each locationsFiltered as location }
-                        <div class="max-w-xs">
-                            <ListItem class="flex flex-wrap" value={location.name}>{location.name}</ListItem>
-                        </div>
+                <List tag="nav" selected={selectedLocation}>
+                    <div class="max-h-96 overflow-y-scroll">
+                    {#each locationsFiltered as location, i }
+                        {#if location.class == 'items'}
+                            <ListItem class="justify-start" value={location.name} tabindex={i}>
+                                <span>{location.name}</span>
+                                <svelte:fragment slot="lead">
+                                    <Tooltip position="right">
+                                        <svelte:fragment slot="message">
+                                            <div class="w-[200px] h-[200px]">
+                                                <img src={locationImages.get(location.name)} alt="Screenshot of {location.name}">
+                                            </div>
+                                        </svelte:fragment>
+                                        <svelte:fragment slot="content">
+                                            <img class="overflow-visible" src={locationImages.get(location.name)} alt="Screenshot of {location.name}" height="48" width="48">
+                                        </svelte:fragment>
+                                    </Tooltip>
+                                </svelte:fragment>
+                            </ListItem>
+                        {/if}
                     {/each}
+                    </div>
                 </List>
             </div>
         {/if}
     </Card>
 </main>
-
-<style>
-</style>

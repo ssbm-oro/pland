@@ -33,6 +33,13 @@
 
     let filterOnlyUser: boolean = false;
     $: filteredLobbies = (filterOnlyUser && user) ? lobbies.filter(lobby => lobby.entrants.some(entrant => entrant.discord_id == user?.id)) : lobbies;
+
+    let refreshing = false;
+    async function refreshLobbies() {
+        refreshing = true;
+        await invalidate();
+        refreshing = false;
+    }
 </script>
 
 <main>
@@ -86,8 +93,8 @@
             {#if user}
                 <SlideToggle bind:checked={filterOnlyUser} size='sm'>Only My Lobbies</SlideToggle>
             {/if}
-            <Button variant="ring-primary" on:click={() => invalidate()}>
-                <Icon icon="charm:refresh"></Icon>
+            <Button variant="ring-primary" on:click={refreshLobbies}>
+                <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
             </Button>
         </div>
         <br/>

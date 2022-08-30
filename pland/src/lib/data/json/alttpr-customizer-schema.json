@@ -4,397 +4,463 @@
             "hash": "U2FoYXNyYWhsYSdzIEh1dCAtIExlZnQ6MQ==",
             "name": "Sahasrahla's Hut - Left:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/SahasrahlasHut.png"
         },
         {
             "hash": "U2FoYXNyYWhsYSdzIEh1dCAtIE1pZGRsZTox",
             "name": "Sahasrahla's Hut - Middle:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/SahasrahlasHut.png"
         },
         {
             "hash": "U2FoYXNyYWhsYSdzIEh1dCAtIFJpZ2h0OjE=",
             "name": "Sahasrahla's Hut - Right:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/SahasrahlasHut.png"
         },
         {
             "hash": "U2FoYXNyYWhsYTox",
             "name": "Sahasrahla:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/Sahasrahla.png"
         },
         {
             "hash": "S2luZyBab3JhOjE=",
             "name": "King Zora:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KingZora.png"
         },
         {
             "hash": "UG90aW9uIFNob3A6MQ==",
             "name": "Potion Shop:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/PotionShop.png"
         },
         {
             "hash": "Wm9yYSdzIExlZGdlOjE=",
-            "name": "Zora's Ledge:1",
+            "name": "Zora Ledge:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/ZorasLedge.png"
         },
         {
             "hash": "V2F0ZXJmYWxsIEZhaXJ5IC0gTGVmdDox",
             "name": "Waterfall Fairy - Left:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/WaterfallFairy.png"
         },
         {
             "hash": "V2F0ZXJmYWxsIEZhaXJ5IC0gUmlnaHQ6MQ==",
             "name": "Waterfall Fairy - Right:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/WaterfallFairy.png"
         },
         {
             "hash": "TWFzdGVyIFN3b3JkIFBlZGVzdGFsOjE=",
             "name": "Master Sword Pedestal:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/MasterSwordPedestal.png"
         },
         {
             "hash": "S2luZydzIFRvbWI6MQ==",
             "name": "King's Tomb:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KingsTomb.png"
         },
         {
             "hash": "S2FrYXJpa28gVGF2ZXJuOjE=",
             "name": "Kakariko Tavern:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KakarikoTavern.png"
         },
         {
             "hash": "Q2hpY2tlbiBIb3VzZTox",
             "name": "Chicken House:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/ChickenHouse.png"
         },
         {
             "hash": "S2FrYXJpa28gV2VsbCAtIFRvcDox",
             "name": "Kakariko Well - Top:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KakarikoWell.png"
         },
         {
             "hash": "S2FrYXJpa28gV2VsbCAtIExlZnQ6MQ==",
             "name": "Kakariko Well - Left:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KakarikoWell.png"
         },
         {
             "hash": "S2FrYXJpa28gV2VsbCAtIE1pZGRsZTox",
             "name": "Kakariko Well - Middle:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KakarikoWell.png"
         },
         {
             "hash": "S2FrYXJpa28gV2VsbCAtIFJpZ2h0OjE=",
             "name": "Kakariko Well - Right:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KakarikoWell.png"
         },
         {
             "hash": "S2FrYXJpa28gV2VsbCAtIEJvdHRvbTox",
             "name": "Kakariko Well - Bottom:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/KakarikoWell.png"
         },
         {
             "hash": "QmxpbmQncyBIaWRlb3V0IC0gVG9wOjE=",
             "name": "Blind's Hideout - Top:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/BlindsHideout.png"
         },
         {
             "hash": "QmxpbmQncyBIaWRlb3V0IC0gTGVmdDox",
             "name": "Blind's Hideout - Left:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/BlindsHideout.png"
         },
         {
             "hash": "QmxpbmQncyBIaWRlb3V0IC0gUmlnaHQ6MQ==",
             "name": "Blind's Hideout - Right:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/BlindsHideout.png"
         },
         {
             "hash": "QmxpbmQncyBIaWRlb3V0IC0gRmFyIExlZnQ6MQ==",
             "name": "Blind's Hideout - Far Left:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/BlindsHideout.png"
         },
         {
             "hash": "QmxpbmQncyBIaWRlb3V0IC0gRmFyIFJpZ2h0OjE=",
             "name": "Blind's Hideout - Far Right:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/BlindsHideout.png"
         },
         {
             "hash": "UGVnYXN1cyBSb2Nrczox",
             "name": "Pegasus Rocks:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/PegasusRocks.png"
         },
         {
             "hash": "Qm90dGxlIE1lcmNoYW50OjE=",
             "name": "Bottle Merchant:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/BottleMerchant.png"
         },
         {
             "hash": "TWFnaWMgQmF0OjE=",
             "name": "Magic Bat:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/MagicBat.png"
         },
         {
             "hash": "U2ljayBLaWQ6MQ==",
             "name": "Sick Kid:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/SickKid.png"
         },
         {
             "hash": "TG9zdCBXb29kcyBIaWRlb3V0OjE=",
             "name": "Lost Woods Hideout:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/LostWoodsHideout.png"
         },
         {
             "hash": "THVtYmVyamFjayBUcmVlOjE=",
             "name": "Lumberjack Tree:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/LumberjackTree.png"
         },
         {
             "hash": "R3JhdmV5YXJkIExlZGdlOjE=",
             "name": "Graveyard Ledge:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/GraveyardLedge.png"
         },
         {
             "hash": "TXVzaHJvb206MQ==",
             "name": "Mushroom:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/Mushroom.png"
         },
         {
             "hash": "Rmxvb2RnYXRlIENoZXN0OjE=",
             "name": "Floodgate Chest:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/Dam.png"
         },
         {
             "hash": "TGluaydzIEhvdXNlOjE=",
             "name": "Link's House:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/LinksHouse.png"
         },
         {
             "hash": "QWdpbmFoJ3MgQ2F2ZTox",
             "name": "Aginah's Cave:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/AginahsCave.png"
         },
         {
             "hash": "TWluaSBNb2xkb3JtIENhdmUgLSBGYXIgTGVmdDox",
-            "name": "Mini Moldorm Cave - Far Left:1",
+            "name": "Minimoldorm Cave - Far Left:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/MiniMoldormCave.png"
         },
         {
             "hash": "TWluaSBNb2xkb3JtIENhdmUgLSBMZWZ0OjE=",
-            "name": "Mini Moldorm Cave - Left:1",
+            "name": "Minimoldorm Cave - Left:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/MiniMoldormCave.png"
         },
         {
             "hash": "TWluaSBNb2xkb3JtIENhdmUgLSBSaWdodDox",
-            "name": "Mini Moldorm Cave - Right:1",
+            "name": "Minimoldorm Cave - Right:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/MiniMoldormCave.png"
         },
         {
             "hash": "TWluaSBNb2xkb3JtIENhdmUgLSBGYXIgUmlnaHQ6MQ==",
-            "name": "Mini Moldorm Cave - Far Right:1",
+            "name": "Minimoldorm Cave - Far Right:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/MiniMoldormCave.png"
         },
         {
             "hash": "SWNlIFJvZCBDYXZlOjE=",
             "name": "Ice Rod Cave:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/IceRodCave.png"
         },
         {
             "hash": "SG9ibzox",
             "name": "Hobo:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/Bridge.png"
         },
         {
             "hash": "Qm9tYm9zIFRhYmxldDox",
             "name": "Bombos Tablet:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/BombosTablet.png"
         },
         {
             "hash": "Q2F2ZSA0NTox",
             "name": "Cave 45:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/Cave45.png"
         },
         {
             "hash": "Q2hlY2tlcmJvYXJkIENhdmU6MQ==",
             "name": "Checkerboard Cave:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/CheckerboardCave.png"
         },
         {
             "hash": "TWluaSBNb2xkb3JtIENhdmUgLSBOUEM6MQ==",
-            "name": "Mini Moldorm Cave - NPC:1",
+            "name": "Minimoldorm Cave - NPC:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/MiniMoldormCave.png"
         },
         {
             "hash": "TGlicmFyeTox",
             "name": "Library:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/Library.png"
         },
         {
             "hash": "TWF6ZSBSYWNlOjE=",
             "name": "Maze Race:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/RaceGame.png"
         },
         {
             "hash": "RGVzZXJ0IExlZGdlOjE=",
             "name": "Desert Ledge:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DesertLedge.png"
         },
         {
             "hash": "TGFrZSBIeWxpYSBJc2xhbmQ6MQ==",
             "name": "Lake Hylia Island:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/LakeHyliaIsland.png"
         },
         {
             "hash": "U3Vua2VuIFRyZWFzdXJlOjE=",
             "name": "Sunken Treasure:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/Dam.png"
         },
         {
             "hash": "Rmx1dGUgU3BvdDox",
             "name": "Flute Spot:1",
             "region": "Light World",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/FluteSpot.png"
         },
         {
             "hash": "U2FuY3R1YXJ5OjE=",
             "name": "Sanctuary:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/Sanctuary.png"
         },
         {
             "hash": "U2V3ZXJzIC0gU2VjcmV0IFJvb20gLSBMZWZ0OjE=",
             "name": "Sewers - Secret Room - Left:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/SewersSecretRoom.png"
         },
         {
             "hash": "U2V3ZXJzIC0gU2VjcmV0IFJvb20gLSBNaWRkbGU6MQ==",
             "name": "Sewers - Secret Room - Middle:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/SewersSecretRoom.png"
         },
         {
             "hash": "U2V3ZXJzIC0gU2VjcmV0IFJvb20gLSBSaWdodDox",
             "name": "Sewers - Secret Room - Right:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/SewersSecretRoom.png"
         },
         {
             "hash": "U2V3ZXJzIC0gRGFyayBDcm9zczox",
             "name": "Sewers - Dark Cross:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/SewersDarkCross.png"
         },
         {
             "hash": "SHlydWxlIENhc3RsZSAtIEJvb21lcmFuZyBDaGVzdDox",
             "name": "Hyrule Castle - Boomerang Chest:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/BoomerangChest.png"
         },
         {
             "hash": "SHlydWxlIENhc3RsZSAtIE1hcCBDaGVzdDox",
             "name": "Hyrule Castle - Map Chest:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/MapChest.png"
         },
         {
             "hash": "SHlydWxlIENhc3RsZSAtIFplbGRhJ3MgQ2VsbDox",
             "name": "Hyrule Castle - Zelda's Cell:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/ZeldasCell.png"
         },
         {
             "hash": "TGluaydzIFVuY2xlOjE=",
             "name": "Link's Uncle:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/LinksUncle.png"
         },
         {
             "hash": "U2VjcmV0IFBhc3NhZ2U6MQ==",
             "name": "Secret Passage:1",
             "region": "Hyrule Castle",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/LinksUncle.png"
         },
         {
             "hash": "RWFzdGVybiBQYWxhY2UgLSBDb21wYXNzIENoZXN0OjE=",
             "name": "Eastern Palace - Compass Chest:1",
             "region": "Eastern Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/EasternPalace/CompassChest.png"
         },
         {
             "hash": "RWFzdGVybiBQYWxhY2UgLSBCaWcgQ2hlc3Q6MQ==",
             "name": "Eastern Palace - Big Chest:1",
             "region": "Eastern Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/EasternPalace/BigChest.png"
         },
         {
             "hash": "RWFzdGVybiBQYWxhY2UgLSBDYW5ub25iYWxsIENoZXN0OjE=",
-            "name": "Eastern Palace - Cannonball Chest:1",
+            "name": "Eastern Palace - Canonball Chest:1",
             "region": "Eastern Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/EasternPalace/CanonballChest.png"
         },
         {
             "hash": "RWFzdGVybiBQYWxhY2UgLSBCaWcgS2V5IENoZXN0OjE=",
             "name": "Eastern Palace - Big Key Chest:1",
             "region": "Eastern Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/EasternPalace/BigKeyChest.png"
         },
         {
             "hash": "RWFzdGVybiBQYWxhY2UgLSBNYXAgQ2hlc3Q6MQ==",
             "name": "Eastern Palace - Map Chest:1",
             "region": "Eastern Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/EasternPalace/MapChest.png"
         },
         {
             "hash": "RWFzdGVybiBQYWxhY2UgLSBCb3NzOjE=",
             "name": "Eastern Palace - Boss:1",
             "region": "Eastern Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/EasternPalace/Boss.png"
         },
         {
             "hash": "RWFzdGVybiBQYWxhY2UgLSBQcml6ZTox",
@@ -406,37 +472,43 @@
             "hash": "RGVzZXJ0IFBhbGFjZSAtIEJpZyBDaGVzdDox",
             "name": "Desert Palace - Big Chest:1",
             "region": "Desert Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/DesertPalace/BigChest.png"
         },
         {
             "hash": "RGVzZXJ0IFBhbGFjZSAtIE1hcCBDaGVzdDox",
             "name": "Desert Palace - Map Chest:1",
             "region": "Desert Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/DesertPalace/MapChest.png"
         },
         {
             "hash": "RGVzZXJ0IFBhbGFjZSAtIFRvcmNoOjE=",
             "name": "Desert Palace - Torch:1",
             "region": "Desert Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/DesertPalace/Torch.png"
         },
         {
             "hash": "RGVzZXJ0IFBhbGFjZSAtIEJpZyBLZXkgQ2hlc3Q6MQ==",
             "name": "Desert Palace - Big Key Chest:1",
             "region": "Desert Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/DesertPalace/BigKeyChest.png"
         },
         {
             "hash": "RGVzZXJ0IFBhbGFjZSAtIENvbXBhc3MgQ2hlc3Q6MQ==",
             "name": "Desert Palace - Compass Chest:1",
             "region": "Desert Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/DesertPalace/CompassChest.png"
         },
         {
             "hash": "RGVzZXJ0IFBhbGFjZSAtIEJvc3M6MQ==",
             "name": "Desert Palace - Boss:1",
             "region": "Desert Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/DesertPalace/Boss.png"
         },
         {
             "hash": "RGVzZXJ0IFBhbGFjZSAtIFByaXplOjE=",
@@ -448,121 +520,141 @@
             "hash": "T2xkIE1hbjox",
             "name": "Old Man:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/OldMan.png"
         },
         {
             "hash": "U3BlY3RhY2xlIFJvY2sgQ2F2ZTox",
             "name": "Spectacle Rock Cave:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/SpectacleRockCave.png"
         },
         {
             "hash": "RXRoZXIgVGFibGV0OjE=",
             "name": "Ether Tablet:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/EtherTablet.png"
         },
         {
             "hash": "U3BlY3RhY2xlIFJvY2s6MQ==",
             "name": "Spectacle Rock:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/SpectacleRock.png"
         },
         {
             "hash": "U3BpcmFsIENhdmU6MQ==",
             "name": "Spiral Cave:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/SpiralCave.png"
         },
         {
             "hash": "TWltaWMgQ2F2ZTox",
             "name": "Mimic Cave:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/MimicCave.png"
         },
         {
             "hash": "UGFyYWRveCBDYXZlIExvd2VyIC0gRmFyIExlZnQ6MQ==",
             "name": "Paradox Cave Lower - Far Left:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/ParadoxCave5.png"
         },
         {
             "hash": "UGFyYWRveCBDYXZlIExvd2VyIC0gTGVmdDox",
             "name": "Paradox Cave Lower - Left:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/ParadoxCave5.png"
         },
         {
             "hash": "UGFyYWRveCBDYXZlIExvd2VyIC0gUmlnaHQ6MQ==",
             "name": "Paradox Cave Lower - Right:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/ParadoxCave5.png"
         },
         {
             "hash": "UGFyYWRveCBDYXZlIExvd2VyIC0gRmFyIFJpZ2h0OjE=",
             "name": "Paradox Cave Lower - Far Right:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/ParadoxCave5.png"
         },
         {
             "hash": "UGFyYWRveCBDYXZlIExvd2VyIC0gTWlkZGxlOjE=",
             "name": "Paradox Cave Lower - Middle:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/ParadoxCave5.png"
         },
         {
             "hash": "UGFyYWRveCBDYXZlIFVwcGVyIC0gTGVmdDox",
             "name": "Paradox Cave Upper - Left:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/ParadoxCave2.png"
         },
         {
             "hash": "UGFyYWRveCBDYXZlIFVwcGVyIC0gUmlnaHQ6MQ==",
             "name": "Paradox Cave Upper - Right:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/ParadoxCave2.png"
         },
         {
             "hash": "RmxvYXRpbmcgSXNsYW5kOjE=",
             "name": "Floating Island:1",
             "region": "Death Mountain",
-            "class": "items"
+            "class": "items",
+            "image": "images/LightWorld/DeathMountain/FloatingIsland.png"
         },
         {
             "hash": "VG93ZXIgb2YgSGVyYSAtIEJpZyBLZXkgQ2hlc3Q6MQ==",
             "name": "Tower of Hera - Big Key Chest:1",
             "region": "Tower Of Hera",
-            "class": "items"
+            "class": "items",
+            "image": "images/TowerOfHera/BigKeyChest.png"
         },
         {
             "hash": "VG93ZXIgb2YgSGVyYSAtIEJhc2VtZW50IENhZ2U6MQ==",
             "name": "Tower of Hera - Basement Cage:1",
             "region": "Tower Of Hera",
-            "class": "items"
+            "class": "items",
+            "image": "images/TowerOfHera/BasementCage.png"
         },
         {
             "hash": "VG93ZXIgb2YgSGVyYSAtIE1hcCBDaGVzdDox",
             "name": "Tower of Hera - Map Chest:1",
             "region": "Tower Of Hera",
-            "class": "items"
+            "class": "items",
+            "image": "images/TowerOfHera/MapChest.png"
         },
         {
             "hash": "VG93ZXIgb2YgSGVyYSAtIENvbXBhc3MgQ2hlc3Q6MQ==",
             "name": "Tower of Hera - Compass Chest:1",
             "region": "Tower Of Hera",
-            "class": "items"
+            "class": "items",
+            "image": "images/TowerOfHera/CompassChest.png"
         },
         {
             "hash": "VG93ZXIgb2YgSGVyYSAtIEJpZyBDaGVzdDox",
             "name": "Tower of Hera - Big Chest:1",
             "region": "Tower Of Hera",
-            "class": "items"
+            "class": "items",
+            "image": "images/TowerOfHera/BigChest.png"
         },
         {
             "hash": "VG93ZXIgb2YgSGVyYSAtIEJvc3M6MQ==",
             "name": "Tower of Hera - Boss:1",
             "region": "Tower Of Hera",
-            "class": "items"
+            "class": "items",
+            "image": "images/TowerOfHera/Boss.png"
         },
         {
             "hash": "VG93ZXIgb2YgSGVyYSAtIFByaXplOjE=",
@@ -574,259 +666,302 @@
             "hash": "Q2FzdGxlIFRvd2VyIC0gUm9vbSAwMzox",
             "name": "Castle Tower - Room 03:1",
             "region": "Castle Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/Room03.png"
         },
         {
             "hash": "Q2FzdGxlIFRvd2VyIC0gRGFyayBNYXplOjE=",
             "name": "Castle Tower - Dark Maze:1",
             "region": "Castle Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/HyruleCastle/DarkMaze.png"
         },
         {
             "hash": "U3VwZXJidW5ueSBDYXZlIC0gVG9wOjE=",
-            "name": "Superbunny Cave - Top:1",
+            "name": "Super Bunny Cave - Top:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DeathMountain/SuperbunnyCave.png"
         },
         {
             "hash": "U3VwZXJidW5ueSBDYXZlIC0gQm90dG9tOjE=",
-            "name": "Superbunny Cave - Bottom:1",
+            "name": "Super Bunny Cave - Bottom:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DeathMountain/SuperbunnyCave.png"
         },
         {
             "hash": "SG9va3Nob3QgQ2F2ZSAtIFRvcCBSaWdodDox",
             "name": "Hookshot Cave - Top Right:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DeathMountain/HookshotCave2.png"
         },
         {
             "hash": "SG9va3Nob3QgQ2F2ZSAtIFRvcCBMZWZ0OjE=",
             "name": "Hookshot Cave - Top Left:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DeathMountain/HookshotCave2.png"
         },
         {
             "hash": "SG9va3Nob3QgQ2F2ZSAtIEJvdHRvbSBMZWZ0OjE=",
             "name": "Hookshot Cave - Bottom Left:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DeathMountain/HookshotCave2.png"
         },
         {
             "hash": "SG9va3Nob3QgQ2F2ZSAtIEJvdHRvbSBSaWdodDox",
             "name": "Hookshot Cave - Bottom Right:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DeathMountain/HookshotCave1.png"
         },
         {
             "hash": "U3Bpa2UgQ2F2ZTox",
             "name": "Spike Cave:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DeathMountain/SpikeCave.png"
         },
         {
             "hash": "Q2F0ZmlzaDox",
             "name": "Catfish:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/Catfish.png"
         },
         {
             "hash": "UHlyYW1pZDox",
             "name": "Pyramid:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/Pyramid.png"
         },
         {
             "hash": "UHlyYW1pZCBGYWlyeSAtIExlZnQ6MQ==",
             "name": "Pyramid Fairy - Left:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/PyramidFairy.png"
         },
         {
             "hash": "UHlyYW1pZCBGYWlyeSAtIFJpZ2h0OjE=",
             "name": "Pyramid Fairy - Right:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/PyramidFairy.png"
         },
         {
             "hash": "QnJld2VyeTox",
             "name": "Brewery:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/Brewery.png"
         },
         {
             "hash": "Qy1TaGFwZWQgSG91c2U6MQ==",
             "name": "C-Shaped House:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/CShapedHouse.png"
         },
         {
             "hash": "Q2hlc3QgR2FtZTox",
             "name": "Chest Game:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/ChestGame.png"
         },
         {
             "hash": "SGFtbWVyIFBlZ3M6MQ==",
             "name": "Hammer Pegs:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/HammerPegs.png"
         },
         {
             "hash": "QnVtcGVyIENhdmU6MQ==",
             "name": "Bumper Cave:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/BumperCave.png"
         },
         {
             "hash": "QmxhY2tzbWl0aDox",
             "name": "Blacksmith:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/Blacksmith.png"
         },
         {
             "hash": "UHVycGxlIENoZXN0OjE=",
             "name": "Purple Chest:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/PurpleChest.png"
         },
         {
             "hash": "SHlwZSBDYXZlIC0gVG9wOjE=",
             "name": "Hype Cave - Top:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/HypeCave.png"
         },
         {
             "hash": "SHlwZSBDYXZlIC0gTWlkZGxlIFJpZ2h0OjE=",
             "name": "Hype Cave - Middle Right:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/HypeCave.png"
         },
         {
             "hash": "SHlwZSBDYXZlIC0gTWlkZGxlIExlZnQ6MQ==",
             "name": "Hype Cave - Middle Left:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/HypeCave.png"
         },
         {
             "hash": "SHlwZSBDYXZlIC0gQm90dG9tOjE=",
             "name": "Hype Cave - Bottom:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/HypeCave.png"
         },
         {
             "hash": "U3R1bXB5OjE=",
             "name": "Stumpy:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/Stumpy.png"
         },
         {
             "hash": "SHlwZSBDYXZlIC0gTlBDOjE=",
             "name": "Hype Cave - NPC:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/HypeCaveNPC.png"
         },
         {
             "hash": "RGlnZ2luZyBHYW1lOjE=",
             "name": "Digging Game:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/DiggingGame.png"
         },
         {
             "hash": "TWlyZSBTaGVkIC0gTGVmdDox",
             "name": "Mire Shed - Left:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/MireShed.png"
         },
         {
             "hash": "TWlyZSBTaGVkIC0gUmlnaHQ6MQ==",
             "name": "Mire Shed - Right:1",
             "region": "Dark World",
-            "class": "items"
+            "class": "items",
+            "image": "images/DarkWorld/MireShed.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gU2hvb3RlciBSb29tOjE=",
             "name": "Palace of Darkness - Shooter Room:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/ShooterRoom.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gQmlnIEtleSBDaGVzdDox",
             "name": "Palace of Darkness - Big Key Chest:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/BigKeyChest.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gVGhlIEFyZW5hIC0gTGVkZ2U6MQ==",
             "name": "Palace of Darkness - The Arena - Ledge:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/TheArena.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gVGhlIEFyZW5hIC0gQnJpZGdlOjE=",
             "name": "Palace of Darkness - The Arena - Bridge:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/TheArena.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gU3RhbGZvcyBCYXNlbWVudDox",
             "name": "Palace of Darkness - Stalfos Basement:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/StalfosBasement.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gTWFwIENoZXN0OjE=",
             "name": "Palace of Darkness - Map Chest:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/MapChest.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gQmlnIENoZXN0OjE=",
             "name": "Palace of Darkness - Big Chest:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/BigChest.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gQ29tcGFzcyBDaGVzdDox",
             "name": "Palace of Darkness - Compass Chest:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/CompassChest.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gSGFybWxlc3MgSGVsbHdheTox",
             "name": "Palace of Darkness - Harmless Hellway:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/HarmlessHellway.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gRGFyayBCYXNlbWVudCAtIExlZnQ6MQ==",
             "name": "Palace of Darkness - Dark Basement - Left:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/DarkBasement.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gRGFyayBCYXNlbWVudCAtIFJpZ2h0OjE=",
             "name": "Palace of Darkness - Dark Basement - Right:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/DarkBasement.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gRGFyayBNYXplIC0gVG9wOjE=",
             "name": "Palace of Darkness - Dark Maze - Top:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/DarkMaze.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gRGFyayBNYXplIC0gQm90dG9tOjE=",
             "name": "Palace of Darkness - Dark Maze - Bottom:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/DarkMaze.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gQm9zczox",
             "name": "Palace of Darkness - Boss:1",
             "region": "Dark Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/PalaceOfDarkness/Boss.png"
         },
         {
             "hash": "UGFsYWNlIG9mIERhcmtuZXNzIC0gUHJpemU6MQ==",
@@ -838,61 +973,71 @@
             "hash": "U3dhbXAgUGFsYWNlIC0gRW50cmFuY2U6MQ==",
             "name": "Swamp Palace - Entrance:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/Entrance.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gQmlnIENoZXN0OjE=",
             "name": "Swamp Palace - Big Chest:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/BigChest.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gQmlnIEtleSBDaGVzdDox",
             "name": "Swamp Palace - Big Key Chest:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/BigKeyChest.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gTWFwIENoZXN0OjE=",
             "name": "Swamp Palace - Map Chest:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/MapChest.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gV2VzdCBDaGVzdDox",
             "name": "Swamp Palace - West Chest:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/WestChest.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gQ29tcGFzcyBDaGVzdDox",
             "name": "Swamp Palace - Compass Chest:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/CompassChest.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gRmxvb2RlZCBSb29tIC0gTGVmdDox",
             "name": "Swamp Palace - Flooded Room - Left:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/FloodedRoom.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gRmxvb2RlZCBSb29tIC0gUmlnaHQ6MQ==",
             "name": "Swamp Palace - Flooded Room - Right:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/FloodedRoom.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gV2F0ZXJmYWxsIFJvb206MQ==",
             "name": "Swamp Palace - Waterfall Room:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/WaterfallRoom.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gQm9zczox",
             "name": "Swamp Palace - Boss:1",
             "region": "Swamp Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/SwampPalace/Boss.png"
         },
         {
             "hash": "U3dhbXAgUGFsYWNlIC0gUHJpemU6MQ==",
@@ -904,49 +1049,57 @@
             "hash": "U2t1bGwgV29vZHMgLSBCaWcgQ2hlc3Q6MQ==",
             "name": "Skull Woods - Big Chest:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/BigChest.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBCaWcgS2V5IENoZXN0OjE=",
             "name": "Skull Woods - Big Key Chest:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/BigKeyChest.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBDb21wYXNzIENoZXN0OjE=",
             "name": "Skull Woods - Compass Chest:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/CompassChest.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBNYXAgQ2hlc3Q6MQ==",
             "name": "Skull Woods - Map Chest:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/MapChest.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBCcmlkZ2UgUm9vbTox",
-            "name": "Skull Woods - Bridge Room:1",
+            "name": "Skull Woods - Bridge Chest:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/BridgeRoom.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBQb3QgUHJpc29uOjE=",
             "name": "Skull Woods - Pot Prison:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/PotPrison.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBQaW5iYWxsIFJvb206MQ==",
             "name": "Skull Woods - Pinball Room:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/PinballRoom.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBCb3NzOjE=",
             "name": "Skull Woods - Boss:1",
             "region": "Skull Woods",
-            "class": "items"
+            "class": "items",
+            "image": "images/SkullWoods/Boss.png"
         },
         {
             "hash": "U2t1bGwgV29vZHMgLSBQcml6ZTox",
@@ -958,49 +1111,57 @@
             "hash": "VGhpZXZlcycgVG93biAtIEF0dGljOjE=",
             "name": "Thieves' Town - Attic:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/Attic.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIEJpZyBLZXkgQ2hlc3Q6MQ==",
             "name": "Thieves' Town - Big Key Chest:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/BigKeyChest.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIE1hcCBDaGVzdDox",
             "name": "Thieves' Town - Map Chest:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/MapChest.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIENvbXBhc3MgQ2hlc3Q6MQ==",
             "name": "Thieves' Town - Compass Chest:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/CompassChest.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIEFtYnVzaCBDaGVzdDox",
             "name": "Thieves' Town - Ambush Chest:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/AmbushChest.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIEJpZyBDaGVzdDox",
             "name": "Thieves' Town - Big Chest:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/BigChest.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIEJsaW5kJ3MgQ2VsbDox",
             "name": "Thieves' Town - Blind's Cell:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/BlindsCell.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIEJvc3M6MQ==",
             "name": "Thieves' Town - Boss:1",
             "region": "Thieves Town",
-            "class": "items"
+            "class": "items",
+            "image": "images/ThievesTown/Boss.png"
         },
         {
             "hash": "VGhpZXZlcycgVG93biAtIFByaXplOjE=",
@@ -1012,49 +1173,57 @@
             "hash": "SWNlIFBhbGFjZSAtIEJpZyBLZXkgQ2hlc3Q6MQ==",
             "name": "Ice Palace - Big Key Chest:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/BigKeyChest.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIENvbXBhc3MgQ2hlc3Q6MQ==",
             "name": "Ice Palace - Compass Chest:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/CompassChest.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIE1hcCBDaGVzdDox",
             "name": "Ice Palace - Map Chest:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/MapChest.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIFNwaWtlIFJvb206MQ==",
             "name": "Ice Palace - Spike Room:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/SpikeRoom.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIEZyZWV6b3IgQ2hlc3Q6MQ==",
             "name": "Ice Palace - Freezor Chest:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/FreezorChest.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIEljZWQgVCBSb29tOjE=",
-            "name": "Ice Palace - Iced T Room:1",
+            "name": "Ice Palace - Iced T Chest:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/IcedTRoom.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIEJpZyBDaGVzdDox",
             "name": "Ice Palace - Big Chest:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/BigChest.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIEJvc3M6MQ==",
             "name": "Ice Palace - Boss:1",
             "region": "Ice Palace",
-            "class": "items"
+            "class": "items",
+            "image": "images/IcePalace/Boss.png"
         },
         {
             "hash": "SWNlIFBhbGFjZSAtIFByaXplOjE=",
@@ -1066,49 +1235,57 @@
             "hash": "TWlzZXJ5IE1pcmUgLSBCaWcgQ2hlc3Q6MQ==",
             "name": "Misery Mire - Big Chest:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/BigChest.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBNYWluIExvYmJ5OjE=",
             "name": "Misery Mire - Main Lobby:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/MainLobby.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBCaWcgS2V5IENoZXN0OjE=",
             "name": "Misery Mire - Big Key Chest:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/BigKeyChest.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBDb21wYXNzIENoZXN0OjE=",
             "name": "Misery Mire - Compass Chest:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/CompassChest.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBCcmlkZ2UgQ2hlc3Q6MQ==",
             "name": "Misery Mire - Bridge Chest:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/BridgeChest.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBNYXAgQ2hlc3Q6MQ==",
             "name": "Misery Mire - Map Chest:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/MapChest.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBTcGlrZSBDaGVzdDox",
             "name": "Misery Mire - Spike Chest:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/SpikeChest.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBCb3NzOjE=",
             "name": "Misery Mire - Boss:1",
             "region": "Misery Mire",
-            "class": "items"
+            "class": "items",
+            "image": "images/MiseryMire/Boss.png"
         },
         {
             "hash": "TWlzZXJ5IE1pcmUgLSBQcml6ZTox",
@@ -1120,73 +1297,85 @@
             "hash": "VHVydGxlIFJvY2sgLSBDaGFpbiBDaG9tcHM6MQ==",
             "name": "Turtle Rock - Chain Chomps:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/ChainChomps.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBDb21wYXNzIENoZXN0OjE=",
             "name": "Turtle Rock - Compass Chest:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/CompassChest.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBSb2xsZXIgUm9vbSAtIExlZnQ6MQ==",
             "name": "Turtle Rock - Roller Room - Left:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/RollerRoom.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBSb2xsZXIgUm9vbSAtIFJpZ2h0OjE=",
             "name": "Turtle Rock - Roller Room - Right:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/RollerRoom.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBCaWcgQ2hlc3Q6MQ==",
             "name": "Turtle Rock - Big Chest:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/BigChest.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBCaWcgS2V5IENoZXN0OjE=",
             "name": "Turtle Rock - Big Key Chest:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/BigKeyChest.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBDcnlzdGFyb2xsZXIgUm9vbTox",
             "name": "Turtle Rock - Crystaroller Room:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/CrystarollerRoom.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBFeWUgQnJpZGdlIC0gQm90dG9tIExlZnQ6MQ==",
             "name": "Turtle Rock - Eye Bridge - Bottom Left:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/EyeBridge.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBFeWUgQnJpZGdlIC0gQm90dG9tIFJpZ2h0OjE=",
             "name": "Turtle Rock - Eye Bridge - Bottom Right:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/EyeBridge.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBFeWUgQnJpZGdlIC0gVG9wIExlZnQ6MQ==",
             "name": "Turtle Rock - Eye Bridge - Top Left:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/EyeBridge.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBFeWUgQnJpZGdlIC0gVG9wIFJpZ2h0OjE=",
             "name": "Turtle Rock - Eye Bridge - Top Right:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/EyeBridge.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBCb3NzOjE=",
             "name": "Turtle Rock - Boss:1",
             "region": "Turtle Rock",
-            "class": "items"
+            "class": "items",
+            "image": "images/TurtleRock/Boss.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgLSBQcml6ZTox",
@@ -1198,163 +1387,190 @@
             "hash": "R2Fub24ncyBUb3dlciAtIEJvYidzIFRvcmNoOjE=",
             "name": "Ganon's Tower - Bob's Torch:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/BobsTorch.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIERNcyBSb29tIC0gVG9wIExlZnQ6MQ==",
             "name": "Ganon's Tower - DMs Room - Top Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/DMsRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIERNcyBSb29tIC0gVG9wIFJpZ2h0OjE=",
             "name": "Ganon's Tower - DMs Room - Top Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/DMsRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIERNcyBSb29tIC0gQm90dG9tIExlZnQ6MQ==",
             "name": "Ganon's Tower - DMs Room - Bottom Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/DMsRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIERNcyBSb29tIC0gQm90dG9tIFJpZ2h0OjE=",
             "name": "Ganon's Tower - DMs Room - Bottom Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/DMsRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIFJhbmRvbWl6ZXIgUm9vbSAtIFRvcCBMZWZ0OjE=",
             "name": "Ganon's Tower - Randomizer Room - Top Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/RandomizerRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIFJhbmRvbWl6ZXIgUm9vbSAtIFRvcCBSaWdodDox",
             "name": "Ganon's Tower - Randomizer Room - Top Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/RandomizerRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIFJhbmRvbWl6ZXIgUm9vbSAtIEJvdHRvbSBMZWZ0OjE=",
             "name": "Ganon's Tower - Randomizer Room - Bottom Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/RandomizerRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIFJhbmRvbWl6ZXIgUm9vbSAtIEJvdHRvbSBSaWdodDox",
             "name": "Ganon's Tower - Randomizer Room - Bottom Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/RandomizerRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEZpcmVzbmFrZSBSb29tOjE=",
             "name": "Ganon's Tower - Firesnake Room:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/FiresnakeRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIE1hcCBDaGVzdDox",
             "name": "Ganon's Tower - Map Chest:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/MapChest.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEJpZyBDaGVzdDox",
             "name": "Ganon's Tower - Big Chest:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/BigChest.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEhvcGUgUm9vbSAtIExlZnQ6MQ==",
             "name": "Ganon's Tower - Hope Room - Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/HopeRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEhvcGUgUm9vbSAtIFJpZ2h0OjE=",
             "name": "Ganon's Tower - Hope Room - Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/HopeRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEJvYidzIENoZXN0OjE=",
             "name": "Ganon's Tower - Bob's Chest:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/BobsChest.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIFRpbGUgUm9vbTox",
             "name": "Ganon's Tower - Tile Room:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/TileRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIENvbXBhc3MgUm9vbSAtIFRvcCBMZWZ0OjE=",
             "name": "Ganon's Tower - Compass Room - Top Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/CompassRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIENvbXBhc3MgUm9vbSAtIFRvcCBSaWdodDox",
             "name": "Ganon's Tower - Compass Room - Top Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/CompassRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIENvbXBhc3MgUm9vbSAtIEJvdHRvbSBMZWZ0OjE=",
             "name": "Ganon's Tower - Compass Room - Bottom Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/CompassRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIENvbXBhc3MgUm9vbSAtIEJvdHRvbSBSaWdodDox",
             "name": "Ganon's Tower - Compass Room - Bottom Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/CompassRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEJpZyBLZXkgQ2hlc3Q6MQ==",
             "name": "Ganon's Tower - Big Key Chest:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/BigKeyRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEJpZyBLZXkgUm9vbSAtIExlZnQ6MQ==",
             "name": "Ganon's Tower - Big Key Room - Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/BigKeyRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIEJpZyBLZXkgUm9vbSAtIFJpZ2h0OjE=",
             "name": "Ganon's Tower - Big Key Room - Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/BigKeyRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIE1pbmkgSGVsbWFzYXVyIFJvb20gLSBMZWZ0OjE=",
             "name": "Ganon's Tower - Mini Helmasaur Room - Left:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/MiniHelmasaurRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIE1pbmkgSGVsbWFzYXVyIFJvb20gLSBSaWdodDox",
             "name": "Ganon's Tower - Mini Helmasaur Room - Right:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/MiniHelmasaurRoom.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIFByZS1Nb2xkb3JtIENoZXN0OjE=",
             "name": "Ganon's Tower - Pre-Moldorm Chest:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/PreMoldormChest.png"
         },
         {
             "hash": "R2Fub24ncyBUb3dlciAtIE1vbGRvcm0gQ2hlc3Q6MQ==",
             "name": "Ganon's Tower - Moldorm Chest:1",
             "region": "Ganons Tower",
-            "class": "items"
+            "class": "items",
+            "image": "images/GanonsTower/Moldorm2Chest.png"
         },
         {
             "hash": "VHVydGxlIFJvY2sgTWVkYWxsaW9uOjE=",

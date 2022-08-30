@@ -152,6 +152,7 @@ export default class Lobby {
                         name: z3rLocation.name,
                         item: z3rLocation.item,
                         isCrystalPendant: z3rLocation.isCrystalPendant,
+                        class: "items",
                     };
                 }
                 entrant.ready = true;

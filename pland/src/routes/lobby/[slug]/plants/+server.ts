@@ -1,7 +1,8 @@
-import { error, json, type RequestHandler } from '@sveltejs/kit';
+import { json, type RequestHandler } from '@sveltejs/kit';
 import { Lobbies } from "$lib/Lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { ILocation } from '$lib/z3r/logic/Location';
+import fs from 'fs';
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
     const lobby = Lobbies.get(params.slug!)!.lobby;
@@ -42,6 +43,19 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
 
     await lobby.initialize();
     let {plantable, messages} = await lobby.plant(user, plantedItems, plantedLocations);
+
+    if (lobby.lobby.ready_to_roll) {
+        try { 
+            if (!fs.existsSync('logs')) {
+                console.log('no log dir')
+                fs.mkdirSync('logs');
+            }
+            const messageBuffer = messages.join('\n')
+            fs.writeFileSync(`logs/${lobby.lobby.slug}.log`, messageBuffer)
+        }
+        // TODO: Handle errors! 
+        catch {}
+    }
 
     return json({planted: plantable, message:messages[messages.length-1] || ''});
 }

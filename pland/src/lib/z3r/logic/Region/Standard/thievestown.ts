@@ -27,7 +27,7 @@ export class ThievesTown extends Dungeon {
             new Chest("Thieves' Town - Big Key Chest", this),
             new Chest("Thieves' Town - Map Chest", this),
             new Chest("Thieves' Town - Compass Chest", this),
-            new Chest("Thieves' Town - Ambuss Chest", this),
+            new Chest("Thieves' Town - Ambush Chest", this),
             new BigChest("Thieves' Town - Big Chest", this),
             new Chest("Thieves' Town - Blind's Cell", this),
             new Drop("Thieves' Town - Boss", this),

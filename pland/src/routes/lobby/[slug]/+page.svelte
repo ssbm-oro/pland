@@ -123,6 +123,13 @@
     async function rollSeed() {
         rollAlertVisible = true;
     }
+
+    let refreshing = false;
+    async function refreshLobby() {
+        refreshing = true;
+        await invalidate();
+        refreshing = false;
+    }
 </script>
 
 <main>
@@ -134,7 +141,15 @@
         <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
         <Alert bind:visible={rollAlertVisible}>
             <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
-            <svelte:fragment slot="message">{rollAlertMessage}</svelte:fragment>
+            <svelte:fragment slot="message">
+                <p>{rollAlertMessage}</p>
+                <br/>
+                {#if userAsEntrant}
+                    <p>Check out the logic log for this lobby:
+                        <a class="text-primary-500" href="/api/roll/log/{lobby.slug}" download>Click Here</a>
+                    </p>
+                {/if}
+            </svelte:fragment>
             <svelte:fragment slot="trail"><Button on:click={() => {rollAlertVisible=false;}}>X</Button></svelte:fragment>
         </Alert>
         <br/>
@@ -145,8 +160,8 @@
         <svelte:fragment slot="trail"><Button on:click={() => {opponentConflictAlertVisible=false;}}>X</Button></svelte:fragment>
     </Alert>
     <div class="fixed top-4 right-4">
-        <Button variant="ring-primary" on:click={() => invalidate()}>
-            <Icon icon="charm:refresh"></Icon>
+        <Button variant="ring-primary" on:click={refreshLobby}>
+            <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
         </Button>
     {#if userInLobby}
         <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
@@ -162,7 +177,13 @@
                     <Card>
                         <Badge>
                             <DiscordAvatar user={{id:entrant.discord_id, ...entrant}} size="sm"/>
-                            <svelte:fragment slot="trail">{#if entrant.ready}🟢{:else}⚪️{/if}</svelte:fragment>
+                            <svelte:fragment slot="trail">
+                                {#if entrant.ready}
+                                    <Icon class="text-primary-500" icon="bi:check-square-fill" />
+                                {:else}
+                                    <Icon class="text-accent-500/50" icon="bi:square-fill" />
+                                {/if}
+                            </svelte:fragment>
                         </Badge>
                         {entrant.username}#{entrant.discriminator}
                     </Card>

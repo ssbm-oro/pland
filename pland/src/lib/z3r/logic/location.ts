@@ -12,6 +12,7 @@ export interface ILocation extends Entry {
     always_callback?: (item: IItem, items: ItemCollection) => boolean;
     fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
     requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
+    class: 'items' | 'prizes' | 'medallions' | 'bottles' | 'events';
 }
 
 export class Z3rLocation implements ILocation {
@@ -19,6 +20,7 @@ export class Z3rLocation implements ILocation {
     region: Region;
     item: IItem | null;
     isCrystalPendant: boolean;
+    class: 'items' | 'prizes' | 'medallions' | 'bottles' | 'events';
 
     always_callback?: (item: IItem, items: ItemCollection) => boolean;
     fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
@@ -29,6 +31,7 @@ export class Z3rLocation implements ILocation {
         this.region = region;
         this.item = null;
         this.isCrystalPendant = false;
+        this.class = 'items';
     }
 
     public fill(newItem:IItem, items: ItemCollection, check_access: boolean = false): boolean {
@@ -152,13 +155,17 @@ export class Ether extends Drop {
 export class Fountain extends Z3rLocation { 
     public constructor(name: string, region: Region) {
         super(name, region);
+        this.class = "bottles"
         // TODO: Fill Criteria should be a bottle
         this.setFillCriteria(() => {return false;});
     }
 }
 
 export class Medallion extends Z3rLocation { 
-    // purposefully empty class
+    public constructor(name: string, region: Region) {
+        super(name, region);
+        this.class = "medallions";
+    }
 }
 
 export class Npc extends Z3rLocation { 
@@ -186,7 +193,10 @@ export class Pedestal extends Z3rLocation {
 }
 
 export class Prize extends Z3rLocation {
-    // purposefully empty class
+    constructor(name: string, region:Region) {
+        super(name, region);
+        this.class = 'prizes'
+    }
 }
 
 export class Crystal extends Prize { 
@@ -202,6 +212,7 @@ export class Pendant extends Prize {
 export class Event extends Prize { 
     public constructor(name: string, region: Region) {
         super(name, region);
+        this.class = 'events'
         this.setFillCriteria(() => {return false;});
     }
 }

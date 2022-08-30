@@ -29,8 +29,8 @@ export class SwampPalace extends Dungeon {
             new Chest("Swamp Palace - Map Chest", this),
             new Chest("Swamp Palace - West Chest", this),
             new Chest("Swamp Palace - Compass Chest", this),
-            new Chest("Swamp Palace - Flooed Room - Left", this),
-            new Chest("Swamp Palace - Flooed Room - Right", this),
+            new Chest("Swamp Palace - Flooded Room - Left", this),
+            new Chest("Swamp Palace - Flooded Room - Right", this),
             new Chest("Swamp Palace - Waterfall Room", this),
             new Drop("Swamp Palace - Boss", this),
 
