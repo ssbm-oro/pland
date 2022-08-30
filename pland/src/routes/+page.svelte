@@ -111,6 +111,7 @@
 
 <main>
     <GradientHeading>Welcome to pland</GradientHeading>
+    <br/>
     
     {#if !user}
         <p>Please log in if you wanna roll seeds. 🔐</p>
@@ -120,6 +121,7 @@
         {#if user.avatar}
             <img src='{discord_avatar_uri.replace('$userid', user.id).replace('$useravatar',user.avatar)}' alt="{user.username}'s avatar"/>
         {/if}
+        <p>This website is best viewed in a resolution of 640x480 or greater.</p>
 
         <!-- <Presets bind:selectedPreset="{selectedPreset}" on:onChange={resetPlants}></Presets>
         {#key reset_toggle}

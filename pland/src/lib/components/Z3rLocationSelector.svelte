@@ -8,6 +8,8 @@
     import { items } from '$lib/data/json/alttpr-customizer-schema.json';
     import { ItemCollection } from '$lib/z3r/logic/Support/ItemCollection';
     import { onMount } from 'svelte';
+    import { blur, crossfade } from 'svelte/transition'
+import { quintOut } from 'svelte/easing';
 
     let available: ItemCollection;
 
@@ -40,7 +42,7 @@
         return true;
     }
 
-    function changeSelection() {
+    export function changeSelection() {
         $selectedLocation = 'Random'
     }
 
@@ -82,21 +84,33 @@
             $selectedLocation = locationsFiltered[0].name;
         }
     }
+
+    const [send, receive] = crossfade({
+		duration:300,
+        easing:quintOut,
+        delay:100
+	});
 </script>
 
 <main>
     <Card>
         {#if disabled || $selectedLocation != 'Random' }
-            <Button variant="ring-primary" on:click={changeSelection} {disabled}>
-                {Location.name}
-            </Button>
+            <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
+                <Button variant="ring-primary" on:click={changeSelection} {disabled}>
+                    {Location.name}
+                </Button>
+            </div>
         {:else}
-            <input type="search" placeholder="Select a location..." bind:value={search} on:keypress={selectOnEnter}>
-            <List tag="nav" selected={selectedLocation} class="max-h-96 overflow-y-auto">
-                {#each locationsFiltered as location }
-                    <ListItem value={location.name}>{location.name}</ListItem>
-                {/each}
-            </List>
+            <div in:send={{key:"ItemList"}} out:blur={{duration:300}}>
+                <input type="search" placeholder="Select a location..." bind:value={search} on:keypress={selectOnEnter}>
+                <List tag="nav" selected={selectedLocation} class="max-h-96 overflow-auto">
+                    {#each locationsFiltered as location }
+                        <div class="max-w-xs">
+                            <ListItem class="flex flex-wrap" value={location.name}>{location.name}</ListItem>
+                        </div>
+                    {/each}
+                </List>
+            </div>
         {/if}
     </Card>
 </main>

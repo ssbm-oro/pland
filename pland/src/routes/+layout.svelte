@@ -9,7 +9,7 @@
 	import { Button, LightSwitch, Menu, Card, Drawer, Divider, List, ListItem, GradientHeading } from '@brainandbones/skeleton';
 	import { writable } from "svelte/store";
 	import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
-import { invalidate } from "$app/navigation";
+	import { invalidate } from "$app/navigation";
 
     export let data: LayoutData;
     $: user = data.user;
@@ -51,9 +51,10 @@ import { invalidate } from "$app/navigation";
 	<Drawer visible={drawer} fixed="left">
 
 	<svelte:fragment slot="header">
-		<div class="flex">
-			<a href="/"><GradientHeading tag="h3">pland</GradientHeading></a>
-			<LightSwitch />
+		<div class="grid grid-flow-col grid-cols-3">
+			<div><a href="/"><GradientHeading tag="h3">pland</GradientHeading></a></div>
+			<div class="grid grid-row-1 content-center justify-center"><LightSwitch /></div>
+			<div class="grid grid-row-1 justify-end">
 			{#if !user}
 				<Button variant="ring-accent" on:click="{() => (window.location.href = discord_login_uri)}">
 					<svelte:fragment slot="lead"><Icon icon="bxl:discord-alt"/></svelte:fragment>
@@ -67,7 +68,9 @@ import { invalidate } from "$app/navigation";
 					</Card>
 				</Menu>
 			{/if}
+			</div>
 		</div>
+		<Divider></Divider>
 	</svelte:fragment>
 	<svelte:fragment slot="main">
 		<List tag="nav" separator="|">
@@ -81,15 +84,20 @@ import { invalidate } from "$app/navigation";
 
 	<svelte:fragment slot="footer">
 		<Divider></Divider>
-		<!-- svelte-ignore missing-declaration -->
-		<footer>&#xa9; oro 2022 - Version {__APP_VERSION__} 
-			<Button href="https://github.com/ssbm-oro/pland" size="none" action="_">
-				<svelte:fragment slot="lead">
-					<Icon icon="fa:github-square" width=24 inline={true}/>
-				</svelte:fragment>
-				Github
-			</Button></footer>
-		<br/>
+		<footer>
+			<div class="grid grid-cols-3">
+				<p>&#xa9; oro 2022</p>
+				<!-- svelte-ignore missing-declaration -->
+				<div class="flex justify-center"><p>v. {__APP_VERSION__}</p></div>
+				<Button href="https://github.com/ssbm-oro/pland" size="none" action="_">
+					<svelte:fragment slot="lead">
+						<Icon icon="fa:github-square" width=24 inline={true}/>
+					</svelte:fragment>
+					Github
+				</Button>
+			</div>
+			<br>
+		</footer>
 	</svelte:fragment>
 	</Drawer>
 

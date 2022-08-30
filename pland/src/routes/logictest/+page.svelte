@@ -11,6 +11,7 @@
     import type { PageData} from './$types';
     import { checkPlants } from '$lib/z3r/logic/Logic'
     import { Button, Card } from '@brainandbones/skeleton';
+    import { slide } from 'svelte/transition'
 
     let selectedPreset: string = 'open.json';
     let world: World;
@@ -81,22 +82,26 @@
                 <p>{selectedPresetData.description}</p>
                 <br/><br/>
             </svelte:fragment>
-            <Button variant="ring-accent" on:click="{addPlant}">Add Plant</Button>
-            {#each selectedItems as selectedItem, index }
+            <div>
+                <Button variant="ring-accent" on:click="{addPlant}">Add Plant</Button>
+                    {#each selectedItems as selectedItem, index }
+                        <div transition:slide>
+                            <br/><br/>
+                            <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" {world}></Plant>
+                            <br/>
+                            <Button variant="ring-warning" on:click="{() => removePlant(index)}">Remove Plant</Button>
+                        </div>
+                    {/each}
                 <br/><br/>
-                <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" {world}></Plant>
+                <Button variant="filled-primary" on:click="{checkPlantsClick}">Check Plants</Button>
+                {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
                 <br/>
-                <Button variant="ring-warning" on:click="{() => removePlant(index)}">Remove Plant</Button>
-            {/each}
-            <br/><br/>
-            <Button variant="filled-primary" on:click="{checkPlantsClick}">Check Plants</Button>
-            {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
-            <br/>
-            <ul>
-                {#each logicTestMessages as message}
-                    <li>{message}</li>
-                {/each}
-            </ul>
+                <ul>
+                    {#each logicTestMessages as message}
+                        <li>{message}</li>
+                    {/each}
+                </ul>
+            </div>
         </Card>
     {/if}
 </main>

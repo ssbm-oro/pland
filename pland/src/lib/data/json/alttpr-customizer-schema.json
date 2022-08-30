@@ -1529,9 +1529,8 @@
             "count": 1,
             "placed": 0,
             "icon": {
-                "icon":"fluent:arrow-download-24-filled",
-                "color":"gray",
-                "vFlip":true
+                "icon":"mdi:hook",
+                "color":"gray"
             }
         },
         {

@@ -14,6 +14,7 @@
     import { checkPlants } from "$lib/z3r/logic/Logic";
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
     import { Badge, List, ListItem, Card, Button, Alert } from "@brainandbones/skeleton"
+    import Icon from "@iconify/svelte";
 
 
     export let data: PageData;
@@ -24,6 +25,7 @@
     let selectedLocations: ILocation[];
     let world: World;
     let logicTestMessages: string[] = [];
+    let plants: Plant[];
 
     $: userInLobby = user ? lobby.entrants.some(entrant => entrant.discord_id == user!.id): undefined;
     $: userAsEntrant = user ? lobby.entrants.find(entrant => entrant.discord_id == user!.id): undefined;
@@ -32,6 +34,7 @@
         try {
             selectedItems = new Array(lobby.max_plants);
             selectedLocations = new Array(lobby.max_plants);
+            plants = new Array(lobby.max_plants);
 
             let preset_res = await fetch(`/presets/${lobby.preset}`);
             let selectedPresetData = await preset_res.json();
@@ -77,6 +80,10 @@
 
     let conflictAlertVisible = false;
     let conflictAlertMessage: string;
+    let opponentConflictAlertVisible = false;
+    let opponentConflictAlertMessage = `You and your opponent conflicted.
+                                        In the future, this message would be
+                                        more specific. Please resubmit your picks.`
     async function submitPlants() {
         if (userAsEntrant) {
             let {plantable, messages} = checkPlants(world, selectedItems, selectedLocations)
@@ -85,8 +92,15 @@
                 params.append('plantedItems', JSON.stringify(selectedItems));
                 params.append('plantedLocations', JSON.stringify(selectedLocations));
                 params.append('ready', 'true');
-                await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
-                invalidate();
+                const res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
+                const data = await res.json();
+                const planted : boolean = data.planted;
+                const message : string = data.message;
+                await invalidate();
+                if (!planted && !userAsEntrant.ready) {
+                    opponentConflictAlertVisible = true;
+                    plants.forEach(plant => plant.resetPlants());
+                }
             }
             else {
                 conflictAlertVisible = true;
@@ -116,18 +130,30 @@
     <h2>Mode: {lobby.preset}</h2>
     <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
     {#if (lobby.ready_to_roll && !userAsEntrant) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
+        <br/>
         <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
         <Alert bind:visible={rollAlertVisible}>
             <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
             <svelte:fragment slot="message">{rollAlertMessage}</svelte:fragment>
             <svelte:fragment slot="trail"><Button on:click={() => {rollAlertVisible=false;}}>X</Button></svelte:fragment>
         </Alert>
+        <br/>
     {/if}
+    <Alert bind:visible={opponentConflictAlertVisible}>
+        <svelte:fragment slot="title">There was a conflict with your opponent's plants</svelte:fragment>
+        <svelte:fragment slot="message">{opponentConflictAlertMessage}</svelte:fragment>
+        <svelte:fragment slot="trail"><Button on:click={() => {opponentConflictAlertVisible=false;}}>X</Button></svelte:fragment>
+    </Alert>
+    <div class="fixed top-4 right-4">
+        <Button variant="ring-primary" on:click={() => invalidate()}>
+            <Icon icon="charm:refresh"></Icon>
+        </Button>
     {#if userInLobby}
         <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
     {:else}
         <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
     {/if}
+    </div>
     <Card>
         <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
         <List>
@@ -149,7 +175,9 @@
         <Card>
             <p>Plants</p>
             {#each selectedItems as selectedItem, index}
-                <Plant bind:selectedItem bind:selectedLocation={selectedLocations[index]} locations={world.locations.to_array()} {world} disabled={userAsEntrant.ready}></Plant>
+                <Plant bind:selectedItem bind:selectedLocation={selectedLocations[index]}
+                    locations={world.locations.to_array()} {world} disabled={userAsEntrant.ready}
+                    bind:this={plants[index]}/>
                 <br/>
             {/each}
             {#if !userAsEntrant.ready}

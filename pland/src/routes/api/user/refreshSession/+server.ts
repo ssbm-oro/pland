@@ -43,7 +43,7 @@ export const POST: RequestHandler = async ( { request} ) => {
         updateSession(sessionId, UserData, GrantData);
 
         // update the session cookie
-        return(new Response('',{
+        return(new Response(null,{
             headers: {
                 'Set-Cookie': cookie.serialize('session_id', sessionId as string, {
                     path: '/',
