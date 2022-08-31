@@ -51,24 +51,22 @@
     </p>
     <Presets bind:selectedPreset bind:presets></Presets>
     <br/>
-    <div class="flex flex-row justify-around">
-        <div>
-            <Menu select={true} open={false}>
-                <Button slot="trigger" background="bg-accent-500">Max Entrants: {$maxPlayers}</Button>
-                <Card slot="content" background="bg-surface-300/80 dark:bg-surface-700/80">
-                    <List tag="nav" selected={maxPlayers}>
-                        <ListItem value={2}>Two</ListItem>
-                        <ListItem value={3}>Three</ListItem>
-                        <ListItem value={4}>Four</ListItem>
-                        <ListItem value={5}>Five</ListItem>
-                        <ListItem value={6}>Six</ListItem>
-                        <ListItem value={7}>Seven</ListItem>
-                        <ListItem value={8}>Eight</ListItem>
-                    </List>
-                </Card>
-            </Menu>
-        </div>
-        <div>
+    <div class="flex flex-col sm:flex-row sm:justify-around">
+        <Menu select={true} open={false} class="self-center sm:self-auto">
+            <Button slot="trigger" background="bg-accent-500">Max Entrants: {$maxPlayers}</Button>
+            <Card slot="content" background="bg-surface-300/80 dark:bg-surface-700/80">
+                <List tag="nav" selected={maxPlayers}>
+                    <ListItem value={2}>Two</ListItem>
+                    <ListItem value={3}>Three</ListItem>
+                    <ListItem value={4}>Four</ListItem>
+                    <ListItem value={5}>Five</ListItem>
+                    <ListItem value={6}>Six</ListItem>
+                    <ListItem value={7}>Seven</ListItem>
+                    <ListItem value={8}>Eight</ListItem>
+                </List>
+            </Card>
+        </Menu>
+        <div class="self-center mt-4 sm:mt-0 sm:self-auto">
             Num Plants: 
             <RadioGroup selected="{numPlants}" background="bg-accent-500">
                 <RadioItem value={1}>One</RadioItem>
