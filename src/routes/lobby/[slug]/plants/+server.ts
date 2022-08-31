@@ -1,5 +1,5 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
-import { Lobbies } from "$lib/Lobby";
+import { Lobbies } from "$lib/lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { ILocation } from '$lib/z3r/logic/Location';
 import fs from 'fs';

@@ -1,4 +1,4 @@
-import { Lobbies } from '$lib/Lobby';
+import { Lobbies } from '$lib/lobby';
 import { fetchClientSession } from '$lib/utils/sessionHandler';
 import { error, type RequestHandler } from '@sveltejs/kit';
 import fs from 'fs';

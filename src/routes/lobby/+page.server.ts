@@ -1,4 +1,4 @@
-import Lobby, { Lobbies } from "$lib/Lobby";
+import Lobby, { Lobbies } from "$lib/lobby";
 import type { Action } from "@sveltejs/kit";
 import { error, redirect } from '@sveltejs/kit'
 
