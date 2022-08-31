@@ -101,7 +101,7 @@
         {#each filteredLobbies as lobby}
             <div class="relative">
                 <ListItem href='lobby/{lobby.slug}'>
-                    <div class="grid grid-cols-4 justify-items-end">
+                    <div class="grid grid-cols-3 md:grid-cols-4 justify-items-end">
                         <p class="place-self-start">{lobby.slug}</p>
                         <p>{lobby.preset}</p>
                         <div class="flex flex-row -space-x-6">
@@ -109,7 +109,7 @@
                                 <div><DiscordAvatar user={{id:entrant.discord_id,...entrant}} size="sm" outlined={entrant.ready} /></div>
                             {/each}
                         </div>
-                        <p>{lobby.entrants.length} / {lobby.max_entrants} entrants.</p>
+                        <p class="invisible md:visible">{lobby.entrants.length} / {lobby.max_entrants} entrants.</p>
                     </div>
                     <svelte:fragment slot="trail">
                         {#if user} <Button background="bg-warning-500" on:click="{() => deleteLobby(lobby.slug)}">Delete</Button>{/if}

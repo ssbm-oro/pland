@@ -47,7 +47,7 @@
     const discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
 </script>
 
-<main class="flex flex-row">
+<main class="flex flex-row bg-fixed bg-[length:4000px_4000px] bg-[center_top_170rem]" style="background-image:url('goronramsay.jpg')">
 	<Drawer visible={drawer} fixed="left">
 
 	<svelte:fragment slot="header">
@@ -121,7 +121,7 @@
 	</svelte:fragment>
 	</Drawer>
 
-	<div id="main" class="w-screen h-screen overflow-y-auto">
+	<div id="main" class="w-screen h-screen overflow-y-auto backdrop-blur-lg bg-surface-200/30 dark:bg-surface-900/60">
 		<header class="lg:hidden flex p-8 space-x-4">
 			<!-- Hamburger Menu -->
 			<Button variant="minimal" class="absolute top-4 left-4" on:click={() => $drawer = !$drawer}>
@@ -137,5 +137,4 @@
 			<slot />
 		</div>
 	</div>
-
 </main>
