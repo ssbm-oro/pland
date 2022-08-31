@@ -40,7 +40,7 @@
                 "<node_internals>/**"
             ],
             "type": "node",
-            "cwd": "${workspaceFolder}/pland"
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

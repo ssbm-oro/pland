@@ -228,6 +228,6 @@ $RECYCLE.BIN/
 .vercel
 
 # node build output
-pland/build
+build
 
-pland/lobbies
+lobbies
