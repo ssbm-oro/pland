@@ -1,4 +1,4 @@
-import { reloadLobbies } from '$lib/Lobby';
+import { reloadLobbies } from '$lib/lobby';
 import { fetchSession } from '$lib/utils/sessionHandler';
 import type { Handle } from '@sveltejs/kit';
 import cookie from 'cookie';
