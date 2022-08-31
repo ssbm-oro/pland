@@ -77,7 +77,7 @@
 <Presets presets={preset_names} bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
 <br/><br/>
 {#if world}
-    <Card>
+    <Card class="overflow-auto">
         <svelte:fragment slot="header">
             <h2>{selectedPresetData.goal_name || selectedPreset}</h2>
             <p>{selectedPresetData.description || selectedPreset}</p>

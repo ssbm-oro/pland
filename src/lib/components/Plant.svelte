@@ -13,7 +13,6 @@
     export let world: World;
     $: iconColor = selectedItem && selectedItem.name != "Random" && selectedLocation && selectedLocation.name != "Random" ? "green" : "white";
     let width: number;
-    $: rotate = width > 1024 ? 0 : 1;
     let itemSelector: Z3rItemSelector;
     let locationSelector: Z3rLocationSelector;
     export let bottleType: string | undefined = 'unselected';
@@ -25,10 +24,10 @@
 </script>
 
 <svelte:window bind:innerWidth={width}></svelte:window>
-<div class="lg:flex lg:flex-row overflow-visible">
+<div class="md:flex md:flex-row overflow-visible">
     <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType}/>
-    <div class="flex justify-start ml-12 lg:ml-0">
-        <Icon icon="el:arrow-right" width="60" bind:color={iconColor} {rotate}></Icon>
+    <div class="flex justify-start ml-12 md:ml-0">
+        <Icon icon="el:arrow-right" width="60" bind:color={iconColor} class="rotate-90 md:rotate-0"></Icon>
     </div>
     <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world} bind:this={locationSelector}/>
 </div>

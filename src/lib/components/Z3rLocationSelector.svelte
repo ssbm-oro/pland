@@ -97,7 +97,7 @@
     }
 </script>
 
-<Card class="flex-none w-96">
+<Card class="min-w-min max-w-prose">
     {#if disabled || $selectedLocation != 'Random' }
         <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
             <Button variant="ring-primary" on:click={changeSelection} {disabled}>
