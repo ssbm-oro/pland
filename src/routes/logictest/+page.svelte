@@ -12,6 +12,7 @@
     import { checkPlants } from '$lib/z3r/logic/Logic'
     import { Button, Card } from '@brainandbones/skeleton';
     import { slide } from 'svelte/transition'
+    import Icon from "@iconify/svelte";
 
     let selectedPreset: string = 'open.json';
     let world: World;
@@ -24,6 +25,7 @@
     export let data: PageData;
     const preset_names = Object.keys(data.presets).map(filepath => filepath.split('/').reverse()[0] ?? 'error');
     const presets = new Map(Object.entries(data.presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
+    const loading_message = data.loading_message;
 
 
     async function presetChanged() {
@@ -107,4 +109,9 @@
             </ul>
         </div>
     </Card>
+{:else}
+    <div class="flex justify-center">
+    <p>{loading_message}</p>
+        <Icon icon="line-md:loading-twotone-loop" height="48" width="48" />
+    </div>
 {/if}

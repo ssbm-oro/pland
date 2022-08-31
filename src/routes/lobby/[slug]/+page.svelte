@@ -21,6 +21,7 @@
     $: lobby = data.lobby;
     $: user = data.user;
     const presets = new Map(Object.entries(data.presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
+    const loading_message = data.loading_message;
 
     let selectedItems: IItem[];
     let selectedLocations: ILocation[];
@@ -223,4 +224,11 @@
             <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
         {/if}
     </Card>
+{:else}
+    {#if userAsEntrant}
+        <div class="flex justify-center">
+        <p>{loading_message}</p>
+            <Icon icon="line-md:loading-twotone-loop" height="48" width="48" />
+        </div>
+    {/if}
 {/if}

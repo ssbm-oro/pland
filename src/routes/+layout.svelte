@@ -3,13 +3,12 @@
 	import "../app.postcss";
     import { onMount, onDestroy } from 'svelte';
     import Icon from '@iconify/svelte';
-    import { env } from '$env/dynamic/public';
-    import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
     import type { LayoutData } from './$types';
 	import { Button, LightSwitch, Menu, Card, Drawer, Divider, List, ListItem, GradientHeading } from '@brainandbones/skeleton';
 	import { writable } from "svelte/store";
 	import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
 	import { invalidate } from "$app/navigation";
+    import { discord_login_uri } from '$lib/Discord/DiscordClient'
 
     export let data: LayoutData;
     $: user = data.user;
@@ -40,14 +39,9 @@
 		await fetch('/api/user/logout', {method: 'POST' });
 		invalidate();
 	}
-
-    const redirect_uri = env.PUBLIC_DISCORD_REDIRECT_URI;
-    const client_id = PUBLIC_DISCORD_OAUTH_CLIENT_ID;
-
-    const discord_login_uri = `https://discord.com/api/oauth2/authorize?client_id=${client_id}&redirect_uri=${redirect_uri}&response_type=code&scope=identify%20guilds`;
 </script>
 
-<main class="flex flex-row bg-fixed bg-[length:4000px_4000px] bg-[center_top_170rem]" style="background-image:url('goronramsay.jpg')">
+<main>
 	<Drawer visible={drawer} fixed="left">
 
 	<svelte:fragment slot="header">
@@ -133,7 +127,7 @@
 		</header>
 
 		<!-- Page Slot -->
-		<div class="container mx-auto p-8">
+		<div class="container mx-auto p-8 ">
 			<slot />
 		</div>
 	</div>
