@@ -7,5 +7,6 @@ export interface SelectedItem {
         icon: string,
         color?:string|undefined|null,
         hFlip?:boolean|undefined|null,
-    } | undefined|null
+    } | undefined | null,
+    pretty_name?: string | undefined | null
 }

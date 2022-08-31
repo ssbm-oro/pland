@@ -78,7 +78,7 @@
                     <svelte:fragment slot="lead">
                         <Icon icon={Item.icon?.icon} color={Item.icon?.color} hFlip={Item.icon?.hFlip} width="{3*scale}" height="{3*scale}"></Icon>
                     </svelte:fragment>
-                    {$selectedItem}
+                    {Item.pretty_name || Item.name}
                 </Button>
             </div>
             {:else}
@@ -118,7 +118,7 @@
                         <svelte:fragment slot="lead">
                             <Icon icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} width={6*scale} height={6*scale}></Icon>
                         </svelte:fragment>
-                        {item.name}
+                        {item.pretty_name || item.name}
                     </ListItem>
                 </div>
             {/each}

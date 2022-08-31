@@ -1647,7 +1647,8 @@
         {
             "value": "auto_fill",
             "name": "Random",
-            "placed": 0
+            "placed": 0,
+            "pretty_name": "Auto Fill"
         },
         {
             "value": "BottleWithRandom:1",
@@ -1657,7 +1658,8 @@
             "icon": {
                 "icon": "mdi:bottle-tonic",
                 "color": "#ccc"
-            }
+            },
+            "pretty_name": "Bottle"
         },
         {
             "value": "Nothing:1",
@@ -1721,7 +1723,8 @@
             "icon": {
                 "icon":"fa6-solid:wand-magic-sparkles",
                 "color":"red"
-            }
+            },
+            "pretty_name": "Fire Rod"
         },
         {
             "value": "IceRod:1",
@@ -1731,7 +1734,8 @@
             "icon": {
                 "icon":"fa6-solid:wand-magic-sparkles",
                 "color":"#09f"
-            }
+            },
+            "pretty_name": "Ice Rod"
         },
         {
             "value": "Hammer:1",
@@ -1741,7 +1745,8 @@
             "icon": {
                 "icon":"jam:hammer-f",
                 "color":"#a60"
-            }
+            },
+            "pretty_name": "Magic Hammer"
         },
         {
             "value": "Hookshot:1",
@@ -1751,7 +1756,8 @@
             "icon": {
                 "icon":"mdi:hook",
                 "color":"gray"
-            }
+            },
+            "pretty_name": "Hookshot"
         },
         {
             "value": "Bow:1",
@@ -1767,7 +1773,8 @@
             "icon": {
                 "icon":"mdi:boomerang",
                 "color":"blue"
-            }
+            },
+            "pretty_name": "Blue Boomerang"
         },
         {
             "value": "Powder:1",
@@ -1777,7 +1784,8 @@
             "icon": {
                 "icon":"mdi:sack",
                 "color":"#a60"
-            }
+            },
+            "pretty_name": "Magic Powder"
         },
         {
             "value": "Bombos:1",
@@ -1788,7 +1796,8 @@
                 "icon":"icon-park-solid:whirlwind",
                 "color":"#da0",
                 "hFlip":true
-            }
+            },
+            "pretty_name": "Bombos"
         },
         {
             "value": "Ether:1",
@@ -1798,7 +1807,8 @@
             "icon": {
                 "icon":"gg:bolt",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Ether"
         },
         {
             "value": "Quake:1",
@@ -1808,7 +1818,8 @@
             "icon":  {
                 "icon":"fluent:catch-up-24-filled",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Quake"
         },
         {
             "value": "Lamp:1",
@@ -1818,7 +1829,8 @@
             "icon": {
                 "icon":"mdi:post-lamp",
                 "color":"#c00"
-            }
+            },
+            "pretty_name": "Lamp"
         },
         {
             "value": "Shovel:1",
@@ -1828,7 +1840,8 @@
             "icon": {
                 "icon":"mdi:shovel",
                 "color":"#aaa"
-            }
+            },
+            "pretty_name": "Shovel"
         },
         {
             "value": "OcarinaInactive:1",
@@ -1838,7 +1851,8 @@
             "icon": {
                 "icon":"mdi:ocarina",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Flute"
         },
         {
             "value": "CaneOfSomaria:1",
@@ -1848,7 +1862,8 @@
             "icon": {
                 "icon":"icon-park-outline:a-cane",
                 "color":"#c00"
-            }
+            },
+            "pretty_name": "Cane of Somaria"
         },
         {
             "value": "Bottle:1",
@@ -1864,7 +1879,8 @@
             "icon": {
                 "icon":"fluent:heart-circle-20-filled",
                 "color":"#a00"
-            }
+            },
+            "pretty_name": "Piece of Heart"
         },
         {
             "value": "CaneOfByrna:1",
@@ -1874,7 +1890,8 @@
             "icon": {
                 "icon":"icon-park-outline:a-cane",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Cane of Byrna"
         },
         {
             "value": "Cape:1",
@@ -1884,7 +1901,8 @@
             "icon": {
                 "icon":"ant-design:eye-invisible-outlined",
                 "color":"#aaa"
-            }
+            },
+            "pretty_name": "Magic Cape"
         },
         {
             "value": "MagicMirror:1",
@@ -1894,7 +1912,8 @@
             "icon": {
                 "icon":"icon-park-twotone:mirror-one",
                 "color":"#05c"
-            }
+            },
+            "pretty_name": "Magic Mirror"
         },
         {
             "value": "PowerGlove:1",
@@ -1916,7 +1935,8 @@
             "icon": {
                 "icon":"dashicons:book-alt",
                 "color":"#070"
-            }
+            },
+            "pretty_name": "Book of Mudora"
         },
         {
             "value": "Flippers:1",
@@ -1926,7 +1946,8 @@
             "icon": {
                 "icon":"mdi:diving-flippers",
                 "color":"#05c"
-            }
+            },
+            "pretty_name": "Flippers"
         },
         {
             "value": "MoonPearl:1",
@@ -1936,7 +1957,8 @@
             "icon": {
                 "icon":"mdi:bowling",
                 "color":"pink"
-            }
+            },
+            "pretty_name": "Moon Pearl"
         },
         {
             "value": "BugCatchingNet:1",
@@ -1946,7 +1968,8 @@
             "icon": {
                 "icon":"mdi:dot-net",
                 "color":"#aaa"
-            }
+            },
+            "pretty_name": "Bug Catching Net"
         },
         {
             "value": "BlueMail:1",
@@ -1974,7 +1997,8 @@
             "icon": {
                 "icon":"fa-solid:bomb",
                 "color":"#00a"
-            }
+            },
+            "pretty_name": "Three Bombs"
         },
         {
             "value": "Mushroom:1",
@@ -1984,7 +2008,8 @@
             "icon": {
                 "icon":"mdi:mushroom",
                 "color":"#a00"
-            }
+            },
+            "pretty_name": "Mushroom"
         },
         {
             "value": "RedBoomerang:1",
@@ -1994,7 +2019,8 @@
             "icon": {
                 "icon":"mdi:boomerang",
                 "color":"#a00"
-            }
+            },
+            "pretty_name": "Magic Boomerang"
         },
         {
             "value": "BottleWithRedPotion:1",
@@ -2022,7 +2048,8 @@
             "icon": {
                 "icon":"fa-solid:bomb",
                 "color":"#00a"
-            }
+            },
+            "pretty_name": "Uncle Bombs"
         },
         {
             "value": "OneRupee:1",
@@ -2032,7 +2059,8 @@
             "icon": {
                 "icon":"fa6-solid:money-bill-1-wave",
                 "color":"green"
-            }
+            },
+            "pretty_name": "Single Rupee"
         },
         {
             "value": "FiveRupees:1",
@@ -2042,7 +2070,8 @@
             "icon": {
                 "icon":"fa6-solid:money-bill-1-wave",
                 "color":"#05c"
-            }
+            },
+            "pretty_name": "Five Rupees"
         },
         {
             "value": "TwentyRupees:1",
@@ -2052,7 +2081,8 @@
             "icon": {
                 "icon":"fa6-solid:money-bill-1-wave",
                 "color":"#a00"
-            }
+            },
+            "pretty_name": "Twenty Rupees"
         },
         {
             "value": "BowAndArrows:1",
@@ -2086,7 +2116,8 @@
             "icon": {
                 "icon":"fluent:heart-24-filled",
                 "color":"#a00"
-            }
+            },
+            "pretty_name": "Heart Container"
         },
         {
             "value": "HeartContainer:1",
@@ -2096,7 +2127,8 @@
             "icon": {
                 "icon":"fluent:heart-24-filled",
                 "color":"#a00"
-            }
+            },
+            "pretty_name": "Sanctuary Heart Container"
         },
         {
             "value": "OneHundredRupees:1",
@@ -2106,7 +2138,8 @@
             "icon": {
                 "icon":"fa6-solid:money-bill-1-wave",
                 "color":"silver"
-            }
+            },
+            "pretty_name": "One Hundred Rupees"
         },
         {
             "value": "FiftyRupees:1",
@@ -2116,7 +2149,8 @@
             "icon": {
                 "icon":"fa6-solid:money-bill-1-wave",
                 "color":"purple"
-            }
+            },
+            "pretty_name": "Fifty Rupees"
         },
         {
             "value": "Heart:1",
@@ -2131,7 +2165,8 @@
             "placed": 0,
             "icon": {
                 "icon":"icon-park-outline:middle-finger"
-            }
+            },
+            "pretty_name": "Single Arrow"
         },
         {
             "value": "TenArrows:1",
@@ -2140,7 +2175,8 @@
             "placed": 0,
             "icon": {
                 "icon":"mdi:spear"
-            }
+            },
+            "pretty_name": "Ten Arrows"
         },
         {
             "value": "SmallMagic:1",
@@ -2156,7 +2192,8 @@
             "icon": {
                 "icon":"healthicons:money-bag",
                 "color":"#a60"
-            }
+            },
+            "pretty_name": "Three Hundred Rupees"
         },
         {
             "value": "BottleWithGoldBee:1",
@@ -2178,7 +2215,8 @@
             "icon": {
                 "icon":"carbon:boot",
                 "color":"#a00"
-            }
+            },
+            "pretty_name": "Pegasus Boots"
         },
         {
             "value": "BombUpgrade5:1",
@@ -2212,7 +2250,8 @@
             "icon": {
                 "icon":"mdi:fraction-one-half",
                 "color":"#0a0"
-            }
+            },
+            "pretty_name": "Half Magic"
         },
         {
             "value": "QuarterMagic:1",
@@ -2257,7 +2296,8 @@
             "placed": 0,
             "icon": {
                 "icon":"akar-icons:sword"
-            }
+            },
+            "pretty_name": "Progressive Sword"
         },
         {
             "value": "ProgressiveShield:1",
@@ -2267,7 +2307,8 @@
             "icon": {
                 "icon":"clarity:shield-solid",
                 "color":"#aaa"
-            }
+            },
+            "pretty_name": "Progressive Shield"
         },
         {
             "value": "ProgressiveArmor:1",
@@ -2277,7 +2318,8 @@
             "icon": {
                 "icon":"majesticons:t-shirt",
                 "color":"#aaa"
-            }
+            },
+            "pretty_name": "Progressive Armor"
         },
         {
             "value": "ProgressiveGlove:1",
@@ -2286,7 +2328,8 @@
             "placed": 0,
             "icon": {
                 "icon":"icon-park-twotone:clothes-gloves"
-            }
+            },
+            "pretty_name": "Progressive Glove"
         },
         {
             "value": "ProgressiveBow:1",
@@ -2296,7 +2339,8 @@
             "icon": {
                 "icon":"mdi:bow-arrow",
                 "color":"#a60"
-            }
+            },
+            "pretty_name": "Progressive Bow"
         },
         {
             "value": "Triforce:1",
@@ -2317,7 +2361,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Ganon's Tower Map"
         },
         {
             "value": "MapD7:1",
@@ -2326,7 +2371,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Turtle Rock Map"
         },
         {
             "value": "MapD4:1",
@@ -2335,7 +2381,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Thieves Town Map"
         },
         {
             "value": "MapP3:1",
@@ -2344,7 +2391,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Tower of Hera Map"
         },
         {
             "value": "MapD5:1",
@@ -2353,7 +2401,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Ice Palace Map"
         },
         {
             "value": "MapD3:1",
@@ -2362,7 +2411,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Skull Woods Map"
         },
         {
             "value": "MapD6:1",
@@ -2371,7 +2421,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Misery Mire Map"
         },
         {
             "value": "MapD1:1",
@@ -2380,7 +2431,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Palace of Darkness Map"
         },
         {
             "value": "MapD2:1",
@@ -2389,7 +2441,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Swamp Palace Map"
         },
         {
             "value": "MapA1:1",
@@ -2404,7 +2457,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Desert Palace Map"
         },
         {
             "value": "MapP1:1",
@@ -2413,7 +2467,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Eastern Palace Map"
         },
         {
             "value": "MapH1:1",
@@ -2431,7 +2486,8 @@
             "placed": 0,
             "icon": {
                 "icon":"clarity:map-line"
-            }
+            },
+            "pretty_name": "Hyrule Castle Map"
         },
         {
             "value": "CompassA2:1",
@@ -2441,7 +2497,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Ganon's Tower Compass"
         },
         {
             "value": "CompassD7:1",
@@ -2451,7 +2508,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Turtle Rock Compass"
         },
         {
             "value": "CompassD4:1",
@@ -2461,7 +2519,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Thieves Town Compass"
         },
         {
             "value": "CompassP3:1",
@@ -2471,7 +2530,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Tower of Hera Compass"
         },
         {
             "value": "CompassD5:1",
@@ -2481,7 +2541,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Ice Palace Compass"
         },
         {
             "value": "CompassD3:1",
@@ -2491,7 +2552,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Skull Woods Compass"
         },
         {
             "value": "CompassD6:1",
@@ -2501,7 +2563,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Misery Mire Compass"
         },
         {
             "value": "CompassD1:1",
@@ -2511,7 +2574,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Palace of Darkness Compass"
         },
         {
             "value": "CompassD2:1",
@@ -2521,7 +2585,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Swamp Palace Compass"
         },
         {
             "value": "CompassA1:1",
@@ -2541,7 +2606,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Desert Palace Compass"
         },
         {
             "value": "CompassP1:1",
@@ -2551,7 +2617,8 @@
             "icon": {
                 "icon":"eos-icons:compass",
                 "color":"#05a"
-            }
+            },
+            "pretty_name": "Eastern Palace Compass"
         },
         {
             "value": "CompassH1:1",
@@ -2573,7 +2640,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Ganon's Tower Big Key"
         },
         {
             "value": "BigKeyD7:1",
@@ -2583,7 +2651,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Turtle Rock Big Key"
         },
         {
             "value": "BigKeyD4:1",
@@ -2593,7 +2662,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Thieves Town Big Key"
         },
         {
             "value": "BigKeyP3:1",
@@ -2603,7 +2673,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Tower of Hera Big Key"
         },
         {
             "value": "BigKeyD5:1",
@@ -2613,7 +2684,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Ice Palace Big Key"
         },
         {
             "value": "BigKeyD3:1",
@@ -2623,7 +2695,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Skull Woods Big Key"
         },
         {
             "value": "BigKeyD6:1",
@@ -2633,7 +2706,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Misery Mire Big Key"
         },
         {
             "value": "BigKeyD1:1",
@@ -2643,7 +2717,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Palace of Darkness Big Key"
         },
         {
             "value": "BigKeyD2:1",
@@ -2653,7 +2728,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Swamp Palace Big Key"
         },
         {
             "value": "BigKeyA1:1",
@@ -2669,7 +2745,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Desert Palace Big Key"
         },
         {
             "value": "BigKeyP1:1",
@@ -2679,7 +2756,8 @@
             "icon": {
                 "icon":"clarity:key-solid",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Eastern Palace Big Key"
         },
         {
             "value": "BigKeyH1:1",
@@ -2701,7 +2779,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Hyrule Castle Big Key"
         },
         {
             "value": "KeyH1:1",
@@ -2723,7 +2802,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Desert Palace Small Key"
         },
         {
             "value": "KeyA1:1",
@@ -2733,7 +2813,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Hyrule Castle Small Key"
         },
         {
             "value": "KeyD2:1",
@@ -2743,7 +2824,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Swamp Palace Small Key"
         },
         {
             "value": "KeyD1:1",
@@ -2753,7 +2835,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Palace of Darkness Small Key"
         },
         {
             "value": "KeyD6:1",
@@ -2763,7 +2846,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Misery Mire Small Key"
         },
         {
             "value": "KeyD3:1",
@@ -2773,7 +2857,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Skull Woods Small Key"
         },
         {
             "value": "KeyD5:1",
@@ -2783,7 +2868,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Ice Palace Small Key"
         },
         {
             "value": "KeyP3:1",
@@ -2793,7 +2879,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Tower of Hera Small Key"
         },
         {
             "value": "KeyD4:1",
@@ -2803,7 +2890,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Thieves Town Big Key"
         },
         {
             "value": "KeyD7:1",
@@ -2813,7 +2901,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Turtle Rock Big Key"
         },
         {
             "value": "KeyA2:1",
@@ -2823,7 +2912,8 @@
             "icon": {
                 "icon":"bx:key",
                 "color":"#da0"
-            }
+            },
+            "pretty_name": "Ganon's Tower Big Key"
         }
     ],
     "prizes": [

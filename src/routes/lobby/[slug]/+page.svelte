@@ -15,7 +15,6 @@
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
     import { Badge, List, ListItem, Card, Button, Alert } from "@brainandbones/skeleton"
     import Icon from "@iconify/svelte";
-import { Lobbies } from "$lib/Lobby";
 
 
     export let data: PageData;
