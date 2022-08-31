@@ -97,7 +97,7 @@
     }
 </script>
 
-<Card class="min-w-min max-w-prose">
+<Card class="max-w-prose border border-solid border-accent-500">
     {#if disabled || $selectedLocation != 'Random' }
         <div out:receive|local={{key:"ItemList"}} in:blur|local={{delay:200, duration:200}}>
             <Button variant="ring-primary" on:click={changeSelection} {disabled}>
@@ -115,7 +115,7 @@
                 {#each locationsFiltered as location, i }
                     {#if location.class == 'items'}
                         <ListItem class="justify-start" value={location.name} tabindex={i}>
-                            <span>{location.name}</span>
+                            <span class="whitespace-normal">{location.name}</span>
                             <svelte:fragment slot="lead">
                                 <Tooltip position="right">
                                     <svelte:fragment slot="message">

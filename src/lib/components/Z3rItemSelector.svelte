@@ -67,7 +67,7 @@
     }
 </script>
 
-<Card>
+<Card class="border-solid border border-accent-500">
     {#if disabled || Item && Item.name != "Random"}
         {#if Item && !Item.name.toLowerCase().includes('bottle')}
             <div out:receive|local={{key:"ItemList"}} in:blur|local={{delay:200, duration:200}}>

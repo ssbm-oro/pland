@@ -24,9 +24,9 @@
 </script>
 
 <svelte:window bind:innerWidth={width}></svelte:window>
-<div class="md:flex md:flex-row overflow-visible">
+<div class="md:flex md:flex-row overflow-auto">
     <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType}/>
-    <div class="flex justify-start ml-12 md:ml-0">
+    <div class="flex justify-start ml-12 md:ml-2 md:mr-2">
         <Icon icon="el:arrow-right" width="60" bind:color={iconColor} class="rotate-90 md:rotate-0"></Icon>
     </div>
     <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world} bind:this={locationSelector}/>
