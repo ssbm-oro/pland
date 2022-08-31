@@ -94,7 +94,7 @@
 	});
         
     function getImageUrl(name:string) {
-        return new URL(`${name}`, import.meta.url).href
+        return new URL(`./${name}`, import.meta.url).href
     }
 
     $: cardClass = hideBorder ? "max-w-prose border border-solid border-accent-500" : "max-w-prose border-none";

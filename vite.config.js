@@ -11,10 +11,6 @@ const pkg = JSON.parse(json);
 const config = {
 	plugins: [sveltekit(), Icons({compiler:'svelte'})],
 	server: {
-	  fs: {
-		// Allow serving files from one level up to the project root
-		allow: ['..'],
-	  },
 	},
 	define: {
 		'__APP_VERSION__': JSON.stringify(pkg.version),
