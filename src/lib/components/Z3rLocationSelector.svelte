@@ -99,7 +99,7 @@
 
 <Card class="min-w-min max-w-prose">
     {#if disabled || $selectedLocation != 'Random' }
-        <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
+        <div out:receive|local={{key:"ItemList"}} in:blur|local={{delay:200, duration:200}}>
             <Button variant="ring-primary" on:click={changeSelection} {disabled}>
                 {Location.name}
                 <svelte:fragment slot="lead">
@@ -108,7 +108,7 @@
             </Button>
         </div>
     {:else}
-        <div in:send={{key:"ItemList"}} out:blur={{duration:300}}>
+        <div in:send|local={{key:"ItemList"}} out:blur|local={{duration:300}}>
             <input type="search" placeholder="Select a location..." bind:value={search} on:keypress={selectOnEnter}>
             <List tag="nav" selected={selectedLocation}>
                 <div class="max-h-96 overflow-y-scroll">

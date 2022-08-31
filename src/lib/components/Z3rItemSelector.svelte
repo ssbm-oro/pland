@@ -70,7 +70,7 @@
 <Card>
     {#if disabled || Item && Item.name != "Random"}
         {#if Item && !Item.name.toLowerCase().includes('bottle')}
-            <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
+            <div out:receive|local={{key:"ItemList"}} in:blur|local={{delay:200, duration:200}}>
                 <Button variant="ring-primary" on:click={changeSelection} {disabled}>
                     <svelte:fragment slot="lead">
                         <Icon icon={Item.icon?.icon} color={Item.icon?.color} hFlip={Item.icon?.hFlip} width="{3*scale}" height="{3*scale}"></Icon>
@@ -80,7 +80,7 @@
             </div>
             {:else}
                 {#if Bottle != "unselected"}
-                    <div out:receive={{key:"BottleList"}} in:blur={{delay:200, duration:200}}>
+                    <div out:receive|local={{key:"BottleList"}} in:blur|local={{delay:200, duration:200}}>
                         <Button variant="ring-primary" on:click={changeSelection} {disabled}>
                             <svelte:fragment slot="lead">
                                 <Icon icon={bottleDetails.icon} color={bottleDetails.color} width="{3*scale}" height="{3*scale}"></Icon>
@@ -89,7 +89,7 @@
                         </Button>
                     </div>
                 {:else}
-                    <div in:send={{key:"BottleList"}} out:blur={{duration:300}}>
+                    <div in:send|local={{key:"BottleList"}} out:blur|local={{duration:300}}>
                         <List tag="nav" selected={selectedBottle} class="max-h-[420px] overflow-y-auto">
                             {#each Object.entries(BottleContents) as contents}
                                 {@const content = contents[1]}
@@ -106,7 +106,7 @@
                 {/if}
         {/if}
     {:else}
-    <div in:send={{key:"ItemList"}} out:blur={{duration:300}}>
+    <div in:send|local={{key:"ItemList"}} out:blur|local={{duration:300}}>
     <input type="search" placeholder="Select an item..." bind:value={search} on:keypress={selectOnEnter}>
         <List tag="nav" selected={selectedItem} class="max-h-96 overflow-y-auto">
             {#each itemsFiltered as item (item.value)}
