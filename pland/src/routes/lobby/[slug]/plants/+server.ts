@@ -47,7 +47,6 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     if (lobby.lobby.ready_to_roll) {
         try { 
             if (!fs.existsSync('logs')) {
-                console.log('no log dir')
                 fs.mkdirSync('logs');
             }
             const messageBuffer = messages.join('\n')

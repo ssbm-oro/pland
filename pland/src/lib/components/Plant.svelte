@@ -16,7 +16,7 @@
     $: rotate = width > 1024 ? 0 : 1;
     let itemSelector: Z3rItemSelector;
     let locationSelector: Z3rLocationSelector;
-    let bottleType: string;
+    export let bottleType: string | undefined = 'unselected';
 
     export function resetPlants() {
         itemSelector.changeSelection();

@@ -87,7 +87,10 @@
                     {#each selectedItems as selectedItem, index }
                         <div transition:slide|local>
                             <br/><br/>
-                            <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" {world}></Plant>
+                            <Plant bind:selectedItem="{selectedItem}" 
+                                bind:selectedLocation="{selectedLocations[index]}" 
+                                locations="{world.locations.to_array()}" {world}>
+                            </Plant>
                             <br/>
                             <Button variant="ring-warning" on:click="{() => removePlant(index)}">Remove Plant</Button>
                         </div>

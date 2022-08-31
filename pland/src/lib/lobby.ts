@@ -42,6 +42,7 @@ export interface Entrant extends User{
     ready: boolean;
     plantedItems: IItem[];
     plantedLocations: ILocation[];
+    plantedBottles: string[];
 }
 
 export interface ILobby {
@@ -116,7 +117,8 @@ export default class Lobby {
                 avatar: user.avatar,
                 ready: false,
                 plantedItems: Array(this.lobby.max_plants),
-                plantedLocations: Array(this.lobby.max_plants)
+                plantedLocations: Array(this.lobby.max_plants),
+                plantedBottles: Array(this.lobby.max_plants)
             });
         }
 
@@ -142,8 +144,8 @@ export default class Lobby {
             messages = canPlant.messages;
 
             if (plantable) {
+                const realWorld = this.world as World;
                 for(let i = 0; i < this.lobby.max_plants; i++) {
-                    const realWorld = this.world as World;
                     entrant.plantedItems[i] = plantedItems[i]!;
 
                     const z3rLocation = realWorld.locations.get(plantedLocations[i]!.name)!
@@ -152,7 +154,7 @@ export default class Lobby {
                         name: z3rLocation.name,
                         item: z3rLocation.item,
                         isCrystalPendant: z3rLocation.isCrystalPendant,
-                        class: "items",
+                        class: "items"
                     };
                 }
                 entrant.ready = true;

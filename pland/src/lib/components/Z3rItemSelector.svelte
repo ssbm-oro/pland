@@ -35,8 +35,8 @@
 	});
     const scale=8;
 
-    export let Bottle: string;
-    const selectedBottle: Writable<string> = writable('unselected');
+    export let Bottle: string | undefined;
+    const selectedBottle: Writable<string> = writable(Bottle || 'unselected');
     $: Bottle = $selectedBottle;
     let bottleDetails = BottleContents.random;
     $: switch(Bottle) {
@@ -70,7 +70,7 @@
 <main>
     <Card>
         {#if disabled || Item && Item.name != "Random"}
-            {#if !Item.name.toLowerCase().includes('bottle')}
+            {#if Item && !Item.name.toLowerCase().includes('bottle')}
                 <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
                     <Button variant="ring-primary" on:click={changeSelection} {disabled}>
                         <svelte:fragment slot="lead">

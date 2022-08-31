@@ -93,7 +93,7 @@
 	});
         
     function getImageUrl(name:string) {
-        return new URL(`/static/${name}`, import.meta.url).href
+        return new URL(`${name}`, import.meta.url).href
     }
 </script>
 

@@ -10,7 +10,7 @@
     import type { PageData} from './$types';
     import { invalidate } from "$app/navigation";
     import type { ILocation } from '$lib/z3r/logic/Location';
-    import type { IItem } from "$lib/z3r/logic/Item";
+    import { Bottle, type IItem } from "$lib/z3r/logic/Item";
     import { checkPlants } from "$lib/z3r/logic/Logic";
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
     import { Badge, List, ListItem, Card, Button, Alert } from "@brainandbones/skeleton"
@@ -23,6 +23,7 @@
 
     let selectedItems: IItem[];
     let selectedLocations: ILocation[];
+    let selectedBottles: string[];
     let world: World;
     let logicTestMessages: string[] = [];
     let plants: Plant[];
@@ -34,6 +35,7 @@
         try {
             selectedItems = new Array(lobby.max_plants);
             selectedLocations = new Array(lobby.max_plants);
+            selectedBottles = new Array(lobby.max_plants);
             plants = new Array(lobby.max_plants);
 
             let preset_res = await fetch(`/presets/${lobby.preset}`);
@@ -56,6 +58,9 @@
             if (userAsEntrant) {
                 selectedItems = userAsEntrant.plantedItems; //.map(item => { return JSON.parse(item);});
                 selectedLocations = userAsEntrant.plantedLocations; //.map(location => { return JSON.parse(location); });
+                for (let i = 0; i < lobby.max_plants; i++) {
+                    selectedBottles[i] = (selectedItems[i] as Bottle).contents || 'random'
+                }
             }
         }
         catch (err) {
@@ -87,6 +92,13 @@
     async function submitPlants() {
         if (userAsEntrant) {
             let {plantable, messages} = checkPlants(world, selectedItems, selectedLocations)
+
+            for (let i = 0; i < lobby.max_plants; i++) {
+                if (selectedItems[i]?.name.toLowerCase().includes('bottle')) {
+                    selectedItems[i] = new Bottle('BottleWithRandom:1', world, selectedBottles[i]);
+                }
+            }
+
             if (plantable) {
                 let params = new URLSearchParams();
                 params.append('plantedItems', JSON.stringify(selectedItems));
@@ -198,7 +210,7 @@
             {#each selectedItems as selectedItem, index}
                 <Plant bind:selectedItem bind:selectedLocation={selectedLocations[index]}
                     locations={world.locations.to_array()} {world} disabled={userAsEntrant.ready}
-                    bind:this={plants[index]}/>
+                    bind:this={plants[index]} bind:bottleType={selectedBottles[index]}/>
                 <br/>
             {/each}
             {#if !userAsEntrant.ready}

@@ -314,6 +314,10 @@ export let BottleContents = {
 
 export class Bottle extends Item {
     contents: string = 'random';
+    constructor(name:string, world:World, contents:string = 'random') {
+        super(name, world);
+        this.contents = contents;
+    }
 }
 
 
