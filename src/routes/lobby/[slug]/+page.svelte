@@ -86,7 +86,7 @@
     let conflictAlertVisible = false;
     let conflictAlertMessage: string;
     let opponentConflictAlertVisible = false;
-    let opponentConflictAlertMessage = `You and your opponent conflicted.
+    const opponentConflictAlertMessage = `You and your opponent conflicted.
                                         In the future, this message would be
                                         more specific. Please resubmit your picks.`
     async function submitPlants() {
@@ -129,7 +129,7 @@
     }
 
     let rollAlertVisible = false;
-    let rollAlertMessage = `It looks like this seed would roll. I haven't implemented
+    const rollAlertMessage = `It looks like this seed would roll. I haven't implemented
                             that because I want to test what's here so far more. 
                             Let's make another lobby and try again!`
     async function rollSeed() {
@@ -155,13 +155,13 @@
         <svelte:fragment slot="message">
             <p>{rollAlertMessage}</p>
             <br/>
-            {#if userAsEntrant}
-                <p>Check out the logic log for this lobby:
-                    <a class="text-primary-500" href="/api/roll/log/{lobby.slug}" download>Click Here</a>
-                </p>
-            {/if}
         </svelte:fragment>
-        <svelte:fragment slot="trail"><Button on:click={() => {rollAlertVisible=false;}}>X</Button></svelte:fragment>
+        <svelte:fragment slot="trail">
+            {#if userAsEntrant}
+                <Button variant="filled-primary" href="/api/roll/log/{lobby.slug}" download>Download Log</Button>
+                {/if}
+            <Button on:click={() => {rollAlertVisible=false;}}>X</Button>
+        </svelte:fragment>
     </Alert>
     <br/>
 {/if}

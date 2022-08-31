@@ -74,10 +74,30 @@
 	</svelte:fragment>
 	<svelte:fragment slot="main">
 		<List tag="nav" separator="|">
-			<ListItem href="/">Home</ListItem>
-			<ListItem href="/lobby">Lobbies</ListItem>
-			<ListItem href="/logictest">Logic Test</ListItem>
-			<ListItem href="/about">About</ListItem>
+			<ListItem href="/">
+				<svelte:fragment slot="lead">
+					<Icon icon="heroicons-solid:home" />
+				</svelte:fragment>
+				Home
+			</ListItem>
+			<ListItem href="/lobby">
+				<svelte:fragment slot="lead">
+					<Icon icon="fluent:conference-room-24-filled" />
+				</svelte:fragment>
+				Lobbies
+			</ListItem>
+			<ListItem href="/logictest">
+				<svelte:fragment slot="lead">
+					<Icon icon="mdi:test-tube" />
+				</svelte:fragment>
+				Logic Test
+			</ListItem>
+			<ListItem href="/about">
+				<svelte:fragment slot="lead">
+					<Icon icon="akar-icons:info-fill" />
+				</svelte:fragment>
+				About
+			</ListItem>
 		</List>
 		<img src="/under-construction.gif" alt="Under Construction">
 	</svelte:fragment>
