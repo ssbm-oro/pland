@@ -85,7 +85,7 @@
             <div>
                 <Button variant="ring-accent" on:click="{addPlant}">Add Plant</Button>
                     {#each selectedItems as selectedItem, index }
-                        <div transition:slide>
+                        <div transition:slide|local>
                             <br/><br/>
                             <Plant bind:selectedItem="{selectedItem}" bind:selectedLocation="{selectedLocations[index]}" locations="{world.locations.to_array()}" {world}></Plant>
                             <br/>

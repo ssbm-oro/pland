@@ -43,7 +43,7 @@
         return true;
     }
 
-    export function changeSelection() {
+    export async function changeSelection() {
         $selectedLocation = 'Random'
     }
 
@@ -91,6 +91,10 @@
         easing:quintOut,
         delay:100
 	});
+        
+    function getImageUrl(name:string) {
+        return new URL(`/static/${name}`, import.meta.url).href
+    }
 </script>
 
 <main>
@@ -99,6 +103,9 @@
             <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
                 <Button variant="ring-primary" on:click={changeSelection} {disabled}>
                     {Location.name}
+                    <svelte:fragment slot="lead">
+                        <img src={getImageUrl(locationImages.get(Location.name) || '')} class="overflow-visible" alt="Screenshot of {Location.name}" height="48" width="48">
+                    </svelte:fragment>
                 </Button>
             </div>
         {:else}
@@ -114,11 +121,11 @@
                                     <Tooltip position="right">
                                         <svelte:fragment slot="message">
                                             <div class="w-[200px] h-[200px]">
-                                                <img src={locationImages.get(location.name)} alt="Screenshot of {location.name}">
+                                                <img src={getImageUrl(locationImages.get(location.name) || '')} alt="Screenshot of {location.name}">
                                             </div>
                                         </svelte:fragment>
                                         <svelte:fragment slot="content">
-                                            <img class="overflow-visible" src={locationImages.get(location.name)} alt="Screenshot of {location.name}" height="48" width="48">
+                                            <img src={getImageUrl(locationImages.get(location.name) || '')} class="overflow-visible" alt="Screenshot of {location.name}" height="48" width="48">
                                         </svelte:fragment>
                                     </Tooltip>
                                 </svelte:fragment>

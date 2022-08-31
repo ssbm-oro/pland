@@ -261,9 +261,59 @@ export class Compass extends IDungeonItem {
 export class Map extends IDungeonItem {
 }
 
+export let BottleContents = {
+    random: {
+        icon: "mdi:beaker-question",
+        color: "#ccc",
+        name: 'Bottle with Random',
+        value: 'random'
+    },
+    empty: {
+        icon: "mdi:bottle-tonic-outline",
+        color: "#ccc",
+        name: 'Empty Bottle',
+        value: 'none'
+    },
+    red: {
+        icon: "mdi:bottle-tonic",
+        color: "#c00",
+        name: 'Bottle with Red Potion',
+        value: 'red'
+    },
+    green: {
+        icon: "mdi:bottle-tonic",
+        color: "#0c0",
+        name: 'Bottle with Green Potion',
+        value: 'green'
+    },
+    blue: {
+        icon: "mdi:bottle-tonic",
+        color: "#00c",
+        name: 'Bottle with Blue Potion',
+        value: 'blue'
+    },
+    fairy: {
+        icon: "noto:fairy",
+        name: 'Bottle with a Fairy',
+        color: '',
+        value: 'fairy'
+    },
+    bee: {
+        icon: "mdi:bee",
+        name: 'Bottle with a Bee',
+        color: '#cc0',
+        value: 'bee'
+    },
+    goodbee: {
+        icon: "mdi:bee-flower",
+        name: 'Bottle with a Good Bee',
+        color: '#cc0',
+        value: 'goodbee'
+    }
+}
 
 export class Bottle extends Item {
-
+    contents: string = 'random';
 }
 
 

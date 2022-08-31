@@ -1650,10 +1650,14 @@
             "placed": 0
         },
         {
-            "value": "BottleWithRandom",
+            "value": "BottleWithRandom:1",
             "name": "BottleWithRandom",
             "count": 4,
-            "placed": 0
+            "placed": 0,
+            "icon": {
+                "icon": "mdi:bottle-tonic",
+                "color": "#ccc"
+            }
         },
         {
             "value": "Nothing:1",

@@ -4,7 +4,7 @@
     import type { SelectedItem } from './ComponentInterfaces';
     import Icon from '@iconify/svelte';
     import Z3rLocationSelector from './Z3rLocationSelector.svelte';
-    import type World from '$lib/z3r/logic/World'
+    import type World from '$lib/z3r/logic/World';
 
     export let selectedItem:SelectedItem;
     export let selectedLocation:any;
@@ -16,6 +16,7 @@
     $: rotate = width > 1024 ? 0 : 1;
     let itemSelector: Z3rItemSelector;
     let locationSelector: Z3rLocationSelector;
+    let bottleType: string;
 
     export function resetPlants() {
         itemSelector.changeSelection();
@@ -26,7 +27,7 @@
 <svelte:window bind:innerWidth={width}></svelte:window>
 <main>
     <div class="lg:flex lg:flex-row overflow-visible">
-        <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector}/>
+        <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType}/>
         <div class="flex justify-start ml-12 lg:ml-0">
             <Icon icon="el:arrow-right" width="60" bind:color={iconColor} {rotate}></Icon>
         </div>
