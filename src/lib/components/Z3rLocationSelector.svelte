@@ -12,6 +12,7 @@
     import { quintOut } from 'svelte/easing';
 
     let available: ItemCollection;
+    export let hideBorder = false;
 
     export let locations: ILocation[];
     $: locationImages = new Map(default_locations.map(location => [location.name.slice(0,-2), location.image]));
@@ -95,9 +96,11 @@
     function getImageUrl(name:string) {
         return new URL(`${name}`, import.meta.url).href
     }
+
+    $: cardClass = hideBorder ? "max-w-prose border border-solid border-accent-500" : "max-w-prose border-none";
 </script>
 
-<Card class="max-w-prose border border-solid border-accent-500">
+<Card class={cardClass}>
     {#if disabled || $selectedLocation != 'Random' }
         <div out:receive|local={{key:"ItemList"}} in:blur|local={{delay:200, duration:200}}>
             <Button variant="ring-primary" on:click={changeSelection} {disabled}>

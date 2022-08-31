@@ -11,7 +11,8 @@
     export let Item: SelectedItem;
     const selectedItem:Writable<string> = writable(Item ? Item.name : items[0]!.name);
     $: Item = items.filter(item => item.name === $selectedItem)[0] as SelectedItem;
-    export let disabled:boolean = false;
+    export let disabled = false;
+    export let hideBorder = false;
 
     $: search = undefined as string | undefined;
     $: itemsFiltered = items.filter(item => item.count && item.count > 0).filter(item => item.name.toLowerCase().includes(search ? search.toLowerCase(): ''))
@@ -65,9 +66,11 @@
             bottleDetails = BottleContents.goodbee
             break;
     }
+
+    $: cardClass = hideBorder ? "max-w-prose border border-solid border-accent-500" : "max-w-prose border-none";
 </script>
 
-<Card class="border-solid border border-accent-500">
+<Card class={cardClass}>
     {#if disabled || Item && Item.name != "Random"}
         {#if Item && !Item.name.toLowerCase().includes('bottle')}
             <div out:receive|local={{key:"ItemList"}} in:blur|local={{delay:200, duration:200}}>

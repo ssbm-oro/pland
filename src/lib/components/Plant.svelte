@@ -11,10 +11,11 @@
     export let locations: ILocation[];
     export let disabled:boolean = false;
     export let world: World;
-    $: iconColor = selectedItem && selectedItem.name != "Random" && selectedLocation && selectedLocation.name != "Random" ? "green" : "white";
-    let width: number;
+    $: itemAndLocationSelected = selectedItem && selectedItem.name != "Random" && selectedLocation && selectedLocation.name != "Random";
+    $: iconColor = itemAndLocationSelected ? "#0c0" : "#ccc";
     let itemSelector: Z3rItemSelector;
     let locationSelector: Z3rLocationSelector;
+    let plantDiv: HTMLDivElement;
     export let bottleType: string | undefined = 'unselected';
 
     export function resetPlants() {
@@ -23,13 +24,12 @@
     }
 </script>
 
-<svelte:window bind:innerWidth={width}></svelte:window>
-<div class="md:flex md:flex-row overflow-auto">
-    <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType}/>
+<div class="md:flex md:flex-row overflow-auto border-solid border-primary-500 rounded-lg min-w-fit max-w-min" class:border={itemAndLocationSelected}>
+    <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType} hideBorder={!itemAndLocationSelected}/>
     <div class="flex justify-start ml-12 md:ml-2 md:mr-2">
         <Icon icon="el:arrow-right" width="60" bind:color={iconColor} class="rotate-90 md:rotate-0"></Icon>
     </div>
-    <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world} bind:this={locationSelector}/>
+    <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world} bind:this={locationSelector}  hideBorder={!itemAndLocationSelected}/>
 </div>
 
 <style>
