@@ -67,7 +67,7 @@
             break;
     }
 
-    $: cardClass = hideBorder ? "max-w-prose border border-solid border-accent-500" : "max-w-prose border-none";
+    $: cardClass = hideBorder ? "max-w-fit sm:max-w-prose border border-solid border-accent-500" : "max-w-fit sm:max-w-prose border-none";
 </script>
 
 <Card class={cardClass}>
