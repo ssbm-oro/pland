@@ -15,6 +15,7 @@
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
     import { Badge, List, ListItem, Card, Button, Alert } from "@brainandbones/skeleton"
     import Icon from "@iconify/svelte";
+import { Lobbies } from "$lib/Lobby";
 
 
     export let data: PageData;
@@ -144,6 +145,11 @@
         refreshing = false;
     }
 </script>
+
+<svelte:head>
+    <title>pland - {lobby.slug}</title>
+    <meta name="A Link to the Past Randomizer Plando Seed Rolling App Lobby">
+</svelte:head>
 
 <h1>{$page.params['slug']}</h1>
 <h2>Mode: {lobby.preset}</h2>

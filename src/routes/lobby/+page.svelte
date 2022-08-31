@@ -42,6 +42,11 @@
     }
 </script>
 
+<svelte:head>
+    <title>pland - Lobbies</title>
+    <meta name="A Link to the Past Randomizer Plando Seed Rolling App Lobbies">
+</svelte:head>
+
 <Card>
     <h3>Create Lobby</h3>
     <p>

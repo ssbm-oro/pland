@@ -11,6 +11,11 @@
     const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`
 </script>
 
+<svelte:head>
+    <title>pland</title>
+    <meta name="A Link to the Past Randomizer Plando Seed Rolling App">
+</svelte:head>
+
 <GradientHeading>Welcome to pland</GradientHeading>
 <br/>
 

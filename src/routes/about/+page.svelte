@@ -1,3 +1,8 @@
+<svelte:head>
+    <title>pland</title>
+    <meta name="A Link to the Past Randomizer Plando Seed Rolling App">
+</svelte:head>
+
 <h1>about pland</h1>
 <p>pland is a tool for creating ALTTPR plando seeds.</p> 
 <p>What is an ALTTPR seed? 

@@ -74,6 +74,12 @@
     presetChanged();
 </script>
 
+
+<svelte:head>
+    <title>pland - Logic Test</title>
+    <meta name="A Link to the Past Randomizer Plando Seed Rolling App Logic Test">
+</svelte:head>
+
 <h1>Select a Preset</h1>
 <br/>
 <Presets presets={preset_names} bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
