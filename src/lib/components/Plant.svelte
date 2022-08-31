@@ -25,15 +25,13 @@
 </script>
 
 <svelte:window bind:innerWidth={width}></svelte:window>
-<main>
-    <div class="lg:flex lg:flex-row overflow-visible">
-        <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType}/>
-        <div class="flex justify-start ml-12 lg:ml-0">
-            <Icon icon="el:arrow-right" width="60" bind:color={iconColor} {rotate}></Icon>
-        </div>
-        <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world} bind:this={locationSelector}/>
+<div class="lg:flex lg:flex-row overflow-visible">
+    <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType}/>
+    <div class="flex justify-start ml-12 lg:ml-0">
+        <Icon icon="el:arrow-right" width="60" bind:color={iconColor} {rotate}></Icon>
     </div>
-</main>
+    <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world} bind:this={locationSelector}/>
+</div>
 
 <style>
 </style>

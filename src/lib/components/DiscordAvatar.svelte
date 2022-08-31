@@ -12,6 +12,5 @@
     $: discord_avatar_uri = user && user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : undefined;
 </script>
 
-<main>
-    <Avatar slot="trigger" src="{discord_avatar_uri}" initials="{user.username[0]}" {outlined} {size} {hover} alt="{user.username}'s avatar."></Avatar>
-</main>
+
+<Avatar slot="trigger" src="{discord_avatar_uri}" initials="{user.username[0]}" {outlined} {size} {hover} alt="{user.username}'s avatar."></Avatar>

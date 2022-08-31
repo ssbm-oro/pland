@@ -8,7 +8,7 @@ export let selectedPreset :string;
 
 </script>
 
-<main>
+<div>
     {#if presets.length > 0}
         <select bind:value="{selectedPreset}" on:change>
             {#each presets as preset}
@@ -18,7 +18,7 @@ export let selectedPreset :string;
     {:else}
         {loadingMessage}
     {/if}
-</main>
+</div>
 
 <style>
 </style>

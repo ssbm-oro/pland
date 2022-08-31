@@ -20,6 +20,7 @@
     export let data: PageData;
     $: lobby = data.lobby;
     $: user = data.user;
+    const presets = new Map(Object.entries(data.presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
 
     let selectedItems: IItem[];
     let selectedLocations: ILocation[];
@@ -38,8 +39,7 @@
             selectedBottles = new Array(lobby.max_plants);
             plants = new Array(lobby.max_plants);
 
-            let preset_res = await fetch(`/presets/${lobby.preset}`);
-            let selectedPresetData = await preset_res.json();
+            const selectedPresetData = await presets.get(lobby.preset) as any;
             switch(selectedPresetData.settings.mode) {
                 case 'open':
                     world = new Open(selectedPresetData.settings, logicTestMessages);
@@ -56,8 +56,8 @@
                     break;
             }
             if (userAsEntrant) {
-                selectedItems = userAsEntrant.plantedItems; //.map(item => { return JSON.parse(item);});
-                selectedLocations = userAsEntrant.plantedLocations; //.map(location => { return JSON.parse(location); });
+                selectedItems = userAsEntrant.plantedItems;
+                selectedLocations = userAsEntrant.plantedLocations;
                 for (let i = 0; i < lobby.max_plants; i++) {
                     selectedBottles[i] = (selectedItems[i] as Bottle).contents || 'random'
                 }
@@ -144,85 +144,83 @@
     }
 </script>
 
-<main>
-    <h1>{$page.params['slug']}</h1>
-    <h2>Mode: {lobby.preset}</h2>
-    <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
-    {#if (lobby.ready_to_roll && !userAsEntrant) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
-        <br/>
-        <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
-        <Alert bind:visible={rollAlertVisible}>
-            <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
-            <svelte:fragment slot="message">
-                <p>{rollAlertMessage}</p>
-                <br/>
-                {#if userAsEntrant}
-                    <p>Check out the logic log for this lobby:
-                        <a class="text-primary-500" href="/api/roll/log/{lobby.slug}" download>Click Here</a>
-                    </p>
-                {/if}
-            </svelte:fragment>
-            <svelte:fragment slot="trail"><Button on:click={() => {rollAlertVisible=false;}}>X</Button></svelte:fragment>
-        </Alert>
-        <br/>
-    {/if}
-    <Alert bind:visible={opponentConflictAlertVisible}>
-        <svelte:fragment slot="title">There was a conflict with your opponent's plants</svelte:fragment>
-        <svelte:fragment slot="message">{opponentConflictAlertMessage}</svelte:fragment>
-        <svelte:fragment slot="trail"><Button on:click={() => {opponentConflictAlertVisible=false;}}>X</Button></svelte:fragment>
-    </Alert>
-    <div class="fixed top-4 right-4">
-        <Button variant="ring-primary" on:click={refreshLobby}>
-            <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
-        </Button>
-    {#if userInLobby}
-        <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
-    {:else}
-        <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
-    {/if}
-    </div>
-    <Card>
-        <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
-        <List>
-            {#each lobby.entrants as entrant }{#key userAsEntrant}
-                <ListItem>
-                    <Card>
-                        <Badge>
-                            <DiscordAvatar user={{id:entrant.discord_id, ...entrant}} size="sm"/>
-                            <svelte:fragment slot="trail">
-                                {#if entrant.ready}
-                                    <Icon class="text-primary-500" icon="bi:check-square-fill" />
-                                {:else}
-                                    <Icon class="text-accent-500/50" icon="bi:square-fill" />
-                                {/if}
-                            </svelte:fragment>
-                        </Badge>
-                        {entrant.username}#{entrant.discriminator}
-                    </Card>
-                </ListItem>
-            {/key}{/each}
-        </List>
-    </Card>
-    {#if userAsEntrant && world}
-    <br/><br/>
-        <Card>
-            <p>Plants</p>
-            {#each selectedItems as selectedItem, index}
-                <Plant bind:selectedItem bind:selectedLocation={selectedLocations[index]}
-                    locations={world.locations.to_array()} {world} disabled={userAsEntrant.ready}
-                    bind:this={plants[index]} bind:bottleType={selectedBottles[index]}/>
-                <br/>
-            {/each}
-            {#if !userAsEntrant.ready}
-                <Alert bind:visible={conflictAlertVisible} background="bg-warning-500/30">
-                    <svelte:fragment slot="title">A conflict was detected</svelte:fragment>
-                    <svelte:fragment slot="message">Check your plants, a conflict was detected: {conflictAlertMessage}</svelte:fragment>
-                    <svelte:fragment slot="trail"><Button on:click={() => {conflictAlertVisible=false;}}>X</Button></svelte:fragment>
-                </Alert>
-                <Button variant="filled-primary" on:click="{submitPlants}">Submit</Button>
-            {:else}
-                <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
+<h1>{$page.params['slug']}</h1>
+<h2>Mode: {lobby.preset}</h2>
+<p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
+{#if (lobby.ready_to_roll && !userAsEntrant) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
+    <br/>
+    <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
+    <Alert bind:visible={rollAlertVisible}>
+        <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
+        <svelte:fragment slot="message">
+            <p>{rollAlertMessage}</p>
+            <br/>
+            {#if userAsEntrant}
+                <p>Check out the logic log for this lobby:
+                    <a class="text-primary-500" href="/api/roll/log/{lobby.slug}" download>Click Here</a>
+                </p>
             {/if}
-        </Card>
-    {/if}
-</main>
+        </svelte:fragment>
+        <svelte:fragment slot="trail"><Button on:click={() => {rollAlertVisible=false;}}>X</Button></svelte:fragment>
+    </Alert>
+    <br/>
+{/if}
+<Alert bind:visible={opponentConflictAlertVisible}>
+    <svelte:fragment slot="title">There was a conflict with your opponent's plants</svelte:fragment>
+    <svelte:fragment slot="message">{opponentConflictAlertMessage}</svelte:fragment>
+    <svelte:fragment slot="trail"><Button on:click={() => {opponentConflictAlertVisible=false;}}>X</Button></svelte:fragment>
+</Alert>
+<div class="fixed top-4 right-4">
+    <Button variant="ring-primary" on:click={refreshLobby}>
+        <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
+    </Button>
+{#if userInLobby}
+    <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
+{:else}
+    <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
+{/if}
+</div>
+<Card>
+    <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
+    <List>
+        {#each lobby.entrants as entrant }{#key userAsEntrant}
+            <ListItem>
+                <Card>
+                    <Badge>
+                        <DiscordAvatar user={{id:entrant.discord_id, ...entrant}} size="sm"/>
+                        <svelte:fragment slot="trail">
+                            {#if entrant.ready}
+                                <Icon class="text-primary-500" icon="bi:check-square-fill" />
+                            {:else}
+                                <Icon class="text-accent-500/50" icon="bi:square-fill" />
+                            {/if}
+                        </svelte:fragment>
+                    </Badge>
+                    {entrant.username}#{entrant.discriminator}
+                </Card>
+            </ListItem>
+        {/key}{/each}
+    </List>
+</Card>
+{#if userAsEntrant && world}
+<br/><br/>
+    <Card>
+        <p>Plants</p>
+        {#each selectedItems as selectedItem, index}
+            <Plant bind:selectedItem bind:selectedLocation={selectedLocations[index]}
+                locations={world.locations.to_array()} {world} disabled={userAsEntrant.ready}
+                bind:this={plants[index]} bind:bottleType={selectedBottles[index]}/>
+            <br/>
+        {/each}
+        {#if !userAsEntrant.ready}
+            <Alert bind:visible={conflictAlertVisible} background="bg-warning-500/30">
+                <svelte:fragment slot="title">A conflict was detected</svelte:fragment>
+                <svelte:fragment slot="message">Check your plants, a conflict was detected: {conflictAlertMessage}</svelte:fragment>
+                <svelte:fragment slot="trail"><Button on:click={() => {conflictAlertVisible=false;}}>X</Button></svelte:fragment>
+            </Alert>
+            <Button variant="filled-primary" on:click="{submitPlants}">Submit</Button>
+        {:else}
+            <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
+        {/if}
+    </Card>
+{/if}

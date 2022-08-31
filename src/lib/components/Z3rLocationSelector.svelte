@@ -97,44 +97,42 @@
     }
 </script>
 
-<main>
-    <Card class="flex-none w-96">
-        {#if disabled || $selectedLocation != 'Random' }
-            <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
-                <Button variant="ring-primary" on:click={changeSelection} {disabled}>
-                    {Location.name}
-                    <svelte:fragment slot="lead">
-                        <img src={getImageUrl(locationImages.get(Location.name) || '')} class="overflow-visible" alt="Screenshot of {Location.name}" height="48" width="48">
-                    </svelte:fragment>
-                </Button>
-            </div>
-        {:else}
-            <div in:send={{key:"ItemList"}} out:blur={{duration:300}}>
-                <input type="search" placeholder="Select a location..." bind:value={search} on:keypress={selectOnEnter}>
-                <List tag="nav" selected={selectedLocation}>
-                    <div class="max-h-96 overflow-y-scroll">
-                    {#each locationsFiltered as location, i }
-                        {#if location.class == 'items'}
-                            <ListItem class="justify-start" value={location.name} tabindex={i}>
-                                <span>{location.name}</span>
-                                <svelte:fragment slot="lead">
-                                    <Tooltip position="right">
-                                        <svelte:fragment slot="message">
-                                            <div class="w-[200px] h-[200px]">
-                                                <img src={getImageUrl(locationImages.get(location.name) || '')} alt="Screenshot of {location.name}">
-                                            </div>
-                                        </svelte:fragment>
-                                        <svelte:fragment slot="content">
-                                            <img src={getImageUrl(locationImages.get(location.name) || '')} class="overflow-visible" alt="Screenshot of {location.name}" height="48" width="48">
-                                        </svelte:fragment>
-                                    </Tooltip>
-                                </svelte:fragment>
-                            </ListItem>
-                        {/if}
-                    {/each}
-                    </div>
-                </List>
-            </div>
-        {/if}
-    </Card>
-</main>
+<Card class="flex-none w-96">
+    {#if disabled || $selectedLocation != 'Random' }
+        <div out:receive={{key:"ItemList"}} in:blur={{delay:200, duration:200}}>
+            <Button variant="ring-primary" on:click={changeSelection} {disabled}>
+                {Location.name}
+                <svelte:fragment slot="lead">
+                    <img src={getImageUrl(locationImages.get(Location.name) || '')} class="overflow-visible" alt="Screenshot of {Location.name}" height="48" width="48">
+                </svelte:fragment>
+            </Button>
+        </div>
+    {:else}
+        <div in:send={{key:"ItemList"}} out:blur={{duration:300}}>
+            <input type="search" placeholder="Select a location..." bind:value={search} on:keypress={selectOnEnter}>
+            <List tag="nav" selected={selectedLocation}>
+                <div class="max-h-96 overflow-y-scroll">
+                {#each locationsFiltered as location, i }
+                    {#if location.class == 'items'}
+                        <ListItem class="justify-start" value={location.name} tabindex={i}>
+                            <span>{location.name}</span>
+                            <svelte:fragment slot="lead">
+                                <Tooltip position="right">
+                                    <svelte:fragment slot="message">
+                                        <div class="w-[200px] h-[200px]">
+                                            <img src={getImageUrl(locationImages.get(location.name) || '')} alt="Screenshot of {location.name}">
+                                        </div>
+                                    </svelte:fragment>
+                                    <svelte:fragment slot="content">
+                                        <img src={getImageUrl(locationImages.get(location.name) || '')} class="overflow-visible" alt="Screenshot of {location.name}" height="48" width="48">
+                                    </svelte:fragment>
+                                </Tooltip>
+                            </svelte:fragment>
+                        </ListItem>
+                    {/if}
+                {/each}
+                </div>
+            </List>
+        </div>
+    {/if}
+</Card>

@@ -22,27 +22,29 @@
     let logicTestResult: boolean|null;
     
     export let data: PageData;
-    const presets = data.presets;
+    const preset_names = Object.keys(data.presets).map(filepath => filepath.split('/').reverse()[0] ?? 'error');
+    const presets = new Map(Object.entries(data.presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
 
 
     async function presetChanged() {
         try {
-            const preset_res = await fetch(`/presets/${selectedPreset}`);
-            selectedPresetData = await preset_res.json();
-            switch(selectedPresetData.settings.mode) {
-                case 'open':
-                    world = new Open(selectedPresetData.settings, logicTestMessages);
-                    break;
-                case 'inverted':
-                    world = new Inverted(selectedPresetData.settings, logicTestMessages);
-                    break;
-                case 'retro':
-                    world = new Retro(selectedPresetData.settings, logicTestMessages);
-                    break;
-                case 'standard':
-                default:
-                    world = new Standard(selectedPresetData.settings, logicTestMessages);
-                    break;
+            if (presets.has(selectedPreset)) {
+                selectedPresetData = await presets.get(selectedPreset) as any;
+                switch(selectedPresetData.settings.mode) {
+                    case 'open':
+                        world = new Open(selectedPresetData.settings, logicTestMessages);
+                        break;
+                    case 'inverted':
+                        world = new Inverted(selectedPresetData.settings, logicTestMessages);
+                        break;
+                    case 'retro':
+                        world = new Retro(selectedPresetData.settings, logicTestMessages);
+                        break;
+                    case 'standard':
+                    default:
+                        world = new Standard(selectedPresetData.settings, logicTestMessages);
+                        break;
+                }
             }
         }
         catch (err) {
@@ -70,41 +72,39 @@
     presetChanged();
 </script>
 
-<main>
-    <h1>Select a Preset</h1>
-    <br/>
-    <Presets {presets} bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
-    <br/><br/>
-    {#if world}
-        <Card>
-            <svelte:fragment slot="header">
-                <h2>{selectedPresetData.goal_name}</h2>
-                <p>{selectedPresetData.description}</p>
-                <br/><br/>
-            </svelte:fragment>
-            <div>
-                <Button variant="ring-accent" on:click="{addPlant}">Add Plant</Button>
-                    {#each selectedItems as selectedItem, index }
-                        <div transition:slide|local>
-                            <br/><br/>
-                            <Plant bind:selectedItem="{selectedItem}" 
-                                bind:selectedLocation="{selectedLocations[index]}" 
-                                locations="{world.locations.to_array()}" {world}>
-                            </Plant>
-                            <br/>
-                            <Button variant="ring-warning" on:click="{() => removePlant(index)}">Remove Plant</Button>
-                        </div>
-                    {/each}
-                <br/><br/>
-                <Button variant="filled-primary" on:click="{checkPlantsClick}">Check Plants</Button>
-                {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
-                <br/>
-                <ul>
-                    {#each logicTestMessages as message}
-                        <li>{message}</li>
-                    {/each}
-                </ul>
-            </div>
-        </Card>
-    {/if}
-</main>
+<h1>Select a Preset</h1>
+<br/>
+<Presets presets={preset_names} bind:selectedPreset='{selectedPreset}' on:change="{presetChanged}"></Presets>
+<br/><br/>
+{#if world}
+    <Card>
+        <svelte:fragment slot="header">
+            <h2>{selectedPresetData.goal_name || selectedPreset}</h2>
+            <p>{selectedPresetData.description || selectedPreset}</p>
+            <br/><br/>
+        </svelte:fragment>
+        <div>
+            <Button variant="ring-accent" on:click="{addPlant}">Add Plant</Button>
+                {#each selectedItems as selectedItem, index }
+                    <div transition:slide|local>
+                        <br/><br/>
+                        <Plant bind:selectedItem="{selectedItem}" 
+                            bind:selectedLocation="{selectedLocations[index]}" 
+                            locations="{world.locations.to_array()}" {world}>
+                        </Plant>
+                        <br/>
+                        <Button variant="ring-warning" on:click="{() => removePlant(index)}">Remove Plant</Button>
+                    </div>
+                {/each}
+            <br/><br/>
+            <Button variant="filled-primary" on:click="{checkPlantsClick}">Check Plants</Button>
+            {#if logicTestResult}✅{:else if logicTestResult == null}☑️{:else}❌{/if}
+            <br/>
+            <ul>
+                {#each logicTestMessages as message}
+                    <li>{message}</li>
+                {/each}
+            </ul>
+        </div>
+    </Card>
+{/if}

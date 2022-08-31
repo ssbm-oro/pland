@@ -5,12 +5,15 @@ import type { ILocation } from "./z3r/logic/Location"
 import type World from "./z3r/logic/World";
 import type { IWorld } from "./z3r/logic/World";
 import Open from "./z3r/logic/World/Open";
-const presets = import.meta.glob('./data/presets/*.json');
-import { browser } from '$app/env'
+const presets = import.meta.glob('$lib/data/presets/*.json');
+import { browser } from '$app/environment'
 import { checkPlants } from "./z3r/logic/Logic";
 
 export const Lobbies = new Map<string, Lobby>();
 let readOnly = false;
+
+const preset_names = Object.keys(presets).map(filepath => filepath.split('/').reverse()[0] ?? 'error');
+const preset_data = new Map(Object.entries(presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
 
 export async function reloadLobbies() {
     if (Lobbies.size == 0) {
@@ -99,7 +102,7 @@ export default class Lobby {
     public async initialize() {
         if (!this.initialized) {
             // TODO: move this logic into a preset loader util
-            const preset = await presets[`./data/presets/${this.lobby.preset}`]!() as any;
+            const preset = await preset_data.get(this.lobby.preset) as any
             const config = preset.settings
 
             this.initialized = true;

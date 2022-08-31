@@ -42,82 +42,80 @@
     }
 </script>
 
-<main>
-    <Card>
-        <h3>Create Lobby</h3>
-        <p>
-            Please note that modes other than Standard/Open are very unimplemented/untested.
-            Dungeon item shuffle logic is also not implemented. The logic assumes the goal is
-            7/7 Defeat Ganon.
-        </p>
-        <Presets bind:selectedPreset bind:presets></Presets>
-        <br/>
-        <div class="flex flex-row justify-around">
-            <div>
-                <Menu select={true} open={false}>
-                    <Button slot="trigger" background="bg-accent-500">Max Entrants: {$maxPlayers}</Button>
-                    <Card slot="content" background="bg-surface-300/80 dark:bg-surface-700/80">
-                        <List tag="nav" selected={maxPlayers}>
-                            <ListItem value={2}>Two</ListItem>
-                            <ListItem value={3}>Three</ListItem>
-                            <ListItem value={4}>Four</ListItem>
-                            <ListItem value={5}>Five</ListItem>
-                            <ListItem value={6}>Six</ListItem>
-                            <ListItem value={7}>Seven</ListItem>
-                            <ListItem value={8}>Eight</ListItem>
-                        </List>
-                    </Card>
-                </Menu>
-            </div>
-            <div>
-                Num Plants: 
-                <RadioGroup selected="{numPlants}" background="bg-accent-500">
-                    <RadioItem value={1}>One</RadioItem>
-                    <RadioItem value={2}>Two</RadioItem>
-                </RadioGroup>
-            </div>
+<Card>
+    <h3>Create Lobby</h3>
+    <p>
+        Please note that modes other than Standard/Open are very unimplemented/untested.
+        Dungeon item shuffle logic is also not implemented. The logic assumes the goal is
+        7/7 Defeat Ganon.
+    </p>
+    <Presets bind:selectedPreset bind:presets></Presets>
+    <br/>
+    <div class="flex flex-row justify-around">
+        <div>
+            <Menu select={true} open={false}>
+                <Button slot="trigger" background="bg-accent-500">Max Entrants: {$maxPlayers}</Button>
+                <Card slot="content" background="bg-surface-300/80 dark:bg-surface-700/80">
+                    <List tag="nav" selected={maxPlayers}>
+                        <ListItem value={2}>Two</ListItem>
+                        <ListItem value={3}>Three</ListItem>
+                        <ListItem value={4}>Four</ListItem>
+                        <ListItem value={5}>Five</ListItem>
+                        <ListItem value={6}>Six</ListItem>
+                        <ListItem value={7}>Seven</ListItem>
+                        <ListItem value={8}>Eight</ListItem>
+                    </List>
+                </Card>
+            </Menu>
         </div>
+        <div>
+            Num Plants: 
+            <RadioGroup selected="{numPlants}" background="bg-accent-500">
+                <RadioItem value={1}>One</RadioItem>
+                <RadioItem value={2}>Two</RadioItem>
+            </RadioGroup>
+        </div>
+    </div>
+    <br/>
+    {#if loading_message === ''}
         <br/>
-        {#if loading_message === ''}
-            <br/>
-            <div class="flex flex-row justify-center">
-                <Button background="bg-accent-600 dark:bg-accent-800" on:click="{createLobby}" disabled="{!user}">Create Lobby</Button>
-            </div>
-        {:else}
-            {loading_message}
+        <div class="flex flex-row justify-center">
+            <Button background="bg-accent-600 dark:bg-accent-800" on:click="{createLobby}" disabled="{!user}">Create Lobby</Button>
+        </div>
+    {:else}
+        {loading_message}
+    {/if}
+</Card><br/>
+<Card class="relative">
+    <h3>Join a Lobby</h3>
+    <div class="absolute top-4 right-4">
+        {#if user}
+            <SlideToggle bind:checked={filterOnlyUser} size='sm'>Only My Lobbies</SlideToggle>
         {/if}
-    </Card><br/>
-    <Card class="relative">
-        <h3>Join a Lobby</h3>
-        <div class="absolute top-4 right-4">
-            {#if user}
-                <SlideToggle bind:checked={filterOnlyUser} size='sm'>Only My Lobbies</SlideToggle>
-            {/if}
-            <Button variant="ring-primary" on:click={refreshLobbies}>
-                <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
-            </Button>
-        </div>
-        <br/>
-        <List tag="nav">
-            {#each filteredLobbies as lobby}
-                <div class="relative">
-                    <ListItem href='lobby/{lobby.slug}'>
-                        <div class="grid grid-cols-4 justify-items-end">
-                            <p class="place-self-start">{lobby.slug}</p>
-                            <p>{lobby.preset}</p>
-                            <div class="flex flex-row -space-x-6">
-                                {#each lobby.entrants as entrant}
-                                    <div><DiscordAvatar user={{id:entrant.discord_id,...entrant}} size="sm" outlined={entrant.ready} /></div>
-                                {/each}
-                            </div>
-                            <p>{lobby.entrants.length} / {lobby.max_entrants} entrants.</p>
+        <Button variant="ring-primary" on:click={refreshLobbies}>
+            <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
+        </Button>
+    </div>
+    <br/>
+    <List tag="nav">
+        {#each filteredLobbies as lobby}
+            <div class="relative">
+                <ListItem href='lobby/{lobby.slug}'>
+                    <div class="grid grid-cols-4 justify-items-end">
+                        <p class="place-self-start">{lobby.slug}</p>
+                        <p>{lobby.preset}</p>
+                        <div class="flex flex-row -space-x-6">
+                            {#each lobby.entrants as entrant}
+                                <div><DiscordAvatar user={{id:entrant.discord_id,...entrant}} size="sm" outlined={entrant.ready} /></div>
+                            {/each}
                         </div>
-                        <svelte:fragment slot="trail">
-                            {#if user} <Button background="bg-warning-500" on:click="{() => deleteLobby(lobby.slug)}">Delete</Button>{/if}
-                        </svelte:fragment>
-                    </ListItem>
-                </div>
-            {/each}
-        </List>
-    </Card>
-</main>
+                        <p>{lobby.entrants.length} / {lobby.max_entrants} entrants.</p>
+                    </div>
+                    <svelte:fragment slot="trail">
+                        {#if user} <Button background="bg-warning-500" on:click="{() => deleteLobby(lobby.slug)}">Delete</Button>{/if}
+                    </svelte:fragment>
+                </ListItem>
+            </div>
+        {/each}
+    </List>
+</Card>
