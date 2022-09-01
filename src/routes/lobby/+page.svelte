@@ -93,9 +93,9 @@
     <h3>Join a Lobby</h3>
     <div class="absolute top-4 right-4">
         {#if user}
-            <SlideToggle bind:checked={filterOnlyUser} size='sm'>Only My Lobbies</SlideToggle>
+            <SlideToggle bind:checked={filterOnlyUser} size='sm' class="mr-4">Only My Lobbies</SlideToggle>
         {/if}
-        <Button variant="ring-primary" on:click={refreshLobbies}>
+        <Button class="mr-4" variant="ring-primary" on:click={refreshLobbies}>
             <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
         </Button>
     </div>

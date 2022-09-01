@@ -15,7 +15,8 @@
     export let hideBorder = false;
 
     export let locations: ILocation[];
-    $: locationImages = new Map(default_locations.map(location => [location.name.slice(0,-2), location.image]));
+    const locationImages = new Map(default_locations.map(location => [location.name.slice(0,-2), location.image]));
+    const locationTags = new Map(default_locations.map(location => [location.name.slice(0,-2), location.tags]))
     locations.push({name:'Random',item:null,isCrystalPendant:false, class:"events"});
 
     export let Location: ILocation;
@@ -28,7 +29,19 @@
     export let disabled:boolean = false;
 
     $: search = undefined as string | undefined;
-    $: locationsFiltered = locations.filter(location => filterLocationsByItem(location, selectedItem)).filter(location => location.name.toLowerCase().includes(search ? search.toLowerCase(): ''))
+    $: locationsFiltered = locations.filter(location => filterLocationsByItem(location, selectedItem)).filter(location => filterLocationsBySearch(location, search))
+
+    function filterLocationsBySearch(location: ILocation, search: string | undefined) {
+        if (search) {
+            const locationTokens: string[] = location.name.split(/[ ,-]+/).map(s => s.toLowerCase());
+            if (locationTags.has(location.name)) {
+                locationTokens.push(...locationTags.get(location.name) || []);
+            }
+            const searchTokens = search.split(/[ ,]+-/).map(s => s.toLowerCase());
+            return searchTokens.every(searchToken => locationTokens.some(locationToken => locationToken.includes(searchToken)));
+        }
+        return true;
+    }
 
     function filterLocationsByItem(location: ILocation, item: SelectedItem) {
         if ((available && item && item.name != "Random") && (location.name != "Random")) {

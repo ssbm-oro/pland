@@ -56,7 +56,8 @@
 						Login
 					</Button>
 				{:else}
-					<Menu>
+					<!-- origin="tl" for now because 'auto' appears to be broken. TODO -->
+					<Menu origin="tl">
 						<DiscordAvatar slot="trigger" user={user} size="md" hover={true}></DiscordAvatar>
 						<Card slot="content">
 							<Button variant="ring-accent" on:click={logout}>Logout</Button>

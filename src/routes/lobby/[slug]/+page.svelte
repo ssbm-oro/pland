@@ -89,7 +89,10 @@
     let opponentConflictAlertVisible = false;
     const opponentConflictAlertMessage = `You and your opponent conflicted.
                                         In the future, this message would be
-                                        more specific. Please resubmit your picks.`
+                                        more specific depending on whether you
+                                        conflicted on location, item, logic bomb,
+                                        and whether you are locked out of any
+                                        choices in the next round of selections.`
     async function submitPlants() {
         if (userAsEntrant) {
             let {plantable, messages} = checkPlants(world, selectedItems, selectedLocations)
@@ -132,7 +135,8 @@
     let rollAlertVisible = false;
     const rollAlertMessage = `It looks like this seed would roll. I haven't implemented
                             that because I want to test what's here so far more. 
-                            Let's make another lobby and try again!`
+                            Let's make another lobby and try again! 'Players' in this
+                            seed can download the logic log for review.`
     async function rollSeed() {
         rollAlertVisible = true;
     }
@@ -211,7 +215,7 @@
 {#if userAsEntrant && world}
 <br/><br/>
     <Card>
-        <p>Plants</p>
+        <h3>Your Plants</h3>
         {#each selectedItems as selectedItem, index}
             <Plant bind:selectedItem bind:selectedLocation={selectedLocations[index]}
                 locations={world.locations.to_array()} {world} disabled={userAsEntrant.ready}
