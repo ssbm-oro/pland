@@ -5,7 +5,7 @@ import type { ILocation } from '$lib/z3r/logic/Location';
 import fs from 'fs';
 
 export const GET: RequestHandler = async ( { params, locals } ) => {
-    const lobby = Lobbies.get(params.slug!)!.lobby;
+    const lobby = Lobbies.get(params.slug || '')?.lobby;
     if (!lobby) return new Response(undefined, { status: 404 });
 
     if (!locals.session) return new Response(undefined, { status: 401 })
@@ -37,12 +37,12 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
 
     const f = await request.formData();
     
-    const plantedItems = JSON.parse(f.get('plantedItems')!.toString());
-    const plantedLocations: ILocation[] = JSON.parse(f.get('plantedLocations')!.toString());
+    const plantedItems = JSON.parse(f.get('plantedItems')?.toString() || '');
+    const plantedLocations: ILocation[] = JSON.parse(f.get('plantedLocations')?.toString() || '');
     if (!plantedItems || !plantedLocations) return new Response('You must define an item to plant and a location to plant it.', { status: 409 });
 
     await lobby.initialize();
-    const {plantable, messages} = await lobby.plant(user, plantedItems, plantedLocations);
+    const {plantable, messages, conflict} = await lobby.plant(user, plantedItems, plantedLocations);
 
     if (lobby.lobby.ready_to_roll) {
         try { 
@@ -58,7 +58,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
         }
     }
 
-    return json({planted: plantable, message:messages[messages.length-1] || ''});
+    return json({plantable: plantable, message:messages[messages.length-1] || '', conflict});
 }
 
 export const DELETE: RequestHandler = async( {params, locals } ) => {

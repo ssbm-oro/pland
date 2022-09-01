@@ -27,10 +27,10 @@
     }
 </script>
 
-<div class="flex flex-col lg:flex-row border-solid border-primary-500 rounded-lg w-full lg:w-fit items-center justify-center lg:justify-start" class:border={itemAndLocationSelected}>
+<div class="flex flex-col md:flex-row border-solid border-primary-500 rounded-lg w-full items-center justify-center md:justify-start" class:border={itemAndLocationSelected} class:md:w-fit={itemAndLocationSelected}>
     <Z3rItemSelector bind:Item={selectedItem} {disabled} bind:this={itemSelector} bind:Bottle={bottleType} hideBorder={!itemAndLocationSelected} bind:selected={itemSelected}/>
-    <div class="flex justify-start lg:ml-2 lg:mr-2">
-        <Icon icon="el:arrow-right" width="60" color={iconColor} class="rotate-90 lg:rotate-0"></Icon>
+    <div class="flex justify-start md:ml-2 md:mr-2">
+        <Icon icon="el:arrow-right" width="60" color={iconColor} class="rotate-90 md:rotate-0"></Icon>
     </div>
     <Z3rLocationSelector bind:Location={selectedLocation} {disabled} {locations} bind:selectedItem {world} bind:this={locationSelector}  hideBorder={!itemAndLocationSelected} bind:selected={locationSelected}/>
 </div>

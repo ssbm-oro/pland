@@ -44,7 +44,7 @@ import type Config from "$lib/z3r/logic/Config";
                 selectedItems = userAsEntrant.plantedItems;
                 selectedLocations = userAsEntrant.plantedLocations;
                 for (let i = 0; i < lobby.max_plants; i++) {
-                    selectedBottles[i] = (selectedItems[i] as Bottle).contents || 'random'
+                    selectedBottles[i] = (selectedItems[i] as Bottle)?.contents || 'random'
                 }
             }
         }
@@ -94,10 +94,12 @@ import type Config from "$lib/z3r/logic/Config";
                 params.append('ready', 'true');
                 const res = await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'POST', body: params });
                 const data = await res.json();
-                const planted : boolean = data.planted;
+                plantable = data.planted;
                 const message : string = data.message;
+                const conflict: boolean = data.conflict;
+
                 await invalidateAll();
-                if (!planted && !userAsEntrant.ready) {
+                if (conflict) {
                     opponentConflictAlertVisible = true;
                     plants.forEach(plant => plant.resetPlants());
                 }

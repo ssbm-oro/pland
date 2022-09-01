@@ -91,7 +91,7 @@
 </Card><br/>
 <Card class="relative">
     <h3>Join a Lobby</h3>
-    <div class="absolute top-4 right-4">
+    <div class="sm:absolute sm:top-4 sm:right-4">
         {#if user}
             <SlideToggle bind:checked={filterOnlyUser} size='sm' class="mr-4">Only My Lobbies</SlideToggle>
         {/if}

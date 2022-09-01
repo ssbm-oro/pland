@@ -136,7 +136,7 @@ export default class Lobby {
 
     public async plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
         const entrant = this.lobby.entrants.find(entrant => entrant.discord_id == user.id);
-        let plantable = false, messages: string[] = [];
+        let plantable = false, messages: string[] = [], conflict = false;
         if (entrant) {
             const canPlant = this.canPlant(plantedItems, plantedLocations);
             plantable = canPlant.plantable;
@@ -158,13 +158,13 @@ export default class Lobby {
                 }
                 entrant.ready = true;
 
-                plantable = await this.checkAllReady();
+                conflict = !await this.checkAllReady();
             }
         }
 
         saveLobby(this);
 
-        return {plantable, messages};
+        return {plantable, messages, conflict};
     }
 
     async checkAllReady() {
@@ -184,7 +184,7 @@ export default class Lobby {
         }
         this.lobby.ready_to_roll = false;
         saveLobby(this);
-        return false;
+        return true;
     }
 
     public unplant(user: APIUser) {
