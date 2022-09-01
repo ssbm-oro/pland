@@ -103,7 +103,7 @@
 
 	<svelte:fragment slot="footer">
 		<footer>
-			<div class="fixed bottom-1.5 left-1.5 right-1.5">
+			<div class="fixed bottom-0 left-1.5 right-1.5 bg-surface-50 dark:bg-surface-900">
 				<Divider></Divider>
 				<div class="grid grid-cols-3">
 					<p>&#xa9; oro 2022</p>

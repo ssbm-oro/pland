@@ -101,23 +101,34 @@
     </div>
     <br/>
     <List tag="nav">
-        {#each filteredLobbies as lobby}
-            <div class="relative">
-                <ListItem href='lobby/{lobby.slug}'>
-                    <div class="grid grid-cols-3 md:grid-cols-4 justify-items-end">
-                        <p class="place-self-start">{lobby.slug}</p>
-                        <p>{lobby.preset}</p>
-                        <div class="flex flex-row -space-x-6">
-                            {#each lobby.entrants as entrant}
-                                <div><DiscordAvatar user={{id:entrant.discord_id,...entrant}} size="sm" outlined={entrant.ready} /></div>
-                            {/each}
-                        </div>
-                        <p class="invisible md:visible">{lobby.entrants.length} / {lobby.max_entrants} entrants.</p>
+        {#each filteredLobbies as lobby, i}
+            <div class="odd:bg-surface-300 odd:dark:bg-surface-700 flex flex-row-reverse items-center pr-2">
+                <div class="flex-none min-w-0">
+                    {#if user} <Button background="bg-warning-500" on:click|once="{() => deleteLobby(lobby.slug)}">Delete</Button>{/if}
+                </div>
+                <div class="grow">
+                <ListItem href='lobby/{lobby.slug}' tabindex={i}>
+                    <div class="flex flex-row justify-start h-8 grow">
+                        <p>{lobby.slug}</p>
+                        <span class="flex flex-row absolute right-[36%] md:left-[36%] grow pr-4">
+                            <p>{lobby.preset}</p>
+                            
+                        </span>
                     </div>
                     <svelte:fragment slot="trail">
-                        {#if user} <Button background="bg-warning-500" on:click="{() => deleteLobby(lobby.slug)}">Delete</Button>{/if}
+                        <div class="grid grid-flow-col justify-end shrink">
+                            <div class="mr-4">
+                                <div class="flex flex-row -space-x-6 grow">
+                                    {#each lobby.entrants as entrant}
+                                        <div><DiscordAvatar user={{id:entrant.discord_id,...entrant}} size="sm" outlined={entrant.ready} /></div>
+                                    {/each}
+                                </div>
+                            </div>
+                            <p class="hidden md:block">{lobby.entrants.length} / {lobby.max_entrants} entrants</p>
+                        </div>
                     </svelte:fragment>
                 </ListItem>
+                </div>
             </div>
         {/each}
     </List>

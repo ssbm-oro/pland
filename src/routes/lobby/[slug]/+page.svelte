@@ -165,17 +165,20 @@ import type Config from "$lib/z3r/logic/Config";
     <svelte:fragment slot="message">{opponentConflictAlertMessage}</svelte:fragment>
     <svelte:fragment slot="trail"><Button on:click={() => {opponentConflictAlertVisible=false;}}>X</Button></svelte:fragment>
 </Alert>
-<div class="fixed top-4 right-4">
-    <Button variant="ring-primary" on:click={refreshLobby}>
-        <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
-    </Button>
-{#if userInLobby}
-    <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
-{:else}
-    <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
-{/if}
-</div>
+<br/>
 <Card>
+    <div class="relative">
+        <div class="absolute top-4 right-4">
+            <Button variant="ring-primary" on:click={refreshLobby}>
+                <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
+            </Button>
+        {#if userInLobby}
+            <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
+        {:else}
+            <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
+        {/if}
+        </div>
+    </div>
     <p>Entrants: {lobby.entrants.length} / {lobby.max_entrants}</p>
     <List>
         {#each lobby.entrants as entrant }{#key userAsEntrant}
@@ -207,16 +210,19 @@ import type Config from "$lib/z3r/logic/Config";
                 bind:this={plants[index]} bind:bottleType={selectedBottles[index]}/>
             <br/>
         {/each}
+        <Alert bind:visible={conflictAlertVisible} background="bg-warning-500/30">
+            <svelte:fragment slot="title">A conflict was detected</svelte:fragment>
+            <svelte:fragment slot="message">Check your plants, a conflict was detected: {conflictAlertMessage}</svelte:fragment>
+            <svelte:fragment slot="trail"><Button on:click={() => {conflictAlertVisible=false;}}>X</Button></svelte:fragment>
+        </Alert>
+        <div class="flex flex-col justify-start lg:flex-none lg:flex-row">
         {#if !userAsEntrant.ready}
-            <Alert bind:visible={conflictAlertVisible} background="bg-warning-500/30">
-                <svelte:fragment slot="title">A conflict was detected</svelte:fragment>
-                <svelte:fragment slot="message">Check your plants, a conflict was detected: {conflictAlertMessage}</svelte:fragment>
-                <svelte:fragment slot="trail"><Button on:click={() => {conflictAlertVisible=false;}}>X</Button></svelte:fragment>
-            </Alert>
+            
             <Button variant="filled-primary" on:click="{submitPlants}">Submit</Button>
         {:else}
             <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
         {/if}
+        </div>
     </Card>
 {:else}
     {#if userAsEntrant}

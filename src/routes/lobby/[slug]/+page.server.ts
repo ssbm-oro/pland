@@ -5,7 +5,7 @@ import { error } from '@sveltejs/kit';
 import fs from 'fs';
 
 export const load: PageServerLoad = async ( { params } ) => {
-    const lobby = Lobbies.get(params.slug!);
+    const lobby = Lobbies.get(params.slug);
 
     if (lobby !== undefined) {
         return {lobby: lobby.lobby};
