@@ -8,9 +8,10 @@ import Open from "./z3r/logic/World/Open";
 const presets = import.meta.glob('$lib/data/presets/*.json');
 import { browser } from '$app/environment'
 import { checkPlants } from "./z3r/logic/Logic";
+import { env } from "$env/dynamic/public";
 
 export const Lobbies = new Map<string, Lobby>();
-let readOnly = false;
+let readOnly = !!env.VERCEL;
 
 const preset_names = Object.keys(presets).map(filepath => filepath.split('/').reverse()[0] ?? 'error');
 const preset_data = new Map(Object.entries(presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
@@ -29,7 +30,9 @@ export async function reloadLobbies() {
             })
         }
         else {
-            fs.mkdirSync('lobbies');
+            if (!readOnly) {
+                fs.mkdirSync('lobbies');
+            }
         }
     }
 }
