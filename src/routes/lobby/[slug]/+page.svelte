@@ -5,7 +5,7 @@
     import WorldFactory from "$lib/z3r/logic/WorldFactory";
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
-    import { invalidate } from "$app/navigation";
+    import { invalidateAll } from "$app/navigation";
     import type { ILocation } from '$lib/z3r/logic/Location';
     import { Bottle, type IItem } from "$lib/z3r/logic/Item";
     import { checkPlants } from "$lib/z3r/logic/Logic";
@@ -97,7 +97,7 @@ import type Config from "$lib/z3r/logic/Config";
                 const data = await res.json();
                 const planted : boolean = data.planted;
                 const message : string = data.message;
-                await invalidate();
+                await invalidateAll();
                 if (!planted && !userAsEntrant.ready) {
                     opponentConflictAlertVisible = true;
                     plants.forEach(plant => plant.resetPlants());
@@ -113,7 +113,7 @@ import type Config from "$lib/z3r/logic/Config";
     async function resetPlants() {
         if (userAsEntrant) {
             await fetch(`/lobby/${$page.params['slug']}/plants`, { method: 'DELETE' });
-            invalidate();
+            await invalidateAll();
         }
     }
 
@@ -129,7 +129,7 @@ import type Config from "$lib/z3r/logic/Config";
     let refreshing = false;
     async function refreshLobby() {
         refreshing = true;
-        await invalidate();
+        await invalidateAll();
         refreshing = false;
     }
 </script>

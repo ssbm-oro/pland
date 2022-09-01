@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { goto, invalidate } from "$app/navigation";
+    import { goto, invalidateAll } from "$app/navigation";
     import Presets from "$lib/components/Presets.svelte";
     import type { PageData} from './$types';
     import { get_loading_message } from "$lib/utils/loadingMessages";
@@ -28,7 +28,7 @@
 
     async function deleteLobby(slug:string) {
         await fetch(`/lobby/${slug}`, { method:'DELETE' } );
-        invalidate();
+        await invalidateAll();
     }
 
     let filterOnlyUser: boolean = false;
@@ -37,7 +37,7 @@
     let refreshing = false;
     async function refreshLobbies() {
         refreshing = true;
-        await invalidate();
+        await invalidateAll();
         refreshing = false;
     }
 </script>

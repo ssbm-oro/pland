@@ -7,7 +7,7 @@
 	import { Button, LightSwitch, Menu, Card, Drawer, Divider, List, ListItem, GradientHeading } from '@brainandbones/skeleton';
 	import { writable } from "svelte/store";
 	import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
-	import { invalidate } from "$app/navigation";
+	import { invalidateAll } from "$app/navigation";
     import { discord_login_uri } from '$lib/Discord/DiscordClient'
 
     export let data: LayoutData;
@@ -37,7 +37,7 @@
 
     async function logout() {
 		await fetch('/api/user/logout', {method: 'POST' });
-		invalidate();
+		await invalidateAll();
 	}
 </script>
 
@@ -124,9 +124,9 @@
 	<div id="main" class="w-screen h-screen overflow-y-auto backdrop-blur-lg bg-surface-200/30 dark:bg-surface-900/60">
 		<header class="lg:hidden flex p-8 space-x-4">
 			<!-- Hamburger Menu -->
-			<Button variant="minimal" class="absolute top-4 left-4" on:click={() => $drawer = !$drawer}>
+			<Button variant="minimal" class="absolute top-8 left-8" on:click={() => $drawer = !$drawer}>
 				<svelte:fragment slot="lead">
-					<Icon icon="quill:hamburger-sidebar"/>
+					<Icon icon="quill:hamburger-sidebar" height="32"/>
 				</svelte:fragment>
 				<span class="font-bold">Menu</span>
 			</Button>
