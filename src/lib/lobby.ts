@@ -11,7 +11,7 @@ import { checkPlants } from "./z3r/logic/Logic";
 import { env } from "$env/dynamic/public";
 
 export const Lobbies = new Map<string, Lobby>();
-let readOnly = !!env.VERCEL;
+let readOnly = !!env.VITE_VERCEL_ENV;
 
 const preset_names = Object.keys(presets).map(filepath => filepath.split('/').reverse()[0] ?? 'error');
 const preset_data = new Map(Object.entries(presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
