@@ -103,16 +103,15 @@
     <List tag="nav">
         {#each filteredLobbies as lobby, i}
             <div class="odd:bg-surface-300 odd:dark:bg-surface-700 flex flex-row-reverse items-center pr-2">
-                <div class="flex-none min-w-0">
+                <div class="flex-none min-w-0 hidden sm:block">
                     {#if user} <Button background="bg-warning-500" on:click|once="{() => deleteLobby(lobby.slug)}">Delete</Button>{/if}
                 </div>
                 <div class="grow">
                 <ListItem href='lobby/{lobby.slug}' tabindex={i}>
-                    <div class="flex flex-row justify-start h-8 grow">
-                        <p>{lobby.slug}</p>
-                        <span class="flex flex-row absolute right-[36%] md:left-[36%] grow pr-4">
+                    <div class="grid grid-rows-1 justify-start h-8 grow">
+                        <p class="whitespace-normal">{lobby.slug}</p>
+                        <span class="hidden sm:block sm:absolute sm:right-[36%] md:left-[36%] grow pr-4">
                             <p>{lobby.preset}</p>
-                            
                         </span>
                     </div>
                     <svelte:fragment slot="trail">
@@ -124,7 +123,7 @@
                                     {/each}
                                 </div>
                             </div>
-                            <p class="hidden md:block">{lobby.entrants.length} / {lobby.max_entrants} entrants</p>
+                            <p class="sm:hidden md:block">{lobby.entrants.length} / {lobby.max_entrants} entrants</p>
                         </div>
                     </svelte:fragment>
                 </ListItem>

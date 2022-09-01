@@ -70,7 +70,7 @@
     export let selected = false;
     $: selected = (!!Item && Item.name != "Random" && (!Item.name.toLowerCase().includes('bottle') || (!!Bottle && Bottle != 'unselected')))
 
-    $: cardClass = hideBorder ? "max-w-fit sm:max-w-prose border border-solid border-accent-500" : "max-w-fit sm:max-w-prose border-none";
+    $: cardClass = hideBorder ? "max-w-prose border border-solid border-accent-500" : "max-w-prose border-none";
 </script>
 
 <Card class={cardClass}>
@@ -121,7 +121,7 @@
                         <svelte:fragment slot="lead">
                             <Icon icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} width={6*scale} height={6*scale}></Icon>
                         </svelte:fragment>
-                        {item.pretty_name || item.name}
+                        <span class="whitespace-normal">{item.pretty_name || item.name}</span>
                     </ListItem>
                 </div>
             {/each}

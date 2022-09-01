@@ -133,7 +133,7 @@
 		</header>
 
 		<!-- Page Slot -->
-		<div class="container mx-auto p-8 ">
+		<div class="container min-w-full mx-auto p-8 ">
 			<slot />
 		</div>
 	</div>
