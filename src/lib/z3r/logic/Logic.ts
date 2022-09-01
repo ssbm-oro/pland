@@ -13,7 +13,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             throw Error('Different lengths of item array and location array received!')
         }
         let plantable = true;
-        let available = new ItemCollection([
+        const available = new ItemCollection([
             Item.get('RescueZelda',world)!,
             Item.get('Crystal1',world)!,
             Item.get('Crystal2',world)!,
@@ -29,7 +29,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             Item.get('DefeatAgahnim2',world)!,
         ]);
         available.setChecksForWorld(world);
-        let planted = new LocationCollection([]);
+        const planted = new LocationCollection([]);
 
         items.forEach(item => {
             if (item.count && item.count > 0)
@@ -118,11 +118,9 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
     catch (err:any) {
         log(err);
     }
-    finally {
-        return {
-            plantable: logicTestResult,
-            messages: messages
-        }
+    return {
+        plantable: logicTestResult,
+        messages: messages
     }
 }
 

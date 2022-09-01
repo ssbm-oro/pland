@@ -12,7 +12,7 @@ export class Bosses {
     private static bosses: BossCollection;
 
     public static get(key: string, world: World): Boss {
-        return Bosses.all(world).get(key)! as Boss;
+        return Bosses.all(world).get(key) as Boss;
     }
     
     public static all(world: World): BossCollection {

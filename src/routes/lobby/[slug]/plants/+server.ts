@@ -24,7 +24,7 @@ export const GET: RequestHandler = async ( { params, locals } ) => {
 }
 
 export const POST: RequestHandler = async( {params, locals, request } ) => {
-    const lobby = Lobbies.get(params.slug!);
+    const lobby = Lobbies.get(params.slug || '');
     if (!lobby) return new Response(undefined, { status: 404 });
 
     if (!locals.session) return new Response(undefined, { status: 401 })
@@ -32,7 +32,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
 
     if (!user) return new Response(undefined, { status: 403 })
 
-    const entrant = lobby.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
+    const entrant = lobby.lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });
 
     const f = await request.formData();
@@ -42,7 +42,7 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
     if (!plantedItems || !plantedLocations) return new Response('You must define an item to plant and a location to plant it.', { status: 409 });
 
     await lobby.initialize();
-    let {plantable, messages} = await lobby.plant(user, plantedItems, plantedLocations);
+    const {plantable, messages} = await lobby.plant(user, plantedItems, plantedLocations);
 
     if (lobby.lobby.ready_to_roll) {
         try { 
@@ -53,14 +53,16 @@ export const POST: RequestHandler = async( {params, locals, request } ) => {
             fs.writeFileSync(`logs/${lobby.lobby.slug}.log`, messageBuffer)
         }
         // TODO: Handle errors! 
-        catch {}
+        finally {
+            // intentionally empty finally block
+        }
     }
 
     return json({planted: plantable, message:messages[messages.length-1] || ''});
 }
 
 export const DELETE: RequestHandler = async( {params, locals } ) => {
-    const lobby = Lobbies.get(params.slug!);
+    const lobby = Lobbies.get(params.slug || '');
     if (!lobby) return new Response(undefined, { status: 404 });
 
     if (!locals.session) return new Response(undefined, { status: 401 })
@@ -68,7 +70,7 @@ export const DELETE: RequestHandler = async( {params, locals } ) => {
     const user = fetchClientSession(locals.session.id);
     if (!user) return new Response(undefined, { status: 403 })
     
-    const entrant = lobby.lobby!.entrants.find(entrant => entrant.discord_id == user.id);
+    const entrant = lobby.lobby.entrants.find(entrant => entrant.discord_id == user.id);
     if (!entrant) return new Response(undefined, { status: 404 });
 
     await lobby.initialize();

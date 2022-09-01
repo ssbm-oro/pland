@@ -56,13 +56,13 @@ export class ThievesTown extends Dungeon {
         });
 
         this.can_complete = (locations, items) => {
-            return this.locations.get("Thieves' Town - Boss")?.canAccess(items, locations)!
+            return this.locations.get("Thieves' Town - Boss").canAccess(items, locations)
         }
 
         this.locations.get("Thieves' Town - Boss")?.setRequirements((locations, items) => {
             return this.canEnter(locations, items)
                 && items.has("KeyD4") && items.has("BigKeyD4")
-                && this.boss?.canBeat(items, locations)!
+                && !!this.boss && this.boss.canBeat(items, locations)
         });
 
         this.can_enter = (locations, items) => {

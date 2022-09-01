@@ -9,12 +9,12 @@ const presets = import.meta.glob('$lib/data/presets/*.json');
 import { browser } from '$app/environment'
 import { checkPlants } from "./z3r/logic/Logic";
 import { env } from "$env/dynamic/private";
+import type Config from "./z3r/logic/Config";
 
 export const Lobbies = new Map<string, Lobby>();
 const readOnly = !!env.VERCEL_ENV;
 
-const preset_names = Object.keys(presets).map(filepath => filepath.split('/').reverse()[0] ?? 'error');
-const preset_data = new Map(Object.entries(presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
+const preset_data = new Map(Object.entries(presets).map(entry => [entry[0].split('/').reverse()[0], entry[1]()]));
 
 export async function reloadLobbies() {
     if (Lobbies.size == 0) {
@@ -63,7 +63,7 @@ export interface ILobby {
 
 function saveLobby(lobby: Lobby) {
     if ((!browser) && (!readOnly)) {
-        fs.writeFileSync(`lobbies/${lobby.lobby!.slug}`, JSON.stringify(lobby));
+        fs.writeFileSync(`lobbies/${lobby.lobby.slug}`, JSON.stringify(lobby));
     }
 }
 
@@ -73,7 +73,7 @@ export default class Lobby {
     initialized = false;
 
 
-    public constructor(created_by: User | null = null, preset:string | null = null, max_entrants:number | null = null, max_plants:number | null = null, slug:string | null = null, entrants: Entrant[]= [], ready_to_roll = false) {
+    public constructor(created_by: User, preset:string, max_entrants:number, max_plants:number, slug:string | null = null, entrants: Entrant[]= [], ready_to_roll = false) {
         const save = slug == null;
         if (!slug) {
             do  {
@@ -81,17 +81,16 @@ export default class Lobby {
             } while (Lobbies.has(slug))
         }
         
-        // TODO: check and error if null or some other type safety >_<
         this.lobby = {
             created_by: {
-                username: created_by!.username,
-                discriminator: created_by!.discriminator,
-                discord_id: created_by!.discord_id,
-                avatar: created_by!.avatar
+                username: created_by.username,
+                discriminator: created_by.discriminator,
+                discord_id: created_by.discord_id,
+                avatar: created_by.avatar
             },
-            preset: preset!,
-            max_entrants: max_entrants!,
-            max_plants: max_plants!,
+            preset: preset,
+            max_entrants: max_entrants,
+            max_plants: max_plants,
             slug:slug,
             entrants: entrants,
             ready_to_roll: ready_to_roll
@@ -104,12 +103,10 @@ export default class Lobby {
 
     public async initialize() {
         if (!this.initialized) {
-            // TODO: move this logic into a preset loader util
-            const preset = await preset_data.get(this.lobby.preset) as any
-            const config = preset.settings
+            const {settings} = await preset_data.get(this.lobby.preset) as {settings:Config};
 
             this.initialized = true;
-            this.world = new Open(config, Array());
+            this.world = new Open(settings);
         }
     }
 
@@ -143,7 +140,7 @@ export default class Lobby {
 
     public async plant(user: APIUser, plantedItems: IItem[], plantedLocations: ILocation[]) {
         const entrant = this.lobby.entrants.find(entrant => entrant.discord_id == user.id);
-        let plantable: boolean = false, messages: string[] = [];
+        let plantable = false, messages: string[] = [];
         if (entrant) {
             const canPlant = this.canPlant(plantedItems, plantedLocations);
             plantable = canPlant.plantable;
@@ -152,16 +149,16 @@ export default class Lobby {
             if (plantable) {
                 const realWorld = this.world as World;
                 for(let i = 0; i < this.lobby.max_plants; i++) {
-                    entrant.plantedItems[i] = plantedItems[i]!;
 
-                    const z3rLocation = realWorld.locations.get(plantedLocations[i]!.name)!
+                    const z3rLocation = realWorld.locations.get(plantedLocations[i]?.name || '')
 
-                    entrant.plantedLocations[i]! = {
+                    entrant.plantedLocations[i] = {
                         name: z3rLocation.name,
                         item: z3rLocation.item,
                         isCrystalPendant: z3rLocation.isCrystalPendant,
                         class: "items"
                     };
+                    entrant.plantedItems = plantedItems;
                 }
                 entrant.ready = true;
 
@@ -178,7 +175,7 @@ export default class Lobby {
         if ((this.lobby.entrants.length >= 2) && (this.lobby.entrants.every(entrant => entrant.ready))) {
             const allItemsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedItems);
             const allLocationsPlanted = this.lobby.entrants.flatMap(entrant => entrant.plantedLocations);
-            const {plantable, messages} = checkPlants(this.world as World, allItemsPlanted, allLocationsPlanted);
+            const { plantable } = checkPlants(this.world as World, allItemsPlanted, allLocationsPlanted);
             if (plantable) {
                 this.lobby.ready_to_roll = true;
             }

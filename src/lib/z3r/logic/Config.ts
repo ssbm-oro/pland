@@ -26,9 +26,9 @@ export default interface Config {
     accessibility: "items" | "locations" | "beatable";
     dungeon_items: string;
     item_placement: "basic" | "advanced";
-    eq: any;
-    l: any;
-    drops: any
+    eq: unknown;
+    l: unknown;
+    drops: unknown
     custom: {
         canBombJump: boolean;
         canBootsClip: boolean;
@@ -45,8 +45,8 @@ export default interface Config {
         canWaterFairyRevive: boolean;
         canWaterWalk: boolean;
         customPrizePacks: boolean;
-        drop: any;
-        item: any;
+        drop: unknown;
+        item: unknown;
         "item.Goal.Required": string;
         "item.require.Lamp": boolean;
         "item.value.BlueClock": string;

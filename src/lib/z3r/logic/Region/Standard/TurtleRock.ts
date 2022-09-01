@@ -48,7 +48,7 @@ export class TurtleRock extends Dungeon {
     public override initialize() {
         const upper = (locations: LocationCollection, items: ItemCollection) => {
             let haveMedallion = false;
-            let medallion = locations.get('Turtle Rock Medallion')
+            const medallion = locations.get('Turtle Rock Medallion')
             if (!medallion || !medallion.item) {
                 haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
                 log(`Turtle Rock Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
@@ -106,14 +106,14 @@ export class TurtleRock extends Dungeon {
         this.locations.get("Turtle Rock - Eye Bridge - Bottom Right")?.setRequirements(laserBridgeRequirements);
 
         this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
-            return this.locations.get("Turtle Rock - Boss")?.canAccess(items, locations)!;
+            return this.locations.get("Turtle Rock - Boss").canAccess(items, locations);
         }
 
         this.locations.get("Turtle Rock - Boss")?.setRequirements((locations, items) => {
             return this.canEnter(locations, items)
                 && items.has("KeyD7", 4)
                 && items.has("BigKeyD7") && items.has("CaneOfSomaria") && items.has("Lamp")
-                && this.boss?.canBeat(items, locations)!
+                && !!this.boss && this.boss.canBeat(items, locations)
         });
 
         this.can_enter = (locations: LocationCollection, items: ItemCollection) => {

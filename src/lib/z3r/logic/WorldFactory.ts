@@ -5,8 +5,8 @@ import Retro from "./World/Retro";
 import Standard from "./World/Standard";
 
 export default class WorldFactory {
-    public static createWorld(type: string, config: Config) {
-        switch(type) {
+    public static createWorld(config: Config) {
+        switch(config.mode) {
             case 'open':
                 return new Open(config);
             case 'inverted':

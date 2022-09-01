@@ -18,13 +18,12 @@ export default class World implements IWorld {
     locations: LocationCollection;
     config: Config;
     win_condition?: (items: ItemCollection) => boolean;
-    id: number = 1;
+    id = 1;
     inverted = false;
 
-    public constructor(config:Config, messages: string[]|null = null)
+    public constructor(config:Config)
     {
         this.config = config;
-        messages = messages;
         this.locations = new LocationCollection([]);
     }
 
@@ -57,11 +56,11 @@ export default class World implements IWorld {
 
 
     canPlacePrizes(items: ItemCollection): boolean {
-        let requiredPendants: IRegion[] = [];
-        let requiredCrystals: IRegion[] = [];
+        const requiredPendants: IRegion[] = [];
+        const requiredCrystals: IRegion[] = [];
 
 
-        let gtItems = new ItemCollection([]);
+        const gtItems = new ItemCollection([]);
         this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
             gtItems.addItem(location.item!);
         });
@@ -97,7 +96,7 @@ export default class World implements IWorld {
         pendItems.addItem(Item.get('PendantOfWisdom', this)!);
         pendItems.addItem(Item.get('PendantOfPower', this)!);
         if (this.locations.get('Master Sword Pedestal')?.item) {
-            pendItems.addItem(this.locations.get('Master Sword Pedestal')?.item!);
+            pendItems.addItem(this.locations.get('Master Sword Pedestal').item!);
         }
 
         const nonPendItems = items.merge(gtItems).diff(pendItems);
@@ -138,7 +137,7 @@ export default class World implements IWorld {
     
     canPlaceMedallion(location: string,items: ItemCollection): boolean {
         let haveMedallion = false;
-        let medallion = this.locations.get(location);
+        const medallion = this.locations.get(location);
         if (!medallion || !medallion.item) {
             haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake');
             log(`${location} not set. HaveMedallion based on any medallion: ${haveMedallion}`);

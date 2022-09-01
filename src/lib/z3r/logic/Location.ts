@@ -34,8 +34,8 @@ export class Z3rLocation implements ILocation {
         this.class = 'items';
     }
 
-    public fill(newItem:IItem, items: ItemCollection, check_access: boolean = false): boolean {
-        let oldItem = this.item;
+    public fill(newItem:IItem, items: ItemCollection, check_access = false): boolean {
+        const oldItem = this.item;
         this.setItem(newItem);
         if (this.canFill(newItem, items, check_access)) {
             // Item.items?.addItem(newItem); TODO - do i need this line?
@@ -66,17 +66,17 @@ export class Z3rLocation implements ILocation {
             items = items.clone();
 
             plants.filter(location => location.canAccess(items)).forEach(accessible => {
-                let accessible_item = (accessible as Z3rLocation).item;
+                const accessible_item = (accessible as Z3rLocation).item;
                 if ((accessible as Z3rLocation).region.canEnter(this.region.world.locations, items) && accessible_item) {
                     log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
-                    items.addItem(accessible_item!);
+                    items.addItem(accessible_item);
                 }
             });
         }
 
-        let oldItem = this.item;
+        const oldItem = this.item;
         this.item = newItem;
-        let fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items));
+        const fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items));
         this.item = oldItem;
 
         return fillable;

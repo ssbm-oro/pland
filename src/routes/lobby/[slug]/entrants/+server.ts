@@ -36,7 +36,7 @@ export const POST: RequestHandler = async( {params, locals } ) => {
 }
 
 export const DELETE: RequestHandler = async( {params, locals} ) => {
-    const lobby = Lobbies.get(params.slug!);
+    const lobby = Lobbies.get(params.slug);
     if (!lobby) return new Response(undefined, { status: 404 })
     if (!locals.session) return new Response(undefined, { status: 401 })
     const user = fetchClientSession(locals.session.id)

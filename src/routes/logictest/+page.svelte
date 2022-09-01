@@ -34,17 +34,17 @@
                 selectedPresetData = await presets.get(selectedPreset) as any;
                 switch(selectedPresetData.settings.mode) {
                     case 'open':
-                        world = new Open(selectedPresetData.settings, logicTestMessages);
+                        world = new Open(selectedPresetData.settings);
                         break;
                     case 'inverted':
-                        world = new Inverted(selectedPresetData.settings, logicTestMessages);
+                        world = new Inverted(selectedPresetData.settings);
                         break;
                     case 'retro':
-                        world = new Retro(selectedPresetData.settings, logicTestMessages);
+                        world = new Retro(selectedPresetData.settings);
                         break;
                     case 'standard':
                     default:
-                        world = new Standard(selectedPresetData.settings, logicTestMessages);
+                        world = new Standard(selectedPresetData.settings);
                         break;
                 }
             }

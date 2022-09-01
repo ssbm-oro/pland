@@ -1,4 +1,3 @@
-import type { Dungeon } from "./Region";
 import type { Entry } from "./Support/Collection";
 import { ItemCollection } from "./Support/ItemCollection";
 import type World from "./World";
@@ -217,12 +216,9 @@ export default class Item implements IItem {
     }
 
     public static get(name: string, world: World) {
-        return Item.allItems(world)!.get(name);
+        return Item.allItems(world).get(name);
     }
 
-    public static addItem(item: Item) {
-
-    }
     static isPrize(item: IItem) {
         return item instanceof IPrize;
     }
@@ -264,7 +260,7 @@ export class Compass extends IDungeonItem {
 export class Map extends IDungeonItem {
 }
 
-export let BottleContents = {
+export const BottleContents = {
     random: {
         icon: "mdi:beaker-question",
         color: "#ccc",
@@ -316,8 +312,8 @@ export let BottleContents = {
 }
 
 export class Bottle extends Item {
-    contents: string = 'random';
-    constructor(name:string, world:World, contents:string = 'random') {
+    contents = 'random';
+    constructor(name:string, world:World, contents = 'random') {
         super(name, world);
         this.contents = contents;
     }

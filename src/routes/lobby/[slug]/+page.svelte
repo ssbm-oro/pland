@@ -2,10 +2,7 @@
     import { page } from "$app/stores";
     import type World from "$lib/z3r/logic/World";
     import { onMount } from "svelte";
-    import Open from "$lib/z3r/logic/World/Open";
-    import Inverted from "$lib/z3r/logic/World/Inverted";
-    import Retro from "$lib/z3r/logic/World/Retro";
-    import Standard from "$lib/z3r/logic/World/Standard";
+    import WorldFactory from "$lib/z3r/logic/WorldFactory";
     import Plant from "$lib/components/Plant.svelte";
     import type { PageData} from './$types';
     import { invalidate } from "$app/navigation";
@@ -15,6 +12,7 @@
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
     import { Badge, List, ListItem, Card, Button, Alert } from "@brainandbones/skeleton"
     import Icon from "@iconify/svelte";
+import type Config from "$lib/z3r/logic/Config";
 
 
     export let data: PageData;
@@ -40,22 +38,9 @@
             selectedBottles = new Array(lobby.max_plants);
             plants = new Array(lobby.max_plants);
 
-            const selectedPresetData = await presets.get(lobby.preset) as any;
-            switch(selectedPresetData.settings.mode) {
-                case 'open':
-                    world = new Open(selectedPresetData.settings, logicTestMessages);
-                    break;
-                case 'inverted':
-                    world = new Inverted(selectedPresetData.settings, logicTestMessages);
-                    break;
-                case 'retro':
-                    world = new Retro(selectedPresetData.settings, logicTestMessages);
-                    break;
-                case 'standard':
-                default:
-                    world = new Standard(selectedPresetData.settings, logicTestMessages);
-                    break;
-            }
+            const {settings} = await presets.get(lobby.preset) as {settings: Config};
+            world = WorldFactory.createWorld(settings);
+
             if (userAsEntrant) {
                 selectedItems = userAsEntrant.plantedItems;
                 selectedLocations = userAsEntrant.plantedLocations;

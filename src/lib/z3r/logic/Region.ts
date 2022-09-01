@@ -60,7 +60,6 @@ export default class Region implements IRegion {
 
     canFill(item: IItem) {
         log(`Checking if ${item.name} can be go in Region ${this.name}.`);
-        let from_world = item.world_id;
 
         // TODO: Add wild dungeon items
         const dungeonItem = item as IDungeonItem
@@ -88,7 +87,7 @@ export default class Region implements IRegion {
 }
 
 export class Dungeon extends Region {
-    canPlaceBoss(region: Region, boss: Boss, level: string = 'top') {
+    canPlaceBoss(region: Region, boss: Boss, _level = 'top') {
         if (region.name != "Ice Palace" && region.world.config.weapons == 'swordless' && boss.name == "Kholdstare") {
             return false;
         }

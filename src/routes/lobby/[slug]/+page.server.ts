@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ( { params } ) => {
     const lobby = Lobbies.get(params.slug!);
 
     if (lobby !== undefined) {
-        return {lobby: lobby.lobby!};
+        return {lobby: lobby.lobby};
     }
     
     throw error(404);
@@ -19,10 +19,12 @@ export const DELETE: Action = async ( { params, locals } ) => {
     const user = fetchClientSession(locals.session.id)
     if (!user) throw error(403);
     
-    Lobbies.delete(params.slug!)
+    Lobbies.delete(params.slug)
 
     try {
         fs.rmSync(`lobbies/${params.slug}`);
     }
-    catch { }
+    finally {
+        //intentionally empty finally block
+    }
 }

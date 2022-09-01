@@ -3,7 +3,7 @@ import type { Action } from "@sveltejs/kit";
 import { error, redirect } from '@sveltejs/kit'
 
 export async function load() {
-    const lobbies = Array.from(Lobbies.values()).map(lobby => lobby.lobby!) ?? []
+    const lobbies = Array.from(Lobbies.values()).map(lobby => lobby.lobby) ?? []
     return { lobbies };
 }
 
