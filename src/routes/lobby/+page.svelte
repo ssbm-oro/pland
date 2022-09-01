@@ -57,7 +57,7 @@
     <Presets bind:selectedPreset bind:presets></Presets>
     <br/>
     <div class="flex flex-col sm:flex-row sm:justify-around">
-        <Menu select={true} open={false} class="self-center sm:self-auto">
+        <Menu select={true} open={false} class="self-center sm:self-auto" origin="tl">
             <Button slot="trigger" background="bg-accent-500">Max Entrants: {$maxPlayers}</Button>
             <Card slot="content" background="bg-surface-300/80 dark:bg-surface-700/80">
                 <List tag="nav" selected={maxPlayers}>
