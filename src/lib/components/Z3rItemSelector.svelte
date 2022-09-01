@@ -67,6 +67,9 @@
             break;
     }
 
+    export let selected = false;
+    $: selected = (!!Item && Item.name != "Random" && (!Item.name.toLowerCase().includes('bottle') || (!!Bottle && Bottle != 'unselected')))
+
     $: cardClass = hideBorder ? "max-w-fit sm:max-w-prose border border-solid border-accent-500" : "max-w-fit sm:max-w-prose border-none";
 </script>
 

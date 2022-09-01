@@ -111,6 +111,9 @@
     }
 
     $: cardClass = hideBorder ? "max-w-prose border border-solid border-accent-500" : "max-w-prose border-none";
+
+    export let selected = false;
+    $: selected = (!!Location && Location.name != "Random")
 </script>
 
 <Card class={cardClass}>
