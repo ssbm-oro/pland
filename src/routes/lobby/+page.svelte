@@ -83,7 +83,7 @@
     {#if loading_message === ''}
         <br/>
         <div class="flex flex-row justify-center">
-            <Button background="bg-accent-600 dark:bg-accent-800" on:click="{createLobby}" disabled="{!user}">Create Lobby</Button>
+            <Button background="bg-accent-600 dark:bg-accent-800" on:click={createLobby} disabled={!user || selectedPreset == ''}>Create Lobby</Button>
         </div>
     {:else}
         {loading_message}
