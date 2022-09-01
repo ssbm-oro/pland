@@ -25,7 +25,6 @@ import type Config from "$lib/z3r/logic/Config";
     let selectedLocations: ILocation[];
     let selectedBottles: string[];
     let world: World;
-    let logicTestMessages: string[] = [];
     let plants: Plant[];
 
     $: userInLobby = user ? lobby.entrants.some(entrant => entrant.discord_id == user!.id): undefined;

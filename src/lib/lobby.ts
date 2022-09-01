@@ -17,6 +17,7 @@ const readOnly = !!env.VERCEL_ENV;
 const preset_data = new Map(Object.entries(presets).map(entry => [entry[0].split('/').reverse()[0], entry[1]()]));
 
 export async function reloadLobbies() {
+    if (readOnly) return;
     if (Lobbies.size == 0) {
         if (fs.existsSync('lobbies')) {
             fs.readdirSync('lobbies').forEach(async lobbyFile => {
@@ -28,11 +29,6 @@ export async function reloadLobbies() {
 
                 Lobbies.set(lobby.slug, fullLobby);
             })
-        }
-        else {
-            if (!readOnly) {
-                fs.mkdirSync('lobbies');
-            }
         }
     }
 }
