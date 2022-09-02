@@ -18,7 +18,7 @@ export class NorthEast extends Region {
         ]);
         this.locations.setChecksForWorld(world);
 
-        this.prize = this.locations.get("Ganon")!;
+        this.prize = this.locations.get("Ganon");
         this.prize.setItem(Item.get("DefeatGanon", world)!);
     }
 
@@ -29,8 +29,8 @@ export class NorthEast extends Region {
 
         const pyramidRequirements = (locations: LocationCollection, items: ItemCollection) => {
             return items.has("Crystal5") && items.has("Crystal6")
-                && this.world.getRegion("South Dark World")!.canEnter(locations, items)
-                && ((items.has("MoonPearl") && items.has("Hammer"))
+                && (!!this.world.getRegion("South Dark World")?.canEnter(locations, items))
+                && items.has("MoonPearl") && (items.has("Hammer")
                     || (items.has("MagicMirror") && (items.has("DefeatAgahnim"))))
         }
 
