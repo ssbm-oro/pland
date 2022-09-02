@@ -15,7 +15,17 @@
     export let hideBorder = false;
 
     $: search = undefined as string | undefined;
-    $: itemsFiltered = items.filter(item => item.count && item.count > 0).filter(item => item.name.toLowerCase().includes(search ? search.toLowerCase(): ''))
+    $: itemsFiltered = items.filter(item => item.count && item.count > 0).filter(item => filterItemsBySearch(item, search))
+
+    function filterItemsBySearch(item: SelectedItem, search: string | undefined) {
+        if (search) {
+            const name = item.pretty_name || item.name;
+            const itemTokens: string[] = name.split(/[ ,-]+/).map(s => s.toLowerCase());
+            const searchTokens = search.split(/[ ,-]+/).map(s => s.toLowerCase());
+            return searchTokens.every(searchToken => itemTokens.some(itemToken => itemToken.includes(searchToken)));
+        }
+        return true;
+    }
 
     export function changeSelection() {
         $selectedItem = items[0]!.name;

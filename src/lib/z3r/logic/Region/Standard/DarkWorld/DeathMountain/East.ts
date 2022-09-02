@@ -21,11 +21,11 @@ export class East extends Region {
 
     public override initialize() {
         this.locations.get("Super Bunny Cave - Top")?.setRequirements((locations, items) => {
-            return items.has("Moon Pearl")
+            return items.has("MoonPearl")
         });
 
         this.locations.get("Super Bunny Cave - Bottom")?.setRequirements((locations, items) => {
-            return items.has("Moon Pearl")
+            return items.has("MoonPearl")
         });
 
         const hookshotCaveRequirements = (locations: LocationCollection, items: ItemCollection) => {

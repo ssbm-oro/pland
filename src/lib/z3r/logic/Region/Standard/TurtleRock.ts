@@ -77,7 +77,7 @@ export class TurtleRock extends Dungeon {
         this.locations.get("Turtle Rock - Roller Room - Right")?.setRequirements(rollerRoom);
 
         this.locations.get("Turtle Rock - Compass Chest")?.setRequirements((locations, items) => {
-            return items.has("Cane of Somaria") && upper(locations, items);
+            return items.has("CaneOfSomaria") && upper(locations, items);
         });
 
         this.locations.get("Turtle Rock - Big Chest")?.setRequirements((locations, items) => {

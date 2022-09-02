@@ -35,29 +35,29 @@ export class DesertPalace extends Dungeon {
         this.setPrizeLocation(this.locations.get("Desert Palace - Prize") as Prize);
 
 
-        this.locations.get("Desert Palace - Big Chest")!.setRequirements((_locations, items) => {
+        this.locations.get("Desert Palace - Big Chest").setRequirements((_locations, items) => {
             return items.has("BigKeyP2");
         });
 
-        this.locations.get("Desert Palace - Big Key Chest")!.setRequirements((_locations, items) => {
+        this.locations.get("Desert Palace - Big Key Chest").setRequirements((_locations, items) => {
             return items.has("KeyP2") && items.canKillMostThings(this.world);
         });
 
-        this.locations.get("Desert Palace - Compass Chest")!.setRequirements((_locations, items) => {
+        this.locations.get("Desert Palace - Compass Chest").setRequirements((_locations, items) => {
             return items.has("KeyP2");
         })
 
-        this.locations.get("Desert Palace - Torch")!.setRequirements((_locations, items) => {
-            return items.has('Pegasus Boots');
+        this.locations.get("Desert Palace - Torch").setRequirements((_locations, items) => {
+            return items.has('PegasusBoots');
         })
 
         this.can_complete = (locations, items) => {
-            return this.locations.get("Desert Palace - Boss")?.canAccess(items, locations)!;
+            return this.locations.get("Desert Palace - Boss").canAccess(items, locations);
         }
 
         this.locations.get("Desert Palace - Boss")!.setRequirements((locations, items) => {
             return ((this.canEnter(locations, items))
-                && ((items.canLiftRocks() || items.has('Magic Mirror') && this.world.getRegion('Mire')!.canEnter(locations, items)))
+                && ((items.canLiftRocks() || items.has('MagicMirror') && this.world.getRegion('Mire')!.canEnter(locations, items)))
                 && items.canLightTorches()
                 && items.has('BigKeyP2') && items.has('KeyP2')
                 && this.boss?.canBeat !== undefined && this.boss!.canBeat(items, locations))

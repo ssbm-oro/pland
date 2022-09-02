@@ -37,7 +37,7 @@
             if (locationTags.has(location.name)) {
                 locationTokens.push(...locationTags.get(location.name) || []);
             }
-            const searchTokens = search.split(/[ ,]+-/).map(s => s.toLowerCase());
+            const searchTokens = search.split(/[ ,-]+/).map(s => s.toLowerCase());
             return searchTokens.every(searchToken => locationTokens.some(locationToken => locationToken.includes(searchToken)));
         }
         return true;
@@ -139,8 +139,9 @@
                                 <svelte:fragment slot="lead">
                                     <Tooltip position="right">
                                         <svelte:fragment slot="message">
-                                            <div class="w-[200px] h-[200px]">
+                                            <div class="w-[200px] h-[200px] text-center">
                                                 <img src={getImageUrl(locationImages.get(location.name) || '')} alt="Screenshot of {location.name}">
+                                                {location.name}
                                             </div>
                                         </svelte:fragment>
                                         <svelte:fragment slot="content">
