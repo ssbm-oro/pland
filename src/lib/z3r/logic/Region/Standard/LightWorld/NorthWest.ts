@@ -61,8 +61,8 @@ export class NorthWest extends Region {
             return items.hasABottle();
         });
 
-        this.locations.get("Lumberjack Tree")?.setRequirements((_locations, items) => {
-            return items.has("DefeatAgahnim") && items.has("PegasusBoots");
+        this.locations.get("Lumberjack Tree")?.setRequirements((locations, items) => {
+            return items.canDefeatAgahnim(this.world) && items.has("PegasusBoots");
         });
 
         this.locations.get("Graveyard Ledge")?.setRequirements((locations, items) => {

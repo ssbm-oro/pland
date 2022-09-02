@@ -4,6 +4,7 @@ import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
 import type { ItemCollection } from "../../Support/ItemCollection";
+import { log } from "../../Logic";
 
 export class HyruleCastleTower extends Dungeon {
     override region_items = [
@@ -37,12 +38,14 @@ export class HyruleCastleTower extends Dungeon {
         });
 
         this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
+            `Checking if we can complete Castle Tower`
             return this.canEnter(locations, items) && items.has('KeyA1',2) && items.has('Lamp') && items.hasSword();
         }
 
         this.prize?.setRequirements(this.canComplete);
 
         this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
+            log(`Checking if we can enter Castle Tower`);
             return items.canKillMostThings(this.world, 8)
                 && items.has('RescueZelda')
                 && (items.has('Cape') || (items.hasSword(2)));

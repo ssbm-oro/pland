@@ -75,7 +75,7 @@ export default class World implements IWorld {
         const nonGtItems = items.diff(gtItems);
 
         log(`Checking if Aghanim1 is defeatable.`)
-        if (this.getRegion('Hyrule Castle Tower')?.canComplete(this.locations, nonGtItems)) {
+        if (nonGtItems.canDefeatAgahnim(this)) {
             log(`Determined that Agahnim1 is defeatable.`)
             nonGtItems.addItem(Item.get('DefeatAgahnim',this)!)
         }

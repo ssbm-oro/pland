@@ -2,6 +2,7 @@ import type { IItem } from "../Item";
 import { log } from "../Logic";
 import type World from "../World";
 import { Collection } from "./Collection";
+import { LocationCollection } from "./LocationCollection";
 
 export class ItemCollection extends Collection {
     override items: Map<string, IItem> = new Map();
@@ -13,7 +14,7 @@ export class ItemCollection extends Collection {
     }
 
     clone(): ItemCollection {
-        let items_clone = new ItemCollection([]);
+        const items_clone = new ItemCollection([]);
         this.items.forEach(item => {
             for (let i = 0; i < this.item_counts.get(item.name)!; i++) {
                 items_clone.addItem(item as IItem)
@@ -103,7 +104,8 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
     //     return merged;
     // }
 
-    public canKillMostThings(world:World, enemies: number = 5, messages: string[]|null = null): boolean {
+    public canKillMostThings(world:World, enemies = 5): boolean {
+        log(`Checking if we can kill at least ${enemies} enemies`);
         return this.hasSword()
             || this.has('CaneOfSomaria')
             || (this.canBombThings() && enemies < 6
@@ -131,6 +133,7 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
     }
 
     public canShootArrows(world: World, min_level = 1): boolean{
+        log(`Checking if we can shoot arrows`);
         switch(min_level) {
             case 2:
                 return this.has('BowAndSilverArrows')
@@ -147,7 +150,7 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
         }
     }
 
-    public hasSword(min_level: number = 1): boolean {
+    public hasSword(min_level = 1): boolean {
         log(`Checking if we have at least a Level ${min_level} Sword`);
         switch(min_level) {
             case 4:
@@ -199,14 +202,14 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
     public canActivateOcarina(world: World): boolean {
         if (world.inverted) {
             log(`Checking if activate ocarina inverted: MoonPearl: ${this.has('MoonPear')}, DefeatAgahnim: ${this.has('DefeatAgahnim')}, Hammer: ${this.has('Hammer')}`)
-            return this.has('MoonPearl') && (this.has('DefeatAgahnim') || ((this.has('Hammer') && this.canLiftRocks()) || (this.canLiftDarkRocks())));
+            return this.has('MoonPearl') && (this.canDefeatAgahnim(world) || ((this.has('Hammer') && this.canLiftRocks()) || (this.canLiftDarkRocks())));
         }
         return true;
     }
 
-    public canExtendMagic(world?: World, bars:number = 2): boolean {
-        let baseMagic = (this.has('QuarterMagic') ? 4 : (this.has('HalfMagic') ? 2 : 1));
-        let bottleMagic = baseMagic * this.bottleCount();
+    public canExtendMagic(world?: World, bars = 2): boolean {
+        const baseMagic = (this.has('QuarterMagic') ? 4 : (this.has('HalfMagic') ? 2 : 1));
+        const bottleMagic = baseMagic * this.bottleCount();
         return baseMagic + bottleMagic >= bars;
     }
 
@@ -229,5 +232,10 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
         })
 
         return crystals;
+    }
+
+    public canDefeatAgahnim(world: World): boolean {
+        log(`Checking if we have or can defeat Agahnim.`)
+        return this.has('DefeatAgahnim') || world.getRegion('Hyrule Castle Tower')?.canComplete(new LocationCollection([]), this) || false;
     }
 }

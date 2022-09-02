@@ -31,15 +31,15 @@ export class NorthEast extends Region {
             return items.has("Crystal5") && items.has("Crystal6")
                 && (!!this.world.getRegion("South Dark World")?.canEnter(locations, items))
                 && items.has("MoonPearl") && (items.has("Hammer")
-                    || (items.has("MagicMirror") && (items.has("DefeatAgahnim"))))
+                    || (items.has("MagicMirror") && (items.canDefeatAgahnim(this.world))))
         }
 
         this.locations.get("Pyramid Fairy - Left")?.setRequirements(pyramidRequirements);
         this.locations.get("Pyramid Fairy - Right")?.setRequirements(pyramidRequirements);
 
-        this.can_enter = (_locations, items) => {
+        this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
-                && (items.has("DefeatAgahnim")
+                && (items.canDefeatAgahnim(this.world)
                     || (items.has("Hammer") && items.canLiftRocks() && items.has("MoonPearl"))
                     || (items.canLiftDarkRocks() && items.has("MoonPearl") && (items.has("Hammer") || items.has("Flippers"))))
         }
