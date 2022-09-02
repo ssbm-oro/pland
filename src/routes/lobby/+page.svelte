@@ -95,7 +95,7 @@
         {#if user}
             <SlideToggle bind:checked={filterOnlyUser} size='sm' class="mr-4">Only My Lobbies</SlideToggle>
         {/if}
-        <Button class="mr-4" variant="ring-primary" on:click={refreshLobbies}>
+        <Button class="mr-4" variant="ring-primary" on:click={refreshLobbies} label="Refresh">
             <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
         </Button>
     </div>

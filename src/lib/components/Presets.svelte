@@ -10,7 +10,7 @@ export let selectedPreset :string;
 
 <div>
     {#if presets.length > 0}
-        <select bind:value="{selectedPreset}" on:change>
+        <select bind:value="{selectedPreset}" on:change label="Presets">
             {#each presets as preset}
                 <option value="{preset}">{preset}</option>
             {/each}

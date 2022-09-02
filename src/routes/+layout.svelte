@@ -24,7 +24,10 @@
         if (res.status == 200)
         {
 			// refresh the user's token every 5 minutes while they are still using the app
-			intervalId = setInterval(async () => await fetch('/api/user/refreshSession', {method: 'POST'}), 1000 * 60 * 5);
+			intervalId = setInterval(async () => {
+				const {ok} = await fetch('/api/user/refreshSession', {method: 'POST'});
+				if (!ok) logout()
+			}, 1000 * 60 * 5);
         }
 
 		return {
@@ -43,6 +46,10 @@
 </script>
 
 <svelte:head>
+	<meta name="title" content="pland | A Link to the Past Plandomizer">
+	<meta name="description" content={`pland is a tool for creating ALTTPR plando seeds,
+		a competitive mode for ALTTPR where players have the option to secretly plant several
+		items before the seed is randomized.`}>
 	<meta property="og:type" content="pland">
 	<meta property="og:url" content={$page.url.toString()}>
 	<meta property="og:title" content="pland | A Link to the Past Plandomizer">
