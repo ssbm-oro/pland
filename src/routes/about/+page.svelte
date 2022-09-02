@@ -45,10 +45,15 @@
     the submit button or the check plants button. The process for checking a list of
     plants is the follows: We start off with a full inventory and a world with
     all empty locations. We go through each item, and see 1. can it go in the assigned
-    location? (this test should always pass, unless the user something naughty) 2.
+    location? (this test should always pass, unless the user does something naughty) 2.
     Put the item in the location and remove it from our inventory. Check to see if
     we can still access the location. 3. Once we've placed all the items successfully,
     we then check to see if the Medallions are placeable, whether Aga1 is beatable,
     how many crystals are obtainable without entering GT, and how many pendants are
     placeable without accessing the Master Sword Pedestal.
+</p>
+<p>
+    This app doesn't actually roll the seeds itself, it just checks the logic
+    of the plants against each other. The plants will then be sent to the alttpr.com
+    customizer, which will actually roll the rest of the seed.
 </p>
