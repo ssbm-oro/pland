@@ -2989,7 +2989,7 @@
                 "icon":"bx:key",
                 "color":"#da0"
             },
-            "pretty_name": "Hyrule Castle Big Key"
+            "pretty_name": "Hyrule Castle Small Key"
         },
         {
             "value": "KeyH1:1",
@@ -3023,7 +3023,7 @@
                 "icon":"bx:key",
                 "color":"#da0"
             },
-            "pretty_name": "Hyrule Castle Small Key"
+            "pretty_name": "Castle Tower Small Key"
         },
         {
             "value": "KeyD2:1",
@@ -3100,7 +3100,7 @@
                 "icon":"bx:key",
                 "color":"#da0"
             },
-            "pretty_name": "Thieves Town Big Key"
+            "pretty_name": "Thieves Town Small Key"
         },
         {
             "value": "KeyD7:1",
@@ -3111,7 +3111,7 @@
                 "icon":"bx:key",
                 "color":"#da0"
             },
-            "pretty_name": "Turtle Rock Big Key"
+            "pretty_name": "Turtle Rock Small Key"
         },
         {
             "value": "KeyA2:1",
@@ -3122,7 +3122,7 @@
                 "icon":"bx:key",
                 "color":"#da0"
             },
-            "pretty_name": "Ganon's Tower Big Key"
+            "pretty_name": "Ganon's Tower Small Key"
         }
     ],
     "prizes": [
