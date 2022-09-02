@@ -99,12 +99,14 @@
                         <List tag="nav" selected={selectedBottle} class="max-h-[420px] overflow-y-auto">
                             {#each Object.entries(BottleContents) as contents}
                                 {@const content = contents[1]}
-                                <ListItem value={content.value}>
-                                    <svelte:fragment slot="lead">
-                                        <Icon icon={content.icon} color={content.color} width={6*scale} height={6*scale}></Icon>
-                                    </svelte:fragment>
-                                    {contents[1].name}
-                                </ListItem>
+                                <div class="group">
+                                    <ListItem value={content.value}>
+                                        <svelte:fragment slot="lead">
+                                            <Icon class="transition-transform group-hover:scale-125" icon={content.icon} color={content.color} width={6*scale} height={6*scale}></Icon>
+                                        </svelte:fragment>
+                                        {contents[1].name}
+                                    </ListItem>
+                                </div>
                             {/each}
                             <div class="hidden"><ListItem value="unselected">Unselected</ListItem></div>
                         </List>
