@@ -56,8 +56,8 @@
 	<Drawer visible={drawer} fixed="left">
 
 	<svelte:fragment slot="header">
-		<div class="fixed top-1.5 left-1.5 right-1.5">
-			<div class="grid grid-flow-col grid-cols-3">
+		<div class="fixed top-0 left-0 right-0 bg-surface-50 dark:bg-surface-900 z-10">
+			<div class="grid grid-flow-col grid-cols-3 p-1.5">
 				<div class="p"><a href="/"><GradientHeading tag="h3">pland</GradientHeading></a></div>
 				<div class="grid grid-row-1 content-center justify-center"><LightSwitch /></div>
 				<div class="grid grid-row-1 justify-end">
@@ -67,8 +67,8 @@
 						Login
 					</Button>
 				{:else}
-					<!-- origin="tl" for now because 'auto' appears to be broken. TODO -->
-					<Menu origin="tl">
+					<!-- origin="tr" for now because 'auto' appears to be broken. TODO -->
+					<Menu origin="tr">
 						<DiscordAvatar slot="trigger" user={user} size="md" hover={true}></DiscordAvatar>
 						<Card slot="content">
 							<Button variant="ring-accent" on:click={logout}>Logout</Button>
@@ -81,34 +81,36 @@
 		</div>
 	</svelte:fragment>
 	<svelte:fragment slot="main">
-		<div class="absolute top-16">
-			<List tag="nav" separator="|">
-				<ListItem href="/">
-					<svelte:fragment slot="lead">
-						<Icon icon="heroicons-solid:home" />
-					</svelte:fragment>
-					Home
-				</ListItem>
-				<ListItem href="/lobby">
-					<svelte:fragment slot="lead">
-						<Icon icon="fluent:conference-room-24-filled" />
-					</svelte:fragment>
-					Lobbies
-				</ListItem>
-				<ListItem href="/logictest">
-					<svelte:fragment slot="lead">
-						<Icon icon="mdi:test-tube" />
-					</svelte:fragment>
-					Logic Test
-				</ListItem>
-				<ListItem href="/about">
-					<svelte:fragment slot="lead">
-						<Icon icon="akar-icons:info-fill" />
-					</svelte:fragment>
-					About
-				</ListItem>
-			</List>
-			<img src="/under-construction.gif" alt="Under Construction">
+		<div class="relative">
+			<div class="absolute top-16 overflow-y-auto">
+				<List tag="nav">
+					<ListItem href="/">
+						<svelte:fragment slot="lead">
+							<Icon icon="heroicons-solid:home" />
+						</svelte:fragment>
+						Home
+					</ListItem>
+					<ListItem href="/lobby">
+						<svelte:fragment slot="lead">
+							<Icon icon="fluent:conference-room-24-filled" />
+						</svelte:fragment>
+						Lobbies
+					</ListItem>
+					<ListItem href="/logictest">
+						<svelte:fragment slot="lead">
+							<Icon icon="mdi:test-tube" />
+						</svelte:fragment>
+						Logic Test
+					</ListItem>
+					<ListItem href="/about">
+						<svelte:fragment slot="lead">
+							<Icon icon="akar-icons:info-fill" />
+						</svelte:fragment>
+						About
+					</ListItem>
+				</List>
+				<img src="/under-construction.gif" alt="Under Construction">
+			</div>
 		</div>
 	</svelte:fragment>
 

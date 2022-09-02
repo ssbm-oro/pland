@@ -71,7 +71,7 @@
                 </List>
             </Card>
         </Menu>
-        <div class="self-center mt-4 sm:mt-0 sm:self-auto">
+        <div class="self-center mt-4 sm:mt-0 sm:self-auto whitespace-normal text-center">
             Num Plants: 
             <RadioGroup selected="{numPlants}" background="bg-accent-500">
                 <RadioItem value={1}>One</RadioItem>
@@ -109,7 +109,7 @@
                 <div class="grow">
                 <ListItem href='lobby/{lobby.slug}' tabindex={i}>
                     <div class="grid grid-rows-1 justify-start h-8 grow">
-                        <p class="whitespace-normal">{lobby.slug}</p>
+                        <p class="whitespace-normal text-xs sm:text-base place-content-stretch">{lobby.slug}</p>
                         <span class="hidden sm:block sm:absolute sm:right-[36%] md:left-[36%] grow pr-4">
                             <p>{lobby.preset}</p>
                         </span>
@@ -123,7 +123,7 @@
                                     {/each}
                                 </div>
                             </div>
-                            <p class="sm:hidden md:block">{lobby.entrants.length} / {lobby.max_entrants} entrants</p>
+                            <p class="hidden md:block">{lobby.entrants.length} / {lobby.max_entrants} entrants</p>
                         </div>
                     </svelte:fragment>
                 </ListItem>

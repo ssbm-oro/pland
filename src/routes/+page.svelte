@@ -29,5 +29,5 @@
             <img src='{discord_avatar_uri.replace('$userid', user.id).replace('$useravatar',user.avatar)}' alt="{user.username}'s avatar"/>
         {/if}
     {/if}
-    <p>This website is best viewed in a resolution of 640x480 or greater. 56k modems are not supported at this time.</p>
+    <p>This website is best viewed in a resolution of 320x240 or greater. 56k modems are not supported at this time.</p>
 </div>
