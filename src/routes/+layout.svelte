@@ -45,7 +45,7 @@
 <svelte:head>
 	<meta property="og:type" content="pland">
 	<meta property="og:url" content={$page.url.toString()}>
-	<meta property="og:title" content="Pland | A Link to the Past Plandomizer">
+	<meta property="og:title" content="pland | A Link to the Past Plandomizer">
 	<meta property="og:description" content={`pland is a tool for creating ALTTPR plando seeds,
 		a competitive mode for ALTTPR where players have the option to secretly plant several
 		items before the seed is randomized.`}>
@@ -58,7 +58,7 @@
 	<svelte:fragment slot="header">
 		<div class="fixed top-1.5 left-1.5 right-1.5">
 			<div class="grid grid-flow-col grid-cols-3">
-				<div><a href="/"><GradientHeading tag="h3">pland</GradientHeading></a></div>
+				<div class="p"><a href="/"><GradientHeading tag="h3">pland</GradientHeading></a></div>
 				<div class="grid grid-row-1 content-center justify-center"><LightSwitch /></div>
 				<div class="grid grid-row-1 justify-end">
 				{#if !user}
