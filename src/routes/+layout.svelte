@@ -9,6 +9,7 @@
 	import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
 	import { invalidateAll } from "$app/navigation";
     import { discord_login_uri } from '$lib/Discord/DiscordClient'
+	import { page } from '$app/stores'
 
     export let data: LayoutData;
     $: user = data.user;
@@ -40,6 +41,16 @@
 		await invalidateAll();
 	}
 </script>
+
+<svelte:head>
+	<meta property="og:type" content="pland">
+	<meta property="og:url" content={$page.url.toString()}>
+	<meta property="og:title" content="Pland | A Link to the Past Plandomizer">
+	<meta property="og:description" content={`pland is a tool for creating ALTTPR plando seeds,
+		a competitive mode for ALTTPR where players have the option to secretly plant several
+		items before the seed is randomized.`}>
+	<meta property="og:image" content={`${$page.url.origin}/poster.png`}>
+</svelte:head>
 
 <main>
 	<Drawer visible={drawer} fixed="left">
