@@ -133,21 +133,23 @@
                 <div class="max-h-96 overflow-y-scroll">
                 {#each locationsFiltered as location, i }
                     {#if location.class == 'items'}
-                        <ListItem class="justify-start" value={location.name} tabindex={i}>
-                            <span class="whitespace-normal">{location.name}</span>
-                            <svelte:fragment slot="lead">
-                                <Tooltip position="right">
-                                    <svelte:fragment slot="message">
-                                        <div class="w-[200px] h-[200px]">
-                                            <img src={getImageUrl(locationImages.get(location.name) || '')} alt="Screenshot of {location.name}">
-                                        </div>
-                                    </svelte:fragment>
-                                    <svelte:fragment slot="content">
-                                        <img src={getImageUrl(locationImages.get(location.name) || '')} class="overflow-visible" alt="Screenshot of {location.name}" height="48" width="48">
-                                    </svelte:fragment>
-                                </Tooltip>
-                            </svelte:fragment>
-                        </ListItem>
+                        <div class="group">
+                            <ListItem class="justify-start" value={location.name} tabindex={i}>
+                                <span class="whitespace-normal">{location.name}</span>
+                                <svelte:fragment slot="lead">
+                                    <Tooltip position="right">
+                                        <svelte:fragment slot="message">
+                                            <div class="w-[200px] h-[200px]">
+                                                <img src={getImageUrl(locationImages.get(location.name) || '')} alt="Screenshot of {location.name}">
+                                            </div>
+                                        </svelte:fragment>
+                                        <svelte:fragment slot="content">
+                                            <img src={getImageUrl(locationImages.get(location.name) || '')} class="overflow-visible transition-transform group-hover:scale-125" alt="Screenshot of {location.name}" height="48" width="48">
+                                        </svelte:fragment>
+                                    </Tooltip>
+                                </svelte:fragment>
+                            </ListItem>
+                        </div>
                     {/if}
                 {/each}
                 </div>

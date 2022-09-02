@@ -116,10 +116,10 @@
     <input type="search" placeholder="Select an item..." bind:value={search} on:keypress={selectOnEnter}>
         <List tag="nav" selected={selectedItem} class="max-h-96 overflow-y-auto">
             {#each itemsFiltered as item (item.value)}
-                <div>
+                <div class="group">
                     <ListItem value={item.name}>
                         <svelte:fragment slot="lead">
-                            <Icon icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} width={6*scale} height={6*scale}></Icon>
+                            <Icon class="transition-transform group-hover:scale-125" icon={item.icon?.icon} color={item.icon?.color} hFlip={item.icon?.hFlip} width={6*scale} height={6*scale}></Icon>
                         </svelte:fragment>
                         <span class="whitespace-normal">{item.pretty_name || item.name}</span>
                     </ListItem>
