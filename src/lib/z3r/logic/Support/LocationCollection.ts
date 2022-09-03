@@ -1,8 +1,9 @@
 import type { IItem } from "../Item";
 import type { ILocation, Z3rLocation as Z3rLocation } from "../Location";
+import { log } from "../Logic";
 import type { IRegion } from "../Region";
 import type World from "../World";
-import { Collection, type Entry } from "./Collection";
+import { Collection } from "./Collection";
 import { ItemCollection } from "./ItemCollection";
 
 export class LocationCollection extends Collection {
@@ -38,36 +39,39 @@ export class LocationCollection extends Collection {
         return this.filter(location => { return ((location as Z3rLocation).hasItem()); }) 
     }
 
-    public itemInLocations(item: IItem, LocationKeys: string[], count: number = 1) {
-        LocationKeys.forEach(locationKey => {
-            if ((this.items.get(locationKey) as Z3rLocation).hasItem(item)) {
-                count--;
-            }
+    public itemInLocations(item: IItem, locationKeys: string[]) {
+        log(`Checking if ${item.name} is in one of these locations:`, ...locationKeys)
+        const locations = locationKeys.map(key => this.items.get(key) as Z3rLocation);
+        
 
-        });
-        return count < 1;
+        if(locations.some(location => location.hasItem(item))) {
+            log(`${item.name} is in ${locations.filter(location => location.hasItem(item))[0]?.name}.`)
+            return true;
+        }
+
+        return false;
     }
 
     public getItems(world: World) {
-        const item_array: IItem[] = Array();
+        const item_array: IItem[] = [];
 
         this.items.forEach(entry => {
-            let Z3rLocation = entry as Z3rLocation;
+            const Z3rLocation = entry as Z3rLocation;
             const item = Z3rLocation.item;
             if ((item) && (world) && (item.world_id == world.id)) {
                 item_array.push(item as IItem);
             }
         });
-        let ret = new ItemCollection(item_array);
+        const ret = new ItemCollection(item_array);
         ret.setChecksForWorld(world);
         return ret;
     }
 
     public getRegions() {
-        let regions: IRegion[] = [];
+        const regions: IRegion[] = [];
 
         this.items.forEach(entry => {
-            let location = entry as Z3rLocation;
+            const location = entry as Z3rLocation;
             if (!regions.includes(location.region)) {
                 regions.push(location.region);
             }
@@ -89,8 +93,8 @@ export class LocationCollection extends Collection {
             return this;
         }
 
-        let items1 = this.items as Map<string, Z3rLocation>;
-        let items2 = locations.items as Map<string, Z3rLocation>;
+        const items1 = this.items as Map<string, Z3rLocation>;
+        const items2 = locations.items as Map<string, Z3rLocation>;
 
         return new  LocationCollection([...items1.values(), ...items2.values()]);
     }
@@ -104,7 +108,7 @@ export class LocationCollection extends Collection {
     }
 
     public toJSON() {
-        let locations = Array();
+        const locations: { name: string; region: { name: string; }; item: IItem | null; }[] = [];
         this.items.forEach(location => {
             locations.push(location.toJSON());
         })

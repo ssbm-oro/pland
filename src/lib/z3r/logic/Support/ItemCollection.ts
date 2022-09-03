@@ -27,7 +27,7 @@ export class ItemCollection extends Collection {
     }
 
     public override addItem(item: IItem) {
-        let count = this.item_counts.get(item.name) || 0;
+        const count = this.item_counts.get(item.name) || 0;
 
         this.item_counts.set(item.name, count+1);
         this.items.set(item.name, item);
@@ -40,7 +40,7 @@ export class ItemCollection extends Collection {
             return this;
         }
 
-        let count = this.item_counts.get(item.name)! - 1;
+        const count = this.item_counts.get(item.name)! - 1;
         if (count == 0) {
             this.items.delete(item.name);
             this.item_counts.delete(item.name);
@@ -74,7 +74,7 @@ export class ItemCollection extends Collection {
         return difference;
     }
 
-    public override has(key: string, count: number = 1) {
+    public override has(key: string, count = 1) {
         log(`checking if we have at least ${count} of ${key} item.`);
         log(`Do we have a ${key}?: ${this.items.has(key)}, Do we have a count of ${key}: ${this.item_counts.has(key)}, the count of ${key}: ${this.item_counts.get(key)!}`);
 

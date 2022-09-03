@@ -38,7 +38,6 @@ export class Z3rLocation implements ILocation {
         const oldItem = this.item;
         this.setItem(newItem);
         if (this.canFill(newItem, items, check_access)) {
-            // Item.items?.addItem(newItem); TODO - do i need this line?
             return true;
         }
 
@@ -60,19 +59,8 @@ export class Z3rLocation implements ILocation {
         this.fill_callback = fill_callback;
     }
 
-    public canFill(newItem: IItem, items: ItemCollection, check_access = true, plants: LocationCollection = new LocationCollection([])) {
+    public canFill(newItem: IItem, items: ItemCollection, check_access = true) {
         if (this.isCrystalPendant && !Item.isPrize(newItem)) return false;
-        if (check_access) {
-            items = items.clone();
-
-            plants.filter(location => location.canAccess(items)).forEach(accessible => {
-                const accessible_item = (accessible as Z3rLocation).item;
-                if ((accessible as Z3rLocation).region.canEnter(this.region.world.locations, items) && accessible_item) {
-                    log(`${accessible.name} is accessible so adding ${accessible_item.name}`);
-                    items.addItem(accessible_item);
-                }
-            });
-        }
 
         const oldItem = this.item;
         this.item = newItem;
@@ -106,7 +94,8 @@ export class Z3rLocation implements ILocation {
     }
 
     public hasItem(item: IItem | null = null) {
-        return item ? this.item == item : this.item !== null;
+        if (!!item && !!this.item) log(`checking if ${this.name}, which has: ${this.item?.name} is equal to ${item?.name}`)
+        return item ? this.item?.name == item.name : this.item !== null;
     }
 
     public getName() {

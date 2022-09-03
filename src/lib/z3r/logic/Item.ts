@@ -25,7 +25,7 @@ export default class Item implements IItem {
         return this.name + ':' + this.world_id;
     }
 
-    private static items: ItemCollection;
+    public static items: ItemCollection;
 
     public static allItems(world: World) {
         if (Item.items) return Item.items;

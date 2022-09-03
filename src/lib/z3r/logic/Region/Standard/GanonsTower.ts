@@ -122,7 +122,7 @@ export class GanonsTower extends Region {
 
         this.locations.get("Ganon's Tower - Randomizer Room - Top Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return leftGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
                     "Ganon's Tower - Randomizer Room - Bottom Right",
@@ -131,7 +131,7 @@ export class GanonsTower extends Region {
 
         this.locations.get("Ganon's Tower - Randomizer Room - Top Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return leftGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
                     "Ganon's Tower - Randomizer Room - Bottom Right",
@@ -140,7 +140,7 @@ export class GanonsTower extends Region {
 
         this.locations.get("Ganon's Tower - Randomizer Room - Bottom Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return leftGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Bottom Right",
@@ -149,7 +149,7 @@ export class GanonsTower extends Region {
 
         this.locations.get("Ganon's Tower - Randomizer Room - Bottom Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return leftGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
@@ -158,7 +158,7 @@ export class GanonsTower extends Region {
 
         this.locations.get("Ganon's Tower - Firesnake Room")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return leftGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Randomizer Room - Top Left",
                     "Ganon's Tower - Randomizer Room - Top Right",
                     "Ganon's Tower - Randomizer Room - Bottom Left",
@@ -182,22 +182,22 @@ export class GanonsTower extends Region {
                 (leftGtRequirements(locations,items) || rightGtRequirements(locations,items));
         });
 
-        this.locations.get("Ganon's Tower - Tile Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Ganon's Tower - Tile Chest")?.setRequirements((_locations, items) => {
             return items.has('CaneOfSomaria');
         })
 
         this.locations.get("Ganon's Tower - Compass Room - Top Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return rightGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (items.has('KeyA2', 4) || !items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Compass Room - Top Right",
                     "Ganon's Tower - Compass Room - Bottom Left",
                     "Ganon's Tower - Compass Room - Bottom Right",
-                ]) && items.has('KeyA2', 3) || items.has('KeyA2', 4));
+                ]) && items.has('KeyA2', 3));
         });
 
         this.locations.get("Ganon's Tower - Compass Room - Top Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return rightGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Compass Room - Top Left",
                     "Ganon's Tower - Compass Room - Bottom Left",
                     "Ganon's Tower - Compass Room - Bottom Right",
@@ -206,7 +206,7 @@ export class GanonsTower extends Region {
 
         this.locations.get("Ganon's Tower - Compass Room - Bottom Left")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return rightGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Compass Room - Top Left",
                     "Ganon's Tower - Compass Room - Top Right",
                     "Ganon's Tower - Compass Room - Bottom Right",
@@ -215,7 +215,7 @@ export class GanonsTower extends Region {
 
         this.locations.get("Ganon's Tower - Compass Room - Bottom Right")?.setRequirements((locations: LocationCollection, items: ItemCollection) => {
             return rightGtRequirements(locations, items)
-                && (locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
+                && (!items.has('BigKeyA2') || locations.itemInLocations(Item.get('BigKeyA2', this.world)!, [
                     "Ganon's Tower - Compass Room - Top Left",
                     "Ganon's Tower - Compass Room - Top Right",
                     "Ganon's Tower - Compass Room - Bottom Left",

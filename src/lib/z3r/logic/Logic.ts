@@ -63,8 +63,6 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                 break;
             }
 
-            available.removeItem(item);
-
             // if another item is in logic, we can get use it to plant this item
             const availablePlants: IItem[] = []
             planted.forEach(location => {
@@ -73,8 +71,9 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                     availablePlants.push(location.item!);
                 }
             });
+            available.removeItem(item);
 
-            plantable = plantable && location.canFill(item, available, true, planted)!;
+            plantable = plantable && location.canFill(item, available, true);
 
             // remove the planted items for next iteration
             availablePlants.forEach(item => {
@@ -125,6 +124,6 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
 
 let messages: string[] = [];
 
-export function log(message: string) {
-    messages.push(message);
+export function log(...newMessages: string[]) {
+    messages.push(...newMessages);
 }
