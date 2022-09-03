@@ -50,6 +50,7 @@ export default class World implements IWorld {
 
     resetPlants() {
         this.locations.LocationsWithItem().forEach(location => {
+            log(`removing ${location.item?.name} from ${location.name}`)
             this.locations.get(location.name)!.removeItem();
         });
     }

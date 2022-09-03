@@ -49,6 +49,14 @@ export class LocationCollection extends Collection {
             return true;
         }
 
+        // const randoLocation = locations[Math.floor(Math.random() * locations.length)];
+        // if (randoLocation) {
+        //     log(`randomly chose ${randoLocation?.name} to place ${item.name}`)
+        //     items.removeItem(item);
+        //     return randoLocation.fill(item, items);
+        // }
+
+        log(`${item.name} was not in them.`)
         return false;
     }
 
@@ -81,6 +89,7 @@ export class LocationCollection extends Collection {
     }
 
     public LocationsWithItem(item?: IItem) {
+        log(`Found ${this.filter(location => { return (location as Z3rLocation).hasItem(item); }).length} locations with items`)
         return this.filter(location => { return (location as Z3rLocation).hasItem(item); })
     }
 

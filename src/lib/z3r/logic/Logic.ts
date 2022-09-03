@@ -1,5 +1,5 @@
 import Item, { type IItem } from "./Item";
-import type { ILocation } from "./Location";
+import type { ILocation, Z3rLocation } from "./Location";
 import { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
 import type World from "./World";
@@ -63,12 +63,15 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                 break;
             }
 
+            log(...planted.to_array().map(location => `${location.item?.name} is planted at ${location.name}`))
+
             // if another item is in logic, we can get use it to plant this item
-            const availablePlants: IItem[] = []
-            planted.forEach(location => {
+            const availableItems: IItem[] = []
+            planted.LocationsWithItem().forEach(location => {
+                log(`checking if ${location.name} can be accessed to get ${location.item?.name}`)
                 if (location.canAccess(available, planted)) {
                     available.addItem(location.item!);
-                    availablePlants.push(location.item!);
+                    availableItems.push(location.item!);
                 }
             });
             available.removeItem(item);
@@ -76,7 +79,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             plantable = plantable && location.canFill(item, available, true);
 
             // remove the planted items for next iteration
-            availablePlants.forEach(item => {
+            availableItems.forEach(item => {
                 available.removeItem(item);
             })
 
@@ -88,6 +91,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                 if (location.fill(item, available)) {
                     log(`Planted ${item.name} at ${location.name}.`)
                     planted.addItem(location);
+
                 }
                 else {
                     log(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
@@ -98,13 +102,14 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
         if (plantable) {
 
             // We already checked and saw we can plant them? Surely that means we can access them...
-            // planted.to_array().map(location => location as Z3rLocation).forEach(location => {
-            //     if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
-            //         available.addItem(location.item);
-            //     }
-            // });
+            planted.to_array().map(location => location as Z3rLocation).forEach(location => {
+                if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
+                    log(`${location.name} is accessible so adding ${location.item.name} to available items`)
+                    available.addItem(location.item);
+                }
+            });
 
-            planted.forEach(location => available.addItem(location.item!))
+            // planted.forEach(location => available.addItem(location.item!))
 
             plantable &&= world.canPlaceMedallions(available);
             plantable &&= world.canPlaceBosses();

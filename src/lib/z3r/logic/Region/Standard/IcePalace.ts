@@ -43,18 +43,33 @@ export class IcePalace extends Dungeon {
     public override initialize() {
         this.locations.get("Ice Palace - Big Key Chest")?.setRequirements((locations, items) => {
             return items.has('Hammer') && items.canLiftRocks()
-            && ((items.has('Hookshot') || items.has('ShopKey') || (items.has('KeyD5', 1) && (!items.has('BigKeyD5') || locations.itemInLocations(Item.get('BigKeyD5', this.world,)!, ["Ice Palace - Map Chest", "Ice Palace - Spike Room"])))));
+            && (items.has('Hookshot') || items.has('ShopKey')
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, 
+                ['Ice Palace - Spike Room','Ice Palace - Map Chest']))));
         });
 
         this.locations.get("Ice Palace - Map Chest")?.setRequirements((locations, items) => {
             return items.has('Hammer') && items.canLiftRocks()
-            && ((items.has('Hookshot') || items.has('ShopKey')
-                || (items.has('KeyD5', 1) && (!items.has('BigKeyD5') || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, ["Ice Palace - Big Key Chest", "Ice Palace - Spike Room"])))));
+            && (items.has('Hookshot') || items.has('ShopKey')
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, 
+                ['Ice Palace - Big Key Chest','Ice Palace - Spike Room']))));
         });
 
         this.locations.get("Ice Palace - Spike Room")?.setRequirements((locations, items) => {
-            return ((items.has('Hookshot') || items.has('ShopKey') || (items.has('KeyD5', 1) && (!items.has('BigKeyD5') || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, ["Ice Palace - Big Key Chest", "Ice Palace - Map Chest"])))));
+            return (items.has('Hookshot') || items.has('ShopKey')
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, 
+                ['Ice Palace - Big Key Chest','Ice Palace - Map Chest']))));
         });
+
+
+
+
+        
+
+
+
+
+
 
         this.locations.get("Ice Palace - Freezor Chest")?.setRequirements((_locations, items) => {
             return items.canMeltThings(this.world);
