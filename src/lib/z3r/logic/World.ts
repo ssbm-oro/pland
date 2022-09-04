@@ -1,7 +1,7 @@
 
 import { ItemCollection } from "./Support/ItemCollection";
 import { LocationCollection } from "./Support/LocationCollection";
-import Item from "./Item";
+import Item, { Event } from "./Item";
 import type { Z3rLocation } from "./Location";
 import type  Config from "./Config";
 import type { IRegion } from "./Region";
@@ -50,6 +50,7 @@ export default class World implements IWorld {
 
     resetPlants() {
         this.locations.LocationsWithItem().forEach(location => {
+            if ((location.item as Event).event) return;
             log(`removing ${location.item?.name} from ${location.name}`)
             this.locations.get(location.name)!.removeItem();
         });

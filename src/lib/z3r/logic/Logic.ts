@@ -65,16 +65,20 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
 
             log(...planted.to_array().map(location => `${location.item?.name} is planted at ${location.name}`))
 
+
+            available.removeItem(item);
+
+            plantable = plantable && location.canFill(item, available, true);
+
             // if another item is in logic, we can get use it to plant this item
             const availableItems: IItem[] = []
-            planted.LocationsWithItem().forEach(location => {
+            planted.LocationsWithItem().reverse().forEach(location => {
                 log(`checking if ${location.name} can be accessed to get ${location.item?.name}`)
                 if (location.canAccess(available, planted)) {
                     available.addItem(location.item!);
                     availableItems.push(location.item!);
                 }
             });
-            available.removeItem(item);
 
             plantable = plantable && location.canFill(item, available, true);
 
@@ -99,11 +103,15 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             }
         }
 
+        plantable &&= planted.to_array().every(location => location.requirement_callback ? location?.requirement_callback(world.locations, available) : true)
+
         if (plantable) {
 
             // We already checked and saw we can plant them? Surely that means we can access them...
             planted.to_array().map(location => location as Z3rLocation).forEach(location => {
-                if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item) {
+                log(`checking if planted item at ${location.name} is accessible.`)
+                console.log(location);
+                if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item && (location.requirement_callback ? location.requirement_callback(world.locations, available): true)) {
                     log(`${location.name} is accessible so adding ${location.item.name} to available items`)
                     available.addItem(location.item);
                 }

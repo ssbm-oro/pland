@@ -371,7 +371,11 @@ export class Programmable extends Item {
 }
 
 export class Event extends Item {
-    // purposefully empty interface
+    event: string;
+    constructor(name: string, world: World) {
+        super(name, world);
+        this.event = name;
+    }
 }
 
 export class Shield extends Item {
