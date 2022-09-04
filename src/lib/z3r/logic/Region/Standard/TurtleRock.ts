@@ -12,13 +12,13 @@ export class TurtleRock extends Dungeon {
         super("Turtle Rock", world,);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyD7', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassD7', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyD7', this.world)!,
-            Item.get('Map', this.world)!,
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyD7', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassD7', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyD7', this.world.id)!,
+            Item.get('Map', this.world.id)!,
             Item.get('MapD7', this.world)!
         ];
 

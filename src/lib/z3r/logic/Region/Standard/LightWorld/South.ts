@@ -30,7 +30,7 @@ export class South extends Region {
             new Standing("Sunken Treasure", this),
             new Dig("Flute Spot", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     override initialize() {
@@ -66,8 +66,8 @@ export class South extends Region {
                 && (items.has("MagicMirror") && this.world.getRegion("Mire")?.canEnter(locations, items) || false);
         });
 
-        this.locations.get("Library")?.setRequirements((_item, _locations, items) => {
-            return items.has("PegasusBoots");
+        this.locations.get("Library")?.setRequirements((item, locations, items) => {
+            return items.has("PegasusBoots") || locations.CanGet("PegasusBoots", item, items);
         });
 
         this.locations.get("Desert Ledge")?.setRequirements((_item, locations, items) => {
@@ -79,8 +79,8 @@ export class South extends Region {
                 && this.world.getRegion("North East Dark World")?.canEnter(locations, items) || false;
         });
 
-        this.locations.get("Flute Spot")?.setRequirements((_item, _locations, items) => {
-            return items.has("Shovel");
+        this.locations.get("Flute Spot")?.setRequirements((item, locations, items) => {
+            return items.has("Shovel") || locations.CanGet("Shovel", item, items);
         })
 
         this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {

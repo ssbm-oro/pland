@@ -1,4 +1,5 @@
 import type { IItem } from "../Item";
+import Item from "../Item";
 import type { ILocation, Z3rLocation as Z3rLocation } from "../Location";
 import { log } from "../Logic";
 import type { IRegion } from "../Region";
@@ -71,7 +72,7 @@ export class LocationCollection extends Collection {
             }
         });
         const ret = new ItemCollection(item_array);
-        ret.setChecksForWorld(world);
+        ret.setChecksForWorld(world.id);
         return ret;
     }
 
@@ -110,6 +111,24 @@ export class LocationCollection extends Collection {
 
     public forEach(callbackfn: (value: Z3rLocation, key: string, map:Map<string, Z3rLocation>) => void, thisArg?: any) {
         this.items.forEach(callbackfn, thisArg)
+    }
+
+    // TODO: investigate adding this to ItemCollection.has
+    CanGet(item_to_get: string, item: IItem | null, items: ItemCollection): boolean {
+        log(`checking if we can get ${item_to_get}`);
+        log(`out of curiousity, _item is ${item?.name}`)
+        const itemToGet = Item.get(item_to_get, this.world_id);
+        if (itemToGet) {
+            const itemLocation = this.LocationsWithItem(itemToGet)[0];
+            log(`${itemToGet.name} was found in ${itemLocation?.name}`)
+            if (itemLocation && item) {
+                return itemLocation.canAccess(items, this) || false;
+            }
+            return false;
+        }
+
+        log(`${item_to_get} not even available. does it exist?`)
+        return false;
     }
 
     public to_array() {

@@ -17,8 +17,8 @@ export class Collection {
         return this.items.get(key);
     }
 
-    public setChecksForWorld(world: World) {
-        this.world_id = world.id;
+    public setChecksForWorld(world_id: number) {
+        this.world_id = world_id;
     }
 
     // public merge(items: Collection) {

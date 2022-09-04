@@ -10,13 +10,13 @@ export class ThievesTown extends Dungeon {
         super("Thieves Town", world);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyD4', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassD4', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyD4', this.world)!,
-            Item.get('Map', this.world)!,
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyD4', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassD4', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyD4', this.world.id)!,
+            Item.get('Map', this.world.id)!,
             Item.get('MapD4', this.world)!
         ];
 

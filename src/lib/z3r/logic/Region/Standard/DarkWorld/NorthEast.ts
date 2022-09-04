@@ -16,10 +16,10 @@ export class NorthEast extends Region {
             new Chest("Pyramid Fairy - Right", this),
             new Event("Ganon", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
 
         this.prize = this.locations.get("Ganon");
-        this.prize.setItem(Item.get("DefeatGanon", world)!);
+        this.prize.setItem(Item.get("DefeatGanon", world.id)!);
     }
 
     override initialize() {

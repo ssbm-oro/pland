@@ -10,13 +10,13 @@ export class SkullWoods extends Region {
         super("Skull Woods", world);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyD3', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassD3', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyD3', this.world)!,
-            Item.get('Map', this.world)!,
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyD3', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassD3', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyD3', this.world.id)!,
+            Item.get('Map', this.world.id)!,
             Item.get('MapD3', this.world)!
         ];
 

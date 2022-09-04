@@ -66,20 +66,20 @@ export default class World implements IWorld {
         this.regions.get("Ganons Tower")?.locationsWithItem().forEach(location =>{
             gtItems.addItem(location.item!);
         });
-        gtItems.addItem(Item.get('Crystal1', this)!)
-        gtItems.addItem(Item.get('Crystal2', this)!)
-        gtItems.addItem(Item.get('Crystal3', this)!)
-        gtItems.addItem(Item.get('Crystal4', this)!)
-        gtItems.addItem(Item.get('Crystal5', this)!)
-        gtItems.addItem(Item.get('Crystal6', this)!)
-        gtItems.addItem(Item.get('Crystal7', this)!)
-        gtItems.addItem(Item.get('DefeatAgahnim', this)!)
+        gtItems.addItem(Item.get('Crystal1', this.id)!)
+        gtItems.addItem(Item.get('Crystal2', this.id)!)
+        gtItems.addItem(Item.get('Crystal3', this.id)!)
+        gtItems.addItem(Item.get('Crystal4', this.id)!)
+        gtItems.addItem(Item.get('Crystal5', this.id)!)
+        gtItems.addItem(Item.get('Crystal6', this.id)!)
+        gtItems.addItem(Item.get('Crystal7', this.id)!)
+        gtItems.addItem(Item.get('DefeatAgahnim', this.id)!)
         const nonGtItems = items.diff(gtItems);
 
         log(`Checking if Aghanim1 is defeatable.`)
         if (nonGtItems.canDefeatAgahnim(this)) {
             log(`Determined that Agahnim1 is defeatable.`)
-            nonGtItems.addItem(Item.get('DefeatAgahnim',this)!)
+            nonGtItems.addItem(Item.get('DefeatAgahnim',this.id)!)
         }
 
         this.regions.forEach(region => {
@@ -94,9 +94,9 @@ export default class World implements IWorld {
         }
 
         const pendItems = new ItemCollection([]);
-        pendItems.addItem(Item.get('PendantOfCourage', this)!);
-        pendItems.addItem(Item.get('PendantOfWisdom', this)!);
-        pendItems.addItem(Item.get('PendantOfPower', this)!);
+        pendItems.addItem(Item.get('PendantOfCourage', this.id)!);
+        pendItems.addItem(Item.get('PendantOfWisdom', this.id)!);
+        pendItems.addItem(Item.get('PendantOfPower', this.id)!);
         if (this.locations.get('Master Sword Pedestal')?.item) {
             pendItems.addItem(this.locations.get('Master Sword Pedestal').item!);
         }

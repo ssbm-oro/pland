@@ -46,7 +46,7 @@
     function filterLocationsByItem(location: ILocation, item: SelectedItem) {
         if ((available && item && item.name != "Random") && (location.name != "Random")) {
             const z3rLocation = world.locations.get(location.name);
-            const z3rItem = Item.get(item.name, world);
+            const z3rItem = Item.get(item.name, world.id);
             if (z3rLocation && z3rItem) {
                 available.removeItem(z3rItem);
                 let plantable = z3rLocation.canFill(z3rItem, available, true)
@@ -63,24 +63,24 @@
 
     onMount(() => {
         available = new ItemCollection([
-            Item.get('RescueZelda',world)!,
-            Item.get('Crystal1',world)!,
-            Item.get('Crystal2',world)!,
-            Item.get('Crystal3',world)!,
-            Item.get('Crystal4',world)!,
-            Item.get('Crystal5',world)!,
-            Item.get('Crystal6',world)!,
-            Item.get('Crystal7',world)!,
-            Item.get('PendantOfWisdom',world)!,
-            Item.get('PendantOfCourage',world)!,
-            Item.get('PendantOfPower',world)!,
-            Item.get('DefeatAgahnim2',world)!,
+            Item.get('RescueZelda',world.id)!,
+            Item.get('Crystal1',world.id)!,
+            Item.get('Crystal2',world.id)!,
+            Item.get('Crystal3',world.id)!,
+            Item.get('Crystal4',world.id)!,
+            Item.get('Crystal5',world.id)!,
+            Item.get('Crystal6',world.id)!,
+            Item.get('Crystal7',world.id)!,
+            Item.get('PendantOfWisdom',world.id)!,
+            Item.get('PendantOfCourage',world.id)!,
+            Item.get('PendantOfPower',world.id)!,
+            Item.get('DefeatAgahnim2',world.id)!,
         ]);
         items.forEach(item => {
             if (item.count && item.count > 0) {
-                let itemObj = Item.get(item.value, world);
+                let itemObj = Item.get(item.value, world.id);
                 if (!itemObj)
-                    itemObj = Item.get(item.value.slice(0, -2), world);
+                    itemObj = Item.get(item.value.slice(0, -2), world.id);
                 
                 if (itemObj) {
                     for(let i = 0; i < item.count; i++) {

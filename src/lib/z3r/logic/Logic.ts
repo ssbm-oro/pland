@@ -14,28 +14,28 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
         }
         let plantable = true;
         const available = new ItemCollection([
-            Item.get('RescueZelda',world)!,
-            Item.get('Crystal1',world)!,
-            Item.get('Crystal2',world)!,
-            Item.get('Crystal3',world)!,
-            Item.get('Crystal4',world)!,
-            Item.get('Crystal5',world)!,
-            Item.get('Crystal6',world)!,
-            Item.get('Crystal7',world)!,
-            Item.get('PendantOfWisdom',world)!,
-            Item.get('PendantOfCourage',world)!,
-            Item.get('PendantOfPower',world)!,
-            Item.get('DefeatAgahnim2',world)!,
+            Item.get('RescueZelda',world.id)!,
+            Item.get('Crystal1',world.id)!,
+            Item.get('Crystal2',world.id)!,
+            Item.get('Crystal3',world.id)!,
+            Item.get('Crystal4',world.id)!,
+            Item.get('Crystal5',world.id)!,
+            Item.get('Crystal6',world.id)!,
+            Item.get('Crystal7',world.id)!,
+            Item.get('PendantOfWisdom',world.id)!,
+            Item.get('PendantOfCourage',world.id)!,
+            Item.get('PendantOfPower',world.id)!,
+            Item.get('DefeatAgahnim2',world.id)!,
         ]);
-        available.setChecksForWorld(world);
+        available.setChecksForWorld(world.id);
         const planted = new LocationCollection([]);
 
         items.forEach(item => {
             if (item.count && item.count > 0)
             {
-                let itemObj = Item.get(item.value, world);
+                let itemObj = Item.get(item.value, world.id);
                 if (!itemObj)
-                    itemObj = Item.get(item.value.slice(0, -2), world);
+                    itemObj = Item.get(item.value.slice(0, -2), world.id);
                 
                 if (itemObj) {
                     for(let i = 0; i < item.count; i++) {
@@ -70,22 +70,37 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
 
             plantable = plantable && location.canFill(item, available, true);
 
-            // if another item is in logic, we can get use it to plant this item
+            let recheck = true;
             const availableItems: IItem[] = []
-            planted.LocationsWithItem().reverse().forEach(location => {
-                log(`checking if ${location.name} can be accessed to get ${location.item?.name}`)
-                if (location.canAccess(available, planted, location.item)) {
-                    available.addItem(location.item!);
-                    availableItems.push(location.item!);
-                }
-            });
+            const availablePlants: Z3rLocation[] = []
+            while (recheck) {
+                recheck = false;
+                // if another item is in logic, we can get use it to plant this item
+                planted.LocationsWithItem().forEach(location => {
+                    log(`checking if ${location.name} can be accessed to get ${location.item?.name}`)
+                    if (location.canAccess(available, planted, location.item)) {
+                        log(`could access, adding ${location.item?.name}.`)
+                        available.addItem(location.item!);
+                        availableItems.push(location.item!);
+                        recheck = true;
+                        availablePlants.push(location);
+                        planted.removeItem(location);
+                    }
+                });
 
-            plantable = plantable && location.canFill(item, available, true);
+            }
+            log(`plantable was ${plantable}`)
+            plantable = location.canFill(item, available, true);
+            log(`plantable is ${plantable}`)
 
             // remove the planted items for next iteration
             availableItems.forEach(item => {
                 available.removeItem(item);
             })
+            availablePlants.forEach(location => {
+                planted.addItem(location);
+            })
+            
 
             if (!plantable) {
                 log(`Could not plant ${item.name} in ${location.name}.`)
@@ -101,21 +116,32 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                     log(`Unknown error occurred. Could not Plant ${item.name} in ${location.name}.`);
                 }
             }
+
         }
+        log(`now we're here`)
 
         plantable &&= planted.to_array().every(location => location.requirement_callback ? location?.requirement_callback(location.item, world.locations, available) : true)
-
+        
         if (plantable) {
 
-            // We already checked and saw we can plant them? Surely that means we can access them...
-            planted.to_array().map(location => location as Z3rLocation).forEach(location => {
-                log(`checking if planted item at ${location.name} is accessible.`)
-                console.log(location);
-                if (location.region.canEnter(world.locations, available) && location.canAccess(available, new LocationCollection(), location.item) && location.item && (location.requirement_callback ? location.requirement_callback(null, world.locations, available): true)) {
-                    log(`${location.name} is accessible so adding ${location.item.name} to available items`)
-                    available.addItem(location.item);
-                }
-            });
+            let recheck = true;
+            while (recheck) {
+                recheck = false;
+                // We already checked and saw we can plant them? Surely that means we can access them...
+                planted.to_array().map(location => location as Z3rLocation).forEach(location => {
+                    log(`checking if planted item at ${location.name} is accessible.`)
+                    if (location.region.canEnter(world.locations, available) && location.canAccess(available, new LocationCollection(), location.item) && location.item && (location.requirement_callback ? location.requirement_callback(location.item, world.locations, available): true)) {
+                        log(`${location.name} is accessible so adding ${location.item.name} to available items`)
+                        available.addItem(location.item);
+                        planted.removeItem(location);
+                        recheck = true;
+                    }
+                    else {
+                        log(`${location.name} was not accessible so ${location.item?.name} is not being added to available.`)
+                        recheck = false
+                    }
+                });
+            }
 
             // planted.forEach(location => available.addItem(location.item!))
 

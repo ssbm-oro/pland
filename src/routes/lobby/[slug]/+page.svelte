@@ -83,7 +83,7 @@ import type Config from "$lib/z3r/logic/Config";
 
             for (let i = 0; i < lobby.max_plants; i++) {
                 if (selectedItems[i]?.name.toLowerCase().includes('bottle')) {
-                    selectedItems[i] = new Bottle('BottleWithRandom:1', world, selectedBottles[i]);
+                    selectedItems[i] = new Bottle('BottleWithRandom:1', world.id, selectedBottles[i]);
                 }
             }
 

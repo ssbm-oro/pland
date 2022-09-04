@@ -11,13 +11,13 @@ export class PalaceOfDarkness extends Dungeon {
         super("Dark Palace", world);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyD1', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassD1', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyD1', this.world)!,
-            Item.get('Map', this.world)!,
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyD1', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassD1', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyD1', this.world.id)!,
+            Item.get('Map', this.world.id)!,
             Item.get('MapD1', this.world)!
         ];
 

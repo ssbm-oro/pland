@@ -10,13 +10,13 @@ export class TowerOfHera extends Dungeon {
         super("Tower of Hera", world,);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyP3', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassP3', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyP3', this.world)!,
-            Item.get('Map', this.world)!,
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyP3', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassP3', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyP3', this.world.id)!,
+            Item.get('Map', this.world.id)!,
             Item.get('MapP3', this.world)!
         ];
 

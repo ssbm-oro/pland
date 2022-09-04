@@ -10,14 +10,14 @@ export class DesertPalace extends Dungeon {
         super("Desert Palace", world);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyP2', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassP2', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyP2', this.world)!,
-            Item.get('Map', this.world)!,
-            Item.get('MapP2', this.world)!
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyP2', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassP2', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyP2', this.world.id)!,
+            Item.get('Map', this.world.id)!,
+            Item.get('MapP2', this.world.id)!
         ]
 
         this.boss = Bosses.get("Lanmolas", world);
@@ -31,7 +31,7 @@ export class DesertPalace extends Dungeon {
             new Drop("Desert Palace - Boss", this),
             new Pendant("Desert Palace - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
         this.setPrizeLocation(this.locations.get("Desert Palace - Prize") as Prize);
 
 

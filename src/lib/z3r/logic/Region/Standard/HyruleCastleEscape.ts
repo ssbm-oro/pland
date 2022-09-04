@@ -10,13 +10,13 @@ export class HyruleCastleEscape extends Region {
         super("Hyrule Castle", world);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyH2', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassH2', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyH2', this.world)!,
-            Item.get('Map', this.world)!,
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyH2', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassH2', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyH2', this.world.id)!,
+            Item.get('Map', this.world.id)!,
             Item.get('MapH2', this.world)!
         ];
 

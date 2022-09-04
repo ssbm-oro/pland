@@ -11,14 +11,14 @@ export class EasternPalace extends Dungeon {
         super("Eastern Palace", world);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyP1', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassP1', this.world)!,
-            Item.get('Map', this.world)!,
-            Item.get('MapP1', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyP1', this.world)!
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyP1', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassP1', this.world.id)!,
+            Item.get('Map', this.world.id)!,
+            Item.get('MapP1', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyP1', this.world.id)!
         ];
 
         this.boss = Bosses.get("Armos Knights", world);
@@ -34,7 +34,7 @@ export class EasternPalace extends Dungeon {
             new Pendant("Eastern Palace - Prize", this)
         ]);
 
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
         this.setPrizeLocation(this.locations.get("Eastern Palace - Prize") as Prize);
     }
 

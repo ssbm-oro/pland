@@ -8,13 +8,13 @@ import { log } from "../../Logic";
 
 export class HyruleCastleTower extends Dungeon {
     override region_items = [
-        Item.get('BigKey', this.world)!,
-        Item.get('BigKeyA1', this.world)!,
-        Item.get('Compass', this.world)!,
-        Item.get('CompassA1', this.world)!,
-        Item.get('Key', this.world)!,
-        Item.get('KeyA1', this.world)!,
-        Item.get('Map', this.world)!,
+        Item.get('BigKey', this.world.id)!,
+        Item.get('BigKeyA1', this.world.id)!,
+        Item.get('Compass', this.world.id)!,
+        Item.get('CompassA1', this.world.id)!,
+        Item.get('Key', this.world.id)!,
+        Item.get('KeyA1', this.world.id)!,
+        Item.get('Map', this.world.id)!,
         Item.get('MapA1', this.world)!
     ];
 

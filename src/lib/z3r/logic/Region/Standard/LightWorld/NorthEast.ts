@@ -1,3 +1,4 @@
+import Item from "$lib/z3r/logic/Item";
 import { Chest, Npc, Witch, Zora, Standing } from "$lib/z3r/logic/Location";
 import Region from "$lib/z3r/logic/Region";
 import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
@@ -19,7 +20,7 @@ export class NorthEast extends Region {
             new Chest("Waterfall Fairy - Left", this),
             new Chest("Waterfall Fairy - Right", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     public override initialize() {
@@ -31,8 +32,8 @@ export class NorthEast extends Region {
             return items.canLiftRocks() || items.has("Flippers");
         });
 
-        this.locations.get("Potion Shop")?.setRequirements((_item, _locations, items) => {
-            return items.has("Mushroom");
+        this.locations.get("Potion Shop")?.setRequirements((item, locations, items) => {
+            return (items.has("Mushroom") || locations.CanGet("Mushroom", item, items));
         });
 
         this.locations.get("Zora Ledge")?.setRequirements((_item, _locations, items) => {

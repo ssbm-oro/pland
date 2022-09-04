@@ -12,14 +12,14 @@ export class IcePalace extends Dungeon {
         super("Ice Palace", world);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyD5', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassD5', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyD5', this.world)!,
-            Item.get('Map', this.world)!,
-            Item.get('MapD5', this.world)!
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyD5', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassD5', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyD5', this.world.id)!,
+            Item.get('Map', this.world.id)!,
+            Item.get('MapD5', this.world.id)!
         ];
 
         this.boss = Bosses.get("Kholdstare", world);
@@ -37,7 +37,7 @@ export class IcePalace extends Dungeon {
             new Crystal("Ice Palace - Prize", this)
         ]);
 
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
         this.prize = this.locations.get("Ice Palace - Prize");
     }
 
@@ -45,21 +45,21 @@ export class IcePalace extends Dungeon {
         this.locations.get("Ice Palace - Big Key Chest")?.setRequirements((item, locations, items) => {
             return items.has('Hammer') && items.canLiftRocks()
             && (items.has('Hookshot') || items.has('ShopKey')
-            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, 
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
                 ['Ice Palace - Spike Room','Ice Palace - Map Chest']))));
         });
 
         this.locations.get("Ice Palace - Map Chest")?.setRequirements((item, locations, items) => {
             return items.has('Hammer') && items.canLiftRocks()
             && (items.has('Hookshot') || items.has('ShopKey')
-            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, 
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
                 ['Ice Palace - Big Key Chest','Ice Palace - Spike Room']))));
         });
 
         this.locations.get("Ice Palace - Spike Room")?.setRequirements((item, locations, items) => {
             log(item?.name || 'Item was undefined in spike room')
             return (items.has('Hookshot') || items.has('ShopKey')
-            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5' || locations.itemInLocations(Item.get('BigKeyD5', this.world)!, 
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5' || locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
                 ['Ice Palace - Big Key Chest','Ice Palace - Map Chest']))));
         });
 

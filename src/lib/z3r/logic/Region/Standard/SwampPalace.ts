@@ -10,13 +10,13 @@ export class SwampPalace extends Dungeon {
         super("Swamp Palace", world,);
 
         this.region_items = [
-            Item.get('BigKey', this.world)!,
-            Item.get('BigKeyD2', this.world)!,
-            Item.get('Compass', this.world)!,
-            Item.get('CompassD2', this.world)!,
-            Item.get('Key', this.world)!,
-            Item.get('KeyD2', this.world)!,
-            Item.get('Map', this.world)!,
+            Item.get('BigKey', this.world.id)!,
+            Item.get('BigKeyD2', this.world.id)!,
+            Item.get('Compass', this.world.id)!,
+            Item.get('CompassD2', this.world.id)!,
+            Item.get('Key', this.world.id)!,
+            Item.get('KeyD2', this.world.id)!,
+            Item.get('Map', this.world.id)!,
             Item.get('MapD2', this.world)!
         ];
 
