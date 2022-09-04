@@ -20,7 +20,7 @@ export class East extends Region {
             new Chest("Paradox Cave Upper - Right", this),
             new Standing("Floating Island", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     override initialize() {

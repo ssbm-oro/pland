@@ -81,6 +81,10 @@ export class ItemCollection extends Collection {
         return this.items.has(key) && this.item_counts.has(key) && this.item_counts.get(key)! >= count;
     }
 
+    public hasOrCanGet(key: string, locations: LocationCollection | null, item: IItem | null = null): boolean {
+        return this.has(key) || locations?.CanGet(key, item, this) || false;
+    }
+
     override get(name: string) {
         return this.items.get(name);
 }

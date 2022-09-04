@@ -17,7 +17,7 @@ export class SwampPalace extends Dungeon {
             Item.get('Key', this.world.id)!,
             Item.get('KeyD2', this.world.id)!,
             Item.get('Map', this.world.id)!,
-            Item.get('MapD2', this.world)!
+            Item.get('MapD2', this.world.id)!
         ];
 
         this.boss = Bosses.get("Arrghus", world);
@@ -36,7 +36,7 @@ export class SwampPalace extends Dungeon {
 
             new Crystal("Swamp Palace - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
 
         this.prize = this.locations.get("Swamp Palace - Prize");
     }
@@ -96,11 +96,11 @@ export class SwampPalace extends Dungeon {
             return this.locations.get("Swamp Palace - Boss")?.canAccess(items);
         }
 
-        this.locations.get("Swamp Palace - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Swamp Palace - Boss")?.setRequirements((item, locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
-                && this.boss?.canBeat(items, locations) || false;
+                && this.boss?.canBeat(items, locations, item) || false;
         });
 
         this.can_enter = (locations, items) => {

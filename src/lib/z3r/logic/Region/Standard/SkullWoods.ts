@@ -17,7 +17,7 @@ export class SkullWoods extends Region {
             Item.get('Key', this.world.id)!,
             Item.get('KeyD3', this.world.id)!,
             Item.get('Map', this.world.id)!,
-            Item.get('MapD3', this.world)!
+            Item.get('MapD3', this.world.id)!
         ];
 
         this.boss = Bosses.get("Mothula", world);
@@ -34,7 +34,7 @@ export class SkullWoods extends Region {
 
             new Crystal("Skull Woods - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
 
         this.prize = this.locations.get("Skull Woods - Prize");
     }
@@ -52,12 +52,12 @@ export class SkullWoods extends Region {
             return this.locations.get('Skull Woods - Boss')?.canAccess(items, locations);
         };
 
-        this.locations.get("Skull Woods - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Skull Woods - Boss")?.setRequirements((item, locations, items) => {
             return this.canEnter(locations, items)
                 && items.has('MoonPearl') && items.has('FireRod')
                 && items.hasSword()
                 && items.has('KeyD3', 3)
-                && this.boss?.canBeat(items, locations) || false;
+                && this.boss?.canBeat(items, locations, item) || false;
         });
 
         this.can_enter = (locations, items) => {

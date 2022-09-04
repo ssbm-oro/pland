@@ -75,10 +75,10 @@ export class IcePalace extends Dungeon {
             return this.locations.get("Ice Palace - Boss")?.canAccess(items, locations);
         }
 
-        this.locations.get("Ice Palace - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Ice Palace - Boss")?.setRequirements((item, locations, items) => {
             return this.canEnter(locations, items)
                 && items.has('Hammer') && items.canLiftRocks()
-                && (this.boss?.canBeat(items, locations) || false)
+                && (this.boss?.canBeat(items, locations, item) || false)
                 && items.has('BigKeyD5') && ((items.has("CaneOfSomaria") && items.has('KeyD5')) || (items.has('KeyD5', 2)));
         });
 

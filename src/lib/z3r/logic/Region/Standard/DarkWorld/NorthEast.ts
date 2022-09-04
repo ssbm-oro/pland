@@ -23,21 +23,21 @@ export class NorthEast extends Region {
     }
 
     override initialize() {
-        this.locations.get("Catfish")?.setRequirements((_item, _locations, items) => {
-            return items.has('MoonPearl') && items.canLiftRocks();
+        this.locations.get("Catfish")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet('MoonPearl', locations, item) && items.canLiftRocks();
         });
 
-        const pyramidRequirements = (_item: IItem | null, locations: LocationCollection, items: ItemCollection) => {
+        const pyramidRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection) => {
             return items.has("Crystal5") && items.has("Crystal6")
                 && (!!this.world.getRegion("South Dark World")?.canEnter(locations, items))
-                && items.has("MoonPearl") && (items.has("Hammer")
-                    || (items.has("MagicMirror") && (items.canDefeatAgahnim(this.world))))
+                && items.hasOrCanGet("MoonPearl", locations, item) && (items.hasOrCanGet("Hammer", locations, item)
+                    || (items.hasOrCanGet("MagicMirror", locations, item) && (items.canDefeatAgahnim(this.world))))
         }
 
         this.locations.get("Pyramid Fairy - Left")?.setRequirements(pyramidRequirements);
         this.locations.get("Pyramid Fairy - Right")?.setRequirements(pyramidRequirements);
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (_locations, items) => {
             return items.has("RescueZelda")
                 && (items.canDefeatAgahnim(this.world)
                     || (items.has("Hammer") && items.canLiftRocks() && items.has("MoonPearl"))

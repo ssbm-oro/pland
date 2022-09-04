@@ -17,7 +17,7 @@ export class East extends Region {
             new Chest("Hookshot Cave - Bottom Left", this),
             new Chest("Hookshot Cave - Bottom Right", this),
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     public override initialize() {

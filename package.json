@@ -1,6 +1,6 @@
 {
 	"name": "pland",
-	"version": "0.3.6c",
+	"version": "0.3.6f",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",

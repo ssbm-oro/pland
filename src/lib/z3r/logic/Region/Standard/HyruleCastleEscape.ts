@@ -17,7 +17,7 @@ export class HyruleCastleEscape extends Region {
             Item.get('Key', this.world.id)!,
             Item.get('KeyH2', this.world.id)!,
             Item.get('Map', this.world.id)!,
-            Item.get('MapH2', this.world)!
+            Item.get('MapH2', this.world.id)!
         ];
 
         this.locations = new LocationCollection([
@@ -35,7 +35,7 @@ export class HyruleCastleEscape extends Region {
         ]);
 
         this.prize = this.locations.get("Zelda")!;
-        this.prize.setItem(Item.get('RescueZelda', world)!);
+        this.prize.setItem(Item.get('RescueZelda', world.id)!);
     }
 
     public override initialize() {

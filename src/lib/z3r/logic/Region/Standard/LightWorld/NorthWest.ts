@@ -32,7 +32,7 @@ export class NorthWest extends Region {
             new Standing("Graveyard Ledge", this),
             new Standing("Mushroom", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     public override initialize() {

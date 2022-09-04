@@ -16,7 +16,7 @@ export class NorthWest extends Region {
             new Npc("Blacksmith", this),
             new Npc("Purple Chest", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     public override initialize() {

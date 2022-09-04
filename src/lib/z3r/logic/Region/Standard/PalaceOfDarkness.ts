@@ -18,7 +18,7 @@ export class PalaceOfDarkness extends Dungeon {
             Item.get('Key', this.world.id)!,
             Item.get('KeyD1', this.world.id)!,
             Item.get('Map', this.world.id)!,
-            Item.get('MapD1', this.world)!
+            Item.get('MapD1', this.world.id)!
         ];
 
         this.boss = Bosses.get("Helmasaur King", world);
@@ -43,7 +43,7 @@ export class PalaceOfDarkness extends Dungeon {
             new Crystal("Palace of Darkness - Prize", this),
         ]);
 
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
         this.prize = this.locations.get("Palace of Darkness - Prize");
     }
 
@@ -53,7 +53,7 @@ export class PalaceOfDarkness extends Dungeon {
         this.locations.get("Palace of Darkness - Map Chest")?.setRequirements(bowLockedRequirements);
 
         this.locations.get("Palace of Darkness - Big Key Chest")?.setRequirements((_item, locations, items) => {
-            if (locations.get("Palace of Darkness - Big Key Chest")?.hasItem(Item.get('KeyD1', this.world)))
+            if (locations.get("Palace of Darkness - Big Key Chest")?.hasItem(Item.get('KeyD1', this.world.id)))
                 return items.has('KeyD1');
 
             return (((items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6): items.has('KeyD1', 5) )));
@@ -77,7 +77,7 @@ export class PalaceOfDarkness extends Dungeon {
         });
 
         this.locations.get("Palace of Darkness - Harmless Hellway")?.setRequirements((_item, locations, items) => {
-            if (locations.get("Palace of Darkness - Harmless Hellway")?.hasItem(Item.get('KeyD1', this.world))) {
+            if (locations.get("Palace of Darkness - Harmless Hellway")?.hasItem(Item.get('KeyD1', this.world.id))) {
                 return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
             }
 
@@ -100,9 +100,9 @@ export class PalaceOfDarkness extends Dungeon {
             return this.locations.get("Palace of Darkness - Boss")?.canAccess(items, locations);
         };
 
-        this.locations.get("Palace of Darkness - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Palace of Darkness - Boss")?.setRequirements((item, locations, items) => {
             return this.canEnter(locations, items)
-                && (this.boss?.canBeat(items, locations) || false)
+                && (this.boss?.canBeat(items, locations, item) || false)
                 && items.has('Hammer') && items.has('Lamp') && items.canShootArrows(this.world)
                 && items.has('BigKeyD1') && items.has('KeyD1', 6);
         });

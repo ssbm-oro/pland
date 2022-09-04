@@ -117,14 +117,15 @@ export class LocationCollection extends Collection {
     CanGet(item_to_get: string, item: IItem | null, items: ItemCollection): boolean {
         log(`checking if we can get ${item_to_get}`);
         log(`out of curiousity, _item is ${item?.name}`)
+        if (item_to_get == item?.name) return false;
         const itemToGet = Item.get(item_to_get, this.world_id);
         if (itemToGet) {
             const itemLocation = this.LocationsWithItem(itemToGet)[0];
             log(`${itemToGet.name} was found in ${itemLocation?.name}`)
-            if (itemLocation && item) {
-                return itemLocation.canAccess(items, this) || false;
+            if (itemLocation) {
+                return itemLocation.canAccess(items, this);
             }
-            return false;
+            return true;
         }
 
         log(`${item_to_get} not even available. does it exist?`)

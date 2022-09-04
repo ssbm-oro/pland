@@ -28,24 +28,24 @@ export class NorthEast extends Region {
             return items.has("PendantOfCourage");
         });
 
-        this.locations.get("King Zora")?.setRequirements((_item, _locations, items) => {
-            return items.canLiftRocks() || items.has("Flippers");
+        this.locations.get("King Zora")?.setRequirements((item, locations, items) => {
+            return items.canLiftRocks() || items.hasOrCanGet("Flippers", locations, item);
         });
 
         this.locations.get("Potion Shop")?.setRequirements((item, locations, items) => {
-            return (items.has("Mushroom") || locations.CanGet("Mushroom", item, items));
+            return (items.hasOrCanGet("Mushroom", locations, item));
         });
 
-        this.locations.get("Zora Ledge")?.setRequirements((_item, _locations, items) => {
-            return items.has("Flippers");
+        this.locations.get("Zora Ledge")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet("Flippers", locations, item);
         });
 
-        this.locations.get("Waterfall Fairy - Left")?.setRequirements((_item, _locations, items) => {
-            return items.has("Flippers");
+        this.locations.get("Waterfall Fairy - Left")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet("Flippers", locations, item);
         });
 
-        this.locations.get("Waterfall Fairy - Right")?.setRequirements((_item, _locations, items) => {
-            return items.has("Flippers");
+        this.locations.get("Waterfall Fairy - Right")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet("Flippers", locations, item);
         });
 
         this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {

@@ -51,11 +51,11 @@ export class EasternPalace extends Dungeon {
             return this.locations.get("Eastern Palace - Boss")?.canAccess(items, locations);
         }
 
-        this.locations.get("Eastern Palace - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Eastern Palace - Boss")?.setRequirements((item, locations, items) => {
             return items.canShootArrows(this.world)
                 && items.canLightTorches()
                 && items.has('BigKeyP1')
-                && this.boss?.canBeat(items, locations) || false;
+                && this.boss?.canBeat(items, locations, item) || false;
         });
 
         this.can_enter = (_locations, items) => {

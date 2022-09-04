@@ -17,7 +17,7 @@ export class TowerOfHera extends Dungeon {
             Item.get('Key', this.world.id)!,
             Item.get('KeyP3', this.world.id)!,
             Item.get('Map', this.world.id)!,
-            Item.get('MapP3', this.world)!
+            Item.get('MapP3', this.world.id)!
         ];
 
         this.boss = Bosses.get("Moldorm", world);
@@ -32,7 +32,7 @@ export class TowerOfHera extends Dungeon {
 
             new Pendant("Tower of Hera - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
 
         this.prize = this.locations.get("Tower of Hera - Prize");
     }
@@ -54,8 +54,8 @@ export class TowerOfHera extends Dungeon {
             return this.locations.get("Tower of Hera - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Tower of Hera - Boss")?.setRequirements((_item, locations, items) => {
-            return (this.boss?.canBeat(items, locations) || false
+        this.locations.get("Tower of Hera - Boss")?.setRequirements((item, locations, items) => {
+            return (this.boss?.canBeat(items, locations, item) || false
                 && items.has("BigKeyP3"));
         });
 

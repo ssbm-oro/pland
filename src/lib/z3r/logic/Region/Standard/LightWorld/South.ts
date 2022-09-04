@@ -48,39 +48,39 @@ export class South extends Region {
         this.locations.get("Minimoldorm Cave - Far Right")?.setRequirements(miniMoldormCaveRequirements);
         this.locations.get("Minimoldorm Cave - NPC")?.setRequirements(miniMoldormCaveRequirements);
 
-        this.locations.get("Hobo")?.setRequirements((_item, _locations, items) => {
-            return items.has("Flippers");
+        this.locations.get("Hobo")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet("Flippers", locations, item);
         });
 
-        this.locations.get("Bombos Tablet")?.setRequirements((_item, locations, items) => {
-            return items.has("BookOfMudora") && items.hasSword(2)
-                && (items.has("MagicMirror") && this.world.getRegion("South Dark World")?.canEnter(locations, items) || false);
+        this.locations.get("Bombos Tablet")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet("BookOfMudora", locations, item) && items.hasSword(2)
+                && (items.hasOrCanGet("MagicMirror", locations, item) && this.world.getRegion("South Dark World")?.canEnter(locations, items) || false);
         });
 
-        this.locations.get("Cave 45")?.setRequirements((_item, locations, items) => {
-            return items.has("MagicMirror") && this.world.getRegion("South Dark World")?.canEnter(locations, items) || false;
+        this.locations.get("Cave 45")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet("MagicMirror", locations, item) && this.world.getRegion("South Dark World")?.canEnter(locations, items) || false;
         });
 
-        this.locations.get("Checkerboard Cave")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Checkerboard Cave")?.setRequirements((item, locations, items) => {
             return items.canLiftRocks()
-                && (items.has("MagicMirror") && this.world.getRegion("Mire")?.canEnter(locations, items) || false);
+                && (items.hasOrCanGet("MagicMirror", locations, item) && this.world.getRegion("Mire")?.canEnter(locations, items) || false);
         });
 
         this.locations.get("Library")?.setRequirements((item, locations, items) => {
-            return items.has("PegasusBoots") || locations.CanGet("PegasusBoots", item, items);
+            return items.hasOrCanGet("PegasusBoots", locations, item);
         });
 
         this.locations.get("Desert Ledge")?.setRequirements((_item, locations, items) => {
             return this.world.getRegion("Desert Palace")?.canEnter(locations, items) || false;
         })
 
-        this.locations.get("Lake Hylia Island")?.setRequirements((_item, locations, items) => {
-            return items.has("Flippers") && items.has("MagicMirror")
+        this.locations.get("Lake Hylia Island")?.setRequirements((item, locations, items) => {
+            return items.hasOrCanGet("Flippers", locations, item) && items.hasOrCanGet("MagicMirror", locations, item)
                 && this.world.getRegion("North East Dark World")?.canEnter(locations, items) || false;
         });
 
         this.locations.get("Flute Spot")?.setRequirements((item, locations, items) => {
-            return items.has("Shovel") || locations.CanGet("Shovel", item, items);
+            return items.hasOrCanGet("Shovel", locations, item);
         })
 
         this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {

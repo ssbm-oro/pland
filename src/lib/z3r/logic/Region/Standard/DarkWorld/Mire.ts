@@ -12,7 +12,7 @@ export class Mire extends Region {
             new Chest("Mire Shed - Left", this),
             new Chest("Mire Shed - Right", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     override initialize() {

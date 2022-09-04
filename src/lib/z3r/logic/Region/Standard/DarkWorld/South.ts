@@ -16,7 +16,7 @@ export class South extends Region {
             new Npc("Hype Cave - NPC", this),
             new Dig("Digging Game", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     public override initialize() {

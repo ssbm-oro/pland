@@ -135,6 +135,6 @@ function get_available_items(world: World) {
         }
     });
 
-    available.setChecksForWorld(world);
+    available.setChecksForWorld(world.id);
     return available;
 }

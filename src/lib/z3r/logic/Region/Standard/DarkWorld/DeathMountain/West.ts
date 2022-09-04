@@ -10,7 +10,7 @@ export class West extends Region {
         this.locations = new LocationCollection([
             new Chest("Spike Cave", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
     }
 
     public override initialize() {

@@ -18,7 +18,7 @@ export class MiseryMire extends Dungeon {
             Item.get('Key', this.world.id)!,
             Item.get('KeyD6', this.world.id)!,
             Item.get('Map', this.world.id)!,
-            Item.get('MapD6', this.world)!
+            Item.get('MapD6', this.world.id)!
         ];
 
         this.boss = Bosses.get("Vitreous", world);
@@ -36,7 +36,7 @@ export class MiseryMire extends Dungeon {
             new Crystal("Misery Mire - Prize", this)
         ]);
 
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
         this.prize = this.locations.get("Misery Mire - Prize");
     }
 
@@ -55,23 +55,23 @@ export class MiseryMire extends Dungeon {
 
         this.locations.get("Misery Mire - Big Key Chest")?.setRequirements((_item, locations, items) => {
             return items.canLightTorches()
-                && ((locations.get("Misery Mire - Compass Chest")?.hasItem(Item.get('BigKeyD6', this.world)) && items.has('KeyD6', 2)) || items.has('KeyD6', 3));
+                && ((locations.get("Misery Mire - Compass Chest")?.hasItem(Item.get('BigKeyD6', this.world.id)) && items.has('KeyD6', 2)) || items.has('KeyD6', 3));
         });
 
         this.locations.get("Misery Mire - Compass Chest")?.setRequirements((_item, locations, items) => {
             return items.canLightTorches()
-                && ((locations.get("Misery Mire - Big Key Chest")?.hasItem(Item.get('BigKeyD6', this.world)) && items.has('KeyD6', 2)) || items.has('KeyD6', 3));
+                && ((locations.get("Misery Mire - Big Key Chest")?.hasItem(Item.get('BigKeyD6', this.world.id)) && items.has('KeyD6', 2)) || items.has('KeyD6', 3));
         });
 
         this.can_complete = (locations, items) => {
             return this.locations.get("Misery Mire - Boss")?.canAccess(items, locations);
         };
 
-        this.locations.get("Misery Mire - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Misery Mire - Boss")?.setRequirements((item, locations, items) => {
             return this.canEnter(locations, items)
                 && items.has('CaneOfSomaria') && (items.has('Lamp'))
                 && items.has('BigKeyD6')
-                && this.boss?.canBeat(items, locations) || false
+                && this.boss?.canBeat(items, locations, item) || false
         });
 
         this.can_enter = (locations, items) => {

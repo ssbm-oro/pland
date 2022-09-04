@@ -55,12 +55,12 @@ export class DesertPalace extends Dungeon {
             return this.locations.get("Desert Palace - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Desert Palace - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Desert Palace - Boss")?.setRequirements((item, locations, items) => {
             return ((this.canEnter(locations, items))
                 && ((items.canLiftRocks() || items.has('MagicMirror') && this.world.getRegion('Mire')?.canEnter(locations, items)) || false)
                 && items.canLightTorches()
                 && items.has('BigKeyP2') && items.has('KeyP2')
-                && this.boss?.canBeat !== undefined && this.boss?.canBeat(items, locations))
+                && this.boss?.canBeat !== undefined && this.boss?.canBeat(items, locations, item))
         });
 
         this.can_enter = (locations, items) => {

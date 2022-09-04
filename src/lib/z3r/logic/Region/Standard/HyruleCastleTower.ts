@@ -15,7 +15,7 @@ export class HyruleCastleTower extends Dungeon {
         Item.get('Key', this.world.id)!,
         Item.get('KeyA1', this.world.id)!,
         Item.get('Map', this.world.id)!,
-        Item.get('MapA1', this.world)!
+        Item.get('MapA1', this.world.id)!
     ];
 
     public constructor(world: World) {
@@ -27,9 +27,9 @@ export class HyruleCastleTower extends Dungeon {
             new Event("Agahnim", this)
         ]);
 
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
         this.prize = this.locations.get("Agahnim")!;
-        this.prize.setItem(Item.get('DefeatAgahnim', world)!);
+        this.prize.setItem(Item.get('DefeatAgahnim', world.id)!);
     }
 
     public override initialize() {

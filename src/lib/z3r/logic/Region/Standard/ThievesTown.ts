@@ -17,7 +17,7 @@ export class ThievesTown extends Dungeon {
             Item.get('Key', this.world.id)!,
             Item.get('KeyD4', this.world.id)!,
             Item.get('Map', this.world.id)!,
-            Item.get('MapD4', this.world)!
+            Item.get('MapD4', this.world.id)!
         ];
 
         this.boss = Bosses.get("Blind", world);
@@ -34,7 +34,7 @@ export class ThievesTown extends Dungeon {
 
             new Crystal("Thieves' Town - Prize", this)
         ]);
-        this.locations.setChecksForWorld(world);
+        this.locations.setChecksForWorld(world.id);
 
         this.prize = this.locations.get("Thieves' Town - Prize");
     }
@@ -45,7 +45,7 @@ export class ThievesTown extends Dungeon {
         });
 
         this.locations.get("Thieves' Town - Big Chest")?.setRequirements((_item, locations, items) => {
-            if (locations.get("Thieves' Town - Big Chest")?.hasItem(Item.get('KeyD4', this.world))) {
+            if (locations.get("Thieves' Town - Big Chest")?.hasItem(Item.get('KeyD4', this.world.id))) {
                 return items.has("Hammer") && items.has("BigKeyD4");
             }
             return items.has("Hammer") && items.has('KeyD4') && items.has('BigKeyD4');
@@ -59,10 +59,10 @@ export class ThievesTown extends Dungeon {
             return this.locations.get("Thieves' Town - Boss").canAccess(items, locations)
         }
 
-        this.locations.get("Thieves' Town - Boss")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Thieves' Town - Boss")?.setRequirements((item, locations, items) => {
             return this.canEnter(locations, items)
                 && items.has("KeyD4") && items.has("BigKeyD4")
-                && !!this.boss && this.boss.canBeat(items, locations)
+                && !!this.boss && this.boss.canBeat(items, locations, item)
         });
 
         this.can_enter = (locations, items) => {

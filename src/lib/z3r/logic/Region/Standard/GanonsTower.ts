@@ -224,33 +224,33 @@ export class GanonsTower extends Region {
 
         const bigKeyRoomRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection) => {
             return ((leftGtRequirements(item, locations, items) || (rightGtRequirements(item, locations, items)))
-                && items.has('KeyA2', 3) && this.boss_bottom?.canBeat(items,locations) || false);
+                && items.has('KeyA2', 3) && this.boss_bottom?.canBeat(items,locations, item) || false);
         }
 
         this.locations.get("Ganon's Tower - Big Key Chest")?.setRequirements(bigKeyRoomRequirements);
         this.locations.get("Ganon's Tower - Big Key Room - Left")?.setRequirements(bigKeyRoomRequirements);
         this.locations.get("Ganon's Tower - Big Key Room - Right")?.setRequirements(bigKeyRoomRequirements);
 
-        const upstairsGtRequiremets = (_item: IItem | null, locations: LocationCollection, items: ItemCollection) => {
+        const upstairsGtRequiremets = (item: IItem | null, locations: LocationCollection, items: ItemCollection) => {
             return items.canShootArrows(this.world) && items.canLightTorches()
                 && items.has('BigKeyA2') && items.has('KeyA2', 3)
-                && this.boss_middle?.canBeat(items, locations) || false;
+                && this.boss_middle?.canBeat(items, locations, item) || false;
         };
 
         this.locations.get("Ganon's Tower - Mini Helmasaur Room - Right")?.setRequirements(upstairsGtRequiremets);
         this.locations.get("Ganon's Tower - Mini Helmasaur Room - Left")?.setRequirements(upstairsGtRequiremets);
         this.locations.get("Ganon's Tower - Pre-Moldorm Chest")?.setRequirements(upstairsGtRequiremets);
 
-        this.locations.get("Ganon's Tower - Moldorm Chest")?.setRequirements((_item, locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Ganon's Tower - Moldorm Chest")?.setRequirements((item, locations: LocationCollection, items: ItemCollection) => {
             return items.has('Hookshot') && items.canShootArrows(this.world) && items.canLightTorches()
                 && items.has('BigKeyA2') && items.has('KeyA2', 4)
-                && this.boss_middle?.canBeat(items, locations) && this.boss_top?.canBeat(items, locations) || false;
+                && this.boss_middle?.canBeat(items, locations, item) && this.boss_top?.canBeat(items, locations, item) || false;
         });
 
         this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
             return this.canEnter(locations, items)
                 && this.locations.get("Ganon's Tower - Moldorm Chest")?.canAccess(items, locations)
-                && this.boss?.canBeat(items, locations) || false;
+                && this.boss?.canBeat(items, locations, null) || false;
         };
 
         this.prize?.setRequirements((_item, items, locations) => this.canComplete(items, locations));
