@@ -136,9 +136,9 @@
                             <ListItem class="justify-start" value={location.name} tabindex={i}>
                                 <span class="whitespace-normal">{location.name}</span>
                                 <svelte:fragment slot="lead">
-                                    <Tooltip position="right">
+                                    <Tooltip position="right" background="bg-surface-100 dark:bg-surface-900" color="black dark:white">
                                         <svelte:fragment slot="message">
-                                            <div class="w-[200px] h-[200px] text-center">
+                                            <div class="w-[200px] h-[200px] text-center whitespace-normal">
                                                 <img src={getImageUrl(locationImages.get(location.name) || '')} alt="Screenshot of {location.name}">
                                                 {location.name}
                                             </div>

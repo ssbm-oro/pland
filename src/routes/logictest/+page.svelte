@@ -24,14 +24,14 @@
     
     export let data: PageData;
     const preset_names = Object.keys(data.presets).map(filepath => filepath.split('/').reverse()[0] ?? 'error');
-    const presets = new Map(Object.entries(data.presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
+    const presets = new Map(Object.entries(data.presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]]));
     const loading_message = data.loading_message;
 
 
     async function presetChanged() {
         try {
             if (presets.has(selectedPreset)) {
-                selectedPresetData = await presets.get(selectedPreset) as any;
+                selectedPresetData = await presets.get(selectedPreset)!() as any;
                 switch(selectedPresetData.settings.mode) {
                     case 'open':
                         world = new Open(selectedPresetData.settings);
