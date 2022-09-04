@@ -36,37 +36,37 @@ export class NorthWest extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Master Sword Pedestal")?.setRequirements((_locations, items) => {
+        this.locations.get("Master Sword Pedestal")?.setRequirements((_item, _locations, items) => {
             return items.has("PendantOfPower") && items.has("PendantOfWisdom") && items.has("PendantOfCourage");
         });
 
-        this.locations.get("King's Tomb")?.setRequirements((locations, items) => {
+        this.locations.get("King's Tomb")?.setRequirements((_item, locations, items) => {
             return items.has("PegasusBoots")
                 && (items.canLiftDarkRocks()
-                    || items.has("MagicMirror") && this.world.getRegion("North West Dark World")!.canEnter(locations, items));
+                    || items.has("MagicMirror") && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false);
         });
 
-        this.locations.get("Pegasus Rocks")?.setRequirements((_locations, items) => {
+        this.locations.get("Pegasus Rocks")?.setRequirements((_item, _locations, items) => {
             return items.has("PegasusBoots")
         });
 
-        this.locations.get("Magic Bat")?.setRequirements((locations, items) => {
+        this.locations.get("Magic Bat")?.setRequirements((_item, locations, items) => {
             return items.has("Powder")
                 && (items.has("Hammer")
                 || (items.has("MagicMirror")
-                    && items.has("MoonPearl") && this.world.getRegion("North West Dark World")!.canEnter(locations, items)));
+                    && items.has("MoonPearl") && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false));
         });
 
-        this.locations.get("Sick Kid")?.setRequirements((_locations, items) => {
+        this.locations.get("Sick Kid")?.setRequirements((_item, _locations, items) => {
             return items.hasABottle();
         });
 
-        this.locations.get("Lumberjack Tree")?.setRequirements((locations, items) => {
+        this.locations.get("Lumberjack Tree")?.setRequirements((_item, _locations, items) => {
             return items.canDefeatAgahnim(this.world) && items.has("PegasusBoots");
         });
 
-        this.locations.get("Graveyard Ledge")?.setRequirements((locations, items) => {
-            return (items.has("MagicMirror") && this.world.getRegion("North West Dark World")!.canEnter(locations, items))
+        this.locations.get("Graveyard Ledge")?.setRequirements((_item, locations, items) => {
+            return (items.has("MagicMirror") && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false)
                 && items.has("MoonPearl");
         });
 

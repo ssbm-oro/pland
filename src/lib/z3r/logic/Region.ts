@@ -99,7 +99,7 @@ export class Dungeon extends Region {
         this.prize = prize;
         this.prize.region = this;
         if (this.can_complete) {
-            this.prize.requirement_callback = this.can_complete;
+            this.prize.requirement_callback = (_item, locations, items) => this.can_complete(locations, items);
         }
 
         return this;

@@ -34,19 +34,19 @@ export class TowerOfHera extends Dungeon {
         ]);
         this.locations.setChecksForWorld(world);
 
-        this.prize = this.locations.get("Tower of Hera - Prize")!
+        this.prize = this.locations.get("Tower of Hera - Prize");
     }
 
     public override initialize() {
-        this.locations.get("Tower of Hera - Big Key Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Tower of Hera - Big Key Chest")?.setRequirements((_item, _locations, items) => {
             return items.canLightTorches() && items.has("KeyP3");
         });
 
-        this.locations.get("Tower of Hera - Compass Chest")?.setRequirements((_locatinos, items) => {
+        this.locations.get("Tower of Hera - Compass Chest")?.setRequirements((_item, _locatinos, items) => {
             return items.has("BigKeyP3");
         })
 
-        this.locations.get("Tower of Hera - Big Chest")?.setRequirements((_locatinos, items) => {
+        this.locations.get("Tower of Hera - Big Chest")?.setRequirements((_item, _locatinos, items) => {
             return items.has("BigKeyP3");
         })
 
@@ -54,7 +54,7 @@ export class TowerOfHera extends Dungeon {
             return this.locations.get("Tower of Hera - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Tower of Hera - Boss")?.setRequirements((locations, items) => {
+        this.locations.get("Tower of Hera - Boss")?.setRequirements((_item, locations, items) => {
             return (this.boss?.canBeat(items, locations) || false
                 && items.has("BigKeyP3"));
         });
@@ -63,10 +63,10 @@ export class TowerOfHera extends Dungeon {
             return items.has("RescueZelda")
                 && (items.has("MagicMirror")
                     || (items.has("Hookshot") && items.has("Hammer")
-                        && this.world.getRegion("West Death Mountain")!.canEnter(locations, items)));
+                        && this.world.getRegion("West Death Mountain")?.canEnter(locations, items) || false));
         };
 
-        this.prize?.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
         return this;
     }

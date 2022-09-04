@@ -35,19 +35,19 @@ export class DesertPalace extends Dungeon {
         this.setPrizeLocation(this.locations.get("Desert Palace - Prize") as Prize);
 
 
-        this.locations.get("Desert Palace - Big Chest").setRequirements((_locations, items) => {
+        this.locations.get("Desert Palace - Big Chest").setRequirements((_item, _locations, items) => {
             return items.has("BigKeyP2");
         });
 
-        this.locations.get("Desert Palace - Big Key Chest").setRequirements((_locations, items) => {
+        this.locations.get("Desert Palace - Big Key Chest").setRequirements((_item, _locations, items) => {
             return items.has("KeyP2") && items.canKillMostThings(this.world);
         });
 
-        this.locations.get("Desert Palace - Compass Chest").setRequirements((_locations, items) => {
+        this.locations.get("Desert Palace - Compass Chest").setRequirements((_item, _locations, items) => {
             return items.has("KeyP2");
         })
 
-        this.locations.get("Desert Palace - Torch").setRequirements((_locations, items) => {
+        this.locations.get("Desert Palace - Torch").setRequirements((_item, _locations, items) => {
             return items.has('PegasusBoots');
         })
 
@@ -55,19 +55,19 @@ export class DesertPalace extends Dungeon {
             return this.locations.get("Desert Palace - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Desert Palace - Boss")!.setRequirements((locations, items) => {
+        this.locations.get("Desert Palace - Boss")?.setRequirements((_item, locations, items) => {
             return ((this.canEnter(locations, items))
-                && ((items.canLiftRocks() || items.has('MagicMirror') && this.world.getRegion('Mire')!.canEnter(locations, items)))
+                && ((items.canLiftRocks() || items.has('MagicMirror') && this.world.getRegion('Mire')?.canEnter(locations, items)) || false)
                 && items.canLightTorches()
                 && items.has('BigKeyP2') && items.has('KeyP2')
-                && this.boss?.canBeat !== undefined && this.boss!.canBeat(items, locations))
+                && this.boss?.canBeat !== undefined && this.boss?.canBeat(items, locations))
         });
 
         this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
-                && (items.has('BookOfMudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')!.canEnter(locations,items))));
+                && (items.has('BookOfMudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')?.canEnter(locations,items)))) || false;
         };
 
-        this.prize!.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
     }
 }

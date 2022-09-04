@@ -18,16 +18,16 @@ export class West extends Region {
     }
 
     override initialize() {
-        this.locations.get("Old Man")?.setRequirements((_locations, items) => {
+        this.locations.get("Old Man")?.setRequirements((_item, _locations, items) => {
             return items.has("Lamp");
         });
 
-        this.locations.get("Ether Tablet")?.setRequirements((locations, items) => {
+        this.locations.get("Ether Tablet")?.setRequirements((_item, locations, items) => {
             return items.has("BookOfMudora") && items.hasSword(2)
                 && this.world.getRegion("Tower of Hera")!.canEnter(locations, items);
         });
 
-        this.locations.get("Spectacle Rock")?.setRequirements((_locations, items) => {
+        this.locations.get("Spectacle Rock")?.setRequirements((_item, _locations, items) => {
             return items.has("MagicMirror");
         });
 

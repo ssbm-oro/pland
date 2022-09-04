@@ -39,23 +39,23 @@ export class EasternPalace extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Eastern Palace - Big Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Eastern Palace - Big Chest")?.setRequirements((_item, _locations, items) => {
             return items.has('BigKeyP1');
         });
 
-        this.locations.get("Eastern Palace - Big Key Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Eastern Palace - Big Key Chest")?.setRequirements((_item, _locations, items) => {
             return items.has('Lamp');
         });
 
         this.can_complete = (locations, items) => {
-            return this.locations.get("Eastern Palace - Boss")?.canAccess(items, locations)!;
+            return this.locations.get("Eastern Palace - Boss")?.canAccess(items, locations);
         }
 
-        this.locations.get("Eastern Palace - Boss")?.setRequirements((locations, items) => {
+        this.locations.get("Eastern Palace - Boss")?.setRequirements((_item, locations, items) => {
             return items.canShootArrows(this.world)
                 && items.canLightTorches()
                 && items.has('BigKeyP1')
-                && this.boss?.canBeat(items, locations)!;
+                && this.boss?.canBeat(items, locations) || false;
         });
 
         this.can_enter = (_locations, items) => {

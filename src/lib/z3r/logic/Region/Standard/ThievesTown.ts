@@ -36,22 +36,22 @@ export class ThievesTown extends Dungeon {
         ]);
         this.locations.setChecksForWorld(world);
 
-        this.prize = this.locations.get("Thieves' Town - Prize")!;
+        this.prize = this.locations.get("Thieves' Town - Prize");
     }
 
     public override initialize() {
-        this.locations.get("Thieves' Town - Attic")?.setRequirements((_locations, items) => {
+        this.locations.get("Thieves' Town - Attic")?.setRequirements((_item, _locations, items) => {
             return items.has('KeyD4') && items.has('BigKeyD4');
         });
 
-        this.locations.get("Thieves' Town - Big Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Thieves' Town - Big Chest")?.setRequirements((_item, locations, items) => {
             if (locations.get("Thieves' Town - Big Chest")?.hasItem(Item.get('KeyD4', this.world))) {
                 return items.has("Hammer") && items.has("BigKeyD4");
             }
             return items.has("Hammer") && items.has('KeyD4') && items.has('BigKeyD4');
         });
 
-        this.locations.get("Thieves' Town - Blind's Cell")?.setRequirements((_locations, items) => {
+        this.locations.get("Thieves' Town - Blind's Cell")?.setRequirements((_item, _locations, items) => {
             return items.has('BigKeyD4');
         });
 
@@ -59,7 +59,7 @@ export class ThievesTown extends Dungeon {
             return this.locations.get("Thieves' Town - Boss").canAccess(items, locations)
         }
 
-        this.locations.get("Thieves' Town - Boss")?.setRequirements((locations, items) => {
+        this.locations.get("Thieves' Town - Boss")?.setRequirements((_item, locations, items) => {
             return this.canEnter(locations, items)
                 && items.has("KeyD4") && items.has("BigKeyD4")
                 && !!this.boss && this.boss.canBeat(items, locations)
@@ -68,10 +68,10 @@ export class ThievesTown extends Dungeon {
         this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && items.has("MoonPearl")
-                && this.world.getRegion("North West Dark World")!.canEnter(locations, items);
+                && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false;
         };
 
-        this.prize?.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
         return this;
     }

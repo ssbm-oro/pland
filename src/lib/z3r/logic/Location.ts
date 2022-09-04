@@ -11,7 +11,7 @@ export interface ILocation extends Entry {
     isCrystalPendant: boolean;
     always_callback?: (item: IItem, items: ItemCollection) => boolean;
     fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
-    requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
+    requirement_callback?: (item: IItem | null, locations: LocationCollection, items: ItemCollection) => boolean;
     class: 'items' | 'prizes' | 'medallions' | 'bottles' | 'events';
 }
 
@@ -24,7 +24,7 @@ export class Z3rLocation implements ILocation {
 
     always_callback?: (item: IItem, items: ItemCollection) => boolean;
     fill_callback?: (item: IItem, locations: LocationCollection) => boolean;
-    requirement_callback?: (locations: LocationCollection, items: ItemCollection) => boolean;
+    requirement_callback?: (item: IItem | null, locations: LocationCollection, items: ItemCollection) => boolean;
 
     public constructor(name: string, region: Region) {
         this.name = name;
@@ -51,7 +51,7 @@ export class Z3rLocation implements ILocation {
         return this;
     }
 
-    public setRequirements(requirement_callback: (locations: LocationCollection, items: ItemCollection) => boolean) {
+    public setRequirements(requirement_callback: (item: IItem | null, locations: LocationCollection, items: ItemCollection) => boolean) {
         this.requirement_callback = requirement_callback;
     }
 
@@ -64,7 +64,7 @@ export class Z3rLocation implements ILocation {
 
         const oldItem = this.item;
         this.item = newItem;
-        const fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items));
+        const fillable = (this.always_callback && this.always_callback.call(this, this.item, items)) || (this.region.canFill(this.item) && (!this.fill_callback || this.fill_callback.call(this, this.item, this.region.locations))) && (!check_access || this.canAccess(items, new LocationCollection([]), this.item));
         this.item = oldItem;
 
         return fillable;
@@ -74,7 +74,7 @@ export class Z3rLocation implements ILocation {
         this.item = null;
     }
 
-    public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([])) {
+    public canAccess(items: ItemCollection, locations: LocationCollection = new LocationCollection([]), item: IItem | null = null) {
         const total_locations = locations.merge(this.region.locations);
 
         log(`Checking region access for ${this.region.name}.`);
@@ -85,7 +85,7 @@ export class Z3rLocation implements ILocation {
         }
 
         log(`Checking requirement callback for ${this.name}.`);
-        if (!this.requirement_callback || this.requirement_callback.call(this, total_locations, items)) {
+        if (!this.requirement_callback || this.requirement_callback.call(this, item, total_locations, items)) {
             log(`Can access requirements.`);
             return true
         }

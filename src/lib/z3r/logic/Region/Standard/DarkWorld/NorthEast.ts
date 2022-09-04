@@ -1,4 +1,4 @@
-import Item from "$lib/z3r/logic/Item";
+import Item, { type IItem } from "$lib/z3r/logic/Item";
 import { Chest, Event, Standing } from "$lib/z3r/logic/Location";
 import  Region from "$lib/z3r/logic/Region";
 import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
@@ -23,11 +23,11 @@ export class NorthEast extends Region {
     }
 
     override initialize() {
-        this.locations.get("Catfish")?.setRequirements((_locations, items) => {
+        this.locations.get("Catfish")?.setRequirements((_item, _locations, items) => {
             return items.has('MoonPearl') && items.canLiftRocks();
         });
 
-        const pyramidRequirements = (locations: LocationCollection, items: ItemCollection) => {
+        const pyramidRequirements = (_item: IItem | null, locations: LocationCollection, items: ItemCollection) => {
             return items.has("Crystal5") && items.has("Crystal6")
                 && (!!this.world.getRegion("South Dark World")?.canEnter(locations, items))
                 && items.has("MoonPearl") && (items.has("Hammer")

@@ -74,7 +74,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             const availableItems: IItem[] = []
             planted.LocationsWithItem().reverse().forEach(location => {
                 log(`checking if ${location.name} can be accessed to get ${location.item?.name}`)
-                if (location.canAccess(available, planted)) {
+                if (location.canAccess(available, planted, location.item)) {
                     available.addItem(location.item!);
                     availableItems.push(location.item!);
                 }
@@ -103,7 +103,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             }
         }
 
-        plantable &&= planted.to_array().every(location => location.requirement_callback ? location?.requirement_callback(world.locations, available) : true)
+        plantable &&= planted.to_array().every(location => location.requirement_callback ? location?.requirement_callback(location.item, world.locations, available) : true)
 
         if (plantable) {
 
@@ -111,7 +111,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             planted.to_array().map(location => location as Z3rLocation).forEach(location => {
                 log(`checking if planted item at ${location.name} is accessible.`)
                 console.log(location);
-                if (location.region.canEnter(world.locations, available) && location.canAccess(available) && location.item && (location.requirement_callback ? location.requirement_callback(world.locations, available): true)) {
+                if (location.region.canEnter(world.locations, available) && location.canAccess(available, new LocationCollection(), location.item) && location.item && (location.requirement_callback ? location.requirement_callback(null, world.locations, available): true)) {
                     log(`${location.name} is accessible so adding ${location.item.name} to available items`)
                     available.addItem(location.item);
                 }

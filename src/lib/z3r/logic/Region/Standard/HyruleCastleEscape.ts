@@ -1,4 +1,4 @@
-import Item from "../../Item";
+import Item, { type IItem } from "../../Item";
 import Region from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
 import type { ItemCollection } from "../../Support/ItemCollection";
@@ -39,7 +39,7 @@ export class HyruleCastleEscape extends Region {
     }
 
     public override initialize() {
-        const backOfEscapeRequirements = (_location: LocationCollection, items: ItemCollection) => {
+        const backOfEscapeRequirements = (_item: IItem | null, _location: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world) && items.has('KeyH2');
         };
 
@@ -48,28 +48,28 @@ export class HyruleCastleEscape extends Region {
         this.locations.get("Sewers - Secret Room - Middle")?.setRequirements(backOfEscapeRequirements);
         this.locations.get("Sewers - Secret Room - Right")?.setRequirements(backOfEscapeRequirements);
         
-        this.locations.get("Sewers - Dark Cross")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Sewers - Dark Cross")?.setRequirements((_item, _locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
 
-        this.locations.get("Hyrule Castle - Boomerang Chest")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Hyrule Castle - Boomerang Chest")?.setRequirements((_item, _locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
-        this.locations.get("Hyrule Castle - Map Chest")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Hyrule Castle - Map Chest")?.setRequirements((_item, _locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
-        this.locations.get("Hyrule Castle - Zelda's Cell")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Hyrule Castle - Zelda's Cell")?.setRequirements((_item, _locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
-        this.locations.get("Secret Passage")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Secret Passage")?.setRequirements((_item, _locations: LocationCollection, items: ItemCollection) => {
             return items.canKillMostThings(this.world);
         });
 
         this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
-            return this.locations.get("Sanctuary")?.canAccess(items, locations)!;
+            return this.locations.get("Sanctuary")?.canAccess(items, locations);
         }
 
-        this.prize?.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
         return this;
     }

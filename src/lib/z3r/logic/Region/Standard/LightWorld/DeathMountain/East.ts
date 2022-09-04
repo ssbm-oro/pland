@@ -24,12 +24,12 @@ export class East extends Region {
     }
 
     override initialize() {
-        this.locations.get("Mimic Cave")?.setRequirements((locations, items) => {
+        this.locations.get("Mimic Cave")?.setRequirements((_item, locations, items) => {
             return items.has("Hammer") && items.has("MagicMirror")
                 && (items.has("KeyD7", 2) && this.world.getRegion("Turtle Rock")!.canEnter(locations, items));
         });
 
-        this.locations.get("Floating Island")?.setRequirements((locations, items) => {
+        this.locations.get("Floating Island")?.setRequirements((_item, locations, items) => {
             return (items.has("MagicMirror")
                 && (items.has("MoonPearl") && (items.canBombThings()) && items.canLiftRocks())
                 && this.world.getRegion("East Dark World Death Mountain")!.canEnter(locations, items));

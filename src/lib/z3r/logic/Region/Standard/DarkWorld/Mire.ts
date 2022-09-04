@@ -16,11 +16,11 @@ export class Mire extends Region {
     }
 
     override initialize() {
-        this.locations.get("Mire Shed - Left")?.setRequirements((_locations, items) => {
+        this.locations.get("Mire Shed - Left")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Mire Shed - Right")?.setRequirements((_locations, items) => {
+        this.locations.get("Mire Shed - Right")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 

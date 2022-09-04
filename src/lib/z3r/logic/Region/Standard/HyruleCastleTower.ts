@@ -33,16 +33,16 @@ export class HyruleCastleTower extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Castle Tower - Dark Maze")?.setRequirements((_locations: LocationCollection, items: ItemCollection) => {
+        this.locations.get("Castle Tower - Dark Maze")?.setRequirements((_item, _locations: LocationCollection, items: ItemCollection) => {
             return items.has('Lamp') && items.has('KeyA1');
         });
 
         this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
-            `Checking if we can complete Castle Tower`
+            log(`Checking if we can complete Castle Tower`)
             return this.canEnter(locations, items) && items.has('KeyA1',2) && items.has('Lamp') && items.hasSword();
         }
 
-        this.prize?.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
         this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
             log(`Checking if we can enter Castle Tower`);

@@ -1,5 +1,4 @@
 import Item from "../../Item";
-import type IItem from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -38,47 +37,47 @@ export class MiseryMire extends Dungeon {
         ]);
 
         this.locations.setChecksForWorld(world);
-        this.prize = this.locations.get("Misery Mire - Prize")!;
+        this.prize = this.locations.get("Misery Mire - Prize");
     }
 
     public override initialize() {
-        this.locations.get("Misery Mire - Big Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Misery Mire - Big Chest")?.setRequirements((_item, _locations, items) => {
             return items.has('BigKeyD6');
         });
 
-        this.locations.get("Misery Mire - Main Lobby")?.setRequirements((_locations, items) => {
+        this.locations.get("Misery Mire - Main Lobby")?.setRequirements((_item, _locations, items) => {
             return items.has('KeyD6') || items.has('BigKeyD6');
         });
 
-        this.locations.get("Misery Mire - Map Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Misery Mire - Map Chest")?.setRequirements((_item, _locations, items) => {
             return items.has('KeyD6') || items.has('BigKeyD6');
         });
 
-        this.locations.get("Misery Mire - Big Key Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Big Key Chest")?.setRequirements((_item, locations, items) => {
             return items.canLightTorches()
                 && ((locations.get("Misery Mire - Compass Chest")?.hasItem(Item.get('BigKeyD6', this.world)) && items.has('KeyD6', 2)) || items.has('KeyD6', 3));
         });
 
-        this.locations.get("Misery Mire - Compass Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Compass Chest")?.setRequirements((_item, locations, items) => {
             return items.canLightTorches()
                 && ((locations.get("Misery Mire - Big Key Chest")?.hasItem(Item.get('BigKeyD6', this.world)) && items.has('KeyD6', 2)) || items.has('KeyD6', 3));
         });
 
         this.can_complete = (locations, items) => {
-            return this.locations.get("Misery Mire - Boss")?.canAccess(items, locations)!;
+            return this.locations.get("Misery Mire - Boss")?.canAccess(items, locations);
         };
 
-        this.locations.get("Misery Mire - Boss")?.setRequirements((locations, items) => {
+        this.locations.get("Misery Mire - Boss")?.setRequirements((_item, locations, items) => {
             return this.canEnter(locations, items)
                 && items.has('CaneOfSomaria') && (items.has('Lamp'))
                 && items.has('BigKeyD6')
-                && this.boss?.canBeat(items, locations)!
+                && this.boss?.canBeat(items, locations) || false
         });
 
         this.can_enter = (locations, items) => {
 
             let haveMedallion = false;
-            let medallion = locations.get('Misery Mire Medallion')
+            const medallion = locations.get('Misery Mire Medallion')
             if (!medallion || !medallion.item) {
                 haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
                 log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
@@ -94,10 +93,10 @@ export class MiseryMire extends Dungeon {
                 && items.has('MoonPearl')
                 && (items.has('Hookshot') || items.has('PegasusBoots'))
                 && items.canKillMostThings(this.world, 8)
-                && this.world.getRegion('Mire')!.canEnter(locations, items);
+                && this.world.getRegion('Mire')?.canEnter(locations, items) || false;
         }
 
-        this.prize?.setRequirements(this.canComplete)
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items))
 
         return this;
     }

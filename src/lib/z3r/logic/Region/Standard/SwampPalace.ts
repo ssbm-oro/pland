@@ -38,80 +38,80 @@ export class SwampPalace extends Dungeon {
         ]);
         this.locations.setChecksForWorld(world);
 
-        this.prize = this.locations.get("Swamp Palace - Prize")!;
+        this.prize = this.locations.get("Swamp Palace - Prize");
     }
 
     public override initialize() {
-        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((_item, _locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer")
                 && items.has("BigKeyD2");
         });
 
-        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((_item, _locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Map Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Map Chest")?.setRequirements((_item, _locations, items) => {
             return items.has("KeyD2")
                 && items.canBombThings();
         });
 
-        this.locations.get("Swamp Palace - West Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - West Chest")?.setRequirements((_item, _locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_item, _locations, items) => {
             return items.has("KeyD2")
                 && items.has("Hammer");
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_item, _locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((_item, _locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((_item, _locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
-        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((_locations, items) => {
+        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((_item, _locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
         });
 
         this.can_complete = (_locations, items) => {
-            return this.locations.get("Swamp Palace - Boss")?.canAccess(items)!;
+            return this.locations.get("Swamp Palace - Boss")?.canAccess(items);
         }
 
-        this.locations.get("Swamp Palace - Boss")?.setRequirements((locations, items) => {
+        this.locations.get("Swamp Palace - Boss")?.setRequirements((_item, locations, items) => {
             return items.has("Hookshot")
                 && items.has("KeyD2")
                 && items.has("Hammer")
-                && this.boss?.canBeat(items, locations)!;
+                && this.boss?.canBeat(items, locations) || false;
         });
 
         this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && items.has("Flippers")
-                && this.world.getRegion("South Dark World")!.canEnter(locations, items)
+                && (this.world.getRegion("South Dark World")?.canEnter(locations, items) || false)
                 && items.has("MoonPearl")
                 && items.has("MagicMirror");
         }
 
-        this.prize?.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
         return this;
     }

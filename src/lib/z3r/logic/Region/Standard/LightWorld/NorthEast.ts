@@ -23,27 +23,27 @@ export class NorthEast extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Sahasrahla")?.setRequirements((_locations, items) => {
+        this.locations.get("Sahasrahla")?.setRequirements((_item, _locations, items) => {
             return items.has("PendantOfCourage");
         });
 
-        this.locations.get("King Zora")?.setRequirements((_locations, items) => {
+        this.locations.get("King Zora")?.setRequirements((_item, _locations, items) => {
             return items.canLiftRocks() || items.has("Flippers");
         });
 
-        this.locations.get("Potion Shop")?.setRequirements((_locations, items) => {
+        this.locations.get("Potion Shop")?.setRequirements((_item, _locations, items) => {
             return items.has("Mushroom");
         });
 
-        this.locations.get("Zora Ledge")?.setRequirements((_locations, items) => {
+        this.locations.get("Zora Ledge")?.setRequirements((_item, _locations, items) => {
             return items.has("Flippers");
         });
 
-        this.locations.get("Waterfall Fairy - Left")?.setRequirements((_locations, items) => {
+        this.locations.get("Waterfall Fairy - Left")?.setRequirements((_item, _locations, items) => {
             return items.has("Flippers");
         });
 
-        this.locations.get("Waterfall Fairy - Right")?.setRequirements((_locations, items) => {
+        this.locations.get("Waterfall Fairy - Right")?.setRequirements((_item, _locations, items) => {
             return items.has("Flippers");
         });
 

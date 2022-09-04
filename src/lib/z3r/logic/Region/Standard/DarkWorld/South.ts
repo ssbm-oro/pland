@@ -20,39 +20,39 @@ export class South extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Hype Cave - Top")?.setRequirements((_locations, items) => {
+        this.locations.get("Hype Cave - Top")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
         
-        this.locations.get("Hype Cave - Middle Right")?.setRequirements((_locations, items) => {
+        this.locations.get("Hype Cave - Middle Right")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Middle Left")?.setRequirements((_locations, items) => {
+        this.locations.get("Hype Cave - Middle Left")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - Bottom")?.setRequirements((_locations, items) => {
+        this.locations.get("Hype Cave - Bottom")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Hype Cave - NPC")?.setRequirements((_locations, items) => {
+        this.locations.get("Hype Cave - NPC")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Stumpy")?.setRequirements((_locations, items) => {
+        this.locations.get("Stumpy")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 
-        this.locations.get("Digging Game")?.setRequirements((_locations, items) => {
+        this.locations.get("Digging Game")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl");
         });
 
         this.can_enter = (locations, items) => {
             return items.has("RescueZelda")
                 && (items.has("MoonPearl")
-                    && (this.world.getRegion("North East Dark World")!.canEnter(locations, items) && items.has("Hammer"))
-                || this.world.getRegion("North West Dark World")!.canEnter(locations, items));
+                    && (this.world.getRegion("North East Dark World")?.canEnter(locations, items) && items.has("Hammer"))
+                || this.world.getRegion("North West Dark World")?.canEnter(locations, items)) || false;
         };
 
         return this;

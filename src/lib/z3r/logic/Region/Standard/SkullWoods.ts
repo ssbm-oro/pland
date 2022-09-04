@@ -36,37 +36,37 @@ export class SkullWoods extends Region {
         ]);
         this.locations.setChecksForWorld(world);
 
-        this.prize = this.locations.get("Skull Woods - Prize")!;
+        this.prize = this.locations.get("Skull Woods - Prize");
     }
 
     public override initialize() {
-        this.locations.get("Skull Woods - Big Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Skull Woods - Big Chest")?.setRequirements((_item, _locations, items) => {
             return items.has('BigKeyD3');
         });
 
-        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((_locations, items) => {
+        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((_item, _locations, items) => {
             return items.has('MoonPearl') && items.has('FireRod');
         });
 
         this.can_complete = (locations, items) => {
-            return this.locations.get('Skull Woods - Boss')?.canAccess(items, locations)!;
+            return this.locations.get('Skull Woods - Boss')?.canAccess(items, locations);
         };
 
-        this.locations.get("Skull Woods - Boss")?.setRequirements((locations, items) => {
+        this.locations.get("Skull Woods - Boss")?.setRequirements((_item, locations, items) => {
             return this.canEnter(locations, items)
                 && items.has('MoonPearl') && items.has('FireRod')
                 && items.hasSword()
                 && items.has('KeyD3', 3)
-                && this.boss?.canBeat(items, locations)!;
+                && this.boss?.canBeat(items, locations) || false;
         });
 
         this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
                 && items.has('MoonPearl')
-                && this.world.getRegion('North West Dark World')!.canEnter(locations, items);
+                && this.world.getRegion('North West Dark World')?.canEnter(locations, items) || false;
         };
 
-        this.prize?.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
         return this;
     }

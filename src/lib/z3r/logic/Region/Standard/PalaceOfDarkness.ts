@@ -1,4 +1,4 @@
-import Item from "../../Item";
+import Item, { type IItem } from "../../Item";
 import { Chest, BigChest, Drop, Crystal } from "../../Location";
 import { Dungeon } from "../../Region";
 import { LocationCollection } from "../../Support/LocationCollection";
@@ -44,39 +44,39 @@ export class PalaceOfDarkness extends Dungeon {
         ]);
 
         this.locations.setChecksForWorld(world);
-        this.prize = this.locations.get("Palace of Darkness - Prize")!;
+        this.prize = this.locations.get("Palace of Darkness - Prize");
     }
 
     public override initialize() {
-        const bowLockedRequirements = (_locations: LocationCollection, items: ItemCollection) => { return items.canShootArrows(this.world) };
+        const bowLockedRequirements = (_items: unknown, _locations: LocationCollection, items: ItemCollection) => { return items.canShootArrows(this.world) };
         this.locations.get("Palace of Darkness - The Arena - Ledge")?.setRequirements(bowLockedRequirements);
         this.locations.get("Palace of Darkness - Map Chest")?.setRequirements(bowLockedRequirements);
 
-        this.locations.get("Palace of Darkness - Big Key Chest")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - Big Key Chest")?.setRequirements((_item, locations, items) => {
             if (locations.get("Palace of Darkness - Big Key Chest")?.hasItem(Item.get('KeyD1', this.world)))
                 return items.has('KeyD1');
 
             return (((items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6): items.has('KeyD1', 5) )));
         });
 
-        this.locations.get("Palace of Darkness - The Arena - Bridge")?.setRequirements((_locations, items) => {
+        this.locations.get("Palace of Darkness - The Arena - Bridge")?.setRequirements((_item, _locations, items) => {
             return items.has('KeyD1') || (items.canShootArrows(this.world) && items.has('Hammer'));
         })
 
-        const darkMazeRequirements = (_locations:LocationCollection, items: ItemCollection) => {
+        const darkMazeRequirements = (_item: IItem | null, _locations:LocationCollection, items: ItemCollection) => {
             return items.has('Lamp')
                 && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6): items.has('KeyD1', 5));
         };
 
-        this.locations.get("Palace of Darkness - Big Chest")?.setRequirements((locations, items) => {
-            return darkMazeRequirements(locations, items) && items.has('BigKeyD1');
+        this.locations.get("Palace of Darkness - Big Chest")?.setRequirements((item, locations, items) => {
+            return darkMazeRequirements(item, locations, items) && items.has('BigKeyD1');
         });
 
-        this.locations.get("Palace of Darkness - Compass Chest")?.setRequirements((_locations, items) => {
+        this.locations.get("Palace of Darkness - Compass Chest")?.setRequirements((_item, _locations, items) => {
             return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4): items.has('KeyD1', 3));
         });
 
-        this.locations.get("Palace of Darkness - Harmless Hellway")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - Harmless Hellway")?.setRequirements((_item, locations, items) => {
             if (locations.get("Palace of Darkness - Harmless Hellway")?.hasItem(Item.get('KeyD1', this.world))) {
                 return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
             }
@@ -84,11 +84,11 @@ export class PalaceOfDarkness extends Dungeon {
             return (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 6) : items.has('KeyD1', 5));
         });
 
-        this.locations.get("Palace of Darkness - Stalfos Basement")?.setRequirements((_locations, items) => {
+        this.locations.get("Palace of Darkness - Stalfos Basement")?.setRequirements((_item, _locations, items) => {
             return items.has('KeyD1') || (items.canShootArrows(this.world) && items.has('Hammer'));
         });
 
-        const darkBasementRequirements = (_locations: LocationCollection, items: ItemCollection) => items.canLightTorches() && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
+        const darkBasementRequirements = (_item: unknown, _locations: LocationCollection, items: ItemCollection) => items.canLightTorches() && (items.has('Hammer') && items.canShootArrows(this.world) && items.has('Lamp') ? items.has('KeyD1', 4) : items.has('KeyD1', 3));
 
         this.locations.get("Palace of Darkness - Dark Basement - Left")?.setRequirements(darkBasementRequirements);
         this.locations.get("Palace of Darkness - Dark Basement - Right")?.setRequirements(darkBasementRequirements);
@@ -97,22 +97,22 @@ export class PalaceOfDarkness extends Dungeon {
         this.locations.get("Palace of Darkness - Dark Maze - Bottom")?.setRequirements(darkMazeRequirements);
 
         this.can_complete = (locations, items) => {
-            return this.locations.get("Palace of Darkness - Boss")?.canAccess(items, locations)!;
+            return this.locations.get("Palace of Darkness - Boss")?.canAccess(items, locations);
         };
 
-        this.locations.get("Palace of Darkness - Boss")?.setRequirements((locations, items) => {
+        this.locations.get("Palace of Darkness - Boss")?.setRequirements((_item, locations, items) => {
             return this.canEnter(locations, items)
-                && this.boss?.canBeat(items, locations)!
+                && (this.boss?.canBeat(items, locations) || false)
                 && items.has('Hammer') && items.has('Lamp') && items.canShootArrows(this.world)
                 && items.has('BigKeyD1') && items.has('KeyD1', 6);
         });
 
         this.can_enter = (locations, items) => {
             return items.has('RescueZelda')
-                && (items.has('MoonPearl') && this.world.getRegion('North East Dark World')!.canEnter(locations, items));
+                && (items.has('MoonPearl') && this.world.getRegion('North East Dark World')?.canEnter(locations, items) || false);
         };
 
-        this.prize?.setRequirements(this.canComplete);
+        this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
         return this;
     }

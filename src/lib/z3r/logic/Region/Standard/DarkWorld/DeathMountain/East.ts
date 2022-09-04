@@ -1,3 +1,4 @@
+import type { IItem } from "$lib/z3r/logic/Item";
 import { Chest } from "$lib/z3r/logic/Location";
 import Region from "$lib/z3r/logic/Region";
 import type { ItemCollection } from "$lib/z3r/logic/Support/ItemCollection";
@@ -20,15 +21,15 @@ export class East extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Super Bunny Cave - Top")?.setRequirements((locations, items) => {
+        this.locations.get("Super Bunny Cave - Top")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl")
         });
 
-        this.locations.get("Super Bunny Cave - Bottom")?.setRequirements((locations, items) => {
+        this.locations.get("Super Bunny Cave - Bottom")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl")
         });
 
-        const hookshotCaveRequirements = (locations: LocationCollection, items: ItemCollection) => {
+        const hookshotCaveRequirements = (_item: IItem | null, _locations: LocationCollection, items: ItemCollection) => {
             return items.has("MoonPearl") && items.canLiftRocks() && items.has("Hookshot");
         }
 
@@ -36,7 +37,7 @@ export class East extends Region {
         this.locations.get("Hookshot Cave - Top Left")?.setRequirements(hookshotCaveRequirements);
         this.locations.get("Hookshot Cave - Bottom Left")?.setRequirements(hookshotCaveRequirements);
 
-        this.locations.get("Hookshot Cave - Bottom Right")?.setRequirements((locations, items) => {
+        this.locations.get("Hookshot Cave - Bottom Right")?.setRequirements((_item, _locations, items) => {
             return items.has("MoonPearl") && items.canLiftRocks() && (items.has("Hookshot") || items.has("PegasusBoots"));
         });
 
