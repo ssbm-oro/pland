@@ -14,9 +14,9 @@ export class West extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Spike Cave")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl") && items.has("Hammer") && items.canLiftRocks()
-                    && ((items.canExtendMagic() && items.has("Cape")) || items.has("CaneOfByrna"));
+        this.locations.get("Spike Cave")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.hasOrCanGet("Hammer", locations, item, items_checked) && items.canLiftRocks()
+                    && ((items.canExtendMagic() && items.hasOrCanGet("Cape", locations, item, items_checked)) || items.hasOrCanGet("CaneOfByrna", locations, item, items_checked));
         });
 
         this.can_enter = (locations, items) => {

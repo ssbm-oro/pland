@@ -49,7 +49,12 @@
             const z3rItem = Item.get(item.name, world.id);
             if (z3rLocation && z3rItem) {
                 available.removeItem(z3rItem);
-                let plantable = z3rLocation.canFill(z3rItem, available, true)
+                let plantable = true;
+                try {
+                    plantable = z3rLocation.canFill(z3rItem, available, true)
+                } catch {
+                    plantable = false;
+                }
                 available.addItem(z3rItem);
                 return plantable;
             }

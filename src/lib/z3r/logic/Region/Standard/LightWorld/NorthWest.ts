@@ -40,14 +40,14 @@ export class NorthWest extends Region {
             return items.has("PendantOfPower") && items.has("PendantOfWisdom") && items.has("PendantOfCourage");
         });
 
-        this.locations.get("King's Tomb")?.setRequirements((_item, locations, items) => {
-            return items.has("PegasusBoots")
+        this.locations.get("King's Tomb")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("PegasusBoots", locations, item, items_checked)
                 && (items.canLiftDarkRocks()
-                    || items.has("MagicMirror") && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false);
+                    || items.hasOrCanGet("MagicMirror", locations, item, items_checked) && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false);
         });
 
-        this.locations.get("Pegasus Rocks")?.setRequirements((_item, _locations, items) => {
-            return items.has("PegasusBoots")
+        this.locations.get("Pegasus Rocks")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("PegasusBoots", locations, item, items_checked)
         });
 
         this.locations.get("Magic Bat")?.setRequirements((_item, locations, items) => {

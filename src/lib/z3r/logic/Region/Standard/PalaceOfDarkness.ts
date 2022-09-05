@@ -100,9 +100,9 @@ export class PalaceOfDarkness extends Dungeon {
             return this.locations.get("Palace of Darkness - Boss")?.canAccess(items, locations);
         };
 
-        this.locations.get("Palace of Darkness - Boss")?.setRequirements((item, locations, items) => {
+        this.locations.get("Palace of Darkness - Boss")?.setRequirements((item, locations, items, items_checked) => {
             return this.canEnter(locations, items)
-                && (this.boss?.canBeat(items, locations, item) || false)
+                && (this.boss?.canBeat(items, locations, item, items_checked) || false)
                 && items.has('Hammer') && items.has('Lamp') && items.canShootArrows(this.world)
                 && items.has('BigKeyD1') && items.has('KeyD1', 6);
         });

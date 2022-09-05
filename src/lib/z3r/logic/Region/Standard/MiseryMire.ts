@@ -67,11 +67,11 @@ export class MiseryMire extends Dungeon {
             return this.locations.get("Misery Mire - Boss")?.canAccess(items, locations);
         };
 
-        this.locations.get("Misery Mire - Boss")?.setRequirements((item, locations, items) => {
+        this.locations.get("Misery Mire - Boss")?.setRequirements((item, locations, items, items_checked) => {
             return this.canEnter(locations, items)
-                && items.has('CaneOfSomaria') && (items.has('Lamp'))
+                && items.hasOrCanGet('CaneOfSomaria', locations, item, items_checked) && (items.hasOrCanGet('Lamp', locations, item, items_checked))
                 && items.has('BigKeyD6')
-                && this.boss?.canBeat(items, locations, item) || false
+                && this.boss?.canBeat(items, locations, item, items_checked) || false
         });
 
         this.can_enter = (locations, items) => {

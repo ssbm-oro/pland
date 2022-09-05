@@ -23,15 +23,15 @@ export class NorthEast extends Region {
     }
 
     override initialize() {
-        this.locations.get("Catfish")?.setRequirements((item, locations, items) => {
-            return items.hasOrCanGet('MoonPearl', locations, item) && items.canLiftRocks();
+        this.locations.get("Catfish")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet('MoonPearl', locations, item, items_checked) && items.canLiftRocks();
         });
 
-        const pyramidRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection) => {
+        const pyramidRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, items_checked: string[]) => {
             return items.has("Crystal5") && items.has("Crystal6")
                 && (!!this.world.getRegion("South Dark World")?.canEnter(locations, items))
-                && items.hasOrCanGet("MoonPearl", locations, item) && (items.hasOrCanGet("Hammer", locations, item)
-                    || (items.hasOrCanGet("MagicMirror", locations, item) && (items.canDefeatAgahnim(this.world))))
+                && items.hasOrCanGet("MoonPearl", locations, item, items_checked) && (items.hasOrCanGet("Hammer", locations, item, items_checked)
+                    || (items.hasOrCanGet("MagicMirror", locations, item, items_checked) && (items.canDefeatAgahnim(this.world))))
         }
 
         this.locations.get("Pyramid Fairy - Left")?.setRequirements(pyramidRequirements);

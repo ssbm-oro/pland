@@ -54,8 +54,8 @@ export class TowerOfHera extends Dungeon {
             return this.locations.get("Tower of Hera - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Tower of Hera - Boss")?.setRequirements((item, locations, items) => {
-            return (this.boss?.canBeat(items, locations, item) || false
+        this.locations.get("Tower of Hera - Boss")?.setRequirements((item, locations, items, items_checked) => {
+            return (this.boss?.canBeat(items, locations, item, items_checked) || false
                 && items.has("BigKeyP3"));
         });
 

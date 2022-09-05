@@ -42,15 +42,15 @@ export class SwampPalace extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((_item, _locations, items) => {
+        this.locations.get("Swamp Palace - Big Chest")?.setRequirements((item, locations, items, items_checked) => {
             return items.has("KeyD2")
-                && items.has("Hammer")
+                && items.hasOrCanGet("Hammer", locations, item, items_checked)
                 && items.has("BigKeyD2");
         });
 
-        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((_item, _locations, items) => {
+        this.locations.get("Swamp Palace - Big Key Chest")?.setRequirements((item, locations, items, items_checked) => {
             return items.has("KeyD2")
-                && items.has("Hammer");
+                && items.hasOrCanGet("Hammer", locations, item, items_checked);
         });
 
         this.locations.get("Swamp Palace - Map Chest")?.setRequirements((_item, _locations, items) => {
@@ -58,49 +58,49 @@ export class SwampPalace extends Dungeon {
                 && items.canBombThings();
         });
 
-        this.locations.get("Swamp Palace - West Chest")?.setRequirements((_item, _locations, items) => {
+        this.locations.get("Swamp Palace - West Chest")?.setRequirements((item, locations, items, items_checked) => {
             return items.has("KeyD2")
-                && items.has("Hammer");
+            && items.hasOrCanGet("Hammer", locations, item, items_checked);
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_item, _locations, items) => {
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((item, locations, items, items_checked) => {
             return items.has("KeyD2")
-                && items.has("Hammer");
+            && items.hasOrCanGet("Hammer", locations, item, items_checked);
         });
 
-        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((_item, _locations, items) => {
-            return items.has("Hookshot")
+        this.locations.get("Swamp Palace - Compass Chest")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Hookshot", locations, item, items_checked)
                 && items.has("KeyD2")
-                && items.has("Hammer")
+                && items.hasOrCanGet("Hammer", locations, item, items_checked);
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((_item, _locations, items) => {
-            return items.has("Hookshot")
+        this.locations.get("Swamp Palace - Flooded Room - Left")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Hookshot", locations, item, items_checked)
                 && items.has("KeyD2")
-                && items.has("Hammer")
+                && items.hasOrCanGet("Hammer", locations, item, items_checked);
         });
 
-        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((_item, _locations, items) => {
-            return items.has("Hookshot")
+        this.locations.get("Swamp Palace - Flooded Room - Right")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Hookshot", locations, item, items_checked)
                 && items.has("KeyD2")
-                && items.has("Hammer")
+                && items.hasOrCanGet("Hammer", locations, item, items_checked);
         });
 
-        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((_item, _locations, items) => {
-            return items.has("Hookshot")
+        this.locations.get("Swamp Palace - Waterfall Room")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Hookshot", locations, item, items_checked)
                 && items.has("KeyD2")
-                && items.has("Hammer")
+                && items.hasOrCanGet("Hammer", locations, item, items_checked);
         });
 
         this.can_complete = (_locations, items) => {
             return this.locations.get("Swamp Palace - Boss")?.canAccess(items);
         }
 
-        this.locations.get("Swamp Palace - Boss")?.setRequirements((item, locations, items) => {
-            return items.has("Hookshot")
+        this.locations.get("Swamp Palace - Boss")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Hookshot", locations, item, items_checked)
                 && items.has("KeyD2")
-                && items.has("Hammer")
-                && this.boss?.canBeat(items, locations, item) || false;
+                && items.hasOrCanGet("Hammer", locations, item, items_checked)
+                && this.boss?.canBeat(items, locations, item, items_checked) || false
         });
 
         this.can_enter = (locations, items) => {

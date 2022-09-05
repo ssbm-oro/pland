@@ -42,12 +42,18 @@ export class LocationCollection extends Collection {
 
     public itemInLocations(item: IItem, locationKeys: string[]) {
         log(`Checking if ${item.name} is in one of these locations:`, ...locationKeys)
+        log(`also this is a ${this.getCount()} collection and has ${this.to_array()[0]?.name}`)
         const locations = locationKeys.map(key => this.items.get(key) as Z3rLocation);
-        
 
-        if(locations.some(location => location.hasItem(item))) {
-            log(`${item.name} is in ${locations.filter(location => location.hasItem(item))[0]?.name}.`)
-            return true;
+        log(`these locations were passed in:`)
+        locations.map(location => log(`${location.name}`))
+
+        const locationWithItem = this.filter(location => location.hasItem(item));
+        
+        if(locationWithItem.length > 0) {
+            log(`${item.name} is in ${locationWithItem[0]?.name}.`)
+            log(`returning ${locationWithItem.some(location => locationKeys.includes(location.name))}`)
+            return locationWithItem.some(location => locationKeys.includes(location.name));
         }
 
         // const randoLocation = locations[Math.floor(Math.random() * locations.length)];
@@ -59,6 +65,10 @@ export class LocationCollection extends Collection {
 
         log(`${item.name} was not in them.`)
         return false;
+    }
+
+    some(predicate: (location: Z3rLocation, index: number, array: Z3rLocation[]) => boolean) {
+        return Array.from(this.items.values()).some(predicate);
     }
 
     public getItems(world: World) {
@@ -114,22 +124,30 @@ export class LocationCollection extends Collection {
     }
 
     // TODO: investigate adding this to ItemCollection.has
-    CanGet(item_to_get: string, item: IItem | null, items: ItemCollection): boolean {
-        log(`checking if we can get ${item_to_get}`);
-        log(`out of curiousity, _item is ${item?.name}`)
-        if (item_to_get == item?.name) return false;
+    CanGet(item_to_get: string, item: IItem | null, items: ItemCollection, items_checked: string[]): boolean {
+        if (items_checked.includes(item_to_get)) {
+            log(`hey we're here. items_checked: ${items_checked.join(', ')}`)
+            return false
+        }
+        // if (!item) return true;
+        items_checked.push(item_to_get);
+
+        log(`checking if we can get ${item_to_get} and also items checked is ${items_checked.join(', ')}`);
         const itemToGet = Item.get(item_to_get, this.world_id);
+        let canGet = false;
         if (itemToGet) {
             const itemLocation = this.LocationsWithItem(itemToGet)[0];
             log(`${itemToGet.name} was found in ${itemLocation?.name}`)
             if (itemLocation) {
-                return itemLocation.canAccess(items, this);
+                log(`checking if we can access ${itemLocation.name}`)
+                //this.removeItem(itemLocation);
+                canGet = itemLocation.canAccess(items, this, itemToGet, items_checked);
+                //this.addItem(itemLocation);
             }
-            return true;
         }
 
-        log(`${item_to_get} not even available. does it exist?`)
-        return false;
+        log(`${item_to_get} not even available. does it exist? ${canGet}`)
+        return canGet;
     }
 
     public to_array() {

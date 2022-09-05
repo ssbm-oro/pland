@@ -20,32 +20,32 @@ export class South extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Hype Cave - Top")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Hype Cave - Top")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
         
-        this.locations.get("Hype Cave - Middle Right")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Hype Cave - Middle Right")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Hype Cave - Middle Left")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Hype Cave - Middle Left")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Hype Cave - Bottom")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Hype Cave - Bottom")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Hype Cave - NPC")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Hype Cave - NPC")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Stumpy")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Stumpy")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Digging Game")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Digging Game")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
         this.can_enter = (locations, items) => {

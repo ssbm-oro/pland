@@ -21,24 +21,24 @@ export class East extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Super Bunny Cave - Top")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl")
+        this.locations.get("Super Bunny Cave - Top")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Super Bunny Cave - Bottom")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl")
+        this.locations.get("Super Bunny Cave - Bottom")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        const hookshotCaveRequirements = (_item: IItem | null, _locations: LocationCollection, items: ItemCollection) => {
-            return items.has("MoonPearl") && items.canLiftRocks() && items.has("Hookshot");
+        const hookshotCaveRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, items_checked:string[]) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.canLiftRocks() && items.hasOrCanGet("Hookshot", locations, item, items_checked);
         }
 
         this.locations.get("Hookshot Cave - Top Right")?.setRequirements(hookshotCaveRequirements);
         this.locations.get("Hookshot Cave - Top Left")?.setRequirements(hookshotCaveRequirements);
         this.locations.get("Hookshot Cave - Bottom Left")?.setRequirements(hookshotCaveRequirements);
 
-        this.locations.get("Hookshot Cave - Bottom Right")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl") && items.canLiftRocks() && (items.has("Hookshot") || items.has("PegasusBoots"));
+        this.locations.get("Hookshot Cave - Bottom Right")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.canLiftRocks() && (items.hasOrCanGet("Hookshot", locations, item, items_checked) || items.hasOrCanGet("PegasusBoots", locations, item, items_checked));
         });
 
         this.can_enter = (locations, items) => {

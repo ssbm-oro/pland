@@ -59,7 +59,7 @@ export default class Region implements IRegion {
     }
 
     canFill(item: IItem) {
-        log(`Checking if ${item.name} can be go in Region ${this.name}.`);
+        log(`Checking if ${item.name} can go in Region ${this.name}.`);
 
         // TODO: Add wild dungeon items
         const dungeonItem = item as IDungeonItem

@@ -68,7 +68,10 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
 
             available.removeItem(item);
 
-            plantable = plantable && location.canFill(item, available, true);
+            const canFill = location.canFill(item, available, true);
+            plantable = plantable && canFill
+
+            log(`canFill is ${canFill} here in the 73`)
 
             let recheck = true;
             const availableItems: IItem[] = []
@@ -78,7 +81,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                 // if another item is in logic, we can get use it to plant this item
                 planted.LocationsWithItem().forEach(location => {
                     log(`checking if ${location.name} can be accessed to get ${location.item?.name}`)
-                    if (location.canAccess(available, planted, location.item)) {
+                    if (location.canAccess(available, planted, location.item, availableItems.map(item => item.name))) {
                         log(`could access, adding ${location.item?.name}.`)
                         available.addItem(location.item!);
                         availableItems.push(location.item!);
@@ -89,16 +92,20 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                 });
 
             }
-            log(`plantable was ${plantable}`)
+
             plantable = location.canFill(item, available, true);
-            log(`plantable is ${plantable}`)
+
+
+            availablePlants.forEach(location => {
+                // log(`chceking ${location.name} plantable was ${plantable}`)
+                // plantable &&= location.requirement_callback? location.requirement_callback(item, planted, available, []) : true;
+                // log(`plantable is ${plantable}`)
+                planted.addItem(location);
+            })
 
             // remove the planted items for next iteration
             availableItems.forEach(item => {
                 available.removeItem(item);
-            })
-            availablePlants.forEach(location => {
-                planted.addItem(location);
             })
             
 
@@ -118,10 +125,13 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
             }
 
         }
-        log(`now we're here`)
 
-        plantable &&= planted.to_array().every(location => location.requirement_callback ? location?.requirement_callback(location.item, world.locations, available) : true)
-        
+        plantable &&= planted.to_array().every((location, index) => {
+            if (index == planted.getCount() - 1) return true;
+            log(`checking ${location.name} with ${location.item?.name}`)
+            return (location.requirement_callback ? location?.requirement_callback(location.item, world.locations, available, []) : true)
+        });
+
         if (plantable) {
 
             let recheck = true;
@@ -130,11 +140,10 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                 // We already checked and saw we can plant them? Surely that means we can access them...
                 planted.to_array().map(location => location as Z3rLocation).forEach(location => {
                     log(`checking if planted item at ${location.name} is accessible.`)
-                    if (location.region.canEnter(world.locations, available) && location.canAccess(available, new LocationCollection(), location.item) && location.item && (location.requirement_callback ? location.requirement_callback(location.item, world.locations, available): true)) {
+                    if (location.region.canEnter(world.locations, available) && location.canAccess(available, planted, location.item) && location.item && (location.requirement_callback ? location.requirement_callback(location.item, world.locations, available, []): true)) {
                         log(`${location.name} is accessible so adding ${location.item.name} to available items`)
                         available.addItem(location.item);
                         planted.removeItem(location);
-                        recheck = true;
                     }
                     else {
                         log(`${location.name} was not accessible so ${location.item?.name} is not being added to available.`)

@@ -28,24 +28,24 @@ export class NorthEast extends Region {
             return items.has("PendantOfCourage");
         });
 
-        this.locations.get("King Zora")?.setRequirements((item, locations, items) => {
-            return items.canLiftRocks() || items.hasOrCanGet("Flippers", locations, item);
+        this.locations.get("King Zora")?.setRequirements((item, locations, items, items_checked) => {
+            return items.canLiftRocks() || items.hasOrCanGet("Flippers", locations, item, items_checked);
         });
 
-        this.locations.get("Potion Shop")?.setRequirements((item, locations, items) => {
-            return (items.hasOrCanGet("Mushroom", locations, item));
+        this.locations.get("Potion Shop")?.setRequirements((item, locations, items, items_checked) => {
+            return (items.hasOrCanGet("Mushroom", locations, item, items_checked));
         });
 
-        this.locations.get("Zora Ledge")?.setRequirements((item, locations, items) => {
-            return items.hasOrCanGet("Flippers", locations, item);
+        this.locations.get("Zora Ledge")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Flippers", locations, item, items_checked);
         });
 
-        this.locations.get("Waterfall Fairy - Left")?.setRequirements((item, locations, items) => {
-            return items.hasOrCanGet("Flippers", locations, item);
+        this.locations.get("Waterfall Fairy - Left")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Flippers", locations, item, items_checked);
         });
 
-        this.locations.get("Waterfall Fairy - Right")?.setRequirements((item, locations, items) => {
-            return items.hasOrCanGet("Flippers", locations, item);
+        this.locations.get("Waterfall Fairy - Right")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Flippers", locations, item, items_checked);
         });
 
         this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {

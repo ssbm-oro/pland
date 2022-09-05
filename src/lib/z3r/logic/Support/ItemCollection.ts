@@ -81,8 +81,12 @@ export class ItemCollection extends Collection {
         return this.items.has(key) && this.item_counts.has(key) && this.item_counts.get(key)! >= count;
     }
 
-    public hasOrCanGet(key: string, locations: LocationCollection | null, item: IItem | null = null): boolean {
-        return this.has(key) || locations?.CanGet(key, item, this) || false;
+    public hasOrCanGet(key: string, locations: LocationCollection | null, item: IItem | null = null, items_checked: string[]): boolean {
+        log(`has or can get: ${key}, ${item?.name}, items_checked: ${items_checked.join(', ')}`)
+        if (items_checked.includes(key) && item && items_checked.includes(item.name)) {
+            log('logic bomb?')
+        }
+        return this.has(key) || locations?.CanGet(key, item, this, items_checked) || false;
     }
 
     override get(name: string) {

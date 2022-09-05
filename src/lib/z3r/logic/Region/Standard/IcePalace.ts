@@ -5,7 +5,6 @@ import { LocationCollection } from "../../Support/LocationCollection";
 import type World from "../../World";
 import type { ItemCollection } from "../../Support/ItemCollection";
 import { Bosses } from "../../Boss";
-import { log } from "../../Logic";
 
 export class IcePalace extends Dungeon {
     public constructor(world: World) {
@@ -42,25 +41,24 @@ export class IcePalace extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Ice Palace - Big Key Chest")?.setRequirements((item, locations, items) => {
-            return items.has('Hammer') && items.canLiftRocks()
-            && (items.has('Hookshot') || items.has('ShopKey')
-            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
-                ['Ice Palace - Spike Room','Ice Palace - Map Chest']))));
+        this.locations.get("Ice Palace - Big Key Chest")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet('Hammer', locations, item, items_checked) && items.canLiftRocks()
+            && (items.hasOrCanGet('Hookshot', locations, item, items_checked) || items.has('ShopKey')
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || this.locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
+                ['Ice Palace - Spike Room','Ice Palace - Map Chest', 'Ice Palace - Big Key Chest']))));
         });
 
-        this.locations.get("Ice Palace - Map Chest")?.setRequirements((item, locations, items) => {
-            return items.has('Hammer') && items.canLiftRocks()
-            && (items.has('Hookshot') || items.has('ShopKey')
-            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
-                ['Ice Palace - Big Key Chest','Ice Palace - Spike Room']))));
+        this.locations.get("Ice Palace - Map Chest")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet('Hammer', locations, item, items_checked) && items.canLiftRocks()
+            && (items.hasOrCanGet('Hookshot', locations, item, items_checked) || items.has('ShopKey')
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5'  || this.locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
+                ['Ice Palace - Big Key Chest','Ice Palace - Spike Room', 'Ice Palace - Map Chest']))));
         });
 
-        this.locations.get("Ice Palace - Spike Room")?.setRequirements((item, locations, items) => {
-            log(item?.name || 'Item was undefined in spike room')
-            return (items.has('Hookshot') || items.has('ShopKey')
-            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5' || locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
-                ['Ice Palace - Big Key Chest','Ice Palace - Map Chest']))));
+        this.locations.get("Ice Palace - Spike Room")?.setRequirements((item, locations, items, items_checked) => {
+            return (items.hasOrCanGet('Hookshot', locations, item, items_checked) || items.has('ShopKey')
+            || (items.has('KeyD5', 1) && (items.has('BigKeyD5') || item?.name == 'BigKeyD5' || this.locations.itemInLocations(Item.get('BigKeyD5', this.world.id)!, 
+                ['Ice Palace - Big Key Chest','Ice Palace - Map Chest', 'Ice Palace - Spike Room']))));
         });
 
         this.locations.get("Ice Palace - Freezor Chest")?.setRequirements((_item, _locations, items) => {
@@ -75,11 +73,11 @@ export class IcePalace extends Dungeon {
             return this.locations.get("Ice Palace - Boss")?.canAccess(items, locations);
         }
 
-        this.locations.get("Ice Palace - Boss")?.setRequirements((item, locations, items) => {
+        this.locations.get("Ice Palace - Boss")?.setRequirements((item, locations, items, items_checked) => {
             return this.canEnter(locations, items)
-                && items.has('Hammer') && items.canLiftRocks()
-                && (this.boss?.canBeat(items, locations, item) || false)
-                && items.has('BigKeyD5') && ((items.has("CaneOfSomaria") && items.has('KeyD5')) || (items.has('KeyD5', 2)));
+                && items.hasOrCanGet('Hammer', locations, item, items_checked)  && items.canLiftRocks()
+                && (this.boss?.canBeat(items, locations, item, items_checked) || false)
+                && items.has('BigKeyD5') && ((items.hasOrCanGet("CaneOfSomaria", locations, item, items_checked) && items.has('KeyD5')) || (items.has('KeyD5', 2)));
         });
 
         this.can_enter = (_locations, items) => {

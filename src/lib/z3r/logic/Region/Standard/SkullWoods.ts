@@ -44,20 +44,20 @@ export class SkullWoods extends Region {
             return items.has('BigKeyD3');
         });
 
-        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((_item, _locations, items) => {
-            return items.has('MoonPearl') && items.has('FireRod');
+        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet('MoonPearl', locations, item, items_checked) && items.hasOrCanGet('FireRod', locations, item, items_checked);
         });
 
         this.can_complete = (locations, items) => {
             return this.locations.get('Skull Woods - Boss')?.canAccess(items, locations);
         };
 
-        this.locations.get("Skull Woods - Boss")?.setRequirements((item, locations, items) => {
+        this.locations.get("Skull Woods - Boss")?.setRequirements((item, locations, items, items_checked) => {
             return this.canEnter(locations, items)
-                && items.has('MoonPearl') && items.has('FireRod')
+                && items.hasOrCanGet('MoonPearl', locations, item, items_checked) && items.hasOrCanGet('FireRod', locations, item, items_checked)
                 && items.hasSword()
                 && items.has('KeyD3', 3)
-                && this.boss?.canBeat(items, locations, item) || false;
+                && this.boss?.canBeat(items, locations, item, items_checked) || false;
         });
 
         this.can_enter = (locations, items) => {

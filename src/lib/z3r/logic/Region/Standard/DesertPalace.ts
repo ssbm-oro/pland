@@ -47,20 +47,20 @@ export class DesertPalace extends Dungeon {
             return items.has("KeyP2");
         })
 
-        this.locations.get("Desert Palace - Torch").setRequirements((_item, _locations, items) => {
-            return items.has('PegasusBoots');
+        this.locations.get("Desert Palace - Torch").setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet('PegasusBoots', locations, item, items_checked);
         })
 
         this.can_complete = (locations, items) => {
             return this.locations.get("Desert Palace - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Desert Palace - Boss")?.setRequirements((item, locations, items) => {
+        this.locations.get("Desert Palace - Boss")?.setRequirements((item, locations, items, items_checked) => {
             return ((this.canEnter(locations, items))
-                && ((items.canLiftRocks() || items.has('MagicMirror') && this.world.getRegion('Mire')?.canEnter(locations, items)) || false)
+                && ((items.canLiftRocks() || items.hasOrCanGet('MagicMirror', locations, item, items_checked) && this.world.getRegion('Mire')?.canEnter(locations, items)) || false)
                 && items.canLightTorches()
                 && items.has('BigKeyP2') && items.has('KeyP2')
-                && this.boss?.canBeat !== undefined && this.boss?.canBeat(items, locations, item))
+                && this.boss?.canBeat !== undefined && this.boss?.canBeat(items, locations, item, items_checked))
         });
 
         this.can_enter = (locations, items) => {

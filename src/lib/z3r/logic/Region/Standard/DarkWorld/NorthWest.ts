@@ -20,33 +20,33 @@ export class NorthWest extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Brewery")?.setRequirements((_item, _locations, items) => {
-            return items.canBombThings() && items.has("MoonPearl");
+        this.locations.get("Brewery")?.setRequirements((item, locations, items, items_checked) => {
+            return items.canBombThings() && items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("C-Shaped House")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("C-Shaped House")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Chest Game")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl");
+        this.locations.get("Chest Game")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
         });
 
-        this.locations.get("Hammer Pegs")?.setRequirements((_item, _locations, items) => {
-            return items.has("Hammer") && items.has("MoonPearl") && items.canLiftDarkRocks();
+        this.locations.get("Hammer Pegs")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("Hammer", locations, item, items_checked) && items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.canLiftDarkRocks();
         });
 
-        this.locations.get("Bumper Cave")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl") && items.has("Cape") && items.canLiftRocks();
+        this.locations.get("Bumper Cave")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.hasOrCanGet("Cape", locations, item, items_checked) && items.canLiftRocks();
         });
 
-        this.locations.get("Blacksmith")?.setRequirements((_item, _locations, items) => {
-            return items.has("MoonPearl") && items.canLiftDarkRocks();
+        this.locations.get("Blacksmith")?.setRequirements((item, locations, items, items_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.canLiftDarkRocks();
         });
 
-        this.locations.get("Purple Chest")?.setRequirements((_item, locations, items) => {
-            return locations.get("Blacksmith")?.canAccess(items, locations, _item)
-                && (items.has("MoonPearl") && items.canLiftDarkRocks());
+        this.locations.get("Purple Chest")?.setRequirements((item, locations, items, items_checked) => {
+            return locations.get("Blacksmith")?.canAccess(items, locations, item)
+                && (items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.canLiftDarkRocks());
         });
 
         this.can_enter = (locations, items) => {
