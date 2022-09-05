@@ -14,14 +14,14 @@ export class West extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Spike Cave")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.hasOrCanGet("Hammer", locations, item, items_checked) && items.canLiftRocks()
-                    && ((items.canExtendMagic() && items.hasOrCanGet("Cape", locations, item, items_checked)) || items.hasOrCanGet("CaneOfByrna", locations, item, items_checked));
+        this.locations.get("Spike Cave")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked) && items.hasOrCanGet("Hammer", locations, item, locations_checked) && items.canLiftRocks()
+                    && ((items.canExtendMagic() && items.hasOrCanGet("Cape", locations, item, locations_checked)) || items.hasOrCanGet("CaneOfByrna", locations, item, locations_checked));
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return (items.has("RescueZelda")
-                && this.world.getRegion("West Death Mountain")!.canEnter(locations, items));
+                && this.world.getRegion("West Death Mountain")!.canEnter(locations, items, item, locations_checked));
         };
 
         return this;

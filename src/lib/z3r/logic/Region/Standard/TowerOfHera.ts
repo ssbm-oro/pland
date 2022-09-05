@@ -54,16 +54,16 @@ export class TowerOfHera extends Dungeon {
             return this.locations.get("Tower of Hera - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Tower of Hera - Boss")?.setRequirements((item, locations, items, items_checked) => {
-            return (this.boss?.canBeat(items, locations, item, items_checked) || false
+        this.locations.get("Tower of Hera - Boss")?.setRequirements((item, locations, items, locations_checked) => {
+            return (this.boss?.canBeat(items, locations, item, locations_checked) || false
                 && items.has("BigKeyP3"));
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has("RescueZelda")
-                && (items.has("MagicMirror")
-                    || (items.has("Hookshot") && items.has("Hammer")
-                        && this.world.getRegion("West Death Mountain")?.canEnter(locations, items) || false));
+                && (items.hasOrCanGet("MagicMirror", locations, item, locations_checked)
+                    || (items.hasOrCanGet("Hookshot", locations, item, locations_checked) && items.hasOrCanGet("Hammer", locations, item, locations_checked)
+                        && this.world.getRegion("West Death Mountain")?.canEnter(locations, items, item, locations_checked) || false));
         };
 
         this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));

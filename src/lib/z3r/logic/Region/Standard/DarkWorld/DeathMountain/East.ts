@@ -21,29 +21,29 @@ export class East extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Super Bunny Cave - Top")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Super Bunny Cave - Top")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.locations.get("Super Bunny Cave - Bottom")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Super Bunny Cave - Bottom")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        const hookshotCaveRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, items_checked:string[]) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.canLiftRocks() && items.hasOrCanGet("Hookshot", locations, item, items_checked);
+        const hookshotCaveRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, locations_checked:string[]) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked) && items.canLiftRocks() && items.hasOrCanGet("Hookshot", locations, item, locations_checked);
         }
 
         this.locations.get("Hookshot Cave - Top Right")?.setRequirements(hookshotCaveRequirements);
         this.locations.get("Hookshot Cave - Top Left")?.setRequirements(hookshotCaveRequirements);
         this.locations.get("Hookshot Cave - Bottom Left")?.setRequirements(hookshotCaveRequirements);
 
-        this.locations.get("Hookshot Cave - Bottom Right")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked) && items.canLiftRocks() && (items.hasOrCanGet("Hookshot", locations, item, items_checked) || items.hasOrCanGet("PegasusBoots", locations, item, items_checked));
+        this.locations.get("Hookshot Cave - Bottom Right")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked) && items.canLiftRocks() && (items.hasOrCanGet("Hookshot", locations, item, locations_checked) || items.hasOrCanGet("PegasusBoots", locations, item, locations_checked));
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has("RescueZelda") && items.has('MoonPearl')
-                && (items.canLiftDarkRocks() && this.world.getRegion("East Death Mountain")!.canEnter(locations, items));
+                && (items.canLiftDarkRocks() && this.world.getRegion("East Death Mountain")!.canEnter(locations, items, item, locations_checked));
         };
 
         return this;

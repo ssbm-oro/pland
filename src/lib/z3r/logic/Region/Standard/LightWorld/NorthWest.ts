@@ -40,37 +40,37 @@ export class NorthWest extends Region {
             return items.has("PendantOfPower") && items.has("PendantOfWisdom") && items.has("PendantOfCourage");
         });
 
-        this.locations.get("King's Tomb")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("PegasusBoots", locations, item, items_checked)
+        this.locations.get("King's Tomb")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("PegasusBoots", locations, item, locations_checked)
                 && (items.canLiftDarkRocks()
-                    || items.hasOrCanGet("MagicMirror", locations, item, items_checked) && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false);
+                    || items.hasOrCanGet("MagicMirror", locations, item, locations_checked) && this.world.getRegion("North West Dark World")?.canEnter(locations, items, item, locations_checked) || false);
         });
 
-        this.locations.get("Pegasus Rocks")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("PegasusBoots", locations, item, items_checked)
+        this.locations.get("Pegasus Rocks")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("PegasusBoots", locations, item, locations_checked)
         });
 
-        this.locations.get("Magic Bat")?.setRequirements((_item, locations, items) => {
-            return items.has("Powder")
-                && (items.has("Hammer")
-                || (items.has("MagicMirror")
-                    && items.has("MoonPearl") && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false));
+        this.locations.get("Magic Bat")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("Powder", locations, item, locations_checked)
+                && (items.hasOrCanGet("Hammer", locations, item, locations_checked)
+                || (items.hasOrCanGet("MagicMirror", locations, item, locations_checked)
+                    && items.has("MoonPearl") && this.world.getRegion("North West Dark World")?.canEnter(locations, items, item, locations_checked) || false));
         });
 
         this.locations.get("Sick Kid")?.setRequirements((_item, _locations, items) => {
             return items.hasABottle();
         });
 
-        this.locations.get("Lumberjack Tree")?.setRequirements((_item, _locations, items) => {
-            return items.canDefeatAgahnim(this.world) && items.has("PegasusBoots");
+        this.locations.get("Lumberjack Tree")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.canDefeatAgahnim(this.world) && items.hasOrCanGet("PegasusBoots", locations, item, locations_checked);
         });
 
-        this.locations.get("Graveyard Ledge")?.setRequirements((_item, locations, items) => {
-            return (items.has("MagicMirror") && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false)
-                && items.has("MoonPearl");
+        this.locations.get("Graveyard Ledge")?.setRequirements((item, locations, items, locations_checked) => {
+            return (items.hasOrCanGet("MagicMirror", locations, item, locations_checked) && this.world.getRegion("North West Dark World")?.canEnter(locations, items, item, locations_checked) || false)
+                && items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (_locations, items) => {
             return items.has("RescueZelda");
         }
 

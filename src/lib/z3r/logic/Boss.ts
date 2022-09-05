@@ -7,7 +7,7 @@ import { log } from "./Logic";
 import type { IItem } from "./Item";
 
 export interface Boss extends Entry {
-    canBeat: (items: ItemCollection, locations: LocationCollection | null, item: IItem | null, items_checked: string[]) => boolean;
+    canBeat: (items: ItemCollection, locations: LocationCollection | null, item: IItem | null, locations_checked: string[]) => boolean;
 }
 
 export class Bosses {
@@ -43,9 +43,9 @@ export class Bosses {
             {name: "Arrghus", canBeat: items => {
                 return items.has('Hookshot') && (items.has('Hammer') || items.hasSword() || world.config.weapons == 'swordless')
             }},
-            {name: "Mothula", canBeat: (items, locations, item, items_checked) => {
+            {name: "Mothula", canBeat: (items, locations, item, locations_checked) => {
                 return items.hasSword() || items.has('Hammer') 
-                    || (items.canExtendMagic(world, 2) && items.hasOrCanGet('FireRod', locations, item, items_checked) || items.has('CaneOfSomaria') || (items.has('CaneOfByrna')))
+                    || (items.canExtendMagic(world, 2) && items.hasOrCanGet('FireRod', locations, item, locations_checked) || items.has('CaneOfSomaria') || (items.has('CaneOfByrna')))
                     || items.canGetGoodBee();
             }},
             {name: "Blind", canBeat: items => {
@@ -59,9 +59,9 @@ export class Bosses {
                 return items.hasSword() || items.has('Hammer') || items.canShootArrows(world)
             }},
             // TODO check if this is right
-            {name: "Trinexx", canBeat: (items, locations, item, items_checked) => {
+            {name: "Trinexx", canBeat: (items, locations, item, locations_checked) => {
                 log(`checking if we can beat Trinexx `);
-                return items.hasOrCanGet('FireRod', locations, item, items_checked) && items.hasOrCanGet('IceRod', locations, item, items_checked)
+                return items.hasOrCanGet('FireRod', locations, item, locations_checked) && items.hasOrCanGet('IceRod', locations, item, locations_checked)
                     && ((items.has('Hammer') || items.hasSword(3))
                         || (items.hasSword(2) && items.canExtendMagic(world, 2)
                         || (items.hasSword() && items.canExtendMagic(world, 4))));

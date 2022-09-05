@@ -124,25 +124,21 @@ export class LocationCollection extends Collection {
     }
 
     // TODO: investigate adding this to ItemCollection.has
-    CanGet(item_to_get: string, item: IItem | null, items: ItemCollection, items_checked: string[]): boolean {
-        if (items_checked.includes(item_to_get)) {
-            log(`hey we're here. items_checked: ${items_checked.join(', ')}`)
-            return false
-        }
+    CanGet(item_to_get: string, item: IItem | null, items: ItemCollection, locations_checked: string[]): boolean {
         // if (!item) return true;
-        items_checked.push(item_to_get);
 
-        log(`checking if we can get ${item_to_get} and also items checked is ${items_checked.join(', ')}`);
+        log(`checking if we can get ${item_to_get} and also items checked is ${locations_checked.join(', ')}`);
         const itemToGet = Item.get(item_to_get, this.world_id);
         let canGet = false;
         if (itemToGet) {
             const itemLocation = this.LocationsWithItem(itemToGet)[0];
             log(`${itemToGet.name} was found in ${itemLocation?.name}`)
+            if (locations_checked.includes(itemLocation?.name || '')) return false;
             if (itemLocation) {
                 log(`checking if we can access ${itemLocation.name}`)
-                //this.removeItem(itemLocation);
-                canGet = itemLocation.canAccess(items, this, itemToGet, items_checked);
-                //this.addItem(itemLocation);
+                locations_checked.push(itemLocation.name)
+                canGet = itemLocation.canAccess(items, this, itemToGet, locations_checked);
+                locations_checked.pop();
             }
         }
 

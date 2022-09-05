@@ -33,22 +33,22 @@ export class HyruleCastleTower extends Dungeon {
     }
 
     public override initialize() {
-        this.locations.get("Castle Tower - Dark Maze")?.setRequirements((item, _locations, items, items_checked) => {
-            return items.hasOrCanGet('Lamp', this.locations, item, items_checked) && items.has('KeyA1');
+        this.locations.get("Castle Tower - Dark Maze")?.setRequirements((item, _locations, items, locations_checked) => {
+            return items.hasOrCanGet('Lamp', this.locations, item, locations_checked) && items.has('KeyA1');
         });
 
         this.can_complete = (locations: LocationCollection, items: ItemCollection) => {
             log(`Checking if we can complete Castle Tower`)
-            return this.canEnter(locations, items) && items.has('KeyA1',2) && items.has('Lamp') && items.hasSword();
+            return this.canEnter(locations, items, null, []) && items.has('KeyA1',2) && items.has('Lamp') && items.hasSword();
         }
 
         this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
 
-        this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             log(`Checking if we can enter Castle Tower`);
             return items.canKillMostThings(this.world, 8)
                 && items.has('RescueZelda')
-                && (items.has('Cape') || (items.hasSword(2)));
+                && (items.hasOrCanGet('Cape', locations, item, locations_checked) || (items.hasSword(2)));
         }
 
         return this;

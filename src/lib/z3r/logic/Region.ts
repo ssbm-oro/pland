@@ -14,7 +14,7 @@ export interface IRegion {
 
     prize?: Prize;
     can_complete: (location: LocationCollection, items: ItemCollection) => boolean;
-    can_enter: (location: LocationCollection, items: ItemCollection) => boolean;
+    can_enter: (location: LocationCollection, items: ItemCollection, item: IItem | null, locations_checked: string[]) => boolean;
     region_items: IItem[];
 }
 
@@ -25,7 +25,7 @@ export default class Region implements IRegion {
     world: World;
     prize?: Prize;
     can_complete: (location: LocationCollection, items: ItemCollection) => boolean = () => {return true;};
-    can_enter: (location: LocationCollection, items: ItemCollection) => boolean = () => {return true;};
+    can_enter: (location: LocationCollection, items: ItemCollection, item: IItem | null, locations_checked: string[]) => boolean = () => {return true;};
     region_items: IItem[];
 
     public constructor(name: string, world: World) {
@@ -49,10 +49,10 @@ export default class Region implements IRegion {
         return true;
     }
 
-    canEnter(locations: LocationCollection, items: ItemCollection) {
+    canEnter(locations: LocationCollection, items: ItemCollection, item: IItem | null = null, locations_checked: string[] = []) {
         if (this.can_enter) {
             log(`Checking if we can enter ${this.name}`);
-            return this.can_enter(locations, items);
+            return this.can_enter(locations, items, item, locations_checked);
         }
         log(`can_enter not defined. Assuming we can enter ${this.name}.`)
         return true;

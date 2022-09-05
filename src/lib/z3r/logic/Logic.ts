@@ -81,7 +81,7 @@ export function checkPlants(world: World, selectedItems: IItem[], selectedLocati
                 // if another item is in logic, we can get use it to plant this item
                 planted.LocationsWithItem().forEach(location => {
                     log(`checking if ${location.name} can be accessed to get ${location.item?.name}`)
-                    if (location.canAccess(available, planted, location.item, availableItems.map(item => item.name))) {
+                    if (location.canAccess(available, planted, location.item, [])) {
                         log(`could access, adding ${location.item?.name}.`)
                         available.addItem(location.item!);
                         availableItems.push(location.item!);

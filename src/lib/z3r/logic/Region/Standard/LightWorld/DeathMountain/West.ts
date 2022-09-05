@@ -18,23 +18,23 @@ export class West extends Region {
     }
 
     override initialize() {
-        this.locations.get("Old Man")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("Lamp", locations, item, items_checked);
+        this.locations.get("Old Man")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("Lamp", locations, item, locations_checked);
         });
 
-        this.locations.get("Ether Tablet")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("BookOfMudora", locations, item, items_checked) && items.hasSword(2)
-                && this.world.getRegion("Tower of Hera")?.canEnter(locations, items) || false;
+        this.locations.get("Ether Tablet")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("BookOfMudora", locations, item, locations_checked) && items.hasSword(2)
+                && this.world.getRegion("Tower of Hera")?.canEnter(locations, items, item, locations_checked) || false;
         });
 
-        this.locations.get("Spectacle Rock")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MagicMirror", locations, item, items_checked);
+        this.locations.get("Spectacle Rock")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MagicMirror", locations, item, locations_checked);
         });
 
-        this.can_enter = (locations:LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has("RescueZelda")
                 && (items.canFly(this.world)
-                    || (items.canLiftRocks() && items.has("Lamp")));
+                    || (items.canLiftRocks() && items.hasOrCanGet("Lamp", locations, item, locations_checked)));
         }
 
         return this;

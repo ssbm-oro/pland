@@ -47,25 +47,25 @@ export class DesertPalace extends Dungeon {
             return items.has("KeyP2");
         })
 
-        this.locations.get("Desert Palace - Torch").setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet('PegasusBoots', locations, item, items_checked);
+        this.locations.get("Desert Palace - Torch").setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet('PegasusBoots', locations, item, locations_checked);
         })
 
         this.can_complete = (locations, items) => {
             return this.locations.get("Desert Palace - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Desert Palace - Boss")?.setRequirements((item, locations, items, items_checked) => {
-            return ((this.canEnter(locations, items))
-                && ((items.canLiftRocks() || items.hasOrCanGet('MagicMirror', locations, item, items_checked) && this.world.getRegion('Mire')?.canEnter(locations, items)) || false)
+        this.locations.get("Desert Palace - Boss")?.setRequirements((item, locations, items, locations_checked) => {
+            return ((this.canEnter(locations, items, item, locations_checked))
+                && ((items.canLiftRocks() || items.hasOrCanGet('MagicMirror', locations, item, locations_checked) && this.world.getRegion('Mire')?.canEnter(locations, items, item, locations_checked)) || false)
                 && items.canLightTorches()
                 && items.has('BigKeyP2') && items.has('KeyP2')
-                && this.boss?.canBeat !== undefined && this.boss?.canBeat(items, locations, item, items_checked))
+                && this.boss?.canBeat !== undefined && this.boss?.canBeat(items, locations, item, locations_checked))
         });
 
-        this.can_enter = (locations, items) => {
-            return items.has('RescueZelda')
-                && (items.has('BookOfMudora') || (items.has('MagicMirror') && (this.world.getRegion('Mire')?.canEnter(locations,items)))) || false;
+        this.can_enter = (locations, items, item, locations_checked) => {
+            return items.hasOrCanGet('RescueZelda', locations, item, locations_checked)
+                && (items.hasOrCanGet('BookOfMudora', locations, item, locations_checked) || (items.hasOrCanGet('MagicMirror', locations, item, locations_checked) && (this.world.getRegion('Mire')?.canEnter(locations,items, item, locations_checked)))) || false;
         };
 
         this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));

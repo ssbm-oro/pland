@@ -20,39 +20,39 @@ export class South extends Region {
     }
 
     public override initialize() {
-        this.locations.get("Hype Cave - Top")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Hype Cave - Top")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
         
-        this.locations.get("Hype Cave - Middle Right")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Hype Cave - Middle Right")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.locations.get("Hype Cave - Middle Left")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Hype Cave - Middle Left")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.locations.get("Hype Cave - Bottom")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Hype Cave - Bottom")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.locations.get("Hype Cave - NPC")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Hype Cave - NPC")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.locations.get("Stumpy")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Stumpy")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.locations.get("Digging Game")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("MoonPearl", locations, item, items_checked);
+        this.locations.get("Digging Game")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("MoonPearl", locations, item, locations_checked);
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has("RescueZelda")
                 && (items.has("MoonPearl")
-                    && (this.world.getRegion("North East Dark World")?.canEnter(locations, items) && items.has("Hammer"))
-                || this.world.getRegion("North West Dark World")?.canEnter(locations, items)) || false;
+                    && (this.world.getRegion("North East Dark World")?.canEnter(locations, items, item, locations_checked) && items.hasOrCanGet("Hammer", locations, item, locations_checked))
+                || this.world.getRegion("North West Dark World")?.canEnter(locations, items, item, locations_checked)) || false;
         };
 
         return this;

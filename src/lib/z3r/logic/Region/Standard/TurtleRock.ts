@@ -46,58 +46,58 @@ export class TurtleRock extends Dungeon {
     }
 
     public override initialize() {
-        const upper = (_item: unknown, locations: LocationCollection, items: ItemCollection) => {
+        const upper = (item: IItem | null, locations: LocationCollection, items: ItemCollection, locations_checked: string[]) => {
             let haveMedallion = false;
             const medallion = locations.get('Turtle Rock Medallion')
             if (!medallion || !medallion.item) {
-                haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
+                haveMedallion = items.hasOrCanGet('Bombos', locations, item, locations_checked) || items.hasOrCanGet('Ether', locations, item, locations_checked) || items.hasOrCanGet('Quake', locations, item, locations_checked)
                 log(`Turtle Rock Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
             }
             else {
-                haveMedallion = items.has(medallion.item.name);
+                haveMedallion = items.hasOrCanGet(medallion.item.name, locations, item, locations_checked);
                 log(`Turtle Rock Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
             }
             return (haveMedallion
                 && items.hasSword()
-                && items.has("MoonPearl")
-                && items.has("CaneOfSomaria")
-                && (items.has("Hammer") && items.canLiftDarkRocks()
-                    && this.world.getRegion("East Death Mountain")?.canEnter(locations, items) || false));
+                && items.hasOrCanGet("MoonPearl", locations, item, locations_checked)
+                && items.hasOrCanGet("CaneOfSomaria", locations, item, locations_checked)
+                && (items.hasOrCanGet("Hammer", locations, item, locations_checked) && items.canLiftDarkRocks()
+                    && this.world.getRegion("East Death Mountain")?.canEnter(locations, items, item, locations_checked) || false));
         };
 
-        this.locations.get("Turtle Rock - Chain Chomps")?.setRequirements((_item, locations, items) => {
-            return(upper(_item, locations, items) && items.has("KeyD7"));
+        this.locations.get("Turtle Rock - Chain Chomps")?.setRequirements((item, locations, items, locations_checked) => {
+            return(upper(item, locations, items, locations_checked) && items.has("KeyD7"));
         });
 
-        const rollerRoom = (item: IItem | null, locations: LocationCollection, items: ItemCollection, items_checked: string[]) => {
-            return items.hasOrCanGet("FireRod", locations, item, items_checked) && items.has("CaneOfSomaria") && upper(item, locations, items);
+        const rollerRoom = (item: IItem | null, locations: LocationCollection, items: ItemCollection, locations_checked: string[]) => {
+            return items.hasOrCanGet("FireRod", locations, item, locations_checked) && items.hasOrCanGet("CaneOfSomaria", locations, item, locations_checked) && upper(item, locations, items, locations_checked);
         };
 
         this.locations.get("Turtle Rock - Roller Room - Left")?.setRequirements(rollerRoom);
         this.locations.get("Turtle Rock - Roller Room - Right")?.setRequirements(rollerRoom);
 
-        this.locations.get("Turtle Rock - Compass Chest")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("CaneOfSomaria", locations, item, items_checked) && upper(item, locations, items);
+        this.locations.get("Turtle Rock - Compass Chest")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("CaneOfSomaria", locations, item, locations_checked) && upper(item, locations, items, locations_checked);
         });
 
-        this.locations.get("Turtle Rock - Big Chest")?.setRequirements((_item, locations, items) => {
+        this.locations.get("Turtle Rock - Big Chest")?.setRequirements((item, locations, items, locations_checked) => {
             return items.has("BigKeyD7")
-                && upper(_item, locations, items) && items.has("KeyD7", 2);
+                && upper(item, locations, items, locations_checked) && items.has("KeyD7", 2);
         });
 
-        this.locations.get("Turtle Rock - Big Key Chest")?.setRequirements((_item, _locations, items) => {
+        this.locations.get("Turtle Rock - Big Key Chest")?.setRequirements((_item, _locations, items, locations_checked) => {
             if (!this.locations.get("Turtle Rock - Big Key Chest")?.hasItem(Item.get("BigKeyD7", this.world.id))) {
                 return this.locations.get("Turtle Rock - Big Key Chest")?.hasItem(Item.get("KeyD7", this.world.id)) ? items.has("KeyD7", 3) : items.has("KeyD7", 4);
             }
             return items.has("KeyD7", 2);
         });
 
-        this.locations.get("Turtle Rock - Crystal Roller Room")?.setRequirements((_item, locations, items) => {
-            return (items.has("BigKeyD7") && upper(_item, locations, items) && items.has("KeyD7", 2));
+        this.locations.get("Turtle Rock - Crystal Roller Room")?.setRequirements((_item, locations, items, locations_checked) => {
+            return (items.has("BigKeyD7") && upper(_item, locations, items, locations_checked) && items.has("KeyD7", 2));
         });
 
-        const laserBridgeRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, items_checked: string[]) => {
-            return (upper(item, locations, items) && items.hasOrCanGet("Lamp", locations, item, items_checked) && items.hasOrCanGet("CaneOfSomaria", locations, item, items_checked) && items.has("BigKeyD7") && items.has("KeyD7", 3));
+        const laserBridgeRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, locations_checked: string[]) => {
+            return (upper(item, locations, items, locations_checked) && items.hasOrCanGet("Lamp", locations, item, locations_checked) && items.hasOrCanGet("CaneOfSomaria", locations, item, locations_checked) && items.has("BigKeyD7") && items.has("KeyD7", 3));
         }
 
         this.locations.get("Turtle Rock - Eye Bridge - Top Left")?.setRequirements(laserBridgeRequirements);
@@ -109,16 +109,16 @@ export class TurtleRock extends Dungeon {
             return this.locations.get("Turtle Rock - Boss").canAccess(items, locations);
         }
 
-        this.locations.get("Turtle Rock - Boss")?.setRequirements((item, locations, items, items_checked) => {
-            return this.canEnter(locations, items)
+        this.locations.get("Turtle Rock - Boss")?.setRequirements((item, locations, items, locations_checked) => {
+            return this.canEnter(locations, items, item, locations_checked)
                 && items.has("KeyD7", 4)
-                && items.has("BigKeyD7") && items.hasOrCanGet("CaneOfSomaria", locations, item, items_checked) && items.hasOrCanGet("Lamp", locations, item, items_checked)
-                && !!this.boss && this.boss.canBeat(items, locations, item, items_checked)
+                && items.has("BigKeyD7") && items.hasOrCanGet("CaneOfSomaria", locations, item, locations_checked) && items.hasOrCanGet("Lamp", locations, item, locations_checked)
+                && !!this.boss && this.boss.canBeat(items, locations, item, locations_checked)
         });
 
-        this.can_enter = (locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has("RescueZelda")
-                && upper(null, locations, items);
+                && upper(item, locations, items, locations_checked);
         };
 
         this.prize = this.locations.get("Turtle Rock - Prize");

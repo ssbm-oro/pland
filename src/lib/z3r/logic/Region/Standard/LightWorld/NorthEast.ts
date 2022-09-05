@@ -28,27 +28,27 @@ export class NorthEast extends Region {
             return items.has("PendantOfCourage");
         });
 
-        this.locations.get("King Zora")?.setRequirements((item, locations, items, items_checked) => {
-            return items.canLiftRocks() || items.hasOrCanGet("Flippers", locations, item, items_checked);
+        this.locations.get("King Zora")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.canLiftRocks() || items.hasOrCanGet("Flippers", locations, item, locations_checked);
         });
 
-        this.locations.get("Potion Shop")?.setRequirements((item, locations, items, items_checked) => {
-            return (items.hasOrCanGet("Mushroom", locations, item, items_checked));
+        this.locations.get("Potion Shop")?.setRequirements((item, locations, items, locations_checked) => {
+            return (items.hasOrCanGet("Mushroom", locations, item, locations_checked));
         });
 
-        this.locations.get("Zora Ledge")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("Flippers", locations, item, items_checked);
+        this.locations.get("Zora Ledge")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("Flippers", locations, item, locations_checked);
         });
 
-        this.locations.get("Waterfall Fairy - Left")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("Flippers", locations, item, items_checked);
+        this.locations.get("Waterfall Fairy - Left")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("Flippers", locations, item, locations_checked);
         });
 
-        this.locations.get("Waterfall Fairy - Right")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet("Flippers", locations, item, items_checked);
+        this.locations.get("Waterfall Fairy - Right")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet("Flippers", locations, item, locations_checked);
         });
 
-        this.can_enter = (_locations: LocationCollection, items: ItemCollection) => {
+        this.can_enter = (_locations, items: ItemCollection) => {
             return items.has("RescueZelda");
         }
 

@@ -67,33 +67,33 @@ export class MiseryMire extends Dungeon {
             return this.locations.get("Misery Mire - Boss")?.canAccess(items, locations);
         };
 
-        this.locations.get("Misery Mire - Boss")?.setRequirements((item, locations, items, items_checked) => {
-            return this.canEnter(locations, items)
-                && items.hasOrCanGet('CaneOfSomaria', locations, item, items_checked) && (items.hasOrCanGet('Lamp', locations, item, items_checked))
+        this.locations.get("Misery Mire - Boss")?.setRequirements((item, locations, items, locations_checked) => {
+            return this.canEnter(locations, items, item, locations_checked)
+                && items.hasOrCanGet('CaneOfSomaria', locations, item, locations_checked) && (items.hasOrCanGet('Lamp', locations, item, locations_checked))
                 && items.has('BigKeyD6')
-                && this.boss?.canBeat(items, locations, item, items_checked) || false
+                && this.boss?.canBeat(items, locations, item, locations_checked) || false
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
 
             let haveMedallion = false;
             const medallion = locations.get('Misery Mire Medallion')
             if (!medallion || !medallion.item) {
-                haveMedallion = items.has('Bombos') || items.has('Ether') || items.has('Quake')
+                haveMedallion = items.hasOrCanGet('Bombos', locations, item, locations_checked) || items.hasOrCanGet('Ether', locations, item, locations_checked) || items.hasOrCanGet('Quake', locations, item, locations_checked)
                 log(`Misery Mire Medallion not set. HaveMedallion based on any medallion: ${haveMedallion}`);
             }
             else {
-                haveMedallion = items.has(medallion.item.name);
+                haveMedallion = items.hasOrCanGet(medallion.item.name, locations, item, locations_checked);
                 log(`Misery Mire Medallion is ${medallion.item.name}. HaveMedallion: ${haveMedallion}`);
             }
 
             return items.has('RescueZelda')
                 && haveMedallion
                 && items.hasSword()
-                && items.has('MoonPearl')
-                && (items.has('Hookshot') || items.has('PegasusBoots'))
+                && items.hasOrCanGet('MoonPearl', locations, item, locations_checked)
+                && (items.hasOrCanGet('Hookshot', locations, item, locations_checked) || items.hasOrCanGet('PegasusBoots', locations, item, locations_checked))
                 && items.canKillMostThings(this.world, 8)
-                && this.world.getRegion('Mire')?.canEnter(locations, items) || false;
+                && this.world.getRegion('Mire')?.canEnter(locations, items, item, locations_checked) || false;
         }
 
         this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items))

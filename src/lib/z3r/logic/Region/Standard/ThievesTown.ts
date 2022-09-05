@@ -44,11 +44,11 @@ export class ThievesTown extends Dungeon {
             return items.has('KeyD4') && items.has('BigKeyD4');
         });
 
-        this.locations.get("Thieves' Town - Big Chest")?.setRequirements((item, locations, items, items_checked) => {
+        this.locations.get("Thieves' Town - Big Chest")?.setRequirements((item, locations, items, locations_checked) => {
             if (locations.get("Thieves' Town - Big Chest")?.hasItem(Item.get('KeyD4', this.world.id))) {
-                return items.hasOrCanGet("Hammer", locations, item, items_checked) && items.has("BigKeyD4");
+                return items.hasOrCanGet("Hammer", locations, item, locations_checked) && items.has("BigKeyD4");
             }
-            return items.hasOrCanGet("Hammer", locations, item, items_checked) && items.has('KeyD4') && items.has('BigKeyD4');
+            return items.hasOrCanGet("Hammer", locations, item, locations_checked) && items.has('KeyD4') && items.has('BigKeyD4');
         });
 
         this.locations.get("Thieves' Town - Blind's Cell")?.setRequirements((_item, _locations, items) => {
@@ -59,16 +59,16 @@ export class ThievesTown extends Dungeon {
             return this.locations.get("Thieves' Town - Boss").canAccess(items, locations)
         }
 
-        this.locations.get("Thieves' Town - Boss")?.setRequirements((item, locations, items, items_checked) => {
-            return this.canEnter(locations, items)
+        this.locations.get("Thieves' Town - Boss")?.setRequirements((item, locations, items, locations_checked) => {
+            return this.canEnter(locations, items, item, locations_checked)
                 && items.has("KeyD4") && items.has("BigKeyD4")
-                && !!this.boss && this.boss.canBeat(items, locations, item, items_checked)
+                && !!this.boss && this.boss.canBeat(items, locations, item, locations_checked)
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has("RescueZelda")
-                && items.has("MoonPearl")
-                && this.world.getRegion("North West Dark World")?.canEnter(locations, items) || false;
+                && items.hasOrCanGet("MoonPearl", locations, item, locations_checked)
+                && this.world.getRegion("North West Dark World")?.canEnter(locations, items, item, locations_checked) || false;
         };
 
         this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));

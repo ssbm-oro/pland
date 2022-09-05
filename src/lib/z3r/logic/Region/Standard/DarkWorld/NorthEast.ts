@@ -23,25 +23,25 @@ export class NorthEast extends Region {
     }
 
     override initialize() {
-        this.locations.get("Catfish")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet('MoonPearl', locations, item, items_checked) && items.canLiftRocks();
+        this.locations.get("Catfish")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet('MoonPearl', locations, item, locations_checked) && items.canLiftRocks();
         });
 
-        const pyramidRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, items_checked: string[]) => {
+        const pyramidRequirements = (item: IItem | null, locations: LocationCollection, items: ItemCollection, locations_checked: string[]) => {
             return items.has("Crystal5") && items.has("Crystal6")
-                && (!!this.world.getRegion("South Dark World")?.canEnter(locations, items))
-                && items.hasOrCanGet("MoonPearl", locations, item, items_checked) && (items.hasOrCanGet("Hammer", locations, item, items_checked)
-                    || (items.hasOrCanGet("MagicMirror", locations, item, items_checked) && (items.canDefeatAgahnim(this.world))))
+                && (!!this.world.getRegion("South Dark World")?.canEnter(locations, items, item, locations_checked))
+                && items.hasOrCanGet("MoonPearl", locations, item, locations_checked) && (items.hasOrCanGet("Hammer", locations, item, locations_checked)
+                    || (items.hasOrCanGet("MagicMirror", locations, item, locations_checked) && (items.canDefeatAgahnim(this.world))))
         }
 
         this.locations.get("Pyramid Fairy - Left")?.setRequirements(pyramidRequirements);
         this.locations.get("Pyramid Fairy - Right")?.setRequirements(pyramidRequirements);
 
-        this.can_enter = (_locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has("RescueZelda")
                 && (items.canDefeatAgahnim(this.world)
-                    || (items.has("Hammer") && items.canLiftRocks() && items.has("MoonPearl"))
-                    || (items.canLiftDarkRocks() && items.has("MoonPearl") && (items.has("Hammer") || items.has("Flippers"))))
+                    || (items.hasOrCanGet("Hammer", locations, item, locations_checked) && items.canLiftRocks() && items.hasOrCanGet("MoonPearl", locations, item, locations_checked))
+                    || (items.canLiftDarkRocks() && items.hasOrCanGet("MoonPearl", locations, item, locations_checked) && (items.hasOrCanGet("Hammer", locations, item, locations_checked) || items.hasOrCanGet("Flippers", locations, item, locations_checked))))
         }
 
         // TODO: Add ganon logic

@@ -44,26 +44,26 @@ export class SkullWoods extends Region {
             return items.has('BigKeyD3');
         });
 
-        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((item, locations, items, items_checked) => {
-            return items.hasOrCanGet('MoonPearl', locations, item, items_checked) && items.hasOrCanGet('FireRod', locations, item, items_checked);
+        this.locations.get("Skull Woods - Bridge Room")?.setRequirements((item, locations, items, locations_checked) => {
+            return items.hasOrCanGet('MoonPearl', locations, item, locations_checked) && items.hasOrCanGet('FireRod', locations, item, locations_checked);
         });
 
         this.can_complete = (locations, items) => {
             return this.locations.get('Skull Woods - Boss')?.canAccess(items, locations);
         };
 
-        this.locations.get("Skull Woods - Boss")?.setRequirements((item, locations, items, items_checked) => {
-            return this.canEnter(locations, items)
-                && items.hasOrCanGet('MoonPearl', locations, item, items_checked) && items.hasOrCanGet('FireRod', locations, item, items_checked)
+        this.locations.get("Skull Woods - Boss")?.setRequirements((item, locations, items, locations_checked) => {
+            return this.canEnter(locations, items, item, locations_checked)
+                && items.hasOrCanGet('MoonPearl', locations, item, locations_checked) && items.hasOrCanGet('FireRod', locations, item, locations_checked)
                 && items.hasSword()
                 && items.has('KeyD3', 3)
-                && this.boss?.canBeat(items, locations, item, items_checked) || false;
+                && this.boss?.canBeat(items, locations, item, locations_checked) || false;
         });
 
-        this.can_enter = (locations, items) => {
+        this.can_enter = (locations, items, item, locations_checked) => {
             return items.has('RescueZelda')
-                && items.has('MoonPearl')
-                && this.world.getRegion('North West Dark World')?.canEnter(locations, items) || false;
+                && items.hasOrCanGet('MoonPearl', locations, item, locations_checked)
+                && this.world.getRegion('North West Dark World')?.canEnter(locations, items, item, locations_checked) || false;
         };
 
         this.prize?.setRequirements((_item, locations, items) => this.canComplete(locations, items));
