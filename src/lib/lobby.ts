@@ -25,7 +25,7 @@ export async function reloadLobbies() {
 
                 const lobby: ILobby = JSON.parse(file).lobby;
 
-                const fullLobby = new Lobby(lobby.created_by, lobby.preset, lobby.max_entrants, lobby.max_plants, lobby.slug, lobby.entrants, lobby.ready_to_roll);
+                const fullLobby = new Lobby(lobby.created_by, lobby.preset, lobby.max_entrants, lobby.max_plants, lobby.slug, lobby.entrants, lobby.ready_to_roll, lobby.seed);
 
                 Lobbies.set(lobby.slug, fullLobby);
             })
@@ -70,7 +70,7 @@ export default class Lobby {
     initialized = false;
 
 
-    public constructor(created_by: User, preset:string, max_entrants:number, max_plants:number, slug:string | null = null, entrants: Entrant[]= [], ready_to_roll = false) {
+    public constructor(created_by: User, preset:string, max_entrants:number, max_plants:number, slug:string | null = null, entrants: Entrant[]= [], ready_to_roll = false, seed: string | undefined = undefined) {
         const save = slug == null;
         if (!slug) {
             do  {
@@ -90,7 +90,8 @@ export default class Lobby {
             max_plants: max_plants,
             slug:slug,
             entrants: entrants,
-            ready_to_roll: ready_to_roll
+            ready_to_roll: ready_to_roll,
+            seed: seed
         }
 
         if (save) saveLobby(this);

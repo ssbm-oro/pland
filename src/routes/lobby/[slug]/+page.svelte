@@ -29,8 +29,8 @@
     let world: World;
     let plants: Plant[];
 
-    $: userInLobby = user ? lobby.entrants.some(entrant => entrant.discord_id == user!.id): undefined;
-    $: userAsEntrant = user ? lobby.entrants.find(entrant => entrant.discord_id == user!.id): undefined;
+    $: userInLobby = user ? lobby.entrants?.some(entrant => entrant.discord_id == user!.id): undefined;
+    $: userAsEntrant = user ? lobby.entrants?.find(entrant => entrant.discord_id == user!.id): undefined;
 
     onMount(async () => {
         try {

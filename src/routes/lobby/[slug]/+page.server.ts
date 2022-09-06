@@ -4,14 +4,20 @@ import type { PageServerLoad, Action } from "./$types";
 import { error } from '@sveltejs/kit';
 import fs from 'fs';
 
-export const load: PageServerLoad = async ( { params } ) => {
-    const lobby = Lobbies.get(params.slug);
+export const load: PageServerLoad = async ( { params, locals } ) => {
+    const fullLobby = Lobbies.get(params.slug)?.lobby
+    if (!fullLobby) throw error(404, `Lobby ${params.slug} not found`);
+    const lobby = {...fullLobby};
 
-    if (lobby !== undefined) {
-        return {lobby: lobby.lobby};
-    }
-    
-    throw error(404);
+    lobby.entrants?.forEach(entrant => {
+        if (entrant.discord_id != locals.user?.id) {
+            entrant.plantedLocations = [];
+            entrant.plantedItems = [];
+            entrant.plantedBottles = [];
+        }
+    });
+
+    return {lobby: lobby};
 }
 
 export const DELETE: Action = async ( { params, locals } ) => {
