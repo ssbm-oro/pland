@@ -7,7 +7,6 @@ import type { ILobby } from "$lib/lobby";
 import * as default_settings from '$lib/data/json/default-customizer.json'
 import type Config from '../logic/Config';
 const presets = import.meta.glob('$lib/data/presets/*.json');
-
 const preset_data = new Map(Object.entries(presets).map(entry => [entry[0].split('/').reverse()[0], entry[1]()]));
 
 const customizer_url = 'https://alttpr.com/api/customizer';
@@ -27,21 +26,13 @@ export async function roll(lobby: Lobby, test = true) {
 
 
     if (lobby.world) {
-        const {settings} = await preset_data.get(lobby.lobby.preset) as {settings:Config};
+        const preset = await preset_data.get(lobby.lobby.preset) as Config;
+        const settings = { ...preset, ...default_settings.settings };
         lobby.lobby.entrants.forEach(entrant => {
-            entrant.plantedLocations.forEach((location, index) => {
-                const locationHash = locations.filter(l => l.name == `${location.name}:1`)[0]?.hash || ''
-
-                console.log(`locationHash is ${locationHash}`);
-                settings.l[locationHash] = entrant.plantedItems[index]?.value || '';
-            })
+            entrant.plantedLocations.forEach((location, index) => addEntrantPlant(settings, location.name, entrant.plantedItems[index]?.value))
         });
         settings.customizer = true;
         settings.spoilers = 'generate';
-
-        if (!settings.custom) {
-            settings.custom = {"prizes.crossworld":true, ...default_settings.settings.custom}
-        }
 
         lobby.world.config.notes = `${lobby.lobby.preset.replace('.json','')} plando seed wrought to you by ${lobby.lobby.entrants.map(entrant => entrant.username).join(', ')}`;
 
@@ -117,13 +108,21 @@ export async function roll(lobby: Lobby, test = true) {
                 webhook_data.append('files[0]', new Blob([JSON.stringify(resData)]), file)
             }
 
-            const discordres = await fetch(DISCORD_WEBHOOK_URI, {
+            await fetch(DISCORD_WEBHOOK_URI, {
                 method: 'POST',
                 body: webhook_data
             })
         }
     }
     return {ok:true, message:'Seed settings tested successfully.', hash_url:hash_url}
+}
+
+function addEntrantPlant(settings: Config, locationName: string, plantedItem: string | undefined) {
+    const locationHash = locations.filter(l => l.name == `${locationName}:1`)[0]?.hash || '';
+    if (plantedItem) {
+        settings.l[locationHash] = plantedItem;
+        removeItemFromPool(settings.custom.item.count, plantedItem);
+    }
 }
 
 function createDiscordEmbed(lobby: ILobby): APIEmbedField[] {
@@ -136,4 +135,14 @@ function createDiscordEmbed(lobby: ILobby): APIEmbedField[] {
     })
 
     return embedFields;
+}
+
+function removeItemFromPool(itemcount: Record<string, number>, item:string) {
+    const item_name = item.slice(0,-2);
+	if (itemcount[item_name] == null) {
+        itemcount[item_name] = 0;
+    }
+    else {
+        itemcount[item_name]--;
+    }
 }

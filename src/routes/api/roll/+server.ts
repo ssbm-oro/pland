@@ -1,8 +1,8 @@
 import { error, json, type RequestHandler } from "@sveltejs/kit";
-import { Lobbies } from "$lib/lobby";
+import { Lobbies, saveLobby } from "$lib/lobby";
 import { roll } from "$lib/z3r/api/Api";
 
-export const POST: RequestHandler = async ( { request, url, locals } ) => {
+export const POST: RequestHandler = async ( { url, locals } ) => {
     if (!locals.session) {
         return new Response('Unauthorized', { status: 401 })
     }
@@ -17,6 +17,8 @@ export const POST: RequestHandler = async ( { request, url, locals } ) => {
     if (seed.ok) {
         lobby.lobby.seed = seed.hash_url
     }
+
+    await saveLobby(lobby)
 
     return json(seed);
 }

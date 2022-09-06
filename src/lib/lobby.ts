@@ -58,7 +58,7 @@ export interface ILobby {
     seed?: string | undefined;
 }
 
-function saveLobby(lobby: Lobby) {
+export async function saveLobby(lobby: Lobby) {
     if ((!browser) && (!readOnly)) {
         fs.writeFileSync(`lobbies/${lobby.lobby.slug}`, JSON.stringify(lobby));
     }

@@ -80,6 +80,7 @@ const loading_messages = [
     `Welcome to oro's Plandotorium, you scheme it, we stream it.`,
     `Welcome to oro's Plandotorium, we built it, you tilted.`,
     `Welcome to oro's Plandotorium, you plot it, we wrought it.`,
+    `Welcome to oro's Plandotorium, we log it, you slog it.`,
     `One day, we're all going to be dead and none of this is going to have mattered. Glhf.`,
     `I sell plando and plando accessories.`,
     `Give cash money to oro to increase your chances of winning.`,
@@ -87,8 +88,12 @@ const loading_messages = [
     `DISABLING QUICKSWAP!`,
     `Banana bread.`,
     `Empathy system online. :(`,
-    `Oh look! It's the big key to my heart!`
-
+    `Oh look! It's the big key to my heart!`,
+    `Enabling Super FX chip`,
+    `Hang on, need to download some more RAM`,
+    `Hold on, I'm practicing the xylophone`,
+    `When are we playing a Formal Boots seed?`,
+    `/me slaps $username around a bit with a large trout`,
 ];
 
 export function get_loading_message() {

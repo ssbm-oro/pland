@@ -16,17 +16,17 @@ export const POST: RequestHandler = async ( { request} ) => {
     if (!session) throw error(400, 'Invalid session.');
 
     const refreshData: RESTPostOAuth2RefreshTokenURLEncodedData = {
-        client_id: PUBLIC_DISCORD_OAUTH_CLIENT_ID,
-        client_secret: DISCORD_OAUTH_CLIENT_SECRET,
-        grant_type: 'refresh_token',
-        refresh_token: session.token.refresh_token
+        'client_id': PUBLIC_DISCORD_OAUTH_CLIENT_ID,
+        'client_secret': DISCORD_OAUTH_CLIENT_SECRET,
+        'grant_type': 'refresh_token',
+        'refresh_token': session.token.refresh_token
     };
 
     try {
         // Get the authentication object using the user's code
         const AuthRes = await fetch('https://discord.com/api/v10/oauth2/token', {
             method: 'POST',
-            body: new URLSearchParams(refreshData as any),
+            body: new URLSearchParams(refreshData as unknown as Record<string, string>),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

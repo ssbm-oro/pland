@@ -28,7 +28,7 @@ export default interface Config {
     accessibility: "items" | "locations" | "beatable";
     dungeon_items: string;
     item_placement: "basic" | "advanced";
-    eq: Record<string, string>;
+    eq: string[]
     l: Record<string, string>
     drops: unknown
     custom: {
@@ -47,18 +47,20 @@ export default interface Config {
         canWaterFairyRevive: boolean;
         canWaterWalk: boolean;
         customPrizePacks: boolean;
-        drop: unknown;
-        item: unknown;
+        drop?: Record<string, unknown>;
+        item: {
+            count: Record<string, number>;
+        };
         "item.Goal.Required": string;
         "item.require.Lamp": boolean;
         "item.value.BlueClock": string;
         "item.value.GreenClock": string;
         "item.value.RedClock": string;
         "item.value.Rupoor": string;
-        "prizes.crossworld": boolean;
+        "prizes.crossworld"?: boolean;
         "prize.shuffleCrystals": boolean;
         "prize.shufflePendants": boolean;
-        "region.bossNormalLocation": boolean;
+        "region.bossNormalLocation"?: boolean;
         "region.wildBigKeys": boolean;
         "region.wildKeys": boolean;
         "region.wildMaps": boolean;

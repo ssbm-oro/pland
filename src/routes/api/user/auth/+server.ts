@@ -23,7 +23,7 @@ export const GET: RequestHandler = async ( { url, setHeaders } ) => {
         // Get the authentication object using the user's code
         const authRes = await fetch('https://discord.com/api/v10/oauth2/token', {
             method: 'POST',
-            body: new URLSearchParams(authData as any)
+            body: new URLSearchParams(authData as unknown as Record<string, string>)
         });
 
         const Grantdata: RESTPostOAuth2AccessTokenResult = await authRes.json();
