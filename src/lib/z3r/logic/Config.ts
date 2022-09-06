@@ -1,11 +1,13 @@
 
 // TODO: Add enumerable values where possible
 export default interface Config {
+    customizer: true;
     item: {
         pool: 'normal' | 'hard';
         functionality: 'normal' | 'hard';
     }
     lang: string;
+    notes: string;
     mode: 'open' | 'standard' | 'inverted' | 'retro';
     hints: 'on' | 'off';
     weapons: 'randomized' | 'vanilla' | 'swordless' | 'assured';
@@ -26,8 +28,8 @@ export default interface Config {
     accessibility: "items" | "locations" | "beatable";
     dungeon_items: string;
     item_placement: "basic" | "advanced";
-    eq: unknown;
-    l: unknown;
+    eq: Record<string, string>;
+    l: Record<string, string>
     drops: unknown
     custom: {
         canBombJump: boolean;

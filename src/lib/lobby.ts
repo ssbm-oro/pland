@@ -55,6 +55,7 @@ export interface ILobby {
     max_plants: number;
     preset: string;
     ready_to_roll: boolean;
+    seed?: string | undefined;
 }
 
 function saveLobby(lobby: Lobby) {
@@ -524,6 +525,7 @@ export default class Lobby {
             'attack',
             'punch',
             'quest',
+            'charts',
         ]
 
         const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] || '';

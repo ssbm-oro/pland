@@ -12,12 +12,14 @@
     import DiscordAvatar from "$lib/components/DiscordAvatar.svelte";
     import { Badge, List, ListItem, Card, Button, Alert } from "@brainandbones/skeleton"
     import Icon from "@iconify/svelte";
-import type Config from "$lib/z3r/logic/Config";
+    import type Config from "$lib/z3r/logic/Config";
+    import { get_loading_message } from "$lib/utils/loadingMessages";
 
 
     export let data: PageData;
     $: lobby = data.lobby;
     $: user = data.user;
+    $: seedUrl = data.lobby.seed;
     const presets = new Map(Object.entries(data.presets).map(entry => [entry[0].split('/').reverse()[0]!, entry[1]()]));
     const loading_message = data.loading_message;
 
@@ -119,12 +121,16 @@ import type Config from "$lib/z3r/logic/Config";
     }
 
     let rollAlertVisible = false;
-    const rollAlertMessage = `It looks like this seed would roll. I haven't implemented
-                            that because I want to test what's here so far more. 
-                            Let's make another lobby and try again! 'Players' in this
-                            seed can download the logic log for review.`
+    let rollAlertMessage = get_loading_message();
     async function rollSeed() {
         rollAlertVisible = true;
+        const res = await fetch(`/api/roll?slug=${lobby.slug}`, { method: 'POST'});
+        if (res.ok) {
+            rollAlertMessage = await res.text()
+        }
+        else {
+            rollAlertMessage = 'Something went wrong: ' + await res.text();
+        }
     }
 
     let refreshing = false;
@@ -142,8 +148,9 @@ import type Config from "$lib/z3r/logic/Config";
 
 <h1>{$page.params['slug']}</h1>
 <h2>Mode: {lobby.preset}</h2>
+{#if seedUrl}<h4><a href={seedUrl} class="text-accent-500">{seedUrl}</a></h4>{/if}
 <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
-{#if (lobby.ready_to_roll && !userAsEntrant) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)}
+{#if (!seedUrl && ((lobby.ready_to_roll && !userAsEntrant) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)))}
     <br/>
     <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
     <Alert bind:visible={rollAlertVisible}>
@@ -173,10 +180,12 @@ import type Config from "$lib/z3r/logic/Config";
             <Button variant="ring-primary" on:click={refreshLobby}>
                 <Icon class={refreshing ? "transition animate-spin" : undefined} icon="charm:refresh"></Icon>
             </Button>
-        {#if userInLobby}
-            <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
-        {:else}
-            <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
+        {#if !seedUrl}
+            {#if userInLobby}
+                <Button variant="ring-accent" on:click='{leaveLobby}'>Leave</Button>
+            {:else}
+                <Button variant="ring-primary" on:click='{joinLobby}' disabled='{!user || lobby.entrants.length >= lobby.max_entrants}'>Join</Button>
+            {/if}
         {/if}
         </div>
     </div>
@@ -218,10 +227,11 @@ import type Config from "$lib/z3r/logic/Config";
         </Alert>
         <div class="flex flex-col justify-start lg:flex-none lg:flex-row">
         {#if !userAsEntrant.ready}
-            
             <Button variant="filled-primary" on:click="{submitPlants}">Submit</Button>
-        {:else}
+        {:else if !seedUrl}
             <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
+        {:else}
+            <Button variant="filled-accent" href={seedUrl}>Get that Seed</Button>
         {/if}
         </div>
     </Card>

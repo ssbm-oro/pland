@@ -99,17 +99,6 @@ public override filter(f: (item: IItem) => boolean): IItem[] {
         this.items.values();
     }
 
-    // public diff(items:ItemCollection) {
-    //     if (!this.items.size) {
-    //         return new ItemCollection([...this.items.values()]);
-    //     }
-
-    //     let merged = new ItemCollection([...items.items.values()]);
-    //     this.items.forEach(item => { merged.addItem(item) });
-
-    //     return merged;
-    // }
-
     public canKillMostThings(world:World, enemies = 5): boolean {
         log(`Checking if we can kill at least ${enemies} enemies`);
         return this.hasSword()

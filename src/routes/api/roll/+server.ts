@@ -1,203 +1,22 @@
-import { fetchClientSession } from "$lib/utils/sessionHandler";
-import type { RequestHandler } from "@sveltejs/kit";
-import log from "loglevel";
-import fetch from 'node-fetch'
-import { locations } from '$lib/data/json/alttpr-customizer-schema.json';
-import type { APIEmbed, APIEmbedField, RESTPostAPIWebhookWithTokenJSONBody } from 'discord-api-types/v10';
-import { DISCORD_WEBHOOK_URI } from "$env/static/private";
-import * as default_settings from '$lib/data/json/default-customizer.json'
-
-// this needs to get cleaned up so much but it works 😖
-
-const webhook_uri = DISCORD_WEBHOOK_URI;
-const discord_avatar_uri = `https://cdn.discordapp.com/avatars/$userid/$useravatar.png`;
-const customizer_url = 'https://alttpr.com/api/customizer';
-
-enum discord_log_levels {
-    info = 0xe4f2e8,
-    success = 0x00ff85,
-    error = 0xe11d62
-}
+import { error, json, type RequestHandler } from "@sveltejs/kit";
+import { Lobbies } from "$lib/lobby";
+import { roll } from "$lib/z3r/api/Api";
 
 export const POST: RequestHandler = async ( { request, url, locals } ) => {
     if (!locals.session) {
         return new Response('Unauthorized', { status: 401 })
     }
 
-    const params = new URLSearchParams(await request.text());
-    const presetName = params.get('preset');
-    const plant1item1 = params.get('plant1item1');
-    const plant1location1 = params.get('plant1location1');
-    const plant1item2 = params.get('plant1item2');
-    const plant1location2 = params.get('plant1location2');
-    const plant2item1 = params.get('plant2item1');
-    const plant2location1 = params.get('plant2location1');
-    const plant2item2 = params.get('plant2item2');
-    const plant2location2 = params.get('plant2location2');
-    const test = params.get('test') == 'true' ?? false;
+    const slug = url.searchParams.get('slug');
+    if (!slug) throw error(409, `Room not specified.`)
+    const lobby = Lobbies.get(slug);
+    if (!lobby) throw error(404, `Lobby ${slug} not found.`)
+    if (lobby.lobby.seed) throw error(409, `Seed already rolled for this lobby.`)
 
-    if ((!presetName) || (!plant1item1) || (!plant1location1) || (!plant1item2) ||
-        (!plant1location2) || (!plant2item1) || (!plant2location1) ||
-        (!plant2item2) || (!plant2location2)) {
-            return new Response('Missing parameter(s)', { status: 400 })
+    const seed = await roll(lobby, false);
+    if (seed.ok) {
+        lobby.lobby.seed = seed.hash_url
     }
 
-    const user = fetchClientSession(locals.session.id);
-    if (!user) {
-        return new Response('Forbidden', { status: 403 })
-    }
-    
-    let preset_res = await fetch(url.origin + `/presets/${presetName}`);
-    let preset :any = await preset_res.json();
-
-    add_default_customizer(preset, default_settings);
-    
-    preset.customizer = true;
-    preset.settings['spoilers'] = 'generate';
-
-    plant(preset, plant1item1, plant1location1);
-    plant(preset, plant1item2, plant1location2);
-    plant(preset, plant2item1, plant2location1);
-    plant(preset, plant2item2, plant1location2);
-
-    let player1 = 'Player 1';
-    let player2 = 'Player 2';
-    preset.settings.notes = `${presetName.replace('.json','')} plando seed wrought to you by ${player1} and ${player2}`;
-
-    let plant_fields: APIEmbedField[] = [];// = field_array(presetName, player1, plant1item1, plant1location1, plant1item2, plant1location2, player2, plant2item1, plant2location1, plant2item2, plant2location2, test)
-    plant_fields.push({name:"Preset", value:presetName, inline:true});
-    plant_fields.push({name:`${player1} Plant 1`, value:`${plant1item1} - ${getLocationName(plant1location1)}`, inline:true});
-    plant_fields.push({name:`${player1} Plant 2`, value:`${plant1item2} - ${getLocationName(plant1location2)}`, inline:true});
-    plant_fields.push({name:`${player2} Plant 1`, value:`${plant2item1} - ${getLocationName(plant2location1)}`, inline:true});
-    plant_fields.push({name:`${player2} Plant 2`, value:`${plant2item2} - ${getLocationName(plant2location2)}`, inline:true});
-    plant_fields.push({name:"Test", value:String(test), inline:true});
-
-    let embed :APIEmbed =  {
-        color: discord_log_levels.info,
-        timestamp: new Date().toISOString(),
-        author: {
-            name: user.username
-        },
-        fields: plant_fields
-    }
-    if (user.avatar) {
-        embed.author!.icon_url = discord_avatar_uri.replace('$userid', user.id).replace('$useravatar', user.avatar);
-    }
-
-    log.info("--- sending preset settings ---")
-    log.info(preset.settings);
-
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(preset.settings),
-        retry: true
-    }
-
-    let endpoint = customizer_url + (test ? '/test' : '');
-
-    let file;
-    let json:any;
-
-    try {
-        let res = await fetch(endpoint, options);
-        if (res.ok)
-        {
-            json = await res.json();
-            let body = 'OK';
-            embed.title = 'Settings tested successfully';
-            embed.description = `The following settings were submitted to the customizer test and it said it'll roll! 🎲`;
-            let hash_url;
-            if (json['hash']) {
-                body = json['hash'];
-                hash_url = `http://alttpr.com/en/h/${body}`;
-                embed.title = 'Seed rolled successfully';
-                embed.description = `The following settings were submitted to the customizer and it gave me this crap: ${hash_url}`
-                embed.color = discord_log_levels.success;
-            }
-            log.info(embed.title);
-            log.info(JSON.stringify(json));
-            try {
-                let options;
-                if (test) {
-                    file = 'tested_settings.json';
-                }
-                else {
-                    file = `${body}.json`;
-                }
-                delete json['patch'];
-            }
-            catch(err) { log.error(err); }
-
-            return(new Response(JSON.stringify(body)));
-        }
-        else
-        {
-            let text = await res.text();
-            embed.title = 'Settings failed to roll'
-            embed.description = `The following settings were submitted to the customizer and it said no bones: ${text}`
-            embed.color = discord_log_levels.error;
-            
-            return(new Response(text));
-        }
-    }
-    catch(err) {
-        log.error(err);
-        return new Response(undefined, { status: 500 })
-    }
-    finally {
-        let payload_json: RESTPostAPIWebhookWithTokenJSONBody = {
-            content: embed.title,
-            embeds: [embed]
-        }
-
-        const webhook_data = new FormData();
-        webhook_data.append('payload_json', JSON.stringify(payload_json));
-        if (file) {
-            webhook_data.append('files[0]', new Blob([JSON.stringify(json)]), file)
-        }
-
-        let discordres = await fetch(webhook_uri, {
-            method: 'POST',
-            body: webhook_data
-        })
-        log.debug(discordres);
-    }
-}
-
-function removeItemFromPool(itemcount: { [key: string]: number; }, item:string) {
-    let item_name = item.slice(0,-2);
-	if (itemcount[item_name] == null) {
-			itemcount[item_name] = 0;
-		}
-		else {
-			itemcount[item_name]--;
-		}
-}
-
-function add_default_customizer(preset_data:any, default_settings:any) {
-    log.info("DEFAULT SETTINGS");
-    log.info(default_settings["settings"]);
-	if (!('l' in preset_data['settings'])) {
-		preset_data['settings'] = { ...preset_data['settings'], ...default_settings["settings"] };
-	}
-    log.info("PRESET_DATA");
-    log.info(preset_data);
-	return preset_data;
-}
-
-function getLocationName(location_hash: string) {
-    let location = locations.find(location => location.hash == location_hash);
-    if (location) {
-        return location.name;
-    }
-
-    return location_hash;
-}
-
-function plant(preset: any, item: string, location: string) {
-    preset.settings.l[location] = item;
-    removeItemFromPool(preset.settings.custom.item.count, item);
+    return json(seed);
 }
