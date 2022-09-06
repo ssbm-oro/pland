@@ -1,13 +1,13 @@
-import { Lobbies } from "$lib/lobby";
+import { Lobbies, type ILobby } from "$lib/lobby";
 import { fetchClientSession } from "$lib/utils/sessionHandler";
 import type { PageServerLoad, Action } from "./$types";
 import { error } from '@sveltejs/kit';
 import fs from 'fs';
 
 export const load: PageServerLoad = async ( { params, locals } ) => {
-    const fullLobby = Lobbies.get(params.slug)?.lobby
+    const fullLobby = Lobbies.get(params.slug)
     if (!fullLobby) throw error(404, `Lobby ${params.slug} not found`);
-    const lobby = {...fullLobby};
+    const lobby: ILobby = JSON.parse(JSON.stringify(fullLobby)).lobby;
 
     lobby.entrants?.forEach(entrant => {
         if (entrant.discord_id != locals.user?.id) {
