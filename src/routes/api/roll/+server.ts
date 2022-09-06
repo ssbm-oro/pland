@@ -14,7 +14,7 @@ export const POST: RequestHandler = async ( { url, locals } ) => {
     if (lobby.lobby.seed) throw error(409, `Seed already rolled for this lobby.`)
 
     const seed = await roll(lobby, false);
-    if (seed.ok) {
+    if (seed.ok && seed.hash_url) {
         lobby.lobby.seed = seed.hash_url
     }
 

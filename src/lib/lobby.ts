@@ -440,6 +440,7 @@ export default class Lobby {
             'boa',
             'python',
             'viper',
+            'ferret',
         ]
 
         const states = [
@@ -562,6 +563,7 @@ export default class Lobby {
             'toboggan',
             'acid',
             'year',
+            'menagerie',
         ]
 
         const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] || '';
