@@ -126,7 +126,10 @@
         rollAlertVisible = true;
         const res = await fetch(`/api/roll?slug=${lobby.slug}`, { method: 'POST'});
         if (res.ok) {
-            rollAlertMessage = await res.text()
+            const rollResults = await res.json();
+            rollAlertMessage = rollResults.message;
+            seedUrl = rollResults.hash_url;
+            await invalidateAll();
         }
         else {
             rollAlertMessage = 'Something went wrong: ' + await res.text();

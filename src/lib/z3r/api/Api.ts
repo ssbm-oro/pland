@@ -27,9 +27,10 @@ export async function roll(lobby: Lobby, test = true) {
 
 
     if (lobby.world) {
-        const preset = await preset_data.get(lobby.lobby.preset) as Config;
+        const preset = JSON.parse(JSON.stringify(await preset_data.get(lobby.lobby.preset))) as Config;
         const defaults = JSON.parse(JSON.stringify(default_settings.settings));
         const settings: Config = { ...defaults, ...preset };
+        if (!settings.l) settings.l = {};
         lobby.lobby.entrants.forEach(({plantedLocations, plantedItems}) => {
             plantedLocations.forEach((location, index) =>  {
                 const bottleItem = plantedItems[index] as Bottle;
@@ -60,10 +61,6 @@ export async function roll(lobby: Lobby, test = true) {
 
         const endpoint = customizer_url + (test ? '/test' : '');
         try {
-            if (test) {
-                console.log(JSON.stringify(settings));
-                return {ok:true, message:JSON.stringify(settings)}
-            }
             const res = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
@@ -92,7 +89,7 @@ export async function roll(lobby: Lobby, test = true) {
                 }
                 catch(err) { console.log(err); }
 
-                return({ok:res.ok, message:body, hash_url:hash_url});
+                return({ok:res.ok, message:`The seed for ${lobby.lobby.slug} has been successfully rolled.`, hash_url:hash_url});
             }
             else
             {
@@ -152,7 +149,7 @@ function createDiscordEmbed(lobby: ILobby): APIEmbedField[] {
 
 function removeItemFromPool(itemcount: Record<string, number>, item:string) {
     const item_name = item.toLowerCase().includes('bottle') ?  'BottleWithRandom': item.slice(0,-2);
-	if (itemcount[item_name] == null) {
+	if (!itemcount[item_name]) {
         itemcount[item_name] = 0;
     }
     else {
@@ -160,6 +157,12 @@ function removeItemFromPool(itemcount: Record<string, number>, item:string) {
     }
 }
 function getBottleContents(plantedBottle: string | undefined): string {
+    const contents = [
+        'Bottle:1', 'BottleWithRedPotion:1', 'BottleWithGreenPotion:1',
+        'BottleWithBluePotion:1', 'BottleWithBee:1', 'BottleWithGoldBee:1',
+        'BottleWithFairy:1'
+    ];
+
     switch (plantedBottle) {
         case BottleContents.empty.value:
             return 'Bottle:1'
@@ -177,6 +180,6 @@ function getBottleContents(plantedBottle: string | undefined): string {
             return 'BottleWithFairy:1';
         case BottleContents.random.value:
         default:
-            return 'BottleWithRandom:1';
+            return contents[Math.floor(Math.random() * contents.length)] || 'Bottle:1';
     }
 }
