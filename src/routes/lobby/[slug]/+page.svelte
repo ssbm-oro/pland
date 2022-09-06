@@ -151,16 +151,17 @@
 
 <h1>{$page.params['slug']}</h1>
 <h2>Mode: {lobby.preset}</h2>
-{#if seedUrl}<h4><a href={seedUrl} class="text-accent-500">{seedUrl}</a></h4>{/if}
+{#if seedUrl}<h4><a href={seedUrl} target="_blank" class="text-accent-500">{seedUrl}</a></h4>{/if}
 <p>Created by: {lobby.created_by.username}#{lobby.created_by.discriminator}</p>
 {#if (!seedUrl && ((lobby.ready_to_roll && !userAsEntrant) || (userAsEntrant && userAsEntrant.ready && lobby.ready_to_roll)))}
     <br/>
     <Button variant="filled-primary" on:click='{rollSeed}'>Whoever Clicks Me First Gets to Roll the Seed</Button>
     <Alert bind:visible={rollAlertVisible}>
-        <svelte:fragment slot="title">Thank you for helping me test</svelte:fragment>
+        <svelte:fragment slot="title">Please wait</svelte:fragment>
         <svelte:fragment slot="message">
             <p>{rollAlertMessage}</p>
             <br/>
+            <Icon icon="line-md:loading-twotone-loop" height="48" width="48" />
         </svelte:fragment>
         <svelte:fragment slot="trail">
             {#if userAsEntrant}
@@ -234,7 +235,7 @@
         {:else if !seedUrl}
             <Button variant="ghost-accent" on:click="{resetPlants}">Reset</Button>
         {:else}
-            <Button variant="filled-accent" href={seedUrl}>Get that Seed</Button>
+            <Button variant="filled-accent" target="_blank" href={seedUrl}>Get that Seed</Button>
         {/if}
         </div>
     </Card>

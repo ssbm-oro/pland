@@ -27,10 +27,11 @@ export async function roll(lobby: Lobby, test = true) {
 
 
     if (lobby.world) {
-        const preset = JSON.parse(JSON.stringify(await preset_data.get(lobby.lobby.preset))) as Config;
-        const defaults = JSON.parse(JSON.stringify(default_settings.settings));
-        const settings: Config = { ...defaults, ...preset };
-        if (!settings.l) settings.l = {};
+        const preset = JSON.parse(JSON.stringify(await preset_data.get(lobby.lobby.preset)));
+        const defaults = JSON.parse(JSON.stringify(default_settings));
+        if (!('l' in preset['settings'])) {
+            preset['settings'] = { ...preset['settings'], ...defaults["settings"] };
+        }
         lobby.lobby.entrants.forEach(({plantedLocations, plantedItems}) => {
             plantedLocations.forEach((location, index) =>  {
                 const bottleItem = plantedItems[index] as Bottle;
@@ -38,13 +39,13 @@ export async function roll(lobby: Lobby, test = true) {
                 if (bottleItem.contents) {
                     plantedItemName = getBottleContents(bottleItem.contents);
                 }
-                addEntrantPlant(settings, location.name, plantedItemName)
+                addEntrantPlant(preset.settings, location.name, plantedItemName)
             });
         });
-        settings.customizer = true;
-        settings.spoilers = 'generate';
+        preset.settings.customizer = true;
+        preset.settings.spoilers = 'generate';
 
-        lobby.world.config.notes = `${lobby.lobby.preset.replace('.json','')} plando seed wrought to you by ${lobby.lobby.entrants.map(entrant => entrant.username).join(', ')}`;
+        preset.settings.notes = `${lobby.lobby.preset.replace('.json','')} plando seed wrought to you by ${lobby.lobby.entrants.map(entrant => entrant.username).join(', ')}`;
 
         const embedFields = createDiscordEmbed(lobby.lobby);
         embedFields.push({name:"Test", value:String(test), inline:true});
@@ -66,7 +67,7 @@ export async function roll(lobby: Lobby, test = true) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(settings)
+                body: JSON.stringify(preset.settings)
             });
 
             if (res.ok)
@@ -113,7 +114,7 @@ export async function roll(lobby: Lobby, test = true) {
 
             const webhook_data = new FormData();
             webhook_data.append('payload_json', JSON.stringify(payload_json));
-            if (test) resData = {...settings}
+            if (test) resData = {...preset}
             if (file) {
                 webhook_data.append('files[0]', new Blob([JSON.stringify(resData)]), file)
             }
