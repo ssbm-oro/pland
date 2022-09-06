@@ -8,8 +8,8 @@ import { PUBLIC_DISCORD_OAUTH_CLIENT_ID } from '$env/static/public';
 
 export const POST: RequestHandler = async ( { request} ) => {
 
-    let cookies = cookie.parse(request.headers.get('cookie') || '')
-    let sessionId = cookies['session_id'];
+    const cookies = cookie.parse(request.headers.get('cookie') || '')
+    const sessionId = cookies['session_id'];
     if (!sessionId) throw error(400, 'Property "sessionId" is required');
 
     const session = fetchSession(sessionId);
@@ -24,9 +24,12 @@ export const POST: RequestHandler = async ( { request} ) => {
 
     try {
         // Get the authentication object using the user's code
-        const AuthRes = await fetch('https://discord.com/api/v10/oauth2/token',
-        {
-            body: JSON.stringify(refreshData)
+        const AuthRes = await fetch('https://discord.com/api/v10/oauth2/token', {
+            method: 'POST',
+            body: new URLSearchParams(refreshData as any),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         });
 
         const GrantData : RESTPostOAuth2AccessTokenResult = await AuthRes.json();

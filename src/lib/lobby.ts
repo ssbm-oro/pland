@@ -328,6 +328,16 @@ export default class Lobby {
             'quiet',
             'smart',
             'pseudo',
+            'mint',
+            'quick',
+            'spoiled',
+            'doctor',
+            'mellow',
+            'harsh',
+            'night',
+            'wicked',
+            'sneaky',
+            'yawning',
             //'horny', oro please, show some restraint
         ]
         
@@ -409,6 +419,26 @@ export default class Lobby {
             'hyena',
             'vulture',
             'falcon',
+            'hornet',
+            'seal',
+            'crane',
+            'leopard',
+            'eagle',
+            'mantis',
+            'raven',
+            'penguin',
+            'turkey',
+            'flamingo',
+            'wren',
+            'weasel',
+            'wombat',
+            'yak',
+            'coral',
+            'mussel',
+            'asp',
+            'boa',
+            'python',
+            'viper',
         ]
 
         const states = [
@@ -526,6 +556,11 @@ export default class Lobby {
             'punch',
             'quest',
             'charts',
+            'break',
+            'meat',
+            'toboggan',
+            'acid',
+            'year',
         ]
 
         const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)] || '';
